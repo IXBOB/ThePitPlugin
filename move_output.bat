@@ -1,0 +1,1 @@
+ move C:\Users\IXBOB\Desktop\ThePitPlugin\ThePitPlugin\build\libs\ThePitPlugin-1.0-SNAPSHOT-all.jar C:\Users\IXBOB\Desktop\java_CloudServer\1.12.2_thepit_ixbob\plugins
