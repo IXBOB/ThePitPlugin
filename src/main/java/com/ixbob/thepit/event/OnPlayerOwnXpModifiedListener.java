@@ -30,7 +30,6 @@ public class OnPlayerOwnXpModifiedListener implements Listener {
             nextLevelNeedXp = 10*((originLevel + upgradeLevel)+1) + (int)(Math.random()*10*((originLevel + upgradeLevel)+1));
         }
         newLevel = originLevel + upgradeLevel;
-        System.out.println(modifiedXp);
 
         updateDataBlock(dataBlock, newLevel, newOwnXp, nextLevelNeedXp);
         dataBlock.updatePlayerDBData();

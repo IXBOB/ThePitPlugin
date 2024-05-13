@@ -3,6 +3,7 @@ package com.ixbob.thepit.event;
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.PlayerDataBlock;
 import com.ixbob.thepit.event.custom.PlayerOwnXpModifiedEvent;
+import com.ixbob.thepit.util.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,14 +25,10 @@ public class OnPlayerBeKilledListener implements Listener {
     }
 
     private void onPlayerKillAnother(Player deathPlayer, Player killer) {
-        PlayerDataBlock killerData = Main.playerDataMap.get(killer);
-        int originXp = killerData.getThisLevelOwnXp();
-        int getXp = (10 + (int) (Math.random() * 15))* (1 + Main.playerDataMap.get(deathPlayer).getConsecutiveKillAmount());
-        int newXp = killerData.getThisLevelOwnXp() + getXp;
-        killerData.setThisLevelOwnXp(newXp);
-        //创建并广播事件
-        PlayerOwnXpModifiedEvent modifyXpEvent = new PlayerOwnXpModifiedEvent(killer, originXp, getXp);
-        Bukkit.getPluginManager().callEvent(modifyXpEvent);
+        int addXp = (10 + (int) (Math.random() * 15))* (1 + Main.playerDataMap.get(deathPlayer).getConsecutiveKillAmount());
+        Utils.addXp(killer, addXp);
+        int addCoin = (5 + (int) (Math.random() * 10))* (1 + Main.playerDataMap.get(deathPlayer).getConsecutiveKillAmount());
+        Utils.addCoin(killer, addCoin);
     }
 
     private void onPlayerBeKilled(Player deathPlayer, Player killer) {

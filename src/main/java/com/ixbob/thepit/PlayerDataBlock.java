@@ -68,6 +68,11 @@ public class PlayerDataBlock {
                     scoreboardObj.getScore(String.format(LangLoader.get("main_scoreboard_line3"), nextLevelNeedXp-thisLevelOwnXp)).setScore(-2);
                     break;
                 }
+                case -4: {
+                    scoreboardObj.getScoreboard().resetScores(score.getEntry());
+                    scoreboardObj.getScore(String.format(LangLoader.get("main_scoreboard_line5"), coinAmount)).setScore(-4);
+                    break;
+                }
             }
         }
     }

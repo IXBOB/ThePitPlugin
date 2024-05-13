@@ -2,7 +2,11 @@ package com.ixbob.thepit.util;
 
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.MongoDB;
+import com.ixbob.thepit.PlayerDataBlock;
+import com.ixbob.thepit.event.custom.PlayerOwnCoinModifiedEvent;
+import com.ixbob.thepit.event.custom.PlayerOwnXpModifiedEvent;
 import com.mongodb.DBObject;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -49,5 +53,25 @@ public class Utils {
         dataDBObj.put("ArmorItemList", armorItemList);
         dataDBObj.put("OffHandItemList", offHandItemList);
         mongoDB.updateDataByUUID(dataDBObj, playerUUID);
+    }
+
+    public static void addXp(Player player, int addXp) {
+        PlayerDataBlock playerData = Main.playerDataMap.get(player);
+        int originXp = playerData.getThisLevelOwnXp();
+        int newXp = originXp + addXp;
+        playerData.setThisLevelOwnXp(newXp);
+        //创建并广播 拥有经验改变事件
+        PlayerOwnXpModifiedEvent modifyXpEvent = new PlayerOwnXpModifiedEvent(player, originXp, addXp);
+        Bukkit.getPluginManager().callEvent(modifyXpEvent);
+    }
+
+    public static void addCoin(Player player, int addCoin) {
+        PlayerDataBlock playerData = Main.playerDataMap.get(player);
+        int originCoin = playerData.getCoinAmount();
+        int newCoin = originCoin + addCoin;
+        playerData.setCoinAmount(newCoin);
+        //创建并广播 拥有硬币改变事件
+        PlayerOwnCoinModifiedEvent modifyCoinEvent = new PlayerOwnCoinModifiedEvent(player, originCoin, addCoin);
+        Bukkit.getPluginManager().callEvent(modifyCoinEvent);
     }
 }
