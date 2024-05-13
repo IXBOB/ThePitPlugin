@@ -1,6 +1,8 @@
 join_loading_title: "§e§l正在加载您的数据"
 join_loading_subtitle: "请稍候 （づ￣3￣）づ╭❤～"
 game_name: "天坑乱斗"
+upgrade_title: "§e§l升 级"
+upgrade_subtitle: "%s §7->§r %s"
 main_scoreboard_line1: "§r"
 main_scoreboard_line2: "等级: §e%s"
 main_scoreboard_line3: "下级还需: §b%s经验"

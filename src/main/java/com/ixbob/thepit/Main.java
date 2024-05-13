@@ -40,6 +40,9 @@ public class Main extends JavaPlugin {
 
         Listener onPlayerOwnCoinModifiedListener = new OnPlayerOwnCoinModifiedListener();
         getServer().getPluginManager().registerEvents(onPlayerOwnCoinModifiedListener, this);
+
+        Listener onPlayerUpgradeLevelListener = new OnPlayerUpgradeLevelListener();
+        getServer().getPluginManager().registerEvents(onPlayerUpgradeLevelListener, this);
     }
 
     public static Plugin getPlugin() {

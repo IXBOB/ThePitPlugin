@@ -3,7 +3,9 @@ package com.ixbob.thepit.event;
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.PlayerDataBlock;
 import com.ixbob.thepit.event.custom.PlayerOwnXpModifiedEvent;
+import com.ixbob.thepit.event.custom.PlayerUpgradeLevelEvent;
 import com.ixbob.thepit.util.Utils;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,6 +20,7 @@ public class OnPlayerOwnXpModifiedListener implements Listener {
         int originLevel;
         int upgradeLevel = 0;
         int newLevel;
+        boolean levelUp = false;
         Player player = event.getPlayer();
         PlayerDataBlock dataBlock = Main.playerDataMap.get(player);
         originXp = event.getOriginXp();
@@ -29,9 +32,14 @@ public class OnPlayerOwnXpModifiedListener implements Listener {
             upgradeLevel++;
             newOwnXp -= nextLevelNeedXp;
             nextLevelNeedXp = 10*((originLevel + upgradeLevel)+1) + (int)(Math.random()*10*((originLevel + upgradeLevel)+1));
-            Utils.updateDisplayName(player);
+            levelUp = true;
         }
         newLevel = originLevel + upgradeLevel;
+        if (levelUp) {
+            Utils.updateDisplayName(player);
+            PlayerUpgradeLevelEvent upgradeLevelEvent = new PlayerUpgradeLevelEvent(player, originLevel, newLevel);
+            Bukkit.getPluginManager().callEvent(upgradeLevelEvent);
+        }
 
         updateDataBlock(dataBlock, newLevel, newOwnXp, nextLevelNeedXp);
         dataBlock.updatePlayerDBData();

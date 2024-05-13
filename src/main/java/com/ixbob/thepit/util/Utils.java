@@ -62,13 +62,18 @@ public class Utils {
         int level = playerData.getLevel();
         String prefix;
         ChatColor color = getChatColorByLevel(level);
+        prefix = getLevelStrWithStyle(rank, level);
+        return prefix + color + player.getName() + ChatColor.RESET;
+    }
+
+    public static String getLevelStrWithStyle(int rank, int level) {
+        ChatColor color = getChatColorByLevel(level);
         if (rank == 0) {
-            prefix = "[" + color + level + ChatColor.RESET + "]" + " ";
+            return  "[" + color + level + ChatColor.RESET + "]" + " ";
         }
         else {
-            prefix = "[" + ChatColor.YELLOW + convertToRoman(rank) + ChatColor.RESET+ "-" + color + level + ChatColor.RESET +"]" + " ";
+            return  "[" + ChatColor.YELLOW + convertToRoman(rank) + ChatColor.RESET+ "-" + color + level + ChatColor.RESET +"]" + " ";
         }
-        return prefix + color + player.getName() + ChatColor.RESET;
     }
 
     private static ChatColor getChatColorByLevel(int level) {
