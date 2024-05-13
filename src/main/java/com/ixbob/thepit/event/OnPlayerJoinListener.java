@@ -7,6 +7,7 @@ import com.ixbob.thepit.handler.config.LangLoader;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,6 +15,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Scoreboard;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,51 +56,55 @@ public class OnPlayerJoinListener implements Listener {
                  createDBData(taskPlayer);
             }
             readDBAndGenPlayerDataBlock(taskPlayer);
+            Bukkit.getServer().getScheduler().runTask(Main.getPlugin(), () -> {
+                initScoreboard(taskPlayer);
 
-            @SuppressWarnings("unchecked")
-            ArrayList<ArrayList<?>> storedHotBarItemList = (ArrayList<ArrayList<?>>) mongoDB.findByUUID(playerUUID).get("HotBarItemList");
-            @SuppressWarnings("unchecked")
-            ArrayList<ArrayList<?>> storedInventoryItemList = (ArrayList<ArrayList<?>>) mongoDB.findByUUID(playerUUID).get("InventoryItemList");
-            @SuppressWarnings("unchecked")
-            ArrayList<ArrayList<?>> storedArmorItemList = (ArrayList<ArrayList<?>>) mongoDB.findByUUID(playerUUID).get("ArmorItemList");
-            @SuppressWarnings("unchecked")
-            ArrayList<ArrayList<?>> storedOffHandItemList = (ArrayList<ArrayList<?>>) mongoDB.findByUUID(playerUUID).get("OffHandItemList");
+                //读取并设置玩家物品栏
+                @SuppressWarnings("unchecked")
+                ArrayList<ArrayList<?>> storedHotBarItemList = (ArrayList<ArrayList<?>>) mongoDB.findByUUID(playerUUID).get("HotBarItemList");
+                @SuppressWarnings("unchecked")
+                ArrayList<ArrayList<?>> storedInventoryItemList = (ArrayList<ArrayList<?>>) mongoDB.findByUUID(playerUUID).get("InventoryItemList");
+                @SuppressWarnings("unchecked")
+                ArrayList<ArrayList<?>> storedArmorItemList = (ArrayList<ArrayList<?>>) mongoDB.findByUUID(playerUUID).get("ArmorItemList");
+                @SuppressWarnings("unchecked")
+                ArrayList<ArrayList<?>> storedOffHandItemList = (ArrayList<ArrayList<?>>) mongoDB.findByUUID(playerUUID).get("OffHandItemList");
 
-            PlayerInventory inventory = taskPlayer.getInventory();
-            //slot ID: https://i.stack.imgur.com/kiUcV.jpg
-            for (int i = 0; i <= 8; i++) {
-                ArrayList<?> handlingInsideList = storedHotBarItemList.get(i);
-                if (handlingInsideList != null) {
-                    ItemStack itemStack = new ItemStack(Material.valueOf((String) handlingInsideList.get(0)), (int) handlingInsideList.get(1));
-                    inventory.setItem(i, itemStack);
-                }
-            }
-            for (int i = 0; i <= 26; i++) {
-                ArrayList<?> handlingInsideList = storedInventoryItemList.get(i);
-                if (handlingInsideList != null) {
-                    ItemStack itemStack = new ItemStack(Material.valueOf((String) handlingInsideList.get(0)), (int) handlingInsideList.get(1));
-                    inventory.setItem(i+9, itemStack);
-                }
-            }
-            for (int i = 0; i <= 3; i++) {
-                ArrayList<?> handlingInsideList = storedArmorItemList.get(i);
-                if (handlingInsideList != null) {
-                    ItemStack itemStack = new ItemStack(Material.valueOf((String) handlingInsideList.get(0)), (int) handlingInsideList.get(1));
-                    switch (i) {
-                        case 0: inventory.setHelmet(itemStack); break;
-                        case 1: inventory.setChestplate(itemStack); break;
-                        case 2: inventory.setLeggings(itemStack); break;
-                        case 3: inventory.setBoots(itemStack); break;
+                PlayerInventory inventory = taskPlayer.getInventory();
+                //slot ID: https://i.stack.imgur.com/kiUcV.jpg
+                for (int i = 0; i <= 8; i++) {
+                    ArrayList<?> handlingInsideList = storedHotBarItemList.get(i);
+                    if (handlingInsideList != null) {
+                        ItemStack itemStack = new ItemStack(Material.valueOf((String) handlingInsideList.get(0)), (int) handlingInsideList.get(1));
+                        inventory.setItem(i, itemStack);
                     }
                 }
-            }
-            if (!storedOffHandItemList.isEmpty()) {
-                ArrayList<?> handlingInsideList = storedOffHandItemList.get(0);
-                if (handlingInsideList != null) {
-                    ItemStack itemStack = new ItemStack(Material.valueOf((String) handlingInsideList.get(0)), (int) handlingInsideList.get(1));
-                    inventory.setItemInOffHand(itemStack);
+                for (int i = 0; i <= 26; i++) {
+                    ArrayList<?> handlingInsideList = storedInventoryItemList.get(i);
+                    if (handlingInsideList != null) {
+                        ItemStack itemStack = new ItemStack(Material.valueOf((String) handlingInsideList.get(0)), (int) handlingInsideList.get(1));
+                        inventory.setItem(i+9, itemStack);
+                    }
                 }
-            }
+                for (int i = 0; i <= 3; i++) {
+                    ArrayList<?> handlingInsideList = storedArmorItemList.get(i);
+                    if (handlingInsideList != null) {
+                        ItemStack itemStack = new ItemStack(Material.valueOf((String) handlingInsideList.get(0)), (int) handlingInsideList.get(1));
+                        switch (i) {
+                            case 0: inventory.setHelmet(itemStack); break;
+                            case 1: inventory.setChestplate(itemStack); break;
+                            case 2: inventory.setLeggings(itemStack); break;
+                            case 3: inventory.setBoots(itemStack); break;
+                        }
+                    }
+                }
+                if (!storedOffHandItemList.isEmpty()) {
+                    ArrayList<?> handlingInsideList = storedOffHandItemList.get(0);
+                    if (handlingInsideList != null) {
+                        ItemStack itemStack = new ItemStack(Material.valueOf((String) handlingInsideList.get(0)), (int) handlingInsideList.get(1));
+                        inventory.setItemInOffHand(itemStack);
+                    }
+                }
+            });
         });
     }
     private void createDBData(Player taskPlayer) {
@@ -105,6 +113,8 @@ public class OnPlayerJoinListener implements Listener {
         dataDBObj.put("player_name", taskPlayer.getName());
         dataDBObj.put("level", 0);
         dataDBObj.put("rank", 0);
+        dataDBObj.put("this_rank_own_xp", 0);
+        dataDBObj.put("next_level_need_xp",   10 + (int)(Math.random()*10*1));
         dataDBObj.put("coin_amount", 0);
         dataDBObj.put("prestige", 0);
         dataDBObj.put("prefix", "0"); // 称号，0相当于什么都没有吧
@@ -123,6 +133,8 @@ public class OnPlayerJoinListener implements Listener {
                 taskPlayer,
                 (int) dataDBObj.get("level"),
                 (int) dataDBObj.get("rank"),
+                (int) dataDBObj.get("this_rank_own_xp"),
+                (int) dataDBObj.get("next_level_need_xp"),
                 (int) dataDBObj.get("coin_amount"),
                 (int) dataDBObj.get("prestige"),
                 (String) dataDBObj.get("prefix"),
@@ -130,5 +142,25 @@ public class OnPlayerJoinListener implements Listener {
                 (int) dataDBObj.get("death_amount"),
                 false);
         Main.playerDataMap.put(taskPlayer, dataBlock);
+    }
+
+    private void initScoreboard(Player taskPlayer) {
+        Scoreboard scoreboard = taskPlayer.getServer().getScoreboardManager().getNewScoreboard();
+        Objective boardObj = scoreboard.registerNewObjective("main", "dummy");
+        boardObj.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + LangLoader.get("game_name"));
+        boardObj.setDisplaySlot(DisplaySlot.SIDEBAR);
+
+        PlayerDataBlock playerData = Main.playerDataMap.get(taskPlayer);
+        boardObj.getScore(LangLoader.get("main_scoreboard_line1")).setScore(0);
+        boardObj.getScore(String.format(LangLoader.get("main_scoreboard_line2"), playerData.getLevel())).setScore(-1);
+        boardObj.getScore(String.format(LangLoader.get("main_scoreboard_line3"), playerData.getNextLevelNeedXp())).setScore(-2);
+        boardObj.getScore(LangLoader.get("main_scoreboard_line4")).setScore(-3);
+        boardObj.getScore(String.format(LangLoader.get("main_scoreboard_line5"), playerData.getCoinAmount())).setScore(-4);
+        boardObj.getScore(LangLoader.get("main_scoreboard_line6")).setScore(-5);
+        boardObj.getScore(LangLoader.get("battle_state_false_scoreboard_line7")).setScore(-6);
+        boardObj.getScore(LangLoader.get("main_scoreboard_line8")).setScore(-7);
+        boardObj.getScore(LangLoader.get("main_scoreboard_line9")).setScore(-8);
+
+        player.setScoreboard(scoreboard);
     }
 }

@@ -1,14 +1,13 @@
 package com.ixbob.thepit;
 
-import de.tr7zw.nbtapi.data.PlayerData;
 import org.bukkit.entity.Player;
 
-import java.util.UUID;
-
 public class PlayerDataBlock {
-    private Player player;
+    private final Player player;
     private int level;
     private int rank;
+    private int thisRankOwnXp;
+    private int nextLevelNeedXp;
     private int coinAmount;
     private int prestige;
     private String prefix;
@@ -16,12 +15,14 @@ public class PlayerDataBlock {
     private int deathAmount;
     private boolean battleState;
 
-    public PlayerDataBlock(Player player, int level, int rank, int prestige, int coinAmount, String prefix, int killAmount, int deathAmount, boolean battleState) {
+    public PlayerDataBlock(Player player, int level, int rank, int thisRankOwnXp, int nextLevelNeedXp, int coinAmount, int prestige, String prefix, int killAmount, int deathAmount, boolean battleState) {
         this.player = player;
         this.level = level;
         this.rank = rank;
-        this.prestige = prestige;
+        this.thisRankOwnXp = thisRankOwnXp;
+        this.nextLevelNeedXp = nextLevelNeedXp;
         this.coinAmount = coinAmount;
+        this.prestige = prestige;
         this.prefix = prefix;
         this.killAmount = killAmount;
         this.deathAmount = deathAmount;
@@ -94,5 +95,21 @@ public class PlayerDataBlock {
 
     public void setBattleState(boolean battleState) {
         this.battleState = battleState;
+    }
+
+    public int getNextLevelNeedXp() {
+        return nextLevelNeedXp;
+    }
+
+    public void setNextLevelNeedXp(int nextLevelNeedXp) {
+        this.nextLevelNeedXp = nextLevelNeedXp;
+    }
+
+    public int getThisRankOwnXp() {
+        return thisRankOwnXp;
+    }
+
+    public void setThisRankOwnXp(int thisRankOwnXp) {
+        this.thisRankOwnXp = thisRankOwnXp;
     }
 }

@@ -2,6 +2,7 @@ package com.ixbob.thepit;
 
 import com.ixbob.thepit.event.OnPlayerJoinListener;
 import com.ixbob.thepit.event.OnPlayerLeaveListener;
+import com.ixbob.thepit.handler.config.LangLoader;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -23,6 +24,8 @@ public class Main extends JavaPlugin {
         mongoDB.connect("127.0.0.1", 27017, this);
         mongoDB.setCollection("ThePit_IXBOB");
         Main.mongoDB = mongoDB;
+
+        LangLoader.init(this);
 
         Listener onPlayerJoinListener = new OnPlayerJoinListener();
         getServer().getPluginManager().registerEvents(onPlayerJoinListener, this);
