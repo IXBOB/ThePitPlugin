@@ -1,7 +1,9 @@
 package com.ixbob.thepit;
 
+import com.ixbob.thepit.event.OnPlayerBeKilledListener;
 import com.ixbob.thepit.event.OnPlayerJoinListener;
 import com.ixbob.thepit.event.OnPlayerLeaveListener;
+import com.ixbob.thepit.event.OnPlayerOwnXpModifiedListener;
 import com.ixbob.thepit.handler.config.LangLoader;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -32,6 +34,12 @@ public class Main extends JavaPlugin {
 
         Listener onPlayerQuitListener = new OnPlayerLeaveListener();
         getServer().getPluginManager().registerEvents(onPlayerQuitListener, this);
+
+        Listener onPlayerBeKilledListener = new OnPlayerBeKilledListener();
+        getServer().getPluginManager().registerEvents(onPlayerBeKilledListener, this);
+
+        Listener onPlayerOwnXpModifiedListener = new OnPlayerOwnXpModifiedListener();
+        getServer().getPluginManager().registerEvents(onPlayerOwnXpModifiedListener, this);
     }
 
     public static Plugin getPlugin() {

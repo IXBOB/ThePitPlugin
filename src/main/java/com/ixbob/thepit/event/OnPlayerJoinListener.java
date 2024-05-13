@@ -113,11 +113,12 @@ public class OnPlayerJoinListener implements Listener {
         dataDBObj.put("player_name", taskPlayer.getName());
         dataDBObj.put("level", 0);
         dataDBObj.put("rank", 0);
-        dataDBObj.put("this_rank_own_xp", 0);
-        dataDBObj.put("next_level_need_xp",   10 + (int)(Math.random()*10*1));
+        dataDBObj.put("this_level_own_xp", 0);
+        dataDBObj.put("next_level_need_xp",  10*(0+1) + (int)(Math.random()*10*(0+1)));
         dataDBObj.put("coin_amount", 0);
         dataDBObj.put("prestige", 0);
         dataDBObj.put("prefix", "0"); // 称号，0相当于什么都没有吧
+        dataDBObj.put("consecutive_kill_amount", 0);
         dataDBObj.put("kill_amount", 0);
         dataDBObj.put("death_amount", 0);
         dataDBObj.put("HotBarItemList", initHotBar);
@@ -133,11 +134,12 @@ public class OnPlayerJoinListener implements Listener {
                 taskPlayer,
                 (int) dataDBObj.get("level"),
                 (int) dataDBObj.get("rank"),
-                (int) dataDBObj.get("this_rank_own_xp"),
+                (int) dataDBObj.get("this_level_own_xp"),
                 (int) dataDBObj.get("next_level_need_xp"),
                 (int) dataDBObj.get("coin_amount"),
                 (int) dataDBObj.get("prestige"),
                 (String) dataDBObj.get("prefix"),
+                (int) dataDBObj.get("consecutive_kill_amount"),
                 (int) dataDBObj.get("kill_amount"),
                 (int) dataDBObj.get("death_amount"),
                 false);
@@ -153,7 +155,7 @@ public class OnPlayerJoinListener implements Listener {
         PlayerDataBlock playerData = Main.playerDataMap.get(taskPlayer);
         boardObj.getScore(LangLoader.get("main_scoreboard_line1")).setScore(0);
         boardObj.getScore(String.format(LangLoader.get("main_scoreboard_line2"), playerData.getLevel())).setScore(-1);
-        boardObj.getScore(String.format(LangLoader.get("main_scoreboard_line3"), playerData.getNextLevelNeedXp())).setScore(-2);
+        boardObj.getScore(String.format(LangLoader.get("main_scoreboard_line3"), playerData.getNextLevelNeedXp()-playerData.getThisLevelOwnXp())).setScore(-2);
         boardObj.getScore(LangLoader.get("main_scoreboard_line4")).setScore(-3);
         boardObj.getScore(String.format(LangLoader.get("main_scoreboard_line5"), playerData.getCoinAmount())).setScore(-4);
         boardObj.getScore(LangLoader.get("main_scoreboard_line6")).setScore(-5);
