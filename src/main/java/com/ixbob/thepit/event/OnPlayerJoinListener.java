@@ -25,13 +25,6 @@ public class OnPlayerJoinListener implements Listener {
     private final MongoDB mongoDB = Main.getDB();
     private UUID playerUUID;
     private String playerUUIDString;
-    private final int initLevel = 0;
-    private final int initRank = 0;
-    private final int initCoinAmount = 0;
-    private final int initPrestige = 0;
-    private final String initPrefix = "0";
-    private final int initKillAmount = 0;
-    private final int initDeathAmount = 0;
     private final ArrayList<ArrayList<?>> initHotBar = new ArrayList<>(Collections.nCopies(9 ,null));
     private final ArrayList<ArrayList<?>> initInventory = new ArrayList<>(Collections.nCopies(27 ,null));
     private final ArrayList<ArrayList<?>> initArmor = new ArrayList<>(Collections.nCopies(4 ,null));
@@ -110,13 +103,13 @@ public class OnPlayerJoinListener implements Listener {
         playerUUIDString = taskPlayer.getUniqueId().toString();
         DBObject dataDBObj = new BasicDBObject("UUID", playerUUIDString);
         dataDBObj.put("player_name", taskPlayer.getName());
-        dataDBObj.put("level", initLevel);
-        dataDBObj.put("rank", initRank);
-        dataDBObj.put("coin_amount", initCoinAmount);
-        dataDBObj.put("prestige", initPrestige);
-        dataDBObj.put("prefix", initPrefix); // 称号，0相当于什么都没有吧
-        dataDBObj.put("kill_amount", initKillAmount);
-        dataDBObj.put("death_amount", initDeathAmount);
+        dataDBObj.put("level", 0);
+        dataDBObj.put("rank", 0);
+        dataDBObj.put("coin_amount", 0);
+        dataDBObj.put("prestige", 0);
+        dataDBObj.put("prefix", "0"); // 称号，0相当于什么都没有吧
+        dataDBObj.put("kill_amount", 0);
+        dataDBObj.put("death_amount", 0);
         dataDBObj.put("HotBarItemList", initHotBar);
         dataDBObj.put("InventoryItemList", initInventory);
         dataDBObj.put("ArmorItemList", initArmor);
@@ -134,7 +127,8 @@ public class OnPlayerJoinListener implements Listener {
                 (int) dataDBObj.get("prestige"),
                 (String) dataDBObj.get("prefix"),
                 (int) dataDBObj.get("kill_amount"),
-                (int) dataDBObj.get("death_amount"));
+                (int) dataDBObj.get("death_amount"),
+                false);
         Main.playerDataMap.put(taskPlayer, dataBlock);
     }
 }

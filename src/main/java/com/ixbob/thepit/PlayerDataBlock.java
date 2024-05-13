@@ -14,8 +14,9 @@ public class PlayerDataBlock {
     private String prefix;
     private int killAmount;
     private int deathAmount;
+    private boolean battleState;
 
-    public PlayerDataBlock(Player player, int level, int rank, int prestige, int coinAmount, String prefix, int killAmount, int deathAmount) {
+    public PlayerDataBlock(Player player, int level, int rank, int prestige, int coinAmount, String prefix, int killAmount, int deathAmount, boolean battleState) {
         this.player = player;
         this.level = level;
         this.rank = rank;
@@ -24,6 +25,7 @@ public class PlayerDataBlock {
         this.prefix = prefix;
         this.killAmount = killAmount;
         this.deathAmount = deathAmount;
+        this.battleState = battleState;
     }
 
     public Player getPlayer() {
@@ -84,5 +86,13 @@ public class PlayerDataBlock {
 
     public void setDeathAmount(int deathAmount) {
         this.deathAmount = deathAmount;
+    }
+
+    public boolean getBattleState() {
+        return battleState;
+    }
+
+    public void setBattleState(boolean battleState) {
+        this.battleState = battleState;
     }
 }

@@ -46,6 +46,11 @@ public class MongoDB {
         BasicDBObject query = new BasicDBObject("id", 0);
         collection.update(query, object);
     }
+
+    public void updateDataByUUID(DBObject object, UUID uuid) {
+        BasicDBObject query = new BasicDBObject("UUID", uuid.toString());
+        collection.update(query, object);
+    }
 //    public void insertTest() {
 //        DBObject obj = new BasicDBObject("test_key", "123456");
 //        obj.put("test_key2", "555555");
