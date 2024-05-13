@@ -4,6 +4,7 @@ import com.ixbob.thepit.Main;
 import com.ixbob.thepit.MongoDB;
 import com.ixbob.thepit.PlayerDataBlock;
 import com.ixbob.thepit.handler.config.LangLoader;
+import com.ixbob.thepit.util.Utils;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import org.bukkit.Bukkit;
@@ -58,6 +59,7 @@ public class OnPlayerJoinListener implements Listener {
             readDBAndGenPlayerDataBlock(taskPlayer);
             Bukkit.getServer().getScheduler().runTask(Main.getPlugin(), () -> {
                 initScoreboard(taskPlayer);
+                Utils.updateDisplayName(taskPlayer);
 
                 //读取并设置玩家物品栏
                 @SuppressWarnings("unchecked")

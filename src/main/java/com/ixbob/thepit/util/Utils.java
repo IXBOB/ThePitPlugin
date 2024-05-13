@@ -7,6 +7,7 @@ import com.ixbob.thepit.event.custom.PlayerOwnCoinModifiedEvent;
 import com.ixbob.thepit.event.custom.PlayerOwnXpModifiedEvent;
 import com.mongodb.DBObject;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -55,6 +56,65 @@ public class Utils {
         mongoDB.updateDataByUUID(dataDBObj, playerUUID);
     }
 
+    public static String getDisplayName(Player player) {
+        PlayerDataBlock playerData = Main.playerDataMap.get(player);
+        int rank = playerData.getRank();
+        int level = playerData.getLevel();
+        String prefix;
+        ChatColor color = getChatColorByLevel(level);
+        if (rank == 0) {
+            prefix = "[" + color + level + ChatColor.RESET + "]" + " ";
+        }
+        else {
+            prefix = "[" + ChatColor.YELLOW + convertToRoman(rank) + ChatColor.RESET+ "-" + color + level + ChatColor.RESET +"]" + " ";
+        }
+        return prefix + color + player.getName() + ChatColor.RESET;
+    }
+
+    private static ChatColor getChatColorByLevel(int level) {
+        ChatColor color;
+        if (level <= 10) {
+            color = ChatColor.GRAY;
+        } else if (level <= 25) {
+            color = ChatColor.WHITE;
+        } else if (level <= 40) {
+            color = ChatColor.LIGHT_PURPLE;
+        } else if (level <= 60) {
+            color = ChatColor.BLUE;
+        } else if (level <= 80) {
+            color = ChatColor.GREEN;
+        } else if (level <= 100) {
+            color = ChatColor.YELLOW;
+        } else if (level <= 110) {
+            color = ChatColor.GOLD;
+        } else {
+            color = ChatColor.RED;
+        }
+        return color;
+    }
+
+    public static String convertToRoman(int number) {
+        if (number <= 0 || number > 3999) {
+            return "ERROR";
+        }
+
+        String[] romanSymbols = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+        int[] values = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+
+        StringBuilder result = new StringBuilder();
+        int i = 0;
+
+        while (number > 0) {
+            while (number >= values[i]) {
+                number -= values[i];
+                result.append(romanSymbols[i]);
+            }
+            i++;
+        }
+
+        return result.toString();
+    }
+
     public static void addXp(Player player, int addXp) {
         PlayerDataBlock playerData = Main.playerDataMap.get(player);
         int originXp = playerData.getThisLevelOwnXp();
@@ -73,5 +133,11 @@ public class Utils {
         //创建并广播 拥有硬币改变事件
         PlayerOwnCoinModifiedEvent modifyCoinEvent = new PlayerOwnCoinModifiedEvent(player, originCoin, addCoin);
         Bukkit.getPluginManager().callEvent(modifyCoinEvent);
+    }
+
+    public static void updateDisplayName(Player player) {
+        String displayName = getDisplayName(player);
+        player.setDisplayName(displayName);
+        player.setPlayerListName(displayName);
     }
 }
