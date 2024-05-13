@@ -44,6 +44,7 @@ public class OnPlayerOwnXpModifiedListener implements Listener {
         updateDataBlock(dataBlock, newLevel, newOwnXp, nextLevelNeedXp);
         dataBlock.updatePlayerDBData();
         dataBlock.updatePlayerScoreboard();
+        Utils.updateDisplayName(player);
     }
     private void updateDataBlock(PlayerDataBlock dataBlock, int newLevel, int newThisLevelOwnXp, int newNextLevelNeedXp) {
         dataBlock.setLevel(newLevel);
