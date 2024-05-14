@@ -3,6 +3,7 @@ package com.ixbob.thepit;
 import com.ixbob.thepit.event.*;
 import com.ixbob.thepit.handler.config.LangLoader;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
@@ -15,9 +16,12 @@ public class Main extends JavaPlugin {
     private static Plugin plugin;
     private static MongoDB mongoDB;
     public static Map<Player, PlayerDataBlock> playerDataMap = new HashMap<>();
+    public static Location initialLocation;
     @Override
     public void onEnable() {
         Main.plugin = this;
+
+        initialLocation = new Location(Bukkit.getWorlds().get(0), 6, 153, 5);
 
         MongoDB mongoDB = new MongoDB();
         mongoDB.connect("127.0.0.1", 27017, this);

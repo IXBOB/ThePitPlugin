@@ -52,7 +52,7 @@ public class OnPlayerJoinListener implements Listener {
         this.player = event.getPlayer();
         this.playerUUID = player.getUniqueId();
 
-        player.teleport(new Location(Bukkit.getWorlds().get(0), 6, 153, 5));
+        player.teleport(Main.initialLocation);
         player.getInventory().clear();
         player.sendTitle(LangLoader.get("join_loading_title"), LangLoader.get("join_loading_subtitle"), 10, 60, 10);
         Bukkit.getServer().getScheduler().runTaskAsynchronously(Main.getPlugin(), () -> {

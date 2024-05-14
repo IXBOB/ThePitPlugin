@@ -69,10 +69,10 @@ public class Utils {
     public static String getLevelStrWithStyle(int rank, int level) {
         ChatColor color = getChatColorByLevel(level);
         if (rank == 0) {
-            return  "[" + color + level + ChatColor.RESET + "]" + " ";
+            return ChatColor.RESET + "[" + color + level + ChatColor.RESET + "]" + " ";
         }
         else {
-            return  "[" + ChatColor.YELLOW + convertToRoman(rank) + ChatColor.RESET+ "-" + color + level + ChatColor.RESET +"]" + " ";
+            return ChatColor.RESET + "[" + ChatColor.YELLOW + convertToRoman(rank) + ChatColor.RESET+ "-" + color + level + ChatColor.RESET +"]" + " ";
         }
     }
 
