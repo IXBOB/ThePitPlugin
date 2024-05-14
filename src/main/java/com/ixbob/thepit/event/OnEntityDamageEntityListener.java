@@ -4,13 +4,17 @@ import com.ixbob.thepit.Main;
 import com.ixbob.thepit.handler.config.LangLoader;
 import com.ixbob.thepit.util.Utils;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
 
 import java.util.Objects;
 
@@ -18,33 +22,46 @@ public class OnEntityDamageEntityListener implements Listener {
     @EventHandler
     public void onPlayerBeKilled(EntityDamageByEntityEvent event) {
         if (!(event.getDamager() instanceof Player) && event.getEntity() instanceof Player) {
-            Entity damager = event.getDamager();
-            if (Utils.isInLobbyArea(damager.getLocation())) {
-                if (damager.getType() == EntityType.ARROW) {
-                    damager.remove();
+            Entity damagerEntity = event.getDamager();
+            if (Utils.isInLobbyArea(damagerEntity.getLocation())) {
+                if (damagerEntity.getType() == EntityType.ARROW) {
+                    damagerEntity.remove();
                 }
                 event.setCancelled(true);
                 return;
+            }
+            else {
+                if (damagerEntity instanceof Arrow) {
+                    Arrow damagerArrow = (Arrow) damagerEntity;
+                    Player damager = (Player) damagerArrow.getShooter();
+                    Player damagedPlayer = (Player) event.getEntity();
+
+                    damageEvent(damager, damagedPlayer, event);
+                }
             }
         }
 
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
             Player damagedPlayer = (Player) event.getEntity();
-            Player killer = (Player) event.getDamager();
+            Player damager = (Player) event.getDamager();
 
             if (Utils.isInLobbyArea(damagedPlayer.getLocation())) {
                 event.setCancelled(true);
                 return;
             }
 
-            if (damagedPlayer.getHealth() <= event.getFinalDamage()) {
-                onPlayerKillAnother(damagedPlayer, killer);
+            damageEvent(damager, damagedPlayer, event);
+        }
+    }
 
-                event.setCancelled(true);
-                damagedPlayer.setHealth(damagedPlayer.getHealthScale());
-                Utils.setMostBasicKit(damagedPlayer, true);
-                damagedPlayer.teleport(Main.spawnLocation);
-            }
+    private void damageEvent(Player damager, Player damagedPlayer, EntityDamageByEntityEvent event) {
+        if (damagedPlayer.getHealth() <= event.getFinalDamage()) {
+            onPlayerKillAnother(damagedPlayer, damager);
+
+            event.setCancelled(true);
+            damagedPlayer.setHealth(damagedPlayer.getHealthScale());
+            Utils.setMostBasicKit(damagedPlayer, true);
+            damagedPlayer.teleport(Main.spawnLocation);
         }
     }
 
@@ -56,6 +73,12 @@ public class OnEntityDamageEntityListener implements Listener {
 
         killer.playSound(killer.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
         deathPlayer.playSound(deathPlayer.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1, 1);
+
+        killer.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 1));
+
+        for (PotionEffect effect : deathPlayer.getActivePotionEffects()) {
+            deathPlayer.removePotionEffect(effect.getType());
+        }
 
         //广播消息不广播给killer和deathPlayer
         String broadcastMes = String.format(LangLoader.get("player_kill_other_message_broadcast"), Utils.getDisplayName(killer), Utils.getDisplayName(deathPlayer));

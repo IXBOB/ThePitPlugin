@@ -159,9 +159,10 @@ public class Utils {
         if (clear) {
             inventory.clear();
         }
-        inventory.setItem(0, new ItemStack(Material.STONE_SWORD, 1));
-        inventory.setItem(1, new ItemStack(Material.BOW, 1));
-        inventory.setItem(2, new ItemStack(Material.ARROW, 8));
+        inventory.addItem(new ItemStack(Material.STONE_SWORD, 1));
+        inventory.addItem(new ItemStack(Material.BOW, 1));
+        inventory.addItem(new ItemStack(Material.ARROW, 8));
+        inventory.addItem(new ItemStack(Material.COOKED_BEEF, 64));
         inventory.setChestplate(new ItemStack(Material.CHAINMAIL_CHESTPLATE, 1));
         inventory.setLeggings(new ItemStack(Material.CHAINMAIL_LEGGINGS, 1));
     }
