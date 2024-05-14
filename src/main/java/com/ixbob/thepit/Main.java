@@ -2,6 +2,7 @@ package com.ixbob.thepit;
 
 import com.ixbob.thepit.event.*;
 import com.ixbob.thepit.handler.config.LangLoader;
+import com.ixbob.thepit.util.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -59,6 +60,13 @@ public class Main extends JavaPlugin {
 
         Listener onEntityDamagedListener = new OnEntityDamagedListener();
         getServer().getPluginManager().registerEvents(onEntityDamagedListener, this);
+    }
+
+    @Override
+    public void onDisable() {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            Utils.storePlayerInventoryData(player);
+        }
     }
 
     public static Plugin getPlugin() {
