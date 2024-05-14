@@ -1,7 +1,9 @@
 package com.ixbob.thepit;
 
 import com.ixbob.thepit.handler.config.LangLoader;
+import com.ixbob.thepit.task.BattleStateCoolCountDowner;
 import com.mongodb.DBObject;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
@@ -20,6 +22,10 @@ public class PlayerDataBlock {
     private int killAmount;
     private int deathAmount;
     private boolean battleState;
+    private BattleStateCoolCountDowner battleStateCoolCountDowner;
+
+    private Scoreboard scoreboard;
+    private Objective scoreboardObj;
 
     public PlayerDataBlock(Player player, int level, int rank, int thisLevelOwnXp, int nextLevelNeedXp, int coinAmount, int prestige, String prefix, int consecutiveKillAmount, int killAmount, int deathAmount, boolean battleState) {
         this.player = player;
@@ -34,6 +40,9 @@ public class PlayerDataBlock {
         this.killAmount = killAmount;
         this.deathAmount = deathAmount;
         this.battleState = battleState;
+
+        this.scoreboard = player.getScoreboard();
+        this.scoreboardObj = scoreboard.getObjective("main");
     }
 
     public void updatePlayerDBData() {
@@ -52,26 +61,49 @@ public class PlayerDataBlock {
         mongoDB.updateDataByUUID(dataObj, player.getUniqueId());
     }
 
-    public void updatePlayerScoreboard() {
-        Scoreboard scoreboard = player.getScoreboard();
-        Objective scoreboardObj = scoreboard.getObjective("main");
+    public void updateScoreboardLevel() {
         for (String entry : scoreboard.getEntries()) {
             Score score = scoreboardObj.getScore(entry);
-            switch (score.getScore()) {
-                case -1: {
-                    scoreboardObj.getScoreboard().resetScores(score.getEntry());
-                    scoreboardObj.getScore(String.format(LangLoader.get("main_scoreboard_line2"), level)).setScore(-1);
-                    break;
-                }
-                case -2: {
-                    scoreboardObj.getScoreboard().resetScores(score.getEntry());
-                    scoreboardObj.getScore(String.format(LangLoader.get("main_scoreboard_line3"), nextLevelNeedXp-thisLevelOwnXp)).setScore(-2);
-                    break;
-                }
-                case -4: {
-                    scoreboardObj.getScoreboard().resetScores(score.getEntry());
-                    scoreboardObj.getScore(String.format(LangLoader.get("main_scoreboard_line5"), coinAmount)).setScore(-4);
-                    break;
+            int scoreInt = score.getScore();
+            if (scoreInt == -1) {
+                scoreboardObj.getScoreboard().resetScores(score.getEntry());
+                scoreboardObj.getScore(String.format(LangLoader.get("main_scoreboard_line2"), level)).setScore(scoreInt);
+            }
+        }
+    }
+
+    public void updateScoreboardNextLevelNeedXp() {
+        for (String entry : scoreboard.getEntries()) {
+            Score score = scoreboardObj.getScore(entry);
+            int scoreInt = score.getScore();
+            if (scoreInt == -2) {
+                scoreboardObj.getScoreboard().resetScores(score.getEntry());
+                scoreboardObj.getScore(String.format(LangLoader.get("main_scoreboard_line3"), nextLevelNeedXp-thisLevelOwnXp)).setScore(scoreInt);
+            }
+        }
+    }
+
+    public void updateScoreboardOwnCoinAmount() {
+        for (String entry : scoreboard.getEntries()) {
+            Score score = scoreboardObj.getScore(entry);
+            int scoreInt = score.getScore();
+            if (scoreInt == -4) {
+                scoreboardObj.getScoreboard().resetScores(score.getEntry());
+                scoreboardObj.getScore(String.format(LangLoader.get("main_scoreboard_line5"), coinAmount)).setScore(scoreInt);
+            }
+        }
+    }
+
+    public void updateScoreboardBattleState() {
+        for (String entry : scoreboard.getEntries()) {
+            Score score = scoreboardObj.getScore(entry);
+            int scoreInt = score.getScore();
+            if (scoreInt == -6) {
+                scoreboardObj.getScoreboard().resetScores(score.getEntry());
+                if (battleState) {
+                    scoreboardObj.getScore(String.format(LangLoader.get("battle_state_true_scoreboard_line7"), String.format("%.1f", battleStateCoolCountDowner.getTimeLeft()))).setScore(scoreInt);
+                } else {
+                    scoreboardObj.getScore(LangLoader.get("battle_state_false_scoreboard_line7")).setScore(scoreInt);
                 }
             }
         }
@@ -143,6 +175,20 @@ public class PlayerDataBlock {
 
     public void setBattleState(boolean battleState) {
         this.battleState = battleState;
+        if (battleState) {
+            if (battleStateCoolCountDowner == null) {
+                BattleStateCoolCountDowner countDowner = new BattleStateCoolCountDowner(20.0f, player);
+                int taskID = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), countDowner, 0, 1);
+                countDowner.setTaskID(taskID);
+                battleStateCoolCountDowner = countDowner;
+            }
+            else {
+                battleStateCoolCountDowner.setTimeLeft(20.0f);
+            }
+        }
+        else {
+            battleStateCoolCountDowner = null;
+        }
     }
 
     public int getNextLevelNeedXp() {

@@ -50,6 +50,8 @@ public class OnPlayerJoinListener implements Listener {
         this.player = event.getPlayer();
         this.playerUUID = player.getUniqueId();
 
+        player.setHealth(player.getHealthScale());
+        player.setFoodLevel(20);
         player.teleport(Main.spawnLocation);
         player.getInventory().clear();
         player.sendTitle(LangLoader.get("join_loading_title"), LangLoader.get("join_loading_subtitle"), 10, 60, 10);
@@ -58,11 +60,11 @@ public class OnPlayerJoinListener implements Listener {
             if (!mongoDB.isFindByUUIDExist(playerUUID)) {
                  createDBData(taskPlayer);
             }
-            readDBAndGenPlayerDataBlock(taskPlayer);
             Bukkit.getServer().getScheduler().runTask(Main.getPlugin(), () -> {
-                initScoreboard(taskPlayer);
+                Scoreboard scoreboard = initScoreboardFrame(taskPlayer);
+                readDBAndGenPlayerDataBlock(taskPlayer);
+                initScoreboardContent(scoreboard, taskPlayer);
                 Utils.updateDisplayName(taskPlayer);
-
                 //读取并设置玩家物品栏
                 @SuppressWarnings("unchecked")
                 ArrayList<ArrayList<?>> storedHotBarItemList = (ArrayList<ArrayList<?>>) mongoDB.findByUUID(playerUUID).get("HotBarItemList");
@@ -150,11 +152,18 @@ public class OnPlayerJoinListener implements Listener {
         Main.playerDataMap.put(taskPlayer, dataBlock);
     }
 
-    private void initScoreboard(Player taskPlayer) {
+    private Scoreboard initScoreboardFrame(Player taskPlayer) {
         Scoreboard scoreboard = taskPlayer.getServer().getScoreboardManager().getNewScoreboard();
         Objective boardObj = scoreboard.registerNewObjective("main", "dummy");
         boardObj.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + LangLoader.get("game_name"));
         boardObj.setDisplaySlot(DisplaySlot.SIDEBAR);
+        taskPlayer.setScoreboard(scoreboard); //setScoreboard(): 设置玩家可见的计分板
+
+        return scoreboard;
+    }
+
+    private void initScoreboardContent(Scoreboard scoreboard, Player taskPlayer) {
+        Objective boardObj = scoreboard.getObjective("main");
 
         PlayerDataBlock playerData = Main.playerDataMap.get(taskPlayer);
         boardObj.getScore(LangLoader.get("main_scoreboard_line1")).setScore(0);
@@ -166,7 +175,5 @@ public class OnPlayerJoinListener implements Listener {
         boardObj.getScore(LangLoader.get("battle_state_false_scoreboard_line7")).setScore(-6);
         boardObj.getScore(LangLoader.get("main_scoreboard_line8")).setScore(-7);
         boardObj.getScore(LangLoader.get("main_scoreboard_line9")).setScore(-8);
-
-        player.setScoreboard(scoreboard);
     }
 }

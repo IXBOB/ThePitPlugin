@@ -60,6 +60,9 @@ public class Main extends JavaPlugin {
 
         Listener onEntityDamagedListener = new OnEntityDamagedListener();
         getServer().getPluginManager().registerEvents(onEntityDamagedListener, this);
+
+        Listener onPlayerBattleStateChangeListener = new OnPlayerBattleStateChangeListener();
+        getServer().getPluginManager().registerEvents(onPlayerBattleStateChangeListener, this);
     }
 
     @Override

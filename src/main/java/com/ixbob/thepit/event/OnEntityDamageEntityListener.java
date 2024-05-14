@@ -1,6 +1,7 @@
 package com.ixbob.thepit.event;
 
 import com.ixbob.thepit.Main;
+import com.ixbob.thepit.event.custom.PlayerBattleStateChangeEvent;
 import com.ixbob.thepit.handler.config.LangLoader;
 import com.ixbob.thepit.util.Utils;
 import org.bukkit.Bukkit;
@@ -55,11 +56,17 @@ public class OnEntityDamageEntityListener implements Listener {
     }
 
     private void damageEvent(Player damager, Player damagedPlayer, EntityDamageByEntityEvent event) {
+        PlayerBattleStateChangeEvent damagerBattleStateChangeEvent = new PlayerBattleStateChangeEvent(damager, true);
+        Bukkit.getPluginManager().callEvent(damagerBattleStateChangeEvent);
+        PlayerBattleStateChangeEvent damagedPlayerBattleStateChangeEvent = new PlayerBattleStateChangeEvent(damagedPlayer, true);
+        Bukkit.getPluginManager().callEvent(damagedPlayerBattleStateChangeEvent);
+
         if (damagedPlayer.getHealth() <= event.getFinalDamage()) {
             onPlayerKillAnother(damagedPlayer, damager);
 
             event.setCancelled(true);
             damagedPlayer.setHealth(damagedPlayer.getHealthScale());
+            damagedPlayer.setFoodLevel(20);
             Utils.setMostBasicKit(damagedPlayer, true);
             damagedPlayer.teleport(Main.spawnLocation);
         }
