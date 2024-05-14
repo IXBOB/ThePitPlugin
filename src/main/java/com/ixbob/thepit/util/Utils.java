@@ -8,9 +8,11 @@ import com.ixbob.thepit.event.custom.PlayerOwnXpModifiedEvent;
 import com.mongodb.DBObject;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -144,5 +146,23 @@ public class Utils {
         String displayName = getDisplayName(player);
         player.setDisplayName(displayName);
         player.setPlayerListName(displayName);
+    }
+
+    public static boolean isInLobbyArea(Location location) {
+        return (Main.lobbyAreaFromPosList.get(0) <= location.getX() && location.getX() <= Main.lobbyAreaToPosList.get(0))
+                && (Main.lobbyAreaFromPosList.get(1) <= location.getY() && location.getY() <= Main.lobbyAreaToPosList.get(1))
+                && (Main.lobbyAreaFromPosList.get(2) <= location.getZ() && location.getZ() <= Main.lobbyAreaToPosList.get(2));
+    }
+
+    public static void setMostBasicKit(Player player, boolean clear) {
+        PlayerInventory inventory = player.getInventory();
+        if (clear) {
+            inventory.clear();
+        }
+        inventory.setItem(0, new ItemStack(Material.STONE_SWORD, 1));
+        inventory.setItem(1, new ItemStack(Material.BOW, 1));
+        inventory.setItem(2, new ItemStack(Material.ARROW, 8));
+        inventory.setChestplate(new ItemStack(Material.CHAINMAIL_CHESTPLATE, 1));
+        inventory.setLeggings(new ItemStack(Material.CHAINMAIL_LEGGINGS, 1));
     }
 }

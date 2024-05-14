@@ -1,32 +1,49 @@
 package com.ixbob.thepit.event;
 
 import com.ixbob.thepit.Main;
-import com.ixbob.thepit.PlayerDataBlock;
-import com.ixbob.thepit.event.custom.PlayerOwnXpModifiedEvent;
 import com.ixbob.thepit.handler.config.LangLoader;
 import com.ixbob.thepit.util.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
 
 import java.util.Objects;
 
-public class OnPlayerBeKilledListener implements Listener {
+public class OnEntityDamageEntityListener implements Listener {
     @EventHandler
     public void onPlayerBeKilled(EntityDamageByEntityEvent event) {
+        if (!(event.getDamager() instanceof Player) && event.getEntity() instanceof Player) {
+            Entity damager = event.getDamager();
+            if (Utils.isInLobbyArea(damager.getLocation())) {
+                if (damager.getType() == EntityType.ARROW) {
+                    damager.remove();
+                }
+                event.setCancelled(true);
+                return;
+            }
+        }
+
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            Player deathPlayer = (Player) event.getEntity();
+            Player damagedPlayer = (Player) event.getEntity();
             Player killer = (Player) event.getDamager();
-            if (deathPlayer.getHealth() <= event.getFinalDamage()) {
-                onPlayerKillAnother(deathPlayer, killer);
+
+            if (Utils.isInLobbyArea(damagedPlayer.getLocation())) {
+                event.setCancelled(true);
+                return;
+            }
+
+            if (damagedPlayer.getHealth() <= event.getFinalDamage()) {
+                onPlayerKillAnother(damagedPlayer, killer);
 
                 event.setCancelled(true);
-                deathPlayer.setHealth(deathPlayer.getHealthScale());
-                deathPlayer.teleport(Main.initialLocation);
+                damagedPlayer.setHealth(damagedPlayer.getHealthScale());
+                Utils.setMostBasicKit(damagedPlayer, true);
+                damagedPlayer.teleport(Main.spawnLocation);
             }
         }
     }

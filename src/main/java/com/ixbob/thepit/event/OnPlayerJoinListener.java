@@ -9,7 +9,6 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,8 +16,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
@@ -52,7 +49,7 @@ public class OnPlayerJoinListener implements Listener {
         this.player = event.getPlayer();
         this.playerUUID = player.getUniqueId();
 
-        player.teleport(Main.initialLocation);
+        player.teleport(Main.spawnLocation);
         player.getInventory().clear();
         player.sendTitle(LangLoader.get("join_loading_title"), LangLoader.get("join_loading_subtitle"), 10, 60, 10);
         Bukkit.getServer().getScheduler().runTaskAsynchronously(Main.getPlugin(), () -> {
