@@ -3,11 +3,11 @@ plugins {
     id 'java'
 }
 
-group = 'com.ixbob.myplugin'
-version = '1.0-SNAPSHOT'
+group = 'com.ixbob.thepitplugin'
+version = '1.0'
 
 repositories {
-    maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+    maven{ url 'https://maven.aliyun.com/nexus/content/groups/public/'}
     mavenCentral()
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
