@@ -14,7 +14,7 @@ public class OnPlayerClickGUIListener implements Listener {
         Player player = (Player) event.getWhoClicked();
         AbstractGUI openingGUI = Main.getGUIManager().getOpeningGUI(player);
         if (openingGUI instanceof GUITalent) {
-            System.out.println("in talent GUI");
+            event.setCancelled(true);
         }
     }
 }

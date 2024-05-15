@@ -35,7 +35,8 @@ public class PlayerGUIManager {
     public void openTalentGUI(Player player) {
         GUITalent gui = new GUITalent(player);
         addPlayerToHashMap(player, gui);
-        gui.open(player);
-        //TODO: 添加GUI初始化物品
+        gui.init(player);
+        gui.open();
+        gui.initContent();
     }
 }

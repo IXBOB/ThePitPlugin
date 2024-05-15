@@ -185,4 +185,8 @@ public class Utils {
         inventory.setChestplate(new ItemStack(Material.CHAINMAIL_CHESTPLATE, 1));
         inventory.setLeggings(new ItemStack(Material.CHAINMAIL_LEGGINGS, 1));
     }
+
+    public static int getInventoryIndex(int row, int column) {
+        return row * 9 - 1 - (9 - column);
+    }
 }
