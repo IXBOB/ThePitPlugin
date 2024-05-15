@@ -1,7 +1,6 @@
 package com.ixbob.thepit;
 
 import com.ixbob.thepit.gui.GUITalent;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -11,9 +10,18 @@ public class PlayerGUIManager {
     private Map<Player, AbstractGUI> playerOpeningCustomGUI = new HashMap<>();
 
     public PlayerGUIManager() {
-        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-            playerOpeningCustomGUI.put(onlinePlayer, null);
+
+    }
+
+    public void addPlayerToHashMap(Player player, AbstractGUI gui) {
+        if (playerOpeningCustomGUI.containsKey(player)) {
+            throw new IllegalArgumentException("Player " + player + " is already has opening custom gui");
         }
+        playerOpeningCustomGUI.put(player, gui);
+    }
+
+    public void removePlayerFromHashMap(Player player) {
+        playerOpeningCustomGUI.remove(player);
     }
 
     public Map<Player, AbstractGUI> getPlayerOpeningCustomGUIHashMap() {
@@ -26,7 +34,8 @@ public class PlayerGUIManager {
 
     public void openTalentGUI(Player player) {
         GUITalent gui = new GUITalent(player);
-        playerOpeningCustomGUI.put(player, gui);
+        addPlayerToHashMap(player, gui);
         gui.open(player);
+        //TODO: 添加GUI初始化物品
     }
 }
