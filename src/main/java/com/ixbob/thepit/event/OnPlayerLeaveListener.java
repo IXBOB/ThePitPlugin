@@ -11,7 +11,7 @@ public class OnPlayerLeaveListener implements Listener {
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        Main.playerDataMap.remove(player);
         Utils.storePlayerInventoryData(player);
+        Main.playerDataMap.remove(player);
     }
 }

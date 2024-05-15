@@ -34,6 +34,7 @@ public class OnPlayerJoinListener implements Listener {
     private final ArrayList<ArrayList<?>> initInventory = new ArrayList<>(Collections.nCopies(27 ,null));
     private final ArrayList<ArrayList<?>> initArmor = new ArrayList<>(Collections.nCopies(4 ,null));
     private final ArrayList<ArrayList<?>> initOffHand = new ArrayList<>(Collections.nCopies(1 ,null)); //虽然只有一个，但为了统一一点，都用List
+    private final ArrayList<?> initEquippedTalents = new ArrayList<>(Collections.nCopies(6 ,null));
 
     public OnPlayerJoinListener() {
         initHotBar.set(0, new ArrayList<>(Arrays.asList(Material.STONE_SWORD.name(), 1, new ArrayList<>())));
@@ -62,7 +63,7 @@ public class OnPlayerJoinListener implements Listener {
             }
             Bukkit.getServer().getScheduler().runTask(Main.getPlugin(), () -> {
                 Scoreboard scoreboard = initScoreboardFrame(taskPlayer);
-                readDBAndGenPlayerDataBlock(taskPlayer);
+                genPlayerDataBlock(taskPlayer);
                 initScoreboardContent(scoreboard, taskPlayer);
                 Utils.updateDisplayName(taskPlayer);
                 //读取并设置玩家物品栏
@@ -122,7 +123,8 @@ public class OnPlayerJoinListener implements Listener {
         dataDBObj.put("this_level_own_xp", 0);
         dataDBObj.put("next_level_need_xp",  10*(0+1) + (int)(Math.random()*10*(0+1)));
         dataDBObj.put("coin_amount", 0);
-        dataDBObj.put("prestige", 0);
+        dataDBObj.put("prestige_level", 0);
+        dataDBObj.put("prestige_point_amount", 0);
         dataDBObj.put("prefix", "0"); // 称号，0相当于什么都没有吧
         dataDBObj.put("consecutive_kill_amount", 0);
         dataDBObj.put("kill_amount", 0);
@@ -131,24 +133,12 @@ public class OnPlayerJoinListener implements Listener {
         dataDBObj.put("InventoryItemList", initInventory);
         dataDBObj.put("ArmorItemList", initArmor);
         dataDBObj.put("OffHandItemList", initOffHand);
+        dataDBObj.put("EquippedTalentList", initEquippedTalents);
         mongoDB.insert(dataDBObj);
     }
 
-    private void readDBAndGenPlayerDataBlock(Player taskPlayer) {
-        DBObject dataDBObj = mongoDB.findByUUID(taskPlayer.getUniqueId());
-        PlayerDataBlock dataBlock = new PlayerDataBlock(
-                taskPlayer,
-                (int) dataDBObj.get("level"),
-                (int) dataDBObj.get("rank"),
-                (int) dataDBObj.get("this_level_own_xp"),
-                (int) dataDBObj.get("next_level_need_xp"),
-                (int) dataDBObj.get("coin_amount"),
-                (int) dataDBObj.get("prestige"),
-                (String) dataDBObj.get("prefix"),
-                (int) dataDBObj.get("consecutive_kill_amount"),
-                (int) dataDBObj.get("kill_amount"),
-                (int) dataDBObj.get("death_amount"),
-                false);
+    private void genPlayerDataBlock(Player taskPlayer) {
+        PlayerDataBlock dataBlock = new PlayerDataBlock(taskPlayer);
         Main.playerDataMap.put(taskPlayer, dataBlock);
     }
 

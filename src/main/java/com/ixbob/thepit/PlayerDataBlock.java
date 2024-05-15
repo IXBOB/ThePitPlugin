@@ -9,6 +9,8 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 
+import java.util.ArrayList;
+
 public class PlayerDataBlock {
     private final Player player;
     private int level;
@@ -16,31 +18,36 @@ public class PlayerDataBlock {
     private int thisLevelOwnXp;
     private int nextLevelNeedXp;
     private int coinAmount;
-    private int prestige;
+    private int prestigeLevel;
+    private int prestigePointAmount;
     private String prefix;
     private int consecutiveKillAmount;
     private int killAmount;
     private int deathAmount;
     private boolean battleState;
+    private ArrayList<?> equippedTalentList;
     private BattleStateCoolCountDowner battleStateCoolCountDowner;
     private boolean typedSpawn;
 
     private final Scoreboard scoreboard;
     private final Objective scoreboardObj;
 
-    public PlayerDataBlock(Player player, int level, int rank, int thisLevelOwnXp, int nextLevelNeedXp, int coinAmount, int prestige, String prefix, int consecutiveKillAmount, int killAmount, int deathAmount, boolean battleState) {
+    public PlayerDataBlock(Player player) {
+        DBObject dataDBObj = Main.getDB().findByUUID(player.getUniqueId());
         this.player = player;
-        this.level = level;
-        this.rank = rank;
-        this.thisLevelOwnXp = thisLevelOwnXp;
-        this.nextLevelNeedXp = nextLevelNeedXp;
-        this.coinAmount = coinAmount;
-        this.prestige = prestige;
-        this.prefix = prefix;
-        this.consecutiveKillAmount = consecutiveKillAmount;
-        this.killAmount = killAmount;
-        this.deathAmount = deathAmount;
-        this.battleState = battleState;
+        this.level = (int) dataDBObj.get("level");
+        this.rank = (int) dataDBObj.get("rank");
+        this.thisLevelOwnXp = (int) dataDBObj.get("this_level_own_xp");
+        this.nextLevelNeedXp = (int) dataDBObj.get("next_level_need_xp");
+        this.coinAmount = (int) dataDBObj.get("coin_amount");
+        this.prestigeLevel = (int) dataDBObj.get("prestige_level");
+        this.prestigePointAmount = (int) dataDBObj.get("prestige_point_amount");
+        this.prefix = (String) dataDBObj.get("prefix");
+        this.consecutiveKillAmount = (int) dataDBObj.get("consecutive_kill_amount");
+        this.killAmount = (int) dataDBObj.get("kill_amount");
+        this.deathAmount = (int) dataDBObj.get("death_amount");
+        this.equippedTalentList = (ArrayList<?>) dataDBObj.get("EquippedTalentList");
+        this.battleState = false;
         this.typedSpawn = false;
 
         this.scoreboard = player.getScoreboard();
@@ -55,11 +62,13 @@ public class PlayerDataBlock {
         dataObj.put("this_level_own_xp", thisLevelOwnXp);
         dataObj.put("next_level_need_xp", nextLevelNeedXp);
         dataObj.put("coin_amount", coinAmount);
-        dataObj.put("prestige", prestige);
+        dataObj.put("prestige_level", prestigeLevel);
+        dataObj.put("prestige_point_amount", prestigePointAmount);
         dataObj.put("prefix", prefix);
         dataObj.put("consecutive_kill_amount", consecutiveKillAmount);
         dataObj.put("kill_amount", killAmount);
         dataObj.put("death_amount", deathAmount);
+        dataObj.put("EquippedTalentList", equippedTalentList);
         mongoDB.updateDataByUUID(dataObj, player.getUniqueId());
     }
 
@@ -139,12 +148,12 @@ public class PlayerDataBlock {
         this.coinAmount = coinAmount;
     }
 
-    public int getPrestige() {
-        return prestige;
+    public int getPrestigeLevel() {
+        return prestigeLevel;
     }
 
-    public void setPrestige(int prestige) {
-        this.prestige = prestige;
+    public void setPrestigeLevel(int prestigeLevel) {
+        this.prestigeLevel = prestigeLevel;
     }
 
     public String getPrefix() {
@@ -227,5 +236,21 @@ public class PlayerDataBlock {
 
     public void setTypedSpawn(boolean typedSpawn) {
         this.typedSpawn = typedSpawn;
+    }
+
+    public ArrayList<?> getEquippedTalentList() {
+        return equippedTalentList;
+    }
+
+    public void setEquippedTalentList(ArrayList<?> equippedTalentList) {
+        this.equippedTalentList = equippedTalentList;
+    }
+
+    public int getPrestigePointAmount() {
+        return prestigePointAmount;
+    }
+
+    public void setPrestigePointAmount(int prestigePointAmount) {
+        this.prestigePointAmount = prestigePointAmount;
     }
 }
