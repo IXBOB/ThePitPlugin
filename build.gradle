@@ -20,7 +20,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
     compileOnly 'org.spigotmc:spigot:1.12.2-R0.1-SNAPSHOT'
     implementation 'org.mongodb:mongo-java-driver:2.13.1'
-    implementation 'org.mongodb:mongodb-driver-sync:4.0.1'
+    implementation 'org.mongodb:mongodb-driver-sync:4.2.1'
     implementation 'de.tr7zw:item-nbt-api-plugin:2.12.3'
     compileOnly group: "com.comphenix.protocol", name: "ProtocolLib", version: "4.8.0";
     implementation 'com.alibaba.fastjson2:fastjson2:2.0.49'
