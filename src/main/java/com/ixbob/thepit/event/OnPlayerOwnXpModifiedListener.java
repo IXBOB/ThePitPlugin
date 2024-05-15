@@ -22,7 +22,7 @@ public class OnPlayerOwnXpModifiedListener implements Listener {
         int newLevel;
         boolean levelUp = false;
         Player player = event.getPlayer();
-        PlayerDataBlock dataBlock = Main.playerDataMap.get(player);
+        PlayerDataBlock dataBlock = Main.getPlayerDataBlock(player);
         originXp = event.getOriginXp();
         modifiedXp = event.getModifiedXp();
         newOwnXp = event.getNewXp();

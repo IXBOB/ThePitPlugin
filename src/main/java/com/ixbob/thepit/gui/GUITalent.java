@@ -13,7 +13,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.MaterialData;
 
 import java.util.ArrayList;
 
@@ -49,21 +48,28 @@ public class GUITalent extends AbstractGUI {
             inventory.setItem(index, new ItemStack(emptyWall));
         }
 
-        ItemStack empty = new ItemStack(Material.AIR);
+        ItemStack locked = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 14);
+        ItemMeta lockedItemMeta = locked.getItemMeta();
+        lockedItemMeta.setDisplayName(LangLoader.get("talent_item_locked"));
+        locked.setItemMeta(lockedItemMeta);
         for (int index = 10; index <= 16; index++) {
-            inventory.setItem(index, empty);
+            inventory.setItem(index, locked);
         }
         for (int index = 19; index <= 25; index++) {
-            inventory.setItem(index, empty);
+            inventory.setItem(index, locked);
         }
+
+        ItemStack empty = new ItemStack(Material.AIR);
         for (int index = 37; index <= 43; index++) {
             inventory.setItem(index, empty);
         }
 
-        PlayerDataBlock dataBlock = Main.playerDataMap.get(player);
-        ArrayList<Integer> talentsLevelList = dataBlock.getTalentsLevelList();
+
+
+        PlayerDataBlock dataBlock = Main.getPlayerDataBlock(player);
+        ArrayList<Integer> talentLevelList = dataBlock.getTalentLevelList();
         ArrayList<?> equippedTalentList = dataBlock.getEquippedTalentList();
 
-        TalentUtils.setTalentItem(inventory, Utils.getInventoryIndex(2, 2), TalentItemsEnum.HEALTH_BOOST, dataBlock.getTalentsLevelList().get(0));
+        TalentUtils.setTalentItem(inventory, Utils.getInventoryIndex(2, 2), TalentItemsEnum.HEALTH_BOOST, talentLevelList.get(0));
     }
 }

@@ -100,4 +100,12 @@ public class Main extends JavaPlugin {
     public static PlayerGUIManager getGUIManager() {
         return GUIManager;
     }
+
+    public static PlayerDataBlock getPlayerDataBlock(Player player) {
+        return playerDataMap.get(player);
+    }
+
+    public static void addPlayerDataBlock(Player player, PlayerDataBlock playerDataBlock) {
+        playerDataMap.put(player, playerDataBlock);
+    }
 }

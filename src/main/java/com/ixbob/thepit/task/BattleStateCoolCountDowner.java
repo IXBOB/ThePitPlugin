@@ -15,7 +15,7 @@ public class BattleStateCoolCountDowner implements Runnable{
     public BattleStateCoolCountDowner(float timeLeft, Player player) {
         this.timeLeft = timeLeft;
         this.player = player;
-        this.dataBlock = Main.playerDataMap.get(player);
+        this.dataBlock = Main.getPlayerDataBlock(player);
     }
 
     @Override

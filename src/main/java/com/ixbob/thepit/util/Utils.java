@@ -44,7 +44,6 @@ public class Utils {
         }
         for (int i = 0; i <= 3; i++) {
             ItemStack indexItem = player.getInventory().getArmorContents()[3 - i];  //默认i=0:脚，3-i:从头上往脚下读
-            System.out.println(3 - i + " " + indexItem);
             if (indexItem != null) {
                 armorItemList.set(i, new ArrayList<>(Arrays.asList(indexItem.getType().name(), indexItem.getAmount(), new ArrayList<>())));
             }
@@ -62,7 +61,7 @@ public class Utils {
     }
 
     public static String getDisplayName(Player player) {
-        PlayerDataBlock playerData = Main.playerDataMap.get(player);
+        PlayerDataBlock playerData = Main.getPlayerDataBlock(player);
         int rank = playerData.getRank();
         int level = playerData.getLevel();
         String prefix;
@@ -126,7 +125,7 @@ public class Utils {
     }
 
     public static void addXp(Player player, int addXp) {
-        PlayerDataBlock playerData = Main.playerDataMap.get(player);
+        PlayerDataBlock playerData = Main.getPlayerDataBlock(player);
         int originXp = playerData.getThisLevelOwnXp();
         int newXp = originXp + addXp;
         playerData.setThisLevelOwnXp(newXp);
@@ -136,7 +135,7 @@ public class Utils {
     }
 
     public static void addCoin(Player player, int addCoin) {
-        PlayerDataBlock playerData = Main.playerDataMap.get(player);
+        PlayerDataBlock playerData = Main.getPlayerDataBlock(player);
         int originCoin = playerData.getCoinAmount();
         int newCoin = originCoin + addCoin;
         playerData.setCoinAmount(newCoin);
@@ -146,7 +145,7 @@ public class Utils {
     }
 
     public static void setBattleState(Player player, boolean battleState) {
-        PlayerDataBlock playerData = Main.playerDataMap.get(player);
+        PlayerDataBlock playerData = Main.getPlayerDataBlock(player);
         playerData.setBattleState(battleState);
 
         PlayerBattleStateChangeEvent playerBattleStateChangeEvent = new PlayerBattleStateChangeEvent(player, battleState);
@@ -154,7 +153,7 @@ public class Utils {
     }
 
     public static void setTypedSpawn(Player player, boolean typedSpawn) {
-        PlayerDataBlock playerData = Main.playerDataMap.get(player);
+        PlayerDataBlock playerData = Main.getPlayerDataBlock(player);
         playerData.setTypedSpawn(typedSpawn);
 
         PlayerTypedSpawnChangeEvent playerTypedSpawnChangeEvent = new PlayerTypedSpawnChangeEvent(player, typedSpawn);

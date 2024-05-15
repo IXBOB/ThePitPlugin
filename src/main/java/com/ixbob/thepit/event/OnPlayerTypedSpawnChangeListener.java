@@ -12,7 +12,7 @@ public class OnPlayerTypedSpawnChangeListener implements Listener {
     public void onPlayerTypedSpawnChange(PlayerTypedSpawnChangeEvent event) {
         Player player = event.getPlayer();
         boolean typedSpawn = event.getChangeToState();
-        PlayerDataBlock dataBlock = Main.playerDataMap.get(player);
+        PlayerDataBlock dataBlock = Main.getPlayerDataBlock(player);
         dataBlock.setTypedSpawn(typedSpawn);
     }
 }

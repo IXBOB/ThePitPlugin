@@ -12,7 +12,7 @@ public class OnPlayerBattleStateChangeListener implements Listener {
     public void onPlayerBattleStateChange(PlayerBattleStateChangeEvent event) {
         Player player = event.getPlayer();
         boolean battleState = event.getChangeToState();
-        PlayerDataBlock dataBlock = Main.playerDataMap.get(player);
+        PlayerDataBlock dataBlock = Main.getPlayerDataBlock(player);
         dataBlock.setBattleState(battleState);
         dataBlock.updateScoreboardBattleState();
     }

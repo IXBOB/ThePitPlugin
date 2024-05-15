@@ -16,7 +16,7 @@ public class PlayerUpgradeLevelEvent extends Event {
         this.player = player;
         this.originLevel = originLevel;
         this.newLevel = newLevel;
-        this.rank = Main.playerDataMap.get(player).getRank();
+        this.rank = Main.getPlayerDataBlock(player).getRank();
     }
 
     public int getRank() {

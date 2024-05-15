@@ -71,9 +71,9 @@ public class OnEntityDamageEntityListener implements Listener {
     }
 
     private void onPlayerKillAnother(Player deathPlayer, Player killer) {
-        int addXp = (10 + (int) (Math.random() * 15))* (1 + Main.playerDataMap.get(deathPlayer).getConsecutiveKillAmount());
+        int addXp = (10 + (int) (Math.random() * 15))* (1 + Main.getPlayerDataBlock(deathPlayer).getConsecutiveKillAmount());
         Utils.addXp(killer, addXp);
-        int addCoin = (5 + (int) (Math.random() * 10))* (1 + Main.playerDataMap.get(deathPlayer).getConsecutiveKillAmount());
+        int addCoin = (5 + (int) (Math.random() * 10))* (1 + Main.getPlayerDataBlock(deathPlayer).getConsecutiveKillAmount());
         Utils.addCoin(killer, addCoin);
 
         killer.playSound(killer.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);

@@ -34,8 +34,8 @@ public class OnPlayerJoinListener implements Listener {
     private final ArrayList<ArrayList<?>> initInventory = new ArrayList<>(Collections.nCopies(27 ,null));
     private final ArrayList<ArrayList<?>> initArmor = new ArrayList<>(Collections.nCopies(4 ,null));
     private final ArrayList<ArrayList<?>> initOffHand = new ArrayList<>(Collections.nCopies(1 ,null)); //虽然只有一个，但为了统一一点，都用List
-    private final ArrayList<Integer> initTalentsLevel = new ArrayList<>(Collections.nCopies(100 ,0));
-    private final ArrayList<?> initEquippedTalents = new ArrayList<>(Collections.nCopies(6 ,null));
+    private final ArrayList<Integer> initTalentLevel = new ArrayList<>(Collections.nCopies(100 ,0));
+    private final ArrayList<?> initEquippedTalent = new ArrayList<>(Collections.nCopies(6 ,null));
 
     public OnPlayerJoinListener() {
         initHotBar.set(0, new ArrayList<>(Arrays.asList(Material.STONE_SWORD.name(), 1, new ArrayList<>())));
@@ -134,14 +134,14 @@ public class OnPlayerJoinListener implements Listener {
         dataDBObj.put("InventoryItemList", initInventory);
         dataDBObj.put("ArmorItemList", initArmor);
         dataDBObj.put("OffHandItemList", initOffHand);
-        dataDBObj.put("TalentsLevelList", initTalentsLevel);
-        dataDBObj.put("EquippedTalentList", initEquippedTalents);
+        dataDBObj.put("TalentLevelList", initTalentLevel);
+        dataDBObj.put("EquippedTalentList", initEquippedTalent);
         mongoDB.insert(dataDBObj);
     }
 
     private void genPlayerDataBlock(Player taskPlayer) {
         PlayerDataBlock dataBlock = new PlayerDataBlock(taskPlayer);
-        Main.playerDataMap.put(taskPlayer, dataBlock);
+        Main.addPlayerDataBlock(taskPlayer, dataBlock);
     }
 
     private Scoreboard initScoreboardFrame(Player taskPlayer) {
@@ -157,7 +157,7 @@ public class OnPlayerJoinListener implements Listener {
     private void initScoreboardContent(Scoreboard scoreboard, Player taskPlayer) {
         Objective boardObj = scoreboard.getObjective("main");
 
-        PlayerDataBlock playerData = Main.playerDataMap.get(taskPlayer);
+        PlayerDataBlock playerData = Main.getPlayerDataBlock(taskPlayer);
         boardObj.getScore(LangLoader.get("main_scoreboard_line1")).setScore(0);
         boardObj.getScore(String.format(LangLoader.get("main_scoreboard_line2"), playerData.getLevel())).setScore(-1);
         boardObj.getScore(String.format(LangLoader.get("main_scoreboard_line3"), playerData.getNextLevelNeedXp()-playerData.getThisLevelOwnXp())).setScore(-2);

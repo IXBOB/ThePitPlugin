@@ -25,7 +25,7 @@ public class PlayerDataBlock {
     private int killAmount;
     private int deathAmount;
     private boolean battleState;
-    private ArrayList<Integer> TalentsLevelList;
+    private ArrayList<Integer> TalentLevelList;
     private ArrayList<?> equippedTalentList;
     private BattleStateCoolCountDowner battleStateCoolCountDowner;
     private boolean typedSpawn;
@@ -47,7 +47,7 @@ public class PlayerDataBlock {
         this.consecutiveKillAmount = (int) dataDBObj.get("consecutive_kill_amount");
         this.killAmount = (int) dataDBObj.get("kill_amount");
         this.deathAmount = (int) dataDBObj.get("death_amount");
-        this.TalentsLevelList = (ArrayList<Integer>) dataDBObj.get("TalentsLevelList");
+        this.TalentLevelList = (ArrayList<Integer>) dataDBObj.get("TalentLevelList");
         this.equippedTalentList = (ArrayList<?>) dataDBObj.get("EquippedTalentList");
         this.battleState = false;
         this.typedSpawn = false;
@@ -70,7 +70,7 @@ public class PlayerDataBlock {
         dataObj.put("consecutive_kill_amount", consecutiveKillAmount);
         dataObj.put("kill_amount", killAmount);
         dataObj.put("death_amount", deathAmount);
-        dataObj.put("TalentsLevelList", TalentsLevelList);
+        dataObj.put("TalentLevelList", TalentLevelList);
         dataObj.put("EquippedTalentList", equippedTalentList);
         mongoDB.updateDataByUUID(dataObj, player.getUniqueId());
     }
@@ -257,11 +257,11 @@ public class PlayerDataBlock {
         this.prestigePointAmount = prestigePointAmount;
     }
 
-    public ArrayList<Integer> getTalentsLevelList() {
-        return TalentsLevelList;
+    public ArrayList<Integer> getTalentLevelList() {
+        return TalentLevelList;
     }
 
-    public void setTalentsLevelList(ArrayList<Integer> talentsLevelList) {
-        TalentsLevelList = talentsLevelList;
+    public void setTalentLevelList(ArrayList<Integer> talentLevelList) {
+        TalentLevelList = talentLevelList;
     }
 }

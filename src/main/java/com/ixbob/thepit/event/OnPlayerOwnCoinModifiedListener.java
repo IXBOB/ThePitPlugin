@@ -12,7 +12,7 @@ public class OnPlayerOwnCoinModifiedListener implements Listener {
     public void onPlayerOwnCoinModified(PlayerOwnCoinModifiedEvent event) {
         Player player = event.getPlayer();
         int newCoin = event.getNewCoin();
-        PlayerDataBlock dataBlock = Main.playerDataMap.get(player);
+        PlayerDataBlock dataBlock = Main.getPlayerDataBlock(player);
         updateDataBlock(dataBlock, newCoin);
         dataBlock.updatePlayerDBData();
         dataBlock.updateScoreboardOwnCoinAmount();

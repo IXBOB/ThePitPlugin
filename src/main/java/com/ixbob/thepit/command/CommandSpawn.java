@@ -17,7 +17,7 @@ public class CommandSpawn implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            PlayerDataBlock dataBlock = Main.playerDataMap.get(player);
+            PlayerDataBlock dataBlock = Main.getPlayerDataBlock(player);
             boolean battleState = dataBlock.getBattleState();
             if (args.length == 0) {
                 if (!battleState) {
