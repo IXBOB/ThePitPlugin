@@ -66,6 +66,9 @@ public class Main extends JavaPlugin {
 
         Listener onPlayerBattleStateChangeListener = new OnPlayerBattleStateChangeListener();
         getServer().getPluginManager().registerEvents(onPlayerBattleStateChangeListener, this);
+
+        Listener onPlayerTypedSpawnChangeListener = new OnPlayerTypedSpawnChangeListener();
+        getServer().getPluginManager().registerEvents(onPlayerTypedSpawnChangeListener, this);
     }
 
     @Override

@@ -2,7 +2,7 @@ package com.ixbob.thepit.task;
 
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.PlayerDataBlock;
-import com.ixbob.thepit.event.custom.PlayerBattleStateChangeEvent;
+import com.ixbob.thepit.util.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -23,8 +23,7 @@ public class BattleStateCoolCountDowner implements Runnable{
         timeLeft -= 0.05f;
         dataBlock.updateScoreboardBattleState();
         if (timeLeft < 0) {
-            PlayerBattleStateChangeEvent battleStateChangeEvent = new PlayerBattleStateChangeEvent(player, false);
-            Bukkit.getPluginManager().callEvent(battleStateChangeEvent);
+            Utils.setBattleState(player, false);
             Bukkit.getScheduler().cancelTask(taskID);
         }
     }

@@ -3,8 +3,10 @@ package com.ixbob.thepit.util;
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.MongoDB;
 import com.ixbob.thepit.PlayerDataBlock;
+import com.ixbob.thepit.event.custom.PlayerBattleStateChangeEvent;
 import com.ixbob.thepit.event.custom.PlayerOwnCoinModifiedEvent;
 import com.ixbob.thepit.event.custom.PlayerOwnXpModifiedEvent;
+import com.ixbob.thepit.event.custom.PlayerTypedSpawnChangeEvent;
 import com.mongodb.DBObject;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -141,6 +143,22 @@ public class Utils {
         //创建并广播 拥有硬币改变事件
         PlayerOwnCoinModifiedEvent modifyCoinEvent = new PlayerOwnCoinModifiedEvent(player, originCoin, addCoin);
         Bukkit.getPluginManager().callEvent(modifyCoinEvent);
+    }
+
+    public static void setBattleState(Player player, boolean battleState) {
+        PlayerDataBlock playerData = Main.playerDataMap.get(player);
+        playerData.setBattleState(battleState);
+
+        PlayerBattleStateChangeEvent playerBattleStateChangeEvent = new PlayerBattleStateChangeEvent(player, battleState);
+        Bukkit.getPluginManager().callEvent(playerBattleStateChangeEvent);
+    }
+
+    public static void setTypedSpawn(Player player, boolean typedSpawn) {
+        PlayerDataBlock playerData = Main.playerDataMap.get(player);
+        playerData.setTypedSpawn(typedSpawn);
+
+        PlayerTypedSpawnChangeEvent playerTypedSpawnChangeEvent = new PlayerTypedSpawnChangeEvent(player, typedSpawn);
+        Bukkit.getPluginManager().callEvent(playerTypedSpawnChangeEvent);
     }
 
     public static void updateDisplayName(Player player) {

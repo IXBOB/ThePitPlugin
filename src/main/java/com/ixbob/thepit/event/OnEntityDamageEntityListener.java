@@ -61,14 +61,12 @@ public class OnEntityDamageEntityListener implements Listener {
         PlayerBattleStateChangeEvent damagedPlayerBattleStateChangeEvent = new PlayerBattleStateChangeEvent(damagedPlayer, true);
         Bukkit.getPluginManager().callEvent(damagedPlayerBattleStateChangeEvent);
 
+        //玩家死亡
         if (damagedPlayer.getHealth() <= event.getFinalDamage()) {
             onPlayerKillAnother(damagedPlayer, damager);
 
             event.setCancelled(true);
-            damagedPlayer.setHealth(damagedPlayer.getHealthScale());
-            damagedPlayer.setFoodLevel(20);
-            Utils.setMostBasicKit(damagedPlayer, true);
-            damagedPlayer.teleport(Main.spawnLocation);
+
         }
     }
 
@@ -99,5 +97,12 @@ public class OnEntityDamageEntityListener implements Listener {
         }
         killer.sendMessage(toKillerMes);
         deathPlayer.sendMessage(toDeathPlayerMes);
+
+        deathPlayer.setHealth(deathPlayer.getHealthScale());
+        deathPlayer.setFoodLevel(20);
+        Utils.setMostBasicKit(deathPlayer, true);
+        deathPlayer.teleport(Main.spawnLocation);
+        Utils.setBattleState(deathPlayer, false);
+        Utils.setTypedSpawn(deathPlayer, false);
     }
 }
