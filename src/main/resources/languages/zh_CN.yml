@@ -3,6 +3,8 @@ command_spawn_success: "§a你回到了出生点！"
 command_spawn_deny_in_battlestate: "§c§l你正在战斗中！输入/spawn confirm以确认返回出生点。"
 command_spawn_deny_in_battlestate_confirm_failed: "§c没有需要确认的请求"
 
+talent_gui_title: "管理天赋"
+
 join_loading_title: "§e§l正在加载您的数据"
 join_loading_subtitle: "请稍候 （づ￣3￣）づ╭❤～"
 game_name: "天坑乱斗"
