@@ -8,12 +8,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PlayerGUIManager {
-    Map<Player, AbstractGUI> playerOpeningCustomGUI = new HashMap<>();
+    private Map<Player, AbstractGUI> playerOpeningCustomGUI = new HashMap<>();
 
     public PlayerGUIManager() {
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             playerOpeningCustomGUI.put(onlinePlayer, null);
         }
+    }
+
+    public Map<Player, AbstractGUI> getPlayerOpeningCustomGUIHashMap() {
+        return playerOpeningCustomGUI;
     }
 
     public AbstractGUI getOpeningGUI(Player player) {

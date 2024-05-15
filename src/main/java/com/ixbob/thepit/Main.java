@@ -74,6 +74,12 @@ public class Main extends JavaPlugin {
 
         Listener onPlayerTypedSpawnChangeListener = new OnPlayerTypedSpawnChangeListener();
         getServer().getPluginManager().registerEvents(onPlayerTypedSpawnChangeListener, this);
+
+        Listener onPlayerClickGUIListener = new OnPlayerClickGUIListener();
+        getServer().getPluginManager().registerEvents(onPlayerClickGUIListener, this);
+
+        Listener onPlayerCloseGUIListener = new OnPlayerCloseGUIListener();
+        getServer().getPluginManager().registerEvents(onPlayerCloseGUIListener, this);
     }
 
     @Override

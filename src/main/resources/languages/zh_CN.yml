@@ -3,8 +3,6 @@ command_spawn_success: "§a你回到了出生点！"
 command_spawn_deny_in_battlestate: "§c§l你正在战斗中！输入/spawn confirm以确认返回出生点。"
 command_spawn_deny_in_battlestate_confirm_failed: "§c没有需要确认的请求"
 
-talent_gui_title: "管理天赋"
-
 join_loading_title: "§e§l正在加载您的数据"
 join_loading_subtitle: "请稍候 （づ￣3￣）づ╭❤～"
 game_name: "天坑乱斗"
@@ -25,3 +23,9 @@ player_kill_other_message_to_killer: "§a§l击杀！ %s"
 player_kill_other_message_to_death_player: "§c你被 %s §c击杀了"
 player_get_xp_message: "§3+%s 经验"
 player_get_coin_message: "§6+%s 硬币"
+
+talent_gui_title: "管理天赋"
+talent_item_add_health_name: "§e§l活跃血液"
+talent_item_add_health_lore1: "§r§b等级: %s  §6下一等级: %s 硬币"
+talent_item_add_health_lore2: "§r§e提升 %s 的初始最大生命值"
+talent_item_add_health_lore3: "§7待补充描述文案"

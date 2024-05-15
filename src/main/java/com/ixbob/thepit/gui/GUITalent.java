@@ -8,6 +8,7 @@ import org.bukkit.inventory.Inventory;
 
 public class GUITalent extends AbstractGUI {
     private static final int size = 54;
+    private static final int[] buttons = new int[]{10};
 
     public GUITalent(Player player) {
         super(player, size);
@@ -16,5 +17,9 @@ public class GUITalent extends AbstractGUI {
     public void open(Player player) {
         Inventory inventory = Bukkit.createInventory(player, size, LangLoader.get("talent_gui_title"));
         player.openInventory(inventory);
+    }
+
+    public int[] getButtonList() {
+        return buttons;
     }
 }
