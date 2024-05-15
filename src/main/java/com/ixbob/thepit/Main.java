@@ -1,5 +1,6 @@
 package com.ixbob.thepit;
 
+import com.ixbob.thepit.command.CommandSpawn;
 import com.ixbob.thepit.event.*;
 import com.ixbob.thepit.handler.config.LangLoader;
 import com.ixbob.thepit.util.Utils;
@@ -39,6 +40,8 @@ public class Main extends JavaPlugin {
         this.saveDefaultConfig();
         lobbyAreaFromPosList = config.getIntegerList("lobby_area.from");
         lobbyAreaToPosList = config.getIntegerList("lobby_area.to");
+
+        this.getCommand("spawn").setExecutor(new CommandSpawn());
 
         Listener onPlayerJoinListener = new OnPlayerJoinListener();
         getServer().getPluginManager().registerEvents(onPlayerJoinListener, this);

@@ -23,9 +23,10 @@ public class PlayerDataBlock {
     private int deathAmount;
     private boolean battleState;
     private BattleStateCoolCountDowner battleStateCoolCountDowner;
+    private boolean typedSpawn;
 
-    private Scoreboard scoreboard;
-    private Objective scoreboardObj;
+    private final Scoreboard scoreboard;
+    private final Objective scoreboardObj;
 
     public PlayerDataBlock(Player player, int level, int rank, int thisLevelOwnXp, int nextLevelNeedXp, int coinAmount, int prestige, String prefix, int consecutiveKillAmount, int killAmount, int deathAmount, boolean battleState) {
         this.player = player;
@@ -40,6 +41,7 @@ public class PlayerDataBlock {
         this.killAmount = killAmount;
         this.deathAmount = deathAmount;
         this.battleState = battleState;
+        this.typedSpawn = false;
 
         this.scoreboard = player.getScoreboard();
         this.scoreboardObj = scoreboard.getObjective("main");
@@ -217,5 +219,13 @@ public class PlayerDataBlock {
 
     public boolean isBattleState() {
         return battleState;
+    }
+
+    public boolean isTypedSpawn() {
+        return typedSpawn;
+    }
+
+    public void setTypedSpawn(boolean typedSpawn) {
+        this.typedSpawn = typedSpawn;
     }
 }
