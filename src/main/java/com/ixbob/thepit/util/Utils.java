@@ -20,7 +20,7 @@ import java.util.Collections;
 import java.util.UUID;
 
 public class Utils {
-    private static MongoDB mongoDB = Main.getDB();
+    private static final MongoDB mongoDB = Main.getDB();
     public static void storePlayerInventoryData(Player player) {
         UUID playerUUID = player.getUniqueId();
         DBObject dataDBObj = mongoDB.findByUUID(playerUUID);
@@ -41,7 +41,8 @@ public class Utils {
             }
         }
         for (int i = 0; i <= 3; i++) {
-            ItemStack indexItem = player.getInventory().getArmorContents()[i];
+            ItemStack indexItem = player.getInventory().getArmorContents()[3 - i];  //默认i=0:脚，3-i:从头上往脚下读
+            System.out.println(3 - i + " " + indexItem);
             if (indexItem != null) {
                 armorItemList.set(i, new ArrayList<>(Arrays.asList(indexItem.getType().name(), indexItem.getAmount(), new ArrayList<>())));
             }
