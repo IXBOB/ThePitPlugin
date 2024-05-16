@@ -24,7 +24,10 @@ public class BattleStateCoolCountDowner implements Runnable{
         dataBlock.updateScoreboardBattleState();
         if (timeLeft < 0) {
             Utils.setBattleState(player, false);
-            Bukkit.getScheduler().cancelTask(taskID);
+            cancel();
+        }
+        if (!player.isOnline()) {
+            cancel();
         }
     }
 
@@ -34,6 +37,10 @@ public class BattleStateCoolCountDowner implements Runnable{
 
     public int getTaskID() {
         return taskID;
+    }
+
+    public void cancel() {
+        Bukkit.getScheduler().cancelTask(taskID);
     }
 
     public float getTimeLeft() {

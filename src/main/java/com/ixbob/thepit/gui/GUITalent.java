@@ -18,12 +18,13 @@ import java.util.ArrayList;
 
 public class GUITalent extends AbstractGUI {
     private static final int size = 54;
-    private static final int[] buttons = new int[]{10};
+    private static final int[] button = new int[]{10};
+    private static final int[] moveable = new int[]{Utils.getInventoryIndex(5,2)};
     private Inventory inventory;
     private Player player;
 
     public GUITalent(Player player) {
-        super(player, size);
+        super(player, size, button, moveable);
     }
 
     public void init(Player player) {
@@ -36,7 +37,7 @@ public class GUITalent extends AbstractGUI {
     }
 
     public int[] getButtonList() {
-        return buttons;
+        return button;
     }
 
     public void initContent() {

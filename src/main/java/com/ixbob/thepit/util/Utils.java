@@ -146,6 +146,8 @@ public class Utils {
 
     public static void setBattleState(Player player, boolean battleState) {
         PlayerDataBlock playerData = Main.getPlayerDataBlock(player);
+        System.out.println(playerData);
+        System.out.println(battleState);
         playerData.setBattleState(battleState);
 
         PlayerBattleStateChangeEvent playerBattleStateChangeEvent = new PlayerBattleStateChangeEvent(player, battleState);

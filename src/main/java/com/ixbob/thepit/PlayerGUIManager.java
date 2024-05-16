@@ -9,24 +9,7 @@ import java.util.Map;
 public class PlayerGUIManager {
     private Map<Player, AbstractGUI> playerOpeningCustomGUI = new HashMap<>();
 
-    public PlayerGUIManager() {
-
-    }
-
-    public void addPlayerToHashMap(Player player, AbstractGUI gui) {
-        if (playerOpeningCustomGUI.containsKey(player)) {
-            throw new IllegalArgumentException("Player " + player + " is already has opening custom gui");
-        }
-        playerOpeningCustomGUI.put(player, gui);
-    }
-
-    public void removePlayerFromHashMap(Player player) {
-        playerOpeningCustomGUI.remove(player);
-    }
-
-    public Map<Player, AbstractGUI> getPlayerOpeningCustomGUIHashMap() {
-        return playerOpeningCustomGUI;
-    }
+    public PlayerGUIManager() {}
 
     public AbstractGUI getOpeningGUI(Player player) {
         return playerOpeningCustomGUI.get(player);
@@ -38,5 +21,20 @@ public class PlayerGUIManager {
         gui.init(player);
         gui.open();
         gui.initContent();
+    }
+
+    public void onCloseTalentGUI(Player player) {
+        removePlayerFromHashMap(player);
+    }
+
+    private void addPlayerToHashMap(Player player, AbstractGUI gui) {
+        if (playerOpeningCustomGUI.containsKey(player)) {
+            throw new IllegalArgumentException("Player " + player + " is already has opening custom gui");
+        }
+        playerOpeningCustomGUI.put(player, gui);
+    }
+
+    private void removePlayerFromHashMap(Player player) {
+        playerOpeningCustomGUI.remove(player);
     }
 }
