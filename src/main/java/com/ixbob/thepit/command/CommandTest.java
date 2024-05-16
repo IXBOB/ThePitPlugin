@@ -1,6 +1,6 @@
 package com.ixbob.thepit.command;
 
-import com.ixbob.thepit.handler.config.LangLoader;
+import com.ixbob.thepit.LangLoader;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

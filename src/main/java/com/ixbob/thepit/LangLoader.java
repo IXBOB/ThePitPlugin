@@ -1,4 +1,4 @@
-package com.ixbob.thepit.handler.config;
+package com.ixbob.thepit;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;

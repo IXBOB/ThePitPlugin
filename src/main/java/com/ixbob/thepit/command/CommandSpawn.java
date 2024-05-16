@@ -3,7 +3,7 @@ package com.ixbob.thepit.command;
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.PlayerDataBlock;
 import com.ixbob.thepit.event.custom.PlayerBattleStateChangeEvent;
-import com.ixbob.thepit.handler.config.LangLoader;
+import com.ixbob.thepit.LangLoader;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

@@ -1,6 +1,5 @@
 package com.ixbob.thepit;
 
-import com.ixbob.thepit.handler.config.LangLoader;
 import com.ixbob.thepit.task.BattleStateCoolCountDowner;
 import com.mongodb.DBObject;
 import org.bukkit.Bukkit;

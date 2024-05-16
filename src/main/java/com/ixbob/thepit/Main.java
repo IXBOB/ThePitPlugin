@@ -4,7 +4,6 @@ import com.ixbob.thepit.command.CommandSpawn;
 import com.ixbob.thepit.command.CommandTalent;
 import com.ixbob.thepit.command.CommandTest;
 import com.ixbob.thepit.event.*;
-import com.ixbob.thepit.handler.config.LangLoader;
 import com.ixbob.thepit.util.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

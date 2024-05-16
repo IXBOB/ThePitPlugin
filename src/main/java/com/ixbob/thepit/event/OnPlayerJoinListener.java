@@ -3,7 +3,7 @@ package com.ixbob.thepit.event;
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.MongoDB;
 import com.ixbob.thepit.PlayerDataBlock;
-import com.ixbob.thepit.handler.config.LangLoader;
+import com.ixbob.thepit.LangLoader;
 import com.ixbob.thepit.util.Utils;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;

@@ -2,7 +2,7 @@ package com.ixbob.thepit.util;
 
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.PlayerDataBlock;
-import com.ixbob.thepit.TalentItemsEnum;
+import com.ixbob.thepit.enums.TalentItemsEnum;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;

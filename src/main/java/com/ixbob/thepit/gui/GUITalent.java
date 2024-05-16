@@ -1,7 +1,9 @@
 package com.ixbob.thepit.gui;
 
 import com.ixbob.thepit.*;
-import com.ixbob.thepit.handler.config.LangLoader;
+import com.ixbob.thepit.enums.GUIGridTypeEnum;
+import com.ixbob.thepit.enums.TalentItemsEnum;
+import com.ixbob.thepit.LangLoader;
 import com.ixbob.thepit.util.TalentUtils;
 import com.ixbob.thepit.util.Utils;
 import org.bukkit.Bukkit;

@@ -1,5 +1,6 @@
 package com.ixbob.thepit;
 
+import com.ixbob.thepit.enums.GUIGridTypeEnum;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 
