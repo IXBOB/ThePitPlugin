@@ -63,10 +63,14 @@ public class OnEntityDamageEntityListener implements Listener {
 
         //玩家死亡
         if (damagedPlayer.getHealth() <= event.getFinalDamage()) {
-            onPlayerKillAnother(damagedPlayer, damager);
-
             event.setCancelled(true);
 
+            if (damager == damagedPlayer) { //检测自己击杀自己
+                backToLobby(damagedPlayer);
+                return;
+            }
+
+            onPlayerKillAnother(damagedPlayer, damager);
         }
     }
 
@@ -98,6 +102,10 @@ public class OnEntityDamageEntityListener implements Listener {
         killer.sendMessage(toKillerMes);
         deathPlayer.sendMessage(toDeathPlayerMes);
 
+        backToLobby(deathPlayer);
+    }
+
+    private void backToLobby(Player deathPlayer) {
         deathPlayer.setHealth(deathPlayer.getHealthScale());
         deathPlayer.setFoodLevel(20);
         Utils.setMostBasicKit(deathPlayer, true);

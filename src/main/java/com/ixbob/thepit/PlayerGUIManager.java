@@ -16,7 +16,6 @@ public class PlayerGUIManager {
     }
 
     public void openTalentGUI(Player player) {
-        System.out.println("open GUI");
         GUITalent gui = new GUITalent(player);
         addPlayerToHashMap(player, gui);
         gui.initFrame(player);

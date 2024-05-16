@@ -49,7 +49,6 @@ public class GUITalent extends AbstractGUI {
     }
 
     public void initContent() {
-        System.out.println("initContent");
         PlayerDataBlock playerDataBlock = Main.getPlayerDataBlock(player);
         int playerLevel = playerDataBlock.getLevel();
         int playerPrestigeLevel = playerDataBlock.getPrestigeLevel();
