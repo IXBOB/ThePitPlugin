@@ -6,6 +6,7 @@ import com.ixbob.thepit.gui.GUITalent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 public class OnPlayerClickGUIListener implements Listener {
@@ -14,7 +15,12 @@ public class OnPlayerClickGUIListener implements Listener {
         Player player = (Player) event.getWhoClicked();
         AbstractGUI openingGUI = Main.getGUIManager().getOpeningGUI(player);
         if (openingGUI instanceof GUITalent) {
-            event.setCancelled(true);
+            int index = event.getSlot();
+            ClickType clickType = event.getClick();
+            if (!openingGUI.isMoveable(index, clickType)) {
+                event.setCancelled(true);
+            }
+            openingGUI.onClick(index, clickType);
         }
     }
 }

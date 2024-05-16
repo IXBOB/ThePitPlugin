@@ -17,7 +17,7 @@ public class TalentUtils {
         int playerPrestigeLevel = playerDataBlock.getPrestigeLevel();
         int needLevel = talentItem.getNeedLevel();
         int needPrestigeLevel = talentItem.getNeedPrestigeLevel();
-        if (playerLevel < needLevel && playerPrestigeLevel <= needPrestigeLevel) {
+        if (playerPrestigeLevel < needPrestigeLevel || (playerPrestigeLevel == needPrestigeLevel && playerLevel < needLevel)) { //不满足条件，不放置
             return;
         }
 
