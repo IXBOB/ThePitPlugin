@@ -31,7 +31,7 @@ public class OnPlayerOwnXpModifiedListener implements Listener {
         while (newOwnXp >= nextLevelNeedXp) {
             upgradeLevel++;
             newOwnXp -= nextLevelNeedXp;
-            nextLevelNeedXp = 10*((originLevel + upgradeLevel)+1) + (int)(Math.random()*10*((originLevel + upgradeLevel)+1));
+            nextLevelNeedXp = 2*((originLevel + upgradeLevel)+1) + (int)(Math.random()*2*((originLevel + upgradeLevel)+1));
             levelUp = true;
         }
         newLevel = originLevel + upgradeLevel;

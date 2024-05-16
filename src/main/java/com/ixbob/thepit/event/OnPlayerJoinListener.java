@@ -1,15 +1,16 @@
 package com.ixbob.thepit.event;
 
+import com.ixbob.thepit.LangLoader;
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.MongoDB;
 import com.ixbob.thepit.PlayerDataBlock;
-import com.ixbob.thepit.LangLoader;
 import com.ixbob.thepit.util.Utils;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -52,6 +53,7 @@ public class OnPlayerJoinListener implements Listener {
         this.player = event.getPlayer();
         this.playerUUID = player.getUniqueId();
 
+        player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(200);
         player.setHealth(player.getHealthScale());
         player.setFoodLevel(20);
         player.teleport(Main.spawnLocation);
@@ -122,7 +124,7 @@ public class OnPlayerJoinListener implements Listener {
         dataDBObj.put("level", 0);
         dataDBObj.put("rank", 0);
         dataDBObj.put("this_level_own_xp", 0);
-        dataDBObj.put("next_level_need_xp",  10*(0+1) + (int)(Math.random()*10*(0+1)));
+        dataDBObj.put("next_level_need_xp",  2*(0+1) + (int)(Math.random()*2*(0+1)));
         dataDBObj.put("coin_amount", 0);
         dataDBObj.put("prestige_level", 0);
         dataDBObj.put("prestige_point_amount", 0);
