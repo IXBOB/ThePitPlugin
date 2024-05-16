@@ -24,7 +24,7 @@ public class PlayerDataBlock {
     private int killAmount;
     private int deathAmount;
     private boolean battleState;
-    private ArrayList<Integer> TalentLevelList;
+    private ArrayList<Integer> talentLevelList;
     private ArrayList<?> equippedTalentList;
     private BattleStateCoolCountDowner battleStateCoolCountDowner;
     private boolean typedSpawn;
@@ -46,7 +46,7 @@ public class PlayerDataBlock {
         this.consecutiveKillAmount = (int) dataDBObj.get("consecutive_kill_amount");
         this.killAmount = (int) dataDBObj.get("kill_amount");
         this.deathAmount = (int) dataDBObj.get("death_amount");
-        this.TalentLevelList = (ArrayList<Integer>) dataDBObj.get("TalentLevelList");
+        this.talentLevelList = (ArrayList<Integer>) dataDBObj.get("TalentLevelList");
         this.equippedTalentList = (ArrayList<?>) dataDBObj.get("EquippedTalentList");
         this.battleState = false;
         this.typedSpawn = false;
@@ -69,7 +69,7 @@ public class PlayerDataBlock {
         dataObj.put("consecutive_kill_amount", consecutiveKillAmount);
         dataObj.put("kill_amount", killAmount);
         dataObj.put("death_amount", deathAmount);
-        dataObj.put("TalentLevelList", TalentLevelList);
+        dataObj.put("TalentLevelList", talentLevelList);
         dataObj.put("EquippedTalentList", equippedTalentList);
         mongoDB.updateDataByUUID(dataObj, player.getUniqueId());
     }
@@ -148,6 +148,10 @@ public class PlayerDataBlock {
 
     public void setCoinAmount(int coinAmount) {
         this.coinAmount = coinAmount;
+    }
+
+    public void setTalentLevel(int id, int newLevel) {
+        this.talentLevelList.set(id, newLevel);
     }
 
     public int getPrestigeLevel() {
@@ -257,10 +261,10 @@ public class PlayerDataBlock {
     }
 
     public ArrayList<Integer> getTalentLevelList() {
-        return TalentLevelList;
+        return talentLevelList;
     }
 
     public void setTalentLevelList(ArrayList<Integer> talentLevelList) {
-        TalentLevelList = talentLevelList;
+        this.talentLevelList = talentLevelList;
     }
 }

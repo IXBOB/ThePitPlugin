@@ -79,6 +79,9 @@ public class Main extends JavaPlugin {
 
         Listener onPlayerCloseGUIListener = new OnPlayerCloseGUIListener();
         getServer().getPluginManager().registerEvents(onPlayerCloseGUIListener, this);
+
+        Listener onPlayerTalentLevelChangeListener = new OnPlayerTalentLevelChangeListener();
+        getServer().getPluginManager().registerEvents(onPlayerTalentLevelChangeListener, this);
     }
 
     @Override

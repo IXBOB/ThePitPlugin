@@ -3,10 +3,7 @@ package com.ixbob.thepit.util;
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.MongoDB;
 import com.ixbob.thepit.PlayerDataBlock;
-import com.ixbob.thepit.event.custom.PlayerBattleStateChangeEvent;
-import com.ixbob.thepit.event.custom.PlayerOwnCoinModifiedEvent;
-import com.ixbob.thepit.event.custom.PlayerOwnXpModifiedEvent;
-import com.ixbob.thepit.event.custom.PlayerTypedSpawnChangeEvent;
+import com.ixbob.thepit.event.custom.*;
 import com.mongodb.DBObject;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -158,6 +155,14 @@ public class Utils {
 
         PlayerTypedSpawnChangeEvent playerTypedSpawnChangeEvent = new PlayerTypedSpawnChangeEvent(player, typedSpawn);
         Bukkit.getPluginManager().callEvent(playerTypedSpawnChangeEvent);
+    }
+
+    public static void setTalentLevel(Player player, int id, int level) {
+        PlayerDataBlock playerData = Main.getPlayerDataBlock(player);
+        playerData.setTalentLevel(id, level);
+
+        PlayerTalentLevelChangeEvent playerTalentLevelChangeEvent = new PlayerTalentLevelChangeEvent(player, id, level);
+        Bukkit.getPluginManager().callEvent(playerTalentLevelChangeEvent);
     }
 
     public static void updateDisplayName(Player player) {

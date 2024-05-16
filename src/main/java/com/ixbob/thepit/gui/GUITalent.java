@@ -2,6 +2,7 @@ package com.ixbob.thepit.gui;
 
 import com.ixbob.thepit.*;
 import com.ixbob.thepit.enums.GUIGridTypeEnum;
+import com.ixbob.thepit.enums.TalentId;
 import com.ixbob.thepit.enums.TalentItemsEnum;
 import com.ixbob.thepit.LangLoader;
 import com.ixbob.thepit.util.TalentUtils;
@@ -40,7 +41,10 @@ public class GUITalent extends AbstractGUI {
     public void onClick(int index, ClickType clickType) {
         GUIGridTypeEnum type = getGridType(index, clickType);
         if (type == GUIGridTypeEnum.BUTTON) {
-            System.out.println("this is a button");
+            if (inventory.getItem(index).getType() == TalentItemsEnum.HEALTH_BOOST.getMaterial()) {
+                System.out.println("upgrade!");
+                purchaseUpgrade(TalentItemsEnum.HEALTH_BOOST.getId(), TalentItemsEnum.HEALTH_BOOST);
+            }
         } else if (type == GUIGridTypeEnum.MOVEABLE) {
             System.out.println("this is a moveable");
         } else {
@@ -89,8 +93,22 @@ public class GUITalent extends AbstractGUI {
         ArrayList<Integer> talentLevelList = dataBlock.getTalentLevelList();
         ArrayList<?> equippedTalentList = dataBlock.getEquippedTalentList();
 
-        TalentUtils.setTalentItem(inventory, Utils.getInventoryIndex(2, 2), TalentItemsEnum.HEALTH_BOOST, talentLevelList.get(0));
-        rightButton.add(Utils.getInventoryIndex(2,2));
-        leftMoveable.add(Utils.getInventoryIndex(2, 2));
+        if (TalentUtils.setTalentItem(inventory, TalentId.valueOf("ID_" + 0).getInventoryIndex(), TalentItemsEnum.HEALTH_BOOST, talentLevelList.get(0))) {
+            rightButton.add(Utils.getInventoryIndex(2,2));
+            leftMoveable.add(Utils.getInventoryIndex(2, 2));
+        }
+    }
+
+    public void purchaseUpgrade(int id, TalentItemsEnum upgradeTalentItemType) {
+        PlayerDataBlock playerDataBlock = Main.getPlayerDataBlock(player);
+        ArrayList<Integer> talentLevelList = playerDataBlock.getTalentLevelList();
+        int currentLevel = talentLevelList.get(id);
+        int ownCoinAmount = playerDataBlock.getCoinAmount();
+        int needCoinAmount = TalentUtils.getNextLevelNeedCoinAmount(upgradeTalentItemType, currentLevel);
+        if (ownCoinAmount >= needCoinAmount) {
+            Utils.setTalentLevel(player, id, currentLevel + 1);
+            TalentUtils.setTalentItem(inventory, TalentId.valueOf("ID_" + id).getInventoryIndex(), upgradeTalentItemType, talentLevelList.get(id));
+            Utils.addCoin(player, -needCoinAmount);
+        }
     }
 }
