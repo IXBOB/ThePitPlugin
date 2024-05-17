@@ -25,7 +25,7 @@ public class PlayerDataBlock {
     private int deathAmount;
     private boolean battleState;
     private ArrayList<Integer> talentLevelList;
-    private ArrayList<?> equippedTalentList;
+    private ArrayList<Integer> equippedTalentList;
     private BattleStateCoolCountDowner battleStateCoolCountDowner;
     private boolean typedSpawn;
 
@@ -47,7 +47,7 @@ public class PlayerDataBlock {
         this.killAmount = (int) dataDBObj.get("kill_amount");
         this.deathAmount = (int) dataDBObj.get("death_amount");
         this.talentLevelList = (ArrayList<Integer>) dataDBObj.get("TalentLevelList");
-        this.equippedTalentList = (ArrayList<?>) dataDBObj.get("EquippedTalentList");
+        this.equippedTalentList = (ArrayList<Integer>) dataDBObj.get("EquippedTalentList");
         this.battleState = false;
         this.typedSpawn = false;
 
@@ -154,6 +154,10 @@ public class PlayerDataBlock {
         this.talentLevelList.set(id, newLevel);
     }
 
+    public void setEquippedTalent(int equipGridId, int talentId) {
+        this.equippedTalentList.set(equipGridId, talentId);
+    }
+
     public int getPrestigeLevel() {
         return prestigeLevel;
     }
@@ -248,7 +252,7 @@ public class PlayerDataBlock {
         return equippedTalentList;
     }
 
-    public void setEquippedTalentList(ArrayList<?> equippedTalentList) {
+    public void setEquippedTalentList(ArrayList<Integer> equippedTalentList) {
         this.equippedTalentList = equippedTalentList;
     }
 

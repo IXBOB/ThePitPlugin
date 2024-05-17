@@ -36,7 +36,7 @@ public class OnPlayerJoinListener implements Listener {
     private final ArrayList<ArrayList<?>> initArmor = new ArrayList<>(Collections.nCopies(4 ,null));
     private final ArrayList<ArrayList<?>> initOffHand = new ArrayList<>(Collections.nCopies(1 ,null)); //虽然只有一个，但为了统一一点，都用List
     private final ArrayList<Integer> initTalentLevel = new ArrayList<>(Collections.nCopies(100 ,0));
-    private final ArrayList<?> initEquippedTalent = new ArrayList<>(Collections.nCopies(6 ,null));
+    private final ArrayList<?> initEquippedTalent = new ArrayList<>(Collections.nCopies(7 ,null));
 
     public OnPlayerJoinListener() {
         initHotBar.set(0, new ArrayList<>(Arrays.asList(Material.STONE_SWORD.name(), 1, new ArrayList<>())));

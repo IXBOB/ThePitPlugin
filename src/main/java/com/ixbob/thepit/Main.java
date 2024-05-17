@@ -82,6 +82,9 @@ public class Main extends JavaPlugin {
 
         Listener onPlayerTalentLevelChangeListener = new OnPlayerTalentLevelChangeListener();
         getServer().getPluginManager().registerEvents(onPlayerTalentLevelChangeListener, this);
+
+        Listener onPlayerEquippedTalentChangeListener = new OnPlayerEquippedTalentChangeListener();
+        getServer().getPluginManager().registerEvents(onPlayerEquippedTalentChangeListener, this);
     }
 
     @Override

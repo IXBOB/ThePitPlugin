@@ -61,4 +61,13 @@ public enum TalentItemsEnum {
     public int getId() {
         return id;
     }
+
+    public static TalentItemsEnum getById(int id) {
+        for (TalentItemsEnum talentItemsEnum : TalentItemsEnum.values()) {
+            if (talentItemsEnum.getId() == id) {
+                return talentItemsEnum;
+            }
+        }
+        return null;
+    }
 }

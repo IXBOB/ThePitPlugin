@@ -3,6 +3,7 @@ package com.ixbob.thepit.util;
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.MongoDB;
 import com.ixbob.thepit.PlayerDataBlock;
+import com.ixbob.thepit.enums.TalentItemsEnum;
 import com.ixbob.thepit.event.custom.*;
 import com.mongodb.DBObject;
 import org.bukkit.Bukkit;
@@ -124,9 +125,7 @@ public class Utils {
     public static void addXp(Player player, int addXp) {
         PlayerDataBlock playerData = Main.getPlayerDataBlock(player);
         int originXp = playerData.getThisLevelOwnXp();
-        int newXp = originXp + addXp;
-        playerData.setThisLevelOwnXp(newXp);
-        //创建并广播 拥有经验改变事件
+
         PlayerOwnXpModifiedEvent modifyXpEvent = new PlayerOwnXpModifiedEvent(player, originXp, addXp);
         Bukkit.getPluginManager().callEvent(modifyXpEvent);
     }
@@ -134,35 +133,29 @@ public class Utils {
     public static void addCoin(Player player, int addCoin) {
         PlayerDataBlock playerData = Main.getPlayerDataBlock(player);
         int originCoin = playerData.getCoinAmount();
-        int newCoin = originCoin + addCoin;
-        playerData.setCoinAmount(newCoin);
-        //创建并广播 拥有硬币改变事件
+
         PlayerOwnCoinModifiedEvent modifyCoinEvent = new PlayerOwnCoinModifiedEvent(player, originCoin, addCoin);
         Bukkit.getPluginManager().callEvent(modifyCoinEvent);
     }
 
     public static void setBattleState(Player player, boolean battleState) {
-        PlayerDataBlock playerData = Main.getPlayerDataBlock(player);
-        playerData.setBattleState(battleState);
-
         PlayerBattleStateChangeEvent playerBattleStateChangeEvent = new PlayerBattleStateChangeEvent(player, battleState);
         Bukkit.getPluginManager().callEvent(playerBattleStateChangeEvent);
     }
 
     public static void setTypedSpawn(Player player, boolean typedSpawn) {
-        PlayerDataBlock playerData = Main.getPlayerDataBlock(player);
-        playerData.setTypedSpawn(typedSpawn);
-
         PlayerTypedSpawnChangeEvent playerTypedSpawnChangeEvent = new PlayerTypedSpawnChangeEvent(player, typedSpawn);
         Bukkit.getPluginManager().callEvent(playerTypedSpawnChangeEvent);
     }
 
     public static void setTalentLevel(Player player, int id, int level) {
-        PlayerDataBlock playerData = Main.getPlayerDataBlock(player);
-        playerData.setTalentLevel(id, level);
-
         PlayerTalentLevelChangeEvent playerTalentLevelChangeEvent = new PlayerTalentLevelChangeEvent(player, id, level);
         Bukkit.getPluginManager().callEvent(playerTalentLevelChangeEvent);
+    }
+
+    public static void setEquippedTalent(Player player, int index, TalentItemsEnum talentItem) {
+        PlayerEquippedTalentChangeEvent playerEquippedTalentChangeEvent = new PlayerEquippedTalentChangeEvent(player, index, talentItem);
+        Bukkit.getPluginManager().callEvent(playerEquippedTalentChangeEvent);
     }
 
     public static void updateDisplayName(Player player) {

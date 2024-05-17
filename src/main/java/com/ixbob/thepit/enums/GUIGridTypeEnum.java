@@ -2,6 +2,8 @@ package com.ixbob.thepit.enums;
 
 public enum GUIGridTypeEnum {
     INVALID,
-    BUTTON,
-    MOVEABLE
+    LEFT_BUTTON,
+    RIGHT_BUTTON,
+    LEFT_MOVEABLE,
+    RIGHT_MOVEABLE
 }
