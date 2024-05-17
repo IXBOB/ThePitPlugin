@@ -126,10 +126,11 @@ public class GUITalent extends AbstractGUI {
                 if (dataBlock.getEquippedTalentList().get(TalentUtils.getEquipTalentIdByInventoryIndex(index)) != null) {
                     int talentId = (int) dataBlock.getEquippedTalentList().get(TalentUtils.getEquipTalentIdByInventoryIndex(index)); //获得已装备的talent id
                     TalentUtils.setTalentItem(inventory, index, TalentItemsEnum.getById(talentId), dataBlock.getTalentLevelList().get(talentId), true);
+                    leftButton.add(index);
+                    rightButton.add(index);
                 } else {
                     inventory.setItem(index, empty);
                 }
-                leftButton.add(index);
             }
         }
     }
