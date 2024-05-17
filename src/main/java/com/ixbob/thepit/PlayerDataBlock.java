@@ -158,6 +158,10 @@ public class PlayerDataBlock {
         this.equippedTalentList.set(equipGridId, talentId);
     }
 
+    public void removeEquippedTalent(int equipGridId) {
+        this.equippedTalentList.set(equipGridId, null);
+    }
+
     public int getPrestigeLevel() {
         return prestigeLevel;
     }

@@ -46,14 +46,18 @@ public class GUITalent extends AbstractGUI {
                 purchaseUpgrade(TalentItemsEnum.HEALTH_BOOST.getId(), TalentItemsEnum.HEALTH_BOOST);
             }
         } else if (type == GUIGridTypeEnum.LEFT_BUTTON) {
+            if (!movingState && index >= 37 && index <= 43) {
+                setEquipTalent(index, null, false);
+                initContent();
+            }
+
             if (!movingState && ((index >= 10 && index <= 16) || (index >= 19 && index <= 25))) {
                 movingTalentItem = TalentItemsEnum.getById(TalentUtils.getTalentIdByInventoryIndex(index));
                 movingState = true;
                 initMovingContent(); //传入点击的index
-            }
-            else if (movingState) {
+            } else if (movingState) {
                 if (index >= 37 && index <= 43) {
-                    equipTalent(index, movingTalentItem);
+                    setEquipTalent(index, movingTalentItem, true);
                 }
                 movingState = false;
                 initContent();
@@ -63,10 +67,16 @@ public class GUITalent extends AbstractGUI {
         }
     }
 
-    public void equipTalent(int index, TalentItemsEnum talentItem) {
-        Utils.setEquippedTalent(player, index, talentItem);
-        player.sendMessage(String.format(LangLoader.get("talent_equip_success_message"), talentItem.getDisplayName(), TalentUtils.getEquipTalentIdByInventoryIndex(index) + 1)); //!!!  装备天赋显示的槽位比代码内槽位id + 1
-        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
+    public void setEquipTalent(int index, TalentItemsEnum talentItem, boolean isEquipped) {
+        if (isEquipped) {
+            Utils.addEquippedTalent(player, index, talentItem);
+            player.sendMessage(String.format(LangLoader.get("talent_equip_success_message"), talentItem.getDisplayName(), TalentUtils.getEquipTalentIdByInventoryIndex(index) + 1)); //!!!  装备天赋显示的槽位比代码内槽位id + 1
+            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
+        } else {
+            Utils.removeEquippedTalent(player, index);
+            player.sendMessage("not equip!!!");
+        }
+
     }
 
     public void initContent() {

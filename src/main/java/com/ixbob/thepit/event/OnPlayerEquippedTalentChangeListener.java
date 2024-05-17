@@ -12,15 +12,21 @@ import org.bukkit.event.Listener;
 public class OnPlayerEquippedTalentChangeListener implements Listener {
     @EventHandler
     public void onPlayerEquippedTalentChange(PlayerEquippedTalentChangeEvent event) {
+        boolean isEquipped = event.getIsEquipped();
         Player player = event.getPlayer();
         int equipToIndex = event.getEquipToIndex();
         TalentItemsEnum talentItem = event.getTalentItem();
         PlayerDataBlock dataBlock = Main.getPlayerDataBlock(player);
-        updateDataBlock(dataBlock, TalentUtils.getEquipTalentIdByInventoryIndex(equipToIndex), talentItem.getId());
+        updateDataBlock(dataBlock, TalentUtils.getEquipTalentIdByInventoryIndex(equipToIndex), talentItem.getId(), isEquipped);
         dataBlock.updatePlayerDBData();
     }
 
-    private void updateDataBlock(PlayerDataBlock dataBlock, int equipGridId, int talentId) {
-        dataBlock.setEquippedTalent(equipGridId, talentId);
+    private void updateDataBlock(PlayerDataBlock dataBlock, int equipGridId, int talentId, boolean isEquipped) {
+        if (isEquipped) {
+            dataBlock.setEquippedTalent(equipGridId, talentId);
+        } else {
+            dataBlock.removeEquippedTalent(equipGridId);
+        }
+
     }
 }

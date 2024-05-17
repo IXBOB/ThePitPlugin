@@ -11,11 +11,24 @@ public class PlayerEquippedTalentChangeEvent extends Event {
     private final Player player;
     private final int equipToIndex;
     private final TalentItemsEnum talentItem;
+    private final boolean equipped;
 
-    public PlayerEquippedTalentChangeEvent(Player player, int equipToIndex, TalentItemsEnum talentItem) {
+    /**
+     *
+     * @param player
+     * @param equipToIndex
+     * @param talentItem 要删除已装备的talent物品，传入null，否则传入要装备talent物品枚举
+     * @param equipped 要删除已装备的talent物品，传入false，否则true
+     */
+    public PlayerEquippedTalentChangeEvent(Player player, int equipToIndex, TalentItemsEnum talentItem, boolean equipped) {
         this.player = player;
         this.equipToIndex = equipToIndex;
         this.talentItem = talentItem;
+        this.equipped = equipped;
+    }
+
+    public boolean getIsEquipped() {
+        return equipped;
     }
 
     public Player getPlayer() {
