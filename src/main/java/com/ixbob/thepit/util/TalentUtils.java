@@ -41,6 +41,7 @@ public class TalentUtils {
                     .replace("%AddMaxHealth%", String.valueOf(level * 2))
                     .replace("%ActionLeftClick%", String.valueOf(equipped ? LangLoader.get("talent_item_click_action_off") : LangLoader.get("talent_item_click_action_equip"))));
             itemMeta.setLore(loreList);
+            itemMeta.setDisplayName(talentItemType.getDisplayName());
             itemStack.setItemMeta(itemMeta);
             return itemStack;
         }
@@ -63,7 +64,7 @@ public class TalentUtils {
         throw new NullPointerException();
     }
 
-    public static int getEquipGridIdByInventoryIndex(int inventoryIndex) {
+    public static int getEquipTalentIdByInventoryIndex(int inventoryIndex) {
         return inventoryIndex - 37;
     }
 }

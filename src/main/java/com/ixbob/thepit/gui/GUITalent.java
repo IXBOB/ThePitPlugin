@@ -65,14 +65,16 @@ public class GUITalent extends AbstractGUI {
 
     public void equipTalent(int index, TalentItemsEnum talentItem) {
         Utils.setEquippedTalent(player, index, talentItem);
-        player.sendMessage(String.format(LangLoader.get("talent_equip_success_message"), talentItem.getDisplayName(), TalentUtils.getEquipGridIdByInventoryIndex(index) + 1)); //!!!  装备天赋显示的槽位比代码内槽位id + 1
+        player.sendMessage(String.format(LangLoader.get("talent_equip_success_message"), talentItem.getDisplayName(), TalentUtils.getEquipTalentIdByInventoryIndex(index) + 1)); //!!!  装备天赋显示的槽位比代码内槽位id + 1
         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
     }
 
     public void initContent() {
-        PlayerDataBlock playerDataBlock = Main.getPlayerDataBlock(player);
-        int playerLevel = playerDataBlock.getLevel();
-        int playerPrestigeLevel = playerDataBlock.getPrestigeLevel();
+        PlayerDataBlock dataBlock = Main.getPlayerDataBlock(player);
+        int playerLevel = dataBlock.getLevel();
+        int playerPrestigeLevel = dataBlock.getPrestigeLevel();
+        ArrayList<Integer> talentLevelList = dataBlock.getTalentLevelList();
+        ArrayList<?> equippedTalentList = dataBlock.getEquippedTalentList();
 
         ItemStack emptyWall = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 7);
         ItemMeta emptyItemMeta = emptyWall.getItemMeta();
@@ -86,8 +88,25 @@ public class GUITalent extends AbstractGUI {
         ItemMeta lockedItemMeta = locked.getItemMeta();
         lockedItemMeta.setDisplayName(LangLoader.get("talent_item_locked"));
         locked.setItemMeta(lockedItemMeta);
+        ItemStack hasEquipped = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 12);
+        ItemMeta hasEquippedItemMeta = hasEquipped.getItemMeta();
+        hasEquippedItemMeta.setDisplayName(LangLoader.get("talent_item_has_equipped"));
+        hasEquipped.setItemMeta(hasEquippedItemMeta);
         for (int index = 10; index <= 16; index++) {
             inventory.setItem(index, locked);
+            int talentId = TalentUtils.getTalentIdByInventoryIndex(index);
+            if (!equippedTalentList.contains(talentId)) {
+                if (talentId == 0) {
+                    //TODO: 什么鸟代码，下面这个还有boolean返回值很烦，有空优化下。
+                    if (TalentUtils.setTalentItem(inventory, TalentIdEnum.valueOf("ID_" + 0).getInventoryIndex(), TalentItemsEnum.HEALTH_BOOST, talentLevelList.get(0), false)) {
+                        rightButton.add(Utils.getInventoryIndex(2,2));
+                        leftButton.add(Utils.getInventoryIndex(2, 2));
+                    }
+                }
+            }
+            else {
+                inventory.setItem(index, hasEquipped);
+            }
         }
         for (int index = 19; index <= 25; index++) {
             inventory.setItem(index, locked);
@@ -104,24 +123,14 @@ public class GUITalent extends AbstractGUI {
             if (playerPrestigeLevel < needPrestigeLevel || (playerPrestigeLevel == needPrestigeLevel && playerLevel < needLevel)) {
                 inventory.setItem(index, barrier);
             } else {
-                if (playerDataBlock.getEquippedTalentList().get(index - 37) != null) {
-                    int talentId = (int) playerDataBlock.getEquippedTalentList().get(index - 37); //获得已装备的talent id
-                    TalentUtils.setTalentItem(inventory, index, TalentItemsEnum.getById(talentId), playerDataBlock.getTalentLevelList().get(talentId), true);
-                    System.out.println("place");
+                if (dataBlock.getEquippedTalentList().get(TalentUtils.getEquipTalentIdByInventoryIndex(index)) != null) {
+                    int talentId = (int) dataBlock.getEquippedTalentList().get(TalentUtils.getEquipTalentIdByInventoryIndex(index)); //获得已装备的talent id
+                    TalentUtils.setTalentItem(inventory, index, TalentItemsEnum.getById(talentId), dataBlock.getTalentLevelList().get(talentId), true);
                 } else {
                     inventory.setItem(index, empty);
                 }
                 leftButton.add(index);
             }
-        }
-
-        PlayerDataBlock dataBlock = Main.getPlayerDataBlock(player);
-        ArrayList<Integer> talentLevelList = dataBlock.getTalentLevelList();
-        ArrayList<?> equippedTalentList = dataBlock.getEquippedTalentList();
-
-        if (TalentUtils.setTalentItem(inventory, TalentIdEnum.valueOf("ID_" + 0).getInventoryIndex(), TalentItemsEnum.HEALTH_BOOST, talentLevelList.get(0), false)) {
-            rightButton.add(Utils.getInventoryIndex(2,2));
-            leftButton.add(Utils.getInventoryIndex(2, 2));
         }
     }
 

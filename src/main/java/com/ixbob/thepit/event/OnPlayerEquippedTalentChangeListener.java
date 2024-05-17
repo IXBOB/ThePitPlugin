@@ -16,7 +16,7 @@ public class OnPlayerEquippedTalentChangeListener implements Listener {
         int equipToIndex = event.getEquipToIndex();
         TalentItemsEnum talentItem = event.getTalentItem();
         PlayerDataBlock dataBlock = Main.getPlayerDataBlock(player);
-        updateDataBlock(dataBlock, TalentUtils.getEquipGridIdByInventoryIndex(equipToIndex), talentItem.getId());
+        updateDataBlock(dataBlock, TalentUtils.getEquipTalentIdByInventoryIndex(equipToIndex), talentItem.getId());
         dataBlock.updatePlayerDBData();
     }
 
