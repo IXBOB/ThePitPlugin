@@ -47,7 +47,10 @@ public class GUITalent extends AbstractGUI {
             }
         } else if (type == GUIGridTypeEnum.LEFT_BUTTON) {
             if (!movingState && index >= 37 && index <= 43) {
-                setEquipTalent(index, null, false);
+                PlayerDataBlock dataBlock = Main.getPlayerDataBlock(player);
+                ArrayList<?> equippedTalentList = dataBlock.getEquippedTalentList();
+                TalentItemsEnum clickTalentItem = TalentItemsEnum.getById((int) equippedTalentList.get(TalentUtils.getEquipGridIdByInventoryIndex(index)));
+                setEquipTalent(index, clickTalentItem, false);
                 initContent();
             }
 
@@ -70,16 +73,19 @@ public class GUITalent extends AbstractGUI {
     public void setEquipTalent(int index, TalentItemsEnum talentItem, boolean isEquipped) {
         if (isEquipped) {
             Utils.addEquippedTalent(player, index, talentItem);
-            player.sendMessage(String.format(LangLoader.get("talent_equip_success_message"), talentItem.getDisplayName(), TalentUtils.getEquipTalentIdByInventoryIndex(index) + 1)); //!!!  装备天赋显示的槽位比代码内槽位id + 1
+            player.sendMessage(String.format(LangLoader.get("talent_equip_success_message"), talentItem.getDisplayName(), TalentUtils.getEquipGridIdByInventoryIndex(index) + 1)); //!!!  装备天赋显示的槽位比代码内槽位id + 1
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
         } else {
             Utils.removeEquippedTalent(player, index);
-            player.sendMessage("not equip!!!");
+            player.sendMessage(String.format(LangLoader.get("talent_drop_success_message"), talentItem.getDisplayName()));
         }
 
     }
 
     public void initContent() {
+        leftButton.clear();
+        rightButton.clear();
+
         PlayerDataBlock dataBlock = Main.getPlayerDataBlock(player);
         int playerLevel = dataBlock.getLevel();
         int playerPrestigeLevel = dataBlock.getPrestigeLevel();
@@ -133,8 +139,8 @@ public class GUITalent extends AbstractGUI {
             if (playerPrestigeLevel < needPrestigeLevel || (playerPrestigeLevel == needPrestigeLevel && playerLevel < needLevel)) {
                 inventory.setItem(index, barrier);
             } else {
-                if (dataBlock.getEquippedTalentList().get(TalentUtils.getEquipTalentIdByInventoryIndex(index)) != null) {
-                    int talentId = (int) dataBlock.getEquippedTalentList().get(TalentUtils.getEquipTalentIdByInventoryIndex(index)); //获得已装备的talent id
+                if (dataBlock.getEquippedTalentList().get(TalentUtils.getEquipGridIdByInventoryIndex(index)) != null) {
+                    int talentId = (int) dataBlock.getEquippedTalentList().get(TalentUtils.getEquipGridIdByInventoryIndex(index)); //获得已装备的talent id
                     TalentUtils.setTalentItem(inventory, index, TalentItemsEnum.getById(talentId), dataBlock.getTalentLevelList().get(talentId), true);
                     leftButton.add(index);
                     rightButton.add(index);
@@ -146,15 +152,20 @@ public class GUITalent extends AbstractGUI {
     }
 
     public void initMovingContent() {
+        leftButton.clear();
+        rightButton.clear();
+
         ItemStack dropButton = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 14);
         ItemMeta dropItemMeta = dropButton.getItemMeta();
         dropItemMeta.setDisplayName(LangLoader.get("talent_system_item_drop_name"));
         dropButton.setItemMeta(dropItemMeta);
         for (int index = 10; index <= 16; index++) {
             inventory.setItem(index, dropButton);
+            leftButton.add(index);
         }
         for (int index = 19; index <= 25; index++) {
             inventory.setItem(index, dropButton);
+            leftButton.add(index);
         }
 
         ItemStack equipButton = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 5);
@@ -164,6 +175,8 @@ public class GUITalent extends AbstractGUI {
         for (int index = 37; index <= 43; index++) {
             if (inventory.getItem(index) == null) {
                 inventory.setItem(index, equipButton);
+                leftButton.add(index);
+                rightButton.add(index);
             }
         }
     }

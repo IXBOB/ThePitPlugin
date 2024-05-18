@@ -64,7 +64,7 @@ public class TalentUtils {
         throw new NullPointerException();
     }
 
-    public static int getEquipTalentIdByInventoryIndex(int inventoryIndex) {
+    public static int getEquipGridIdByInventoryIndex(int inventoryIndex) {
         return inventoryIndex - 37;
     }
 }

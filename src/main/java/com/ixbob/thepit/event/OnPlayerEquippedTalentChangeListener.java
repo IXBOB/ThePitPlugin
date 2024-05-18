@@ -17,11 +17,11 @@ public class OnPlayerEquippedTalentChangeListener implements Listener {
         int equipToIndex = event.getEquipToIndex();
         TalentItemsEnum talentItem = event.getTalentItem();
         PlayerDataBlock dataBlock = Main.getPlayerDataBlock(player);
-        updateDataBlock(dataBlock, TalentUtils.getEquipTalentIdByInventoryIndex(equipToIndex), talentItem.getId(), isEquipped);
+        updateDataBlock(dataBlock, TalentUtils.getEquipGridIdByInventoryIndex(equipToIndex), talentItem != null ? talentItem.getId() : null , isEquipped);
         dataBlock.updatePlayerDBData();
     }
 
-    private void updateDataBlock(PlayerDataBlock dataBlock, int equipGridId, int talentId, boolean isEquipped) {
+    private void updateDataBlock(PlayerDataBlock dataBlock, int equipGridId, Integer talentId, boolean isEquipped) {  //Integer类型可传入null
         if (isEquipped) {
             dataBlock.setEquippedTalent(equipGridId, talentId);
         } else {
