@@ -55,7 +55,7 @@ public class TalentUtils {
         throw new RuntimeException();
     }
 
-    public static int getTalentIdByInventoryIndex(int inventoryIndex) {
+    public static int getNotEquippedTalentIdByInventoryIndex(int inventoryIndex) {
         for (TalentIdEnum talentId : TalentIdEnum.values()) {
             if (talentId.getInventoryIndex() == inventoryIndex) {
                 return talentId.getId();
@@ -66,5 +66,14 @@ public class TalentUtils {
 
     public static int getEquipGridIdByInventoryIndex(int inventoryIndex) {
         return inventoryIndex - 37;
+    }
+
+    public static TalentItemsEnum getTalentItemEnumById(int id) {
+        for (TalentItemsEnum talentItemsEnum : TalentItemsEnum.values()) {
+            if (talentItemsEnum.getId() == id) {
+                return talentItemsEnum;
+            }
+        }
+        return null;
     }
 }

@@ -1,6 +1,7 @@
 package com.ixbob.thepit.enums;
 
 import com.ixbob.thepit.LangLoader;
+import com.ixbob.thepit.util.Utils;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -9,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum TalentItemsEnum {
-    HEALTH_BOOST(Material.REDSTONE, 0, 10, 0, LangLoader.get("talent_item_add_health_name"), new ArrayList<>(Arrays.asList(
+    HEALTH_BOOST(Material.REDSTONE, 0, 10, 0, Utils.getInventoryIndex(2,2), 1, LangLoader.get("talent_item_add_health_name"), new ArrayList<>(Arrays.asList(
             LangLoader.get("talent_item_add_health_lore1"),
             LangLoader.get("talent_item_add_health_lore2"),
             LangLoader.get("talent_item_add_health_lore3"),
@@ -22,14 +23,18 @@ public enum TalentItemsEnum {
     private final int id;
     private final int needLevel;
     private final int needPrestigeLevel;
+    private final int index;
+    private final int page;
     private final String displayName;
     private final List<String> loreList;
 
-    TalentItemsEnum(Material material, int id, int needLevel, int needPrestigeLevel, String displayName, List<String> loreList) {
+    TalentItemsEnum(Material material, int id, int needLevel, int needPrestigeLevel, int index, int page, String displayName, List<String> loreList) {
         this.material = material;
         this.id = id;
         this.needLevel = needLevel;
         this.needPrestigeLevel = needPrestigeLevel;
+        this.index = index;
+        this.page = page;
         this.displayName = displayName;
         this.loreList = loreList;
     }
@@ -46,6 +51,14 @@ public enum TalentItemsEnum {
         return needPrestigeLevel;
     }
 
+    public int getIndex() {
+        return index;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
     public ItemStack getItemStack(int amount) {
         return new ItemStack(material, amount);
     }
@@ -60,14 +73,5 @@ public enum TalentItemsEnum {
 
     public int getId() {
         return id;
-    }
-
-    public static TalentItemsEnum getById(int id) {
-        for (TalentItemsEnum talentItemsEnum : TalentItemsEnum.values()) {
-            if (talentItemsEnum.getId() == id) {
-                return talentItemsEnum;
-            }
-        }
-        return null;
     }
 }

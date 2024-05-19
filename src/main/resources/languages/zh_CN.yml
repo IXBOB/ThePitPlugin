@@ -35,7 +35,7 @@ talent_system_item_equip_name: "§a装备至此天赋栏"
 talent_item_click_action_equip: "装备"
 talent_item_click_action_off: "卸下"
 talent_upgrade_success_message: "%s §r§d现已被升至 §a§l%s §r§d级"
-talent_upgrade_failed_as_coin: "§c你没有足够的硬币来升级该天赋！"
+talent_upgrade_failed_as_coin: "§c你没有足够的硬币来升级该天赋！ 还需要 %s"
 talent_item_add_health_name: "§e§l活跃血液" #talent_id = 0
 talent_item_add_health_lore1: "§7--------------------------------"
 talent_item_add_health_lore2: "§r§b等级: %Level%  §6下一等级: %NextLevelNeedCoin% 硬币"

@@ -1,10 +1,11 @@
 package com.ixbob.thepit.gui;
 
-import com.ixbob.thepit.*;
-import com.ixbob.thepit.enums.GUIGridTypeEnum;
-import com.ixbob.thepit.enums.TalentIdEnum;
-import com.ixbob.thepit.enums.TalentItemsEnum;
+import com.ixbob.thepit.AbstractGUI;
 import com.ixbob.thepit.LangLoader;
+import com.ixbob.thepit.Main;
+import com.ixbob.thepit.PlayerDataBlock;
+import com.ixbob.thepit.enums.GUIGridTypeEnum;
+import com.ixbob.thepit.enums.TalentItemsEnum;
 import com.ixbob.thepit.util.TalentUtils;
 import com.ixbob.thepit.util.Utils;
 import org.bukkit.Bukkit;
@@ -49,14 +50,14 @@ public class GUITalent extends AbstractGUI {
             if (!movingState && index >= 37 && index <= 43) {   //移除天赋
                 PlayerDataBlock dataBlock = Main.getPlayerDataBlock(player);
                 ArrayList<?> equippedTalentList = dataBlock.getEquippedTalentList();
-                TalentItemsEnum clickTalentItem = TalentItemsEnum.getById((int) equippedTalentList.get(TalentUtils.getEquipGridIdByInventoryIndex(index)));
+                TalentItemsEnum clickTalentItem = TalentUtils.getTalentItemEnumById((int) equippedTalentList.get(TalentUtils.getEquipGridIdByInventoryIndex(index)));
                 setEquipTalent(index, clickTalentItem, false);
                 initContent();
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_HARP, 1, 1);
             }
 
             if (!movingState && ((index >= 10 && index <= 16) || (index >= 19 && index <= 25))) {  //装备天赋
-                movingTalentItem = TalentItemsEnum.getById(TalentUtils.getTalentIdByInventoryIndex(index));
+                movingTalentItem = TalentUtils.getTalentItemEnumById(TalentUtils.getNotEquippedTalentIdByInventoryIndex(index));
                 movingState = true;
                 initMovingContent(); //传入点击的index
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_HARP, 1, 1);
@@ -111,24 +112,26 @@ public class GUITalent extends AbstractGUI {
         ItemMeta hasEquippedItemMeta = hasEquipped.getItemMeta();
         hasEquippedItemMeta.setDisplayName(LangLoader.get("talent_item_has_equipped"));
         hasEquipped.setItemMeta(hasEquippedItemMeta);
-        for (int index = 10; index <= 16; index++) {
+        for (int index = 10; index <= 25; index++) {
+            if (index == 17 || index == 18 ) {
+                continue;
+            }
+
             inventory.setItem(index, locked);
-            int talentId = TalentUtils.getTalentIdByInventoryIndex(index);
+            int talentId = TalentUtils.getNotEquippedTalentIdByInventoryIndex(index);
+            TalentItemsEnum talentItem = TalentUtils.getTalentItemEnumById(talentId);
+            if (talentItem == null) {
+                continue;
+            }
             if (!equippedTalentList.contains(talentId)) {
-                if (talentId == 0) {
-                    //TODO: 什么鸟代码，下面这个还有boolean返回值很烦，有空优化下。
-                    if (TalentUtils.setTalentItem(inventory, TalentIdEnum.valueOf("ID_" + 0).getInventoryIndex(), TalentItemsEnum.HEALTH_BOOST, talentLevelList.get(0), false)) {
-                        rightButton.add(Utils.getInventoryIndex(2,2));
-                        leftButton.add(Utils.getInventoryIndex(2, 2));
-                    }
+                if (TalentUtils.setTalentItem(inventory, index, talentItem, talentLevelList.get(talentId), false)) {
+                    rightButton.add(talentItem.getIndex());
+                    leftButton.add(talentItem.getIndex());
                 }
             }
             else {
                 inventory.setItem(index, hasEquipped);
             }
-        }
-        for (int index = 19; index <= 25; index++) {
-            inventory.setItem(index, locked);
         }
 
         ItemStack barrier = new ItemStack(Material.BARRIER);
@@ -144,7 +147,11 @@ public class GUITalent extends AbstractGUI {
             } else {
                 if (dataBlock.getEquippedTalentList().get(TalentUtils.getEquipGridIdByInventoryIndex(index)) != null) {
                     int talentId = (int) dataBlock.getEquippedTalentList().get(TalentUtils.getEquipGridIdByInventoryIndex(index)); //获得已装备的talent id
-                    TalentUtils.setTalentItem(inventory, index, TalentItemsEnum.getById(talentId), dataBlock.getTalentLevelList().get(talentId), true);
+                    TalentItemsEnum talentItemsEnum = TalentUtils.getTalentItemEnumById(talentId);
+                    if (talentItemsEnum == null) { //id不存在
+                        continue;
+                    }
+                    TalentUtils.setTalentItem(inventory, index, talentItemsEnum, dataBlock.getTalentLevelList().get(talentId), true);
                     leftButton.add(index);
                     rightButton.add(index);
                 } else {
@@ -200,7 +207,7 @@ public class GUITalent extends AbstractGUI {
             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 2);
             return;
         }
-        player.sendMessage(LangLoader.get("talent_upgrade_failed_as_coin"));
-        player.playSound(player.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1);
+        player.sendMessage(String.format(LangLoader.get("talent_upgrade_failed_as_coin"), needCoinAmount - ownCoinAmount));
+        player.playSound(player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1, 1);
     }
 }
