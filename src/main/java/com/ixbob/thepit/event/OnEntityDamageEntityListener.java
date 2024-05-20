@@ -45,12 +45,12 @@ public class OnEntityDamageEntityListener implements Listener {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
             Player damagedPlayer = (Player) event.getEntity();
             Player damager = (Player) event.getDamager();
-
-            if (Utils.isInLobbyArea(damagedPlayer.getLocation())) {
+            //若有一方在大厅，则取消伤害
+            if (Utils.isInLobbyArea(damagedPlayer.getLocation()) || Utils.isInLobbyArea(damager.getLocation())) {
                 event.setCancelled(true);
                 return;
             }
-
+            //正常伤害逻辑
             damageEvent(damager, damagedPlayer, event);
         }
     }
