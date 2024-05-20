@@ -46,10 +46,10 @@ public class TalentUtils {
             itemStack.setItemMeta(itemMeta);
             return itemStack;
         }
-        if (talentItemType == TalentItemsEnum.GOLDEN_HEAD) {
+        if (talentItemType == TalentItemsEnum.GOLDEN_CHOCOLATE) {
             loreList.replaceAll(s -> s.replace("%Level%", String.valueOf(level))
                     .replace("%NextLevelNeedCoin%", String.valueOf(getNextLevelNeedCoinAmount(talentItemType, level)))
-                    .replace("%AddPoint%", String.valueOf(4 + level))
+                    .replace("%AddPoint%", String.valueOf(TalentCalcuUtils.getValue(id, level)))
                     .replace("%ActionLeftClick%", String.valueOf(equipped ? LangLoader.get("talent_item_click_action_off") : LangLoader.get("talent_item_click_action_equip"))));
             itemMeta.setLore(loreList);
             itemMeta.setDisplayName(talentItemType.getDisplayName());
@@ -63,7 +63,7 @@ public class TalentUtils {
         if (talentItemType == TalentItemsEnum.HEALTH_BOOST) {
             return (currentLevel + 1) * 500;
         }
-        if (talentItemType == TalentItemsEnum.GOLDEN_HEAD) {
+        if (talentItemType == TalentItemsEnum.GOLDEN_CHOCOLATE) {
             return (currentLevel + 1) * 400;
         }
         throw new RuntimeException();

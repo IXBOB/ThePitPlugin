@@ -1,6 +1,9 @@
 package com.ixbob.thepit.event;
 
 import com.ixbob.thepit.Main;
+import com.ixbob.thepit.PlayerDataBlock;
+import com.ixbob.thepit.enums.PitItem;
+import com.ixbob.thepit.enums.TalentItemsEnum;
 import com.ixbob.thepit.event.custom.PlayerBattleStateChangeEvent;
 import com.ixbob.thepit.LangLoader;
 import com.ixbob.thepit.util.Utils;
@@ -17,6 +20,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class OnEntityDamageEntityListener implements Listener {
@@ -61,7 +65,7 @@ public class OnEntityDamageEntityListener implements Listener {
         PlayerBattleStateChangeEvent damagedPlayerBattleStateChangeEvent = new PlayerBattleStateChangeEvent(damagedPlayer, true);
         Bukkit.getPluginManager().callEvent(damagedPlayerBattleStateChangeEvent);
 
-        //玩家死亡
+        //若被击杀的玩家受到的伤害足以导致死亡
         if (damagedPlayer.getHealth() <= event.getFinalDamage()) {
             event.setCancelled(true);
 
@@ -83,7 +87,11 @@ public class OnEntityDamageEntityListener implements Listener {
         killer.playSound(killer.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
         deathPlayer.playSound(deathPlayer.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1, 1);
 
-        killer.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 1));
+        PlayerDataBlock dataBlock = Main.getPlayerDataBlock(killer);
+        ArrayList<?> equippedTalentList = dataBlock.getEquippedTalentList();
+        if (equippedTalentList.contains(TalentItemsEnum.GOLDEN_CHOCOLATE.getId())) {
+            killer.getInventory().addItem(PitItem.GOLDEN_CHOCOLATE.getItemStack());
+        } else killer.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 1));
 
         for (PotionEffect effect : deathPlayer.getActivePotionEffects()) {
             deathPlayer.removePotionEffect(effect.getType());

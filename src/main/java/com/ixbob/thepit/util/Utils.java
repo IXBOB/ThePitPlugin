@@ -5,11 +5,16 @@ import com.ixbob.thepit.MongoDB;
 import com.ixbob.thepit.PlayerDataBlock;
 import com.ixbob.thepit.enums.TalentItemsEnum;
 import com.ixbob.thepit.event.custom.*;
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
 import com.mongodb.DBObject;
+import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_12_R1.CraftServer;
+import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -185,5 +190,28 @@ public class Utils {
 
     public static int getInventoryIndex(int row, int column) {
         return row * 9 - 1 - (9 - column);
+    }
+
+    public static EntityPlayer getNewNMSPlayer(String name, String texture, String signature) throws Exception {
+        MinecraftServer minecraftServer = ((CraftServer) Bukkit.getServer()).getServer();
+        WorldServer worldServer = ((CraftWorld) Bukkit.getWorlds().get(0)).getHandle();
+        GameProfile gameProfile = new GameProfile(UUID.randomUUID(), "golden_chocolate");
+
+        gameProfile.getProperties().put("textures", new Property("textures", texture, signature));
+
+        EntityPlayer entityPlayer = new EntityPlayer(minecraftServer, worldServer, gameProfile, new PlayerInteractManager(minecraftServer.getWorld()));
+        int entityID = (int)Math.ceil(Math.random() * 1000) + 2000;
+        entityPlayer.h(entityID); //h: setID
+
+        //启用双层皮肤
+        DataWatcher dataWatcher = new DataWatcher(null);
+//        https://wiki.vg/Entity_metadata#Player
+        DataWatcherObject<Byte> displayedPartsObject = new DataWatcherObject<>(13, DataWatcherRegistry.a);
+        byte displayedSkinParts = (byte) (0x01 | 0x02 | 0x04 | 0x08 | 0x10 | 0x20 | 0x40);
+        dataWatcher.register(displayedPartsObject, displayedSkinParts);
+        PacketPlayOutEntityMetadata packet = new PacketPlayOutEntityMetadata(entityID, dataWatcher, true);
+        NMSUtils.sendNMSPacketToAllPlayers(packet);
+
+        return entityPlayer;
     }
 }

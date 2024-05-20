@@ -3,6 +3,7 @@ package com.ixbob.thepit;
 import com.ixbob.thepit.command.CommandSpawn;
 import com.ixbob.thepit.command.CommandTalent;
 import com.ixbob.thepit.command.CommandTest;
+import com.ixbob.thepit.enums.CustomSkull;
 import com.ixbob.thepit.event.*;
 import com.ixbob.thepit.util.Utils;
 import org.bukkit.Bukkit;
@@ -38,6 +39,7 @@ public class Main extends JavaPlugin {
         Main.mongoDB = mongoDB;
 
         LangLoader.init(this);
+        CustomSkull.init();
 
         this.saveDefaultConfig();
         lobbyAreaFromPosList = config.getIntegerList("lobby_area.from");
@@ -85,6 +87,9 @@ public class Main extends JavaPlugin {
 
         Listener onPlayerEquippedTalentChangeListener = new OnPlayerEquippedTalentChangeListener();
         getServer().getPluginManager().registerEvents(onPlayerEquippedTalentChangeListener, this);
+
+        Listener onPlayerInteractListener = new OnPlayerInteractListener();
+        getServer().getPluginManager().registerEvents(onPlayerInteractListener, this);
     }
 
     @Override

@@ -43,9 +43,16 @@ public class GUITalent extends AbstractGUI {
     public void onClick(int index, ClickType clickType) {
         GUIGridTypeEnum type = getGridType(index, clickType);
         if (type == GUIGridTypeEnum.RIGHT_BUTTON) {  //升级天赋
-            if (inventory.getItem(index).getType() == TalentItemsEnum.HEALTH_BOOST.getMaterial()) {
-                purchaseUpgrade(index, TalentItemsEnum.HEALTH_BOOST.getId(), TalentItemsEnum.HEALTH_BOOST);
+            TalentItemsEnum clickedTalentItem = null;
+            int talentItemId = -1;
+            if ((index >= 10 && index <= 16) || (index >= 19 && index <= 25)) {
+                talentItemId = TalentUtils.getNotEquippedTalentIdByInventoryIndex(index);
+                clickedTalentItem = TalentUtils.getTalentItemEnumById(talentItemId);
+            } else if (index >= 37 && index <= 43) {
+                talentItemId = (int) Main.getPlayerDataBlock(player).getEquippedTalentList().get(TalentUtils.getEquipGridIdByInventoryIndex(index));
+                clickedTalentItem = TalentUtils.getTalentItemEnumById(talentItemId);
             }
+            purchaseUpgrade(index, talentItemId, clickedTalentItem);
         } else if (type == GUIGridTypeEnum.LEFT_BUTTON) {
             if (!movingState && index >= 37 && index <= 43) {   //移除天赋
                 PlayerDataBlock dataBlock = Main.getPlayerDataBlock(player);

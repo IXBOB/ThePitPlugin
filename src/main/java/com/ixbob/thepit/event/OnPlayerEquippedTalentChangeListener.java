@@ -2,6 +2,7 @@ package com.ixbob.thepit.event;
 
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.PlayerDataBlock;
+import com.ixbob.thepit.enums.PitItem;
 import com.ixbob.thepit.enums.TalentItemsEnum;
 import com.ixbob.thepit.event.custom.PlayerEquippedTalentChangeEvent;
 import com.ixbob.thepit.util.TalentCalcuUtils;
@@ -44,16 +45,16 @@ public class OnPlayerEquippedTalentChangeListener implements Listener {
         switch (talentItem) {
             case HEALTH_BOOST:
                 if (isEquipped) {
-                    float maxHealth = TalentCalcuUtils.getValue(id, level);
+                    float maxHealth = 20 + TalentCalcuUtils.getValue(id, level);
                     player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(maxHealth);
                     player.setHealth(maxHealth);
                 } else {
                     player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
                     player.setHealth(20);
                 } break;
-            case GOLDEN_HEAD:
+            case GOLDEN_CHOCOLATE:
                 if (isEquipped) {
-                    System.out.println("Equip!");
+                    player.getInventory().addItem(PitItem.GOLDEN_CHOCOLATE.getItemStack());
                 } else {
                     System.out.println("Not Equip!");
                 } break;

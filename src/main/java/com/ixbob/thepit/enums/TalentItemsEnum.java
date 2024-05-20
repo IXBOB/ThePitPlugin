@@ -18,7 +18,7 @@ public enum TalentItemsEnum {
             LangLoader.get("talent_item_id_0_lore5"),
             LangLoader.get("talent_item_id_0_lore6"),
             LangLoader.get("talent_item_id_0_lore7")))),
-    GOLDEN_HEAD(Material.GOLDEN_APPLE, 1, 10, 0, Utils.getInventoryIndex(2, 3), 1, LangLoader.get("talent_item_id_1_name"), new ArrayList<>(Arrays.asList(
+    GOLDEN_CHOCOLATE(Material.GOLDEN_APPLE, 1, 10, 0, Utils.getInventoryIndex(2, 3), 1, LangLoader.get("talent_item_id_1_name"), new ArrayList<>(Arrays.asList(
             LangLoader.get("talent_item_id_1_lore1"),
             LangLoader.get("talent_item_id_1_lore2"),
             LangLoader.get("talent_item_id_1_lore3"),
