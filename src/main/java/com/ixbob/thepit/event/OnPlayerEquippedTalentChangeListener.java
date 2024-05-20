@@ -4,21 +4,30 @@ import com.ixbob.thepit.Main;
 import com.ixbob.thepit.PlayerDataBlock;
 import com.ixbob.thepit.enums.TalentItemsEnum;
 import com.ixbob.thepit.event.custom.PlayerEquippedTalentChangeEvent;
+import com.ixbob.thepit.util.TalentCalcuUtils;
 import com.ixbob.thepit.util.TalentUtils;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 public class OnPlayerEquippedTalentChangeListener implements Listener {
+    private Player player;
+    private int equipToIndex;
+    private TalentItemsEnum talentItem;
+    private boolean isEquipped;
+    private PlayerDataBlock dataBlock;
     @EventHandler
     public void onPlayerEquippedTalentChange(PlayerEquippedTalentChangeEvent event) {
-        boolean isEquipped = event.getIsEquipped();
-        Player player = event.getPlayer();
-        int equipToIndex = event.getEquipToIndex();
-        TalentItemsEnum talentItem = event.getTalentItem();
-        PlayerDataBlock dataBlock = Main.getPlayerDataBlock(player);
+        isEquipped = event.getIsEquipped();
+        player = event.getPlayer();
+        equipToIndex = event.getEquipToIndex();
+        talentItem = event.getTalentItem();
+        dataBlock = Main.getPlayerDataBlock(player);
+
         updateDataBlock(dataBlock, TalentUtils.getEquipGridIdByInventoryIndex(equipToIndex), talentItem != null ? talentItem.getId() : null , isEquipped);
         dataBlock.updatePlayerDBData();
+        applyEquipChangeResult();
     }
 
     private void updateDataBlock(PlayerDataBlock dataBlock, int equipGridId, Integer talentId, boolean isEquipped) {  //Integer类型可传入null
@@ -27,6 +36,28 @@ public class OnPlayerEquippedTalentChangeListener implements Listener {
         } else {
             dataBlock.removeEquippedTalent(equipGridId);
         }
+    }
 
+    private void applyEquipChangeResult() {
+        int id = talentItem.getId();
+        int level = dataBlock.getTalentLevelList().get(id);
+        switch (talentItem) {
+            case HEALTH_BOOST:
+                if (isEquipped) {
+                    float maxHealth = TalentCalcuUtils.getValue(id, level);
+                    player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(maxHealth);
+                    player.setHealth(maxHealth);
+                } else {
+                    player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
+                    player.setHealth(20);
+                } break;
+            case GOLDEN_HEAD:
+                if (isEquipped) {
+                    System.out.println("Equip!");
+                } else {
+                    System.out.println("Not Equip!");
+                } break;
+
+        }
     }
 }

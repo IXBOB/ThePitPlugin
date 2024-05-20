@@ -75,12 +75,11 @@ public class GUITalent extends AbstractGUI {
     }
 
     public void setEquipTalent(int index, TalentItemsEnum talentItem, boolean isEquipped) {
+        Utils.changeEquippedTalent(player, index, talentItem, isEquipped);
         if (isEquipped) {
-            Utils.addEquippedTalent(player, index, talentItem);
             player.sendMessage(String.format(LangLoader.get("talent_equip_success_message"), talentItem.getDisplayName(), TalentUtils.getEquipGridIdByInventoryIndex(index) + 1)); //!!!  装备天赋显示的槽位比代码内槽位id + 1
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
         } else {
-            Utils.removeEquippedTalent(player, index);
             player.sendMessage(String.format(LangLoader.get("talent_drop_success_message"), talentItem.getDisplayName()));
         }
 
@@ -118,6 +117,7 @@ public class GUITalent extends AbstractGUI {
             }
 
             inventory.setItem(index, locked);
+
             int talentId = TalentUtils.getNotEquippedTalentIdByInventoryIndex(index);
             TalentItemsEnum talentItem = TalentUtils.getTalentItemEnumById(talentId);
             if (talentItem == null) {

@@ -153,13 +153,8 @@ public class Utils {
         Bukkit.getPluginManager().callEvent(playerTalentLevelChangeEvent);
     }
 
-    public static void addEquippedTalent(Player player, int index, TalentItemsEnum talentItem) {
-        PlayerEquippedTalentChangeEvent playerEquippedTalentChangeEvent = new PlayerEquippedTalentChangeEvent(player, index, talentItem, true);
-        Bukkit.getPluginManager().callEvent(playerEquippedTalentChangeEvent);
-    }
-
-    public static void removeEquippedTalent(Player player, int index) {
-        PlayerEquippedTalentChangeEvent playerEquippedTalentChangeEvent = new PlayerEquippedTalentChangeEvent(player, index, null, false);
+    public static void changeEquippedTalent(Player player, int index, TalentItemsEnum talentItem, boolean equipped) {
+        PlayerEquippedTalentChangeEvent playerEquippedTalentChangeEvent = new PlayerEquippedTalentChangeEvent(player, index, talentItem, equipped);
         Bukkit.getPluginManager().callEvent(playerEquippedTalentChangeEvent);
     }
 

@@ -16,11 +16,11 @@ public class CommandTest implements CommandExecutor {
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         ItemStack itemStack = new ItemStack(Material.REDSTONE, 1);
         ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.setDisplayName(LangLoader.get("talent_item_add_health_name"));
+        itemMeta.setDisplayName(LangLoader.get("talent_item_id_0_name"));
         ArrayList<String> lore = new ArrayList<>();
-        lore.add(LangLoader.get("talent_item_add_health_lore1"));
-        lore.add(LangLoader.get("talent_item_add_health_lore2"));
-        lore.add(LangLoader.get("talent_item_add_health_lore3"));
+        lore.add(LangLoader.get("talent_item_id_0_lore1"));
+        lore.add(LangLoader.get("talent_item_id_0_lore2"));
+        lore.add(LangLoader.get("talent_item_id_0_lore3"));
         itemMeta.setLore(lore);
         itemStack.setItemMeta(itemMeta);
         if (commandSender instanceof Player) {
