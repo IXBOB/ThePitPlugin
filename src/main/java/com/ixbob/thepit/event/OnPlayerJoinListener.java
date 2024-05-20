@@ -54,7 +54,7 @@ public class OnPlayerJoinListener implements Listener {
         this.playerUUID = player.getUniqueId();
 
         player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(200);
-        player.setHealth(player.getHealthScale());
+        player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
         player.setFoodLevel(20);
         player.teleport(Main.spawnLocation);
         player.getInventory().clear();
