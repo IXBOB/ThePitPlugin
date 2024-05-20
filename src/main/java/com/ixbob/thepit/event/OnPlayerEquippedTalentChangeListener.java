@@ -2,7 +2,6 @@ package com.ixbob.thepit.event;
 
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.PlayerDataBlock;
-import com.ixbob.thepit.enums.PitItem;
 import com.ixbob.thepit.enums.TalentItemsEnum;
 import com.ixbob.thepit.event.custom.PlayerEquippedTalentChangeEvent;
 import com.ixbob.thepit.util.TalentCalcuUtils;
@@ -54,7 +53,7 @@ public class OnPlayerEquippedTalentChangeListener implements Listener {
                 } break;
             case GOLDEN_CHOCOLATE:
                 if (isEquipped) {
-                    player.getInventory().addItem(PitItem.GOLDEN_CHOCOLATE.getItemStack());
+                    System.out.println("equip!");
                 } else {
                     System.out.println("Not Equip!");
                 } break;
