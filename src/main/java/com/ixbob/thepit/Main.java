@@ -90,6 +90,9 @@ public class Main extends JavaPlugin {
 
         Listener onPlayerInteractListener = new OnPlayerInteractListener();
         getServer().getPluginManager().registerEvents(onPlayerInteractListener, this);
+
+        Listener onPlayerConsumeItemListener = new OnPlayerConsumeItemListener();
+        getServer().getPluginManager().registerEvents(onPlayerConsumeItemListener, this);
     }
 
     @Override
