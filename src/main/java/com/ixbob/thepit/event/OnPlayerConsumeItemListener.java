@@ -22,6 +22,7 @@ public class OnPlayerConsumeItemListener implements Listener {
             int newAmount = item.getAmount() - 1;
             item.setAmount(newAmount);
             player.getInventory().setItemInMainHand(item);
+            player.setFoodLevel(player.getFoodLevel() + 4);
         }
     }
 }

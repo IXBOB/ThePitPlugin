@@ -3,6 +3,7 @@ package com.ixbob.thepit.util;
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.MongoDB;
 import com.ixbob.thepit.PlayerDataBlock;
+import com.ixbob.thepit.enums.CustomBasicTool;
 import com.ixbob.thepit.enums.TalentItemsEnum;
 import com.ixbob.thepit.event.custom.*;
 import com.mojang.authlib.GameProfile;
@@ -33,35 +34,33 @@ public class Utils {
         ArrayList<ArrayList<?>> hotBarItemList = new ArrayList<>(Collections.nCopies(9 ,null));
         ArrayList<ArrayList<?>> inventoryItemList = new ArrayList<>(Collections.nCopies(27 ,null));
         ArrayList<ArrayList<?>> armorItemList = new ArrayList<>(Collections.nCopies(4 ,null));
-        ArrayList<ArrayList<?>> offHandItemList = new ArrayList<>(Collections.nCopies(1 ,null)); //虽然只有一个，但为了统一一点，都用List
         for (int i = 0; i <= 8; i++) {
             ItemStack indexItem = player.getInventory().getItem(i);
             if (indexItem != null) {
-                hotBarItemList.set(i, new ArrayList<>(Arrays.asList(indexItem.getType().name(), indexItem.getAmount(), new ArrayList<>())));
+                hotBarItemList.set(i, new ArrayList<>(Arrays.asList(indexItem.getType().name(), indexItem.getAmount(), readItemExtraData(indexItem))));
             }
         }
         for (int i = 0; i <= 26; i++) {
             ItemStack indexItem = player.getInventory().getItem(i+9);
             if (indexItem != null) {
-                inventoryItemList.set(i, new ArrayList<>(Arrays.asList(indexItem.getType().name(), indexItem.getAmount(), new ArrayList<>())));
+                inventoryItemList.set(i, new ArrayList<>(Arrays.asList(indexItem.getType().name(), indexItem.getAmount(), readItemExtraData(indexItem))));
             }
         }
         for (int i = 0; i <= 3; i++) {
             ItemStack indexItem = player.getInventory().getArmorContents()[3 - i];  //默认i=0:脚，3-i:从头上往脚下读
             if (indexItem != null) {
-                armorItemList.set(i, new ArrayList<>(Arrays.asList(indexItem.getType().name(), indexItem.getAmount(), new ArrayList<>())));
+                armorItemList.set(i, new ArrayList<>(Arrays.asList(indexItem.getType().name(), indexItem.getAmount(), readItemExtraData(indexItem))));
             }
-        }
-        ItemStack itemInOffHand = player.getInventory().getItemInOffHand();
-        if (itemInOffHand != null) {
-            offHandItemList.set(0, new ArrayList<>(Arrays.asList(itemInOffHand.getType().name(), itemInOffHand.getAmount(), new ArrayList<>())));
         }
 
         dataDBObj.put("HotBarItemList", hotBarItemList);
         dataDBObj.put("InventoryItemList", inventoryItemList);
         dataDBObj.put("ArmorItemList", armorItemList);
-        dataDBObj.put("OffHandItemList", offHandItemList);
         mongoDB.updateDataByUUID(dataDBObj, playerUUID);
+    }
+
+    public static ArrayList<String> readItemExtraData(ItemStack itemStack) {
+        return ItemExtraDataReader.readFromItem(itemStack);
     }
 
     public static String getPitDisplayName(Player player) {
@@ -181,12 +180,12 @@ public class Utils {
         if (clear) {
             inventory.clear();
         }
-        inventory.addItem(new ItemStack(Material.STONE_SWORD, 1));
-        inventory.addItem(new ItemStack(Material.BOW, 1));
+         inventory.addItem(CustomBasicTool.BASIC_STONE_SWORD.getItemStack());
+        inventory.addItem(CustomBasicTool.BASIC_BOW.getItemStack());
         inventory.addItem(new ItemStack(Material.ARROW, 8));
         inventory.addItem(new ItemStack(Material.COOKED_BEEF, 64));
-        inventory.setChestplate(new ItemStack(Material.CHAINMAIL_CHESTPLATE, 1));
-        inventory.setLeggings(new ItemStack(Material.CHAINMAIL_LEGGINGS, 1));
+        inventory.setChestplate(CustomBasicTool.BASIC_CHAINMAIL_CHESTPLATE.getItemStack());
+        inventory.setLeggings(CustomBasicTool.BASIC_CHAINMAIL_LEGGINGS.getItemStack());
     }
 
     public static int getInventoryIndex(int row, int column) {

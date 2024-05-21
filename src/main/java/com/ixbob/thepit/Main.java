@@ -3,6 +3,7 @@ package com.ixbob.thepit;
 import com.ixbob.thepit.command.CommandSpawn;
 import com.ixbob.thepit.command.CommandTalent;
 import com.ixbob.thepit.command.CommandTest;
+import com.ixbob.thepit.enums.CustomBasicTool;
 import com.ixbob.thepit.enums.CustomSkull;
 import com.ixbob.thepit.event.*;
 import com.ixbob.thepit.util.Utils;
@@ -40,6 +41,7 @@ public class Main extends JavaPlugin {
 
         LangLoader.init(this);
         CustomSkull.init();
+        CustomBasicTool.init();
 
         this.saveDefaultConfig();
         lobbyAreaFromPosList = config.getIntegerList("lobby_area.from");
