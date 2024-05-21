@@ -10,6 +10,7 @@ import com.ixbob.thepit.util.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -114,7 +115,7 @@ public class OnEntityDamageEntityListener implements Listener {
     }
 
     private void backToLobby(Player deathPlayer) {
-        deathPlayer.setHealth(deathPlayer.getHealthScale());
+        deathPlayer.setHealth(deathPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
         deathPlayer.setFoodLevel(20);
         Utils.setMostBasicKit(deathPlayer, true);
         deathPlayer.teleport(Main.spawnLocation);
