@@ -31,6 +31,7 @@ public class OnPlayerInteractListener implements Listener {
                     item.setAmount(item.getAmount() - 1);
                     NMSUtils.getEntityPlayer(player).setAbsorptionHearts(TalentCalcuUtils.getValue(1, talentLevelList.get(1)));
                     player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 100, 1), false);
+                    player.setFoodLevel(player.getFoodLevel() + 4);
                 }
             }
         }

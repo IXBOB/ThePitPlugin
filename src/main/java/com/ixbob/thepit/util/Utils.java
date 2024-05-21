@@ -64,7 +64,7 @@ public class Utils {
         mongoDB.updateDataByUUID(dataDBObj, playerUUID);
     }
 
-    public static String getDisplayName(Player player) {
+    public static String getPitDisplayName(Player player) {
         PlayerDataBlock playerData = Main.getPlayerDataBlock(player);
         int rank = playerData.getRank();
         int level = playerData.getLevel();
@@ -165,7 +165,7 @@ public class Utils {
     }
 
     public static void updateDisplayName(Player player) {
-        String displayName = getDisplayName(player);
+        String displayName = getPitDisplayName(player);
         player.setDisplayName(displayName);
         player.setPlayerListName(displayName);
     }

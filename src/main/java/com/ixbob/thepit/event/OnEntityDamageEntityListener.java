@@ -1,13 +1,15 @@
 package com.ixbob.thepit.event;
 
+import com.ixbob.thepit.LangLoader;
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.PlayerDataBlock;
 import com.ixbob.thepit.enums.PitItem;
 import com.ixbob.thepit.enums.TalentItemsEnum;
 import com.ixbob.thepit.event.custom.PlayerBattleStateChangeEvent;
-import com.ixbob.thepit.LangLoader;
 import com.ixbob.thepit.util.NMSUtils;
 import com.ixbob.thepit.util.Utils;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -67,8 +69,40 @@ public class OnEntityDamageEntityListener implements Listener {
         PlayerBattleStateChangeEvent damagedPlayerBattleStateChangeEvent = new PlayerBattleStateChangeEvent(damagedPlayer, true);
         Bukkit.getPluginManager().callEvent(damagedPlayerBattleStateChangeEvent);
 
+        double finalDamageAmount = event.getFinalDamage();
+
+        double absorptionHealthBefore = NMSUtils.getEntityPlayer(damagedPlayer).getAbsorptionHearts();
+        double normalHealthBefore = damagedPlayer.getHealth();
+        double allHealthBefore = absorptionHealthBefore + normalHealthBefore;
+
+        double absorptionHealthAfter = absorptionHealthBefore - event.getDamage(); //getDamage()? 但是实际似乎比getFinalDamage准确，不懂其计算方式·_·
+        double allHealthAfter;
+        double normalHealthAfter;
+        if (absorptionHealthAfter < 0) {
+            normalHealthAfter = normalHealthBefore + absorptionHealthAfter;
+            allHealthAfter = normalHealthAfter;
+        } else {
+            normalHealthAfter = normalHealthBefore;
+            allHealthAfter = normalHealthAfter + absorptionHealthAfter;
+        }
+
+        if (allHealthAfter > 0) {
+            StringBuilder actionbarBuilder = new StringBuilder();
+            actionbarBuilder.append(LangLoader.get("damage_show_heart_actionbar_empty").repeat((int) Math.ceil(damagedPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() / 2)))
+                    .replace(0, (int) Math.ceil(normalHealthAfter / 2) * 3, LangLoader.get("damage_show_heart_actionbar_healthful").repeat((int) Math.ceil(normalHealthAfter / 2)))
+                    .replace((int) Math.ceil(normalHealthAfter / 2) * 3, (int) Math.ceil(normalHealthAfter / 2) * 3 + (int) Math.ceil(finalDamageAmount / 2) * 3, LangLoader.get("damage_show_heart_actionbar_damaged").repeat((int) Math.ceil(finalDamageAmount / 2)))
+                    .append(LangLoader.get("damage_show_heart_actionbar_extra").repeat(
+                            absorptionHealthAfter > 0 ? (int) Math.ceil(absorptionHealthAfter / 2) : 0
+                    ));
+            damager.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Utils.getPitDisplayName(damagedPlayer) + " " + actionbarBuilder));
+        }
+        else {
+            damager.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(String.format(LangLoader.get("damage_kill_show_player_info"), Utils.getPitDisplayName(damagedPlayer))));
+        }
+
+
         //若被击杀的玩家受到的伤害足以导致死亡
-        if (damagedPlayer.getHealth() <= event.getFinalDamage()) {
+        if (allHealthAfter <= 0) {
             event.setCancelled(true);
 
             if (damager == damagedPlayer) { //检测自己击杀自己
@@ -100,9 +134,9 @@ public class OnEntityDamageEntityListener implements Listener {
         }
 
         //广播消息不广播给killer和deathPlayer
-        String broadcastMes = String.format(LangLoader.get("player_kill_other_message_broadcast"), Utils.getDisplayName(killer), Utils.getDisplayName(deathPlayer));
-        String toKillerMes = String.format(String.format(LangLoader.get("player_kill_other_message_to_killer"), Utils.getDisplayName(deathPlayer))) + " " + String.format(LangLoader.get("player_get_xp_message"), addXp) + " " + String.format(LangLoader.get("player_get_coin_message"), addCoin);
-        String toDeathPlayerMes = String.format(LangLoader.get("player_kill_other_message_to_death_player"), Utils.getDisplayName(killer));
+        String broadcastMes = String.format(LangLoader.get("player_kill_other_message_broadcast"), Utils.getPitDisplayName(killer), Utils.getPitDisplayName(deathPlayer));
+        String toKillerMes = String.format(String.format(LangLoader.get("player_kill_other_message_to_killer"), Utils.getPitDisplayName(deathPlayer))) + " " + String.format(LangLoader.get("player_get_xp_message"), addXp) + " " + String.format(LangLoader.get("player_get_coin_message"), addCoin);
+        String toDeathPlayerMes = String.format(LangLoader.get("player_kill_other_message_to_death_player"), Utils.getPitDisplayName(killer));
 
         for (Player onlinePl : Bukkit.getOnlinePlayers()) {
             if ( ! (Objects.equals(onlinePl.getName(), killer.getName()) || Objects.equals(onlinePl.getName(), deathPlayer.getName()))  ) {
@@ -113,16 +147,6 @@ public class OnEntityDamageEntityListener implements Listener {
         deathPlayer.sendMessage(toDeathPlayerMes);
 
         deathBackToLobby(deathPlayer);
-    }
-
-    private void backToLobby(Player deathPlayer) {
-        NMSUtils.getEntityPlayer(deathPlayer).setAbsorptionHearts(0);
-        deathPlayer.setHealth(deathPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
-        deathPlayer.setFoodLevel(20);
-
-        deathPlayer.teleport(Main.spawnLocation);
-        Utils.setBattleState(deathPlayer, false);
-        Utils.setTypedSpawn(deathPlayer, false);
     }
 
     private void deathBackToLobby(Player player) {
