@@ -95,6 +95,9 @@ public class Main extends JavaPlugin {
 
         Listener onPlayerConsumeItemListener = new OnPlayerConsumeItemListener();
         getServer().getPluginManager().registerEvents(onPlayerConsumeItemListener, this);
+
+        Listener onPlayerSwapHandItemsListener = new OnPlayerSwapHandItemsListener();
+        getServer().getPluginManager().registerEvents(onPlayerSwapHandItemsListener, this);
     }
 
     @Override

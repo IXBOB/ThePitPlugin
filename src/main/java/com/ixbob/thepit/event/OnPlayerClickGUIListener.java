@@ -12,6 +12,10 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 public class OnPlayerClickGUIListener implements Listener {
     @EventHandler
     public void onPlayerClickGUI(InventoryClickEvent event) {
+        if (event.getRawSlot() == 45) {
+            event.setCancelled(true);
+            return;
+        }
         Player player = (Player) event.getWhoClicked();
         AbstractGUI openingGUI = Main.getGUIManager().getOpeningGUI(player);
         if (openingGUI instanceof GUITalent) {
