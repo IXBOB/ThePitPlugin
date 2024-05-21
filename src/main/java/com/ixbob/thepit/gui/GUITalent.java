@@ -220,6 +220,7 @@ public class GUITalent extends AbstractGUI {
             boolean equipped = clickIndex >= 37 && clickIndex <= 43;
             TalentUtils.setTalentItem(inventory, clickIndex, upgradeTalentItemType, talentLevelList.get(id), equipped, talentLevelList.get(id) >= upgradeTalentItemType.getMaxTalentLevel());
             Utils.addCoin(player, -needCoinAmount);
+            Utils.changeEquippedTalent(player, clickIndex, upgradeTalentItemType, true);
             player.sendMessage(String.format(LangLoader.get("talent_upgrade_success_message"), upgradeTalentItemType.getDisplayName(), newLevel));
             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 2);
             return;
