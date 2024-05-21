@@ -8,6 +8,7 @@ import com.ixbob.thepit.enums.GUIGridTypeEnum;
 import com.ixbob.thepit.enums.TalentItemsEnum;
 import com.ixbob.thepit.util.TalentUtils;
 import com.ixbob.thepit.util.Utils;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -48,6 +49,7 @@ public class GUITalent extends AbstractGUI {
             if ((index >= 10 && index <= 16) || (index >= 19 && index <= 25)) {
                 talentItemId = TalentUtils.getNotEquippedTalentIdByInventoryIndex(index);
                 clickedTalentItem = TalentUtils.getTalentItemEnumById(talentItemId);
+
             } else if (index >= 37 && index <= 43) {
                 talentItemId = (int) Main.getPlayerDataBlock(player).getEquippedTalentList().get(TalentUtils.getEquipGridIdByInventoryIndex(index));
                 clickedTalentItem = TalentUtils.getTalentItemEnumById(talentItemId);
@@ -131,7 +133,7 @@ public class GUITalent extends AbstractGUI {
                 continue;
             }
             if (!equippedTalentList.contains(talentId)) {
-                if (TalentUtils.setTalentItem(inventory, index, talentItem, talentLevelList.get(talentId), false)) {
+                if (TalentUtils.setTalentItem(inventory, index, talentItem, talentLevelList.get(talentId), false, talentLevelList.get(talentId) >= talentItem.getMaxTalentLevel())) {
                     rightButton.add(talentItem.getIndex());
                     leftButton.add(talentItem.getIndex());
                 }
@@ -158,7 +160,7 @@ public class GUITalent extends AbstractGUI {
                     if (talentItemsEnum == null) { //id不存在
                         continue;
                     }
-                    TalentUtils.setTalentItem(inventory, index, talentItemsEnum, dataBlock.getTalentLevelList().get(talentId), true);
+                    TalentUtils.setTalentItem(inventory, index, talentItemsEnum, dataBlock.getTalentLevelList().get(talentId), true, talentLevelList.get(talentId) >= talentItemsEnum.getMaxTalentLevel());
                     leftButton.add(index);
                     rightButton.add(index);
                 } else {
@@ -198,17 +200,25 @@ public class GUITalent extends AbstractGUI {
         }
     }
 
-    public void purchaseUpgrade(int clickIndex, int id, TalentItemsEnum upgradeTalentItemType) {
+    public void purchaseUpgrade(int clickIndex, int id, @NonNull TalentItemsEnum upgradeTalentItemType) {
         PlayerDataBlock playerDataBlock = Main.getPlayerDataBlock(player);
         ArrayList<Integer> talentLevelList = playerDataBlock.getTalentLevelList();
-        int currentLevel = talentLevelList.get(id);
+        int currentTalentLevel = talentLevelList.get(id);
+        int maxTalentLevel = upgradeTalentItemType.getMaxTalentLevel();
         int ownCoinAmount = playerDataBlock.getCoinAmount();
-        int needCoinAmount = TalentUtils.getNextLevelNeedCoinAmount(upgradeTalentItemType, currentLevel);
+        int needCoinAmount = TalentUtils.getNextLevelNeedCoinAmount(upgradeTalentItemType, currentTalentLevel);
+
+        if (currentTalentLevel >= maxTalentLevel) {
+            player.sendMessage(LangLoader.get("talent_upgrade_failed_as_already_level_max"));
+            player.playSound(player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1, 1);
+            return;
+        }
+
         if (ownCoinAmount >= needCoinAmount) {
-            int newLevel = currentLevel + 1;
+            int newLevel = currentTalentLevel + 1;
             Utils.setTalentLevel(player, id, newLevel);
             boolean equipped = clickIndex >= 37 && clickIndex <= 43;
-            TalentUtils.setTalentItem(inventory, clickIndex, upgradeTalentItemType, talentLevelList.get(id), equipped);
+            TalentUtils.setTalentItem(inventory, clickIndex, upgradeTalentItemType, talentLevelList.get(id), equipped, talentLevelList.get(id) >= upgradeTalentItemType.getMaxTalentLevel());
             Utils.addCoin(player, -needCoinAmount);
             player.sendMessage(String.format(LangLoader.get("talent_upgrade_success_message"), upgradeTalentItemType.getDisplayName(), newLevel));
             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 2);
