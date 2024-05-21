@@ -57,10 +57,9 @@ public class OnPlayerJoinListener implements Listener {
         for (PotionEffect potionEffect : player.getActivePotionEffects()) {
             player.removePotionEffect(potionEffect.getType());
         }
+
+        Utils.backToLobby(player);
         player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(200);
-        player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
-        player.setFoodLevel(20);
-        player.teleport(Main.spawnLocation);
         player.getInventory().clear();
         player.sendTitle(LangLoader.get("join_loading_title"), LangLoader.get("join_loading_subtitle"), 10, 60, 10);
         Bukkit.getServer().getScheduler().runTaskAsynchronously(Main.getPlugin(), () -> {

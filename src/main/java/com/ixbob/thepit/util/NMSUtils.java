@@ -1,6 +1,8 @@
 package com.ixbob.thepit.util;
 
+import net.minecraft.server.v1_12_R1.EntityPlayer;
 import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Field;
@@ -24,5 +26,9 @@ public class NMSUtils {
 
     public static Class<?> getNMSClass(String clazz) throws Exception {
         return Class.forName("net.minecraft.server.v1_12_R1." + clazz);
+    }
+
+    public static EntityPlayer getEntityPlayer(Player player) {
+        return ((CraftPlayer)player).getHandle();
     }
 }

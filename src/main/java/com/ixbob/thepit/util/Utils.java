@@ -13,6 +13,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftServer;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.entity.Player;
@@ -213,5 +214,12 @@ public class Utils {
         NMSUtils.sendNMSPacketToAllPlayers(packet);
 
         return entityPlayer;
+    }
+
+    public static void backToLobby(Player player) {
+        NMSUtils.getEntityPlayer(player).setAbsorptionHearts(0);
+        player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+        player.setFoodLevel(20);
+        player.teleport(Main.spawnLocation);
     }
 }

@@ -3,7 +3,8 @@ package com.ixbob.thepit.event;
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.PlayerDataBlock;
 import com.ixbob.thepit.enums.PitItem;
-import com.ixbob.thepit.enums.TalentItemsEnum;
+import com.ixbob.thepit.util.NMSUtils;
+import com.ixbob.thepit.util.TalentCalcuUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -28,7 +29,7 @@ public class OnPlayerInteractListener implements Listener {
                 if (item.getType() == PitItem.GOLDEN_CHOCOLATE.getItemStack().getType()) {
                     event.setCancelled(true);
                     item.setAmount(item.getAmount() - 1);
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 2400, talentLevelList.get(TalentItemsEnum.GOLDEN_CHOCOLATE.getId())), false);
+                    NMSUtils.getEntityPlayer(player).setAbsorptionHearts(TalentCalcuUtils.getValue(1, talentLevelList.get(1)));
                     player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 100, 1), false);
                 }
             }

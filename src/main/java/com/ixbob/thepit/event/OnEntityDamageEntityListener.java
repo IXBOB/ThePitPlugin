@@ -6,6 +6,7 @@ import com.ixbob.thepit.enums.PitItem;
 import com.ixbob.thepit.enums.TalentItemsEnum;
 import com.ixbob.thepit.event.custom.PlayerBattleStateChangeEvent;
 import com.ixbob.thepit.LangLoader;
+import com.ixbob.thepit.util.NMSUtils;
 import com.ixbob.thepit.util.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -71,7 +72,7 @@ public class OnEntityDamageEntityListener implements Listener {
             event.setCancelled(true);
 
             if (damager == damagedPlayer) { //检测自己击杀自己
-                backToLobby(damagedPlayer);
+                deathBackToLobby(damagedPlayer);
                 return;
             }
 
@@ -111,15 +112,23 @@ public class OnEntityDamageEntityListener implements Listener {
         killer.sendMessage(toKillerMes);
         deathPlayer.sendMessage(toDeathPlayerMes);
 
-        backToLobby(deathPlayer);
+        deathBackToLobby(deathPlayer);
     }
 
     private void backToLobby(Player deathPlayer) {
+        NMSUtils.getEntityPlayer(deathPlayer).setAbsorptionHearts(0);
         deathPlayer.setHealth(deathPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
         deathPlayer.setFoodLevel(20);
-        Utils.setMostBasicKit(deathPlayer, true);
+
         deathPlayer.teleport(Main.spawnLocation);
         Utils.setBattleState(deathPlayer, false);
         Utils.setTypedSpawn(deathPlayer, false);
+    }
+
+    private void deathBackToLobby(Player player) {
+        Utils.setMostBasicKit(player, true);
+        Utils.setBattleState(player, false);
+        Utils.setTypedSpawn(player, false);
+        Utils.backToLobby(player);
     }
 }
