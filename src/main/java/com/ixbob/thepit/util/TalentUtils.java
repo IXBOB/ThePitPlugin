@@ -1,6 +1,5 @@
 package com.ixbob.thepit.util;
 
-import com.ixbob.thepit.LangLoader;
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.PlayerDataBlock;
 import com.ixbob.thepit.enums.TalentIdEnum;
@@ -9,9 +8,6 @@ import lombok.NonNull;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.List;
 
 public class TalentUtils {
     public static boolean setTalentItem(Inventory inventory, int index, TalentItemsEnum talentItem, int talentLevel, boolean equipped, boolean hasReachedMaxLevel) {
@@ -31,44 +27,11 @@ public class TalentUtils {
     }
 
     public static ItemStack getTalentItemStack(@NonNull TalentItemsEnum talentItemType, int level, boolean equipped, boolean hasReachedMaxLevel) {
-        ItemStack itemStack = talentItemType.getItemStack(1);
-        ItemMeta itemMeta = itemStack.getItemMeta();
-        List<String> loreList = talentItemType.getLoreList();
-        int id = talentItemType.getId();
-
-        if (talentItemType == TalentItemsEnum.HEALTH_BOOST) {
-            loreList.replaceAll(s -> s.replace("%Level%", String.valueOf(level))
-                    .replace("%NextLevelTip%", String.valueOf(hasReachedMaxLevel ? LangLoader.get("talent_item_next_level_tip_already_max") : LangLoader.get("talent_item_next_level_tip_need_coin")))
-                    .replace("%NextLevelNeedCoin%", String.valueOf(getNextLevelNeedCoinAmount(talentItemType, level)))
-                    .replace("%AddPoint%", String.valueOf(TalentCalcuUtils.getValue(id, level)))
-                    .replace("%ActionLeftClick%", String.valueOf(equipped ? LangLoader.get("talent_item_click_action_off") : LangLoader.get("talent_item_click_action_equip"))));
-            itemMeta.setLore(loreList);
-            itemMeta.setDisplayName(talentItemType.getDisplayName());
-            itemStack.setItemMeta(itemMeta);
-            return itemStack;
-        }
-        if (talentItemType == TalentItemsEnum.GOLDEN_CHOCOLATE) {
-            loreList.replaceAll(s -> s.replace("%Level%", String.valueOf(level))
-                    .replace("%NextLevelTip%", String.valueOf(hasReachedMaxLevel ? LangLoader.get("talent_item_next_level_tip_already_max") : LangLoader.get("talent_item_next_level_tip_need_coin")))
-                    .replace("%NextLevelNeedCoin%", String.valueOf(getNextLevelNeedCoinAmount(talentItemType, level)))
-                    .replace("%AddPoint%", String.valueOf(TalentCalcuUtils.getValue(id, level)))
-                    .replace("%ActionLeftClick%", String.valueOf(equipped ? LangLoader.get("talent_item_click_action_off") : LangLoader.get("talent_item_click_action_equip"))));
-            itemMeta.setLore(loreList);
-            itemMeta.setDisplayName(talentItemType.getDisplayName());
-            itemStack.setItemMeta(itemMeta);
-            return itemStack;
-        }
-        throw new RuntimeException();
+        return talentItemType.getNamedItem(level, equipped, hasReachedMaxLevel);
     }
 
-    public static int getNextLevelNeedCoinAmount(TalentItemsEnum talentItemType, int currentLevel) {
-        if (talentItemType == TalentItemsEnum.HEALTH_BOOST) {
-            return (currentLevel + 1) * 500;
-        }
-        if (talentItemType == TalentItemsEnum.GOLDEN_CHOCOLATE) {
-            return (currentLevel + 1) * 400;
-        }
-        throw new RuntimeException();
+    public static double getNextLevelNeedCoinAmount(TalentItemsEnum talentItemType, int currentLevel) {
+        return talentItemType.getNextLevelNeedCoinValue(currentLevel + 1);
     }
 
     public static int getNotEquippedTalentIdByInventoryIndex(int inventoryIndex) {

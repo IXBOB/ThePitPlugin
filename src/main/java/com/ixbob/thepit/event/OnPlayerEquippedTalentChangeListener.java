@@ -2,9 +2,9 @@ package com.ixbob.thepit.event;
 
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.PlayerDataBlock;
+import com.ixbob.thepit.enums.TalentGivingItems;
 import com.ixbob.thepit.enums.TalentItemsEnum;
 import com.ixbob.thepit.event.custom.PlayerEquippedTalentChangeEvent;
-import com.ixbob.thepit.util.TalentCalcuUtils;
 import com.ixbob.thepit.util.TalentUtils;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
@@ -44,7 +44,7 @@ public class OnPlayerEquippedTalentChangeListener implements Listener {
         switch (talentItem) {
             case HEALTH_BOOST:
                 if (isEquipped) {
-                    float maxHealth = 20 + TalentCalcuUtils.getValue(id, level);
+                    float maxHealth = 20 + talentItem.getAddPointValue(level);
                     player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(maxHealth);
                     player.setHealth(maxHealth);
                 } else {
@@ -57,7 +57,12 @@ public class OnPlayerEquippedTalentChangeListener implements Listener {
                 } else {
                     System.out.println("Not Equip!");
                 } break;
-
+            case FISHERMAN:
+                if (isEquipped) {
+                    player.getInventory().addItem(TalentGivingItems.DEFAULT_FISHING_ROD.getItemStack());
+                } else {
+                    player.getInventory().remove(TalentGivingItems.DEFAULT_FISHING_ROD.getItemStack());
+                } break;
         }
     }
 }

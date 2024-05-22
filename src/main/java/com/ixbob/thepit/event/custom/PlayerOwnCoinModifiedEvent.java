@@ -7,11 +7,11 @@ import org.bukkit.event.HandlerList;
 public class PlayerOwnCoinModifiedEvent extends Event {
     public static final HandlerList HANDLERS = new HandlerList();
     private final Player player;
-    private final int originCoin;
-    private final int modifiedCoin;
-    public final int newCoin;
+    private final double originCoin;
+    private final double modifiedCoin;
+    public final double newCoin;
 
-    public PlayerOwnCoinModifiedEvent(Player player, int originCoin, int modifiedCoin) {
+    public PlayerOwnCoinModifiedEvent(Player player, double originCoin, double modifiedCoin) {
         this.player = player;
         this.originCoin = originCoin;
         this.modifiedCoin = modifiedCoin;
@@ -22,15 +22,15 @@ public class PlayerOwnCoinModifiedEvent extends Event {
         return player;
     }
 
-    public int getOriginCoin() {
+    public double getOriginCoin() {
         return originCoin;
     }
 
-    public int getModifiedCoin() {
+    public double getModifiedCoin() {
         return modifiedCoin;
     }
 
-    public int getNewCoin() {
+    public double getNewCoin() {
         return newCoin;
     }
 

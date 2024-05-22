@@ -29,7 +29,7 @@ public class OnPlayerInteractListener implements Listener {
                 if (item.getType() == PitItem.GOLDEN_CHOCOLATE.getItemStack().getType()) {
                     event.setCancelled(true);
                     item.setAmount(item.getAmount() - 1);
-                    NMSUtils.getEntityPlayer(player).setAbsorptionHearts(TalentCalcuUtils.getValue(1, talentLevelList.get(1)));
+                    NMSUtils.getEntityPlayer(player).setAbsorptionHearts(TalentCalcuUtils.getAddPointValue(1, talentLevelList.get(1)));
                     player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 100, 1), false);
                     player.setFoodLevel(player.getFoodLevel() + 4);
                 }

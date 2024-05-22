@@ -1,9 +1,12 @@
 package com.ixbob.thepit.enums;
 
 import com.ixbob.thepit.LangLoader;
+import com.ixbob.thepit.util.TalentCalcuUtils;
+import com.ixbob.thepit.util.TalentUtils;
 import com.ixbob.thepit.util.Utils;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,8 +19,7 @@ public enum TalentItemsEnum {
             LangLoader.get("talent_item_id_0_lore3"),
             LangLoader.get("talent_item_id_0_lore4"),
             LangLoader.get("talent_item_id_0_lore5"),
-            LangLoader.get("talent_item_id_0_lore6"),
-            LangLoader.get("talent_item_id_0_lore7")))),
+            LangLoader.get("talent_item_id_0_lore6")))),
     GOLDEN_CHOCOLATE(Material.GOLDEN_APPLE, 1, 10, 0, 2, Utils.getInventoryIndex(2, 3), 1, LangLoader.get("talent_item_id_1_name"), new ArrayList<>(Arrays.asList(
             LangLoader.get("talent_item_id_1_lore1"),
             LangLoader.get("talent_item_id_1_lore2"),
@@ -25,7 +27,14 @@ public enum TalentItemsEnum {
             LangLoader.get("talent_item_id_1_lore4"),
             LangLoader.get("talent_item_id_1_lore5"),
             LangLoader.get("talent_item_id_1_lore6"),
-            LangLoader.get("talent_item_id_1_lore7"))));
+            LangLoader.get("talent_item_id_1_lore7")))),
+    FISHERMAN(Material.FISHING_ROD, 2, 10, 0, 0, Utils.getInventoryIndex(2, 4), 1, LangLoader.get("talent_item_id_2_name"), new ArrayList<>(Arrays.asList(
+            LangLoader.get("talent_item_id_2_lore1"),
+            LangLoader.get("talent_item_id_2_lore2"),
+            LangLoader.get("talent_item_id_2_lore3"),
+            LangLoader.get("talent_item_id_2_lore4"),
+            LangLoader.get("talent_item_id_2_lore5"),
+            LangLoader.get("talent_item_id_2_lore6"))));
 
     private final Material material;
     private final int id;
@@ -88,4 +97,33 @@ public enum TalentItemsEnum {
     public int getId() {
         return id;
     }
+
+    public double getNextLevelNeedCoinValue(int currentLevel) {
+        return TalentCalcuUtils.getNextLevelAddCoinValue(id, currentLevel);
+    }
+
+    public float getAddPointValue(int level) {
+        return TalentCalcuUtils.getAddPointValue(id, level);
+    }
+
+    public ItemStack getNamedItem(int level, boolean equipped, boolean hasReachedMaxLevel) {
+        ItemStack itemStack = this.getItemStack(1);
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        return defaultNameMethod(level, equipped, hasReachedMaxLevel, itemStack, itemMeta);
+    }
+
+    private ItemStack defaultNameMethod(int level, boolean equipped, boolean hasReachedMaxLevel, ItemStack itemStack, ItemMeta itemMeta) {
+        ArrayList<String> copiedLoreList = new ArrayList<>(loreList);
+        copiedLoreList.replaceAll(s -> s.replace("%Level%", String.valueOf(level))
+                .replace("%NextLevelTip%", String.valueOf(hasReachedMaxLevel ? LangLoader.get("talent_item_next_level_tip_already_max") : LangLoader.get("talent_item_next_level_tip_need_coin")))
+                .replace("%NextLevelNeedCoin%", String.valueOf(TalentUtils.getNextLevelNeedCoinAmount(this, level)))
+                .replace("%AddPoint%", String.valueOf(this.getAddPointValue(level)))
+                .replace("%ActionLeftClick%", String.valueOf(equipped ? LangLoader.get("talent_item_click_action_off") : LangLoader.get("talent_item_click_action_equip"))));
+        itemMeta.setLore(copiedLoreList);
+        itemMeta.setDisplayName(this.getDisplayName());
+        itemStack.setItemMeta(itemMeta);
+        return itemStack;
+    }
+
+
 }

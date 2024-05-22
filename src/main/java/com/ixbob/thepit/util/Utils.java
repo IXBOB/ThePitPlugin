@@ -135,9 +135,9 @@ public class Utils {
         Bukkit.getPluginManager().callEvent(modifyXpEvent);
     }
 
-    public static void addCoin(Player player, int addCoin) {
+    public static void addCoin(Player player, double addCoin) {
         PlayerDataBlock playerData = Main.getPlayerDataBlock(player);
-        int originCoin = playerData.getCoinAmount();
+        double originCoin = playerData.getCoinAmount();
 
         PlayerOwnCoinModifiedEvent modifyCoinEvent = new PlayerOwnCoinModifiedEvent(player, originCoin, addCoin);
         Bukkit.getPluginManager().callEvent(modifyCoinEvent);

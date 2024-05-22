@@ -16,7 +16,7 @@ public class PlayerDataBlock {
     private int rank;
     private int thisLevelOwnXp;
     private int nextLevelNeedXp;
-    private int coinAmount;
+    private double coinAmount;
     private int prestigeLevel;
     private int prestigePointAmount;
     private String prefix;
@@ -39,7 +39,7 @@ public class PlayerDataBlock {
         this.rank = (int) dataDBObj.get("rank");
         this.thisLevelOwnXp = (int) dataDBObj.get("this_level_own_xp");
         this.nextLevelNeedXp = (int) dataDBObj.get("next_level_need_xp");
-        this.coinAmount = (int) dataDBObj.get("coin_amount");
+        this.coinAmount = (double) dataDBObj.get("coin_amount");
         this.prestigeLevel = (int) dataDBObj.get("prestige_level");
         this.prestigePointAmount = (int) dataDBObj.get("prestige_point_amount");
         this.prefix = (String) dataDBObj.get("prefix");
@@ -102,7 +102,7 @@ public class PlayerDataBlock {
             int scoreInt = score.getScore();
             if (scoreInt == -4) {
                 scoreboardObj.getScoreboard().resetScores(score.getEntry());
-                scoreboardObj.getScore(String.format(LangLoader.get("main_scoreboard_line5"), coinAmount)).setScore(scoreInt);
+                scoreboardObj.getScore(String.format(LangLoader.get("main_scoreboard_line5"), Mth.formatDecimalWithFloor(coinAmount, 1))).setScore(scoreInt);
             }
         }
     }
@@ -114,7 +114,7 @@ public class PlayerDataBlock {
             if (scoreInt == -6) {
                 scoreboardObj.getScoreboard().resetScores(score.getEntry());
                 if (battleState) {
-                    scoreboardObj.getScore(String.format(LangLoader.get("battle_state_true_scoreboard_line7"), String.format("%.1f", battleStateCoolCountDowner.getTimeLeft()))).setScore(scoreInt);
+                    scoreboardObj.getScore(String.format(LangLoader.get("battle_state_true_scoreboard_line7"), Mth.formatDecimalWithFloor(battleStateCoolCountDowner.getTimeLeft(), 1))).setScore(scoreInt);
                 } else {
                     scoreboardObj.getScore(LangLoader.get("battle_state_false_scoreboard_line7")).setScore(scoreInt);
                 }
@@ -142,11 +142,11 @@ public class PlayerDataBlock {
         this.rank = rank;
     }
 
-    public int getCoinAmount() {
+    public double getCoinAmount() {
         return coinAmount;
     }
 
-    public void setCoinAmount(int coinAmount) {
+    public void setCoinAmount(double coinAmount) {
         this.coinAmount = coinAmount;
     }
 

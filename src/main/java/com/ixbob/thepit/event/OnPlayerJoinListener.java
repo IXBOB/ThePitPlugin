@@ -1,9 +1,6 @@
 package com.ixbob.thepit.event;
 
-import com.ixbob.thepit.LangLoader;
-import com.ixbob.thepit.Main;
-import com.ixbob.thepit.MongoDB;
-import com.ixbob.thepit.PlayerDataBlock;
+import com.ixbob.thepit.*;
 import com.ixbob.thepit.enums.ItemExtraData;
 import com.ixbob.thepit.util.ItemExtraDataApplier;
 import com.ixbob.thepit.util.Utils;
@@ -128,7 +125,7 @@ public class OnPlayerJoinListener implements Listener {
         dataDBObj.put("rank", 0);
         dataDBObj.put("this_level_own_xp", 0);
         dataDBObj.put("next_level_need_xp",  2*(0+1) + (int)(Math.random()*2*(0+1)));
-        dataDBObj.put("coin_amount", 0);
+        dataDBObj.put("coin_amount", (double) 0);
         dataDBObj.put("prestige_level", 0);
         dataDBObj.put("prestige_point_amount", 0);
         dataDBObj.put("prefix", "0"); // 称号，0相当于什么都没有吧
@@ -166,7 +163,7 @@ public class OnPlayerJoinListener implements Listener {
         boardObj.getScore(String.format(LangLoader.get("main_scoreboard_line2"), playerData.getLevel())).setScore(-1);
         boardObj.getScore(String.format(LangLoader.get("main_scoreboard_line3"), playerData.getNextLevelNeedXp()-playerData.getThisLevelOwnXp())).setScore(-2);
         boardObj.getScore(LangLoader.get("main_scoreboard_line4")).setScore(-3);
-        boardObj.getScore(String.format(LangLoader.get("main_scoreboard_line5"), playerData.getCoinAmount())).setScore(-4);
+        boardObj.getScore(String.format(LangLoader.get("main_scoreboard_line5"), Mth.formatDecimalWithFloor(playerData.getCoinAmount(), 1))).setScore(-4);
         boardObj.getScore(LangLoader.get("main_scoreboard_line6")).setScore(-5);
         boardObj.getScore(LangLoader.get("battle_state_false_scoreboard_line7")).setScore(-6);
         boardObj.getScore(LangLoader.get("main_scoreboard_line8")).setScore(-7);

@@ -1,9 +1,6 @@
 package com.ixbob.thepit.gui;
 
-import com.ixbob.thepit.AbstractGUI;
-import com.ixbob.thepit.LangLoader;
-import com.ixbob.thepit.Main;
-import com.ixbob.thepit.PlayerDataBlock;
+import com.ixbob.thepit.*;
 import com.ixbob.thepit.enums.GUIGridTypeEnum;
 import com.ixbob.thepit.enums.TalentItemsEnum;
 import com.ixbob.thepit.util.TalentUtils;
@@ -49,12 +46,13 @@ public class GUITalent extends AbstractGUI {
             if ((index >= 10 && index <= 16) || (index >= 19 && index <= 25)) {
                 talentItemId = TalentUtils.getNotEquippedTalentIdByInventoryIndex(index);
                 clickedTalentItem = TalentUtils.getTalentItemEnumById(talentItemId);
-
+                purchaseUpgrade(index, talentItemId, clickedTalentItem);
             } else if (index >= 37 && index <= 43) {
                 talentItemId = (int) Main.getPlayerDataBlock(player).getEquippedTalentList().get(TalentUtils.getEquipGridIdByInventoryIndex(index));
                 clickedTalentItem = TalentUtils.getTalentItemEnumById(talentItemId);
+                purchaseUpgrade(index, talentItemId, clickedTalentItem);
             }
-            purchaseUpgrade(index, talentItemId, clickedTalentItem);
+
         } else if (type == GUIGridTypeEnum.LEFT_BUTTON) {
             if (!movingState && index >= 37 && index <= 43) {   //移除天赋
                 PlayerDataBlock dataBlock = Main.getPlayerDataBlock(player);
@@ -205,8 +203,8 @@ public class GUITalent extends AbstractGUI {
         ArrayList<Integer> talentLevelList = playerDataBlock.getTalentLevelList();
         int currentTalentLevel = talentLevelList.get(id);
         int maxTalentLevel = upgradeTalentItemType.getMaxTalentLevel();
-        int ownCoinAmount = playerDataBlock.getCoinAmount();
-        int needCoinAmount = TalentUtils.getNextLevelNeedCoinAmount(upgradeTalentItemType, currentTalentLevel);
+        double ownCoinAmount = playerDataBlock.getCoinAmount();
+        double needCoinAmount = TalentUtils.getNextLevelNeedCoinAmount(upgradeTalentItemType, currentTalentLevel);
 
         if (currentTalentLevel >= maxTalentLevel) {
             player.sendMessage(LangLoader.get("talent_upgrade_failed_as_already_level_max"));
@@ -218,14 +216,18 @@ public class GUITalent extends AbstractGUI {
             int newLevel = currentTalentLevel + 1;
             Utils.setTalentLevel(player, id, newLevel);
             boolean equipped = clickIndex >= 37 && clickIndex <= 43;
-            TalentUtils.setTalentItem(inventory, clickIndex, upgradeTalentItemType, talentLevelList.get(id), equipped, talentLevelList.get(id) >= upgradeTalentItemType.getMaxTalentLevel());
+            if (equipped) { //升级时，如果升级的物品已装备，那么执行更改装备的天赋即Utils.changeEquippedTalent。如果未装备，直接TalentUtils.setTalentItem即可。
+                Utils.changeEquippedTalent(player, clickIndex, upgradeTalentItemType, true);
+            } else {
+                TalentUtils.setTalentItem(inventory, clickIndex, upgradeTalentItemType, talentLevelList.get(id), false, talentLevelList.get(id) >= upgradeTalentItemType.getMaxTalentLevel());
+            }
             Utils.addCoin(player, -needCoinAmount);
-            Utils.changeEquippedTalent(player, clickIndex, upgradeTalentItemType, true);
+
             player.sendMessage(String.format(LangLoader.get("talent_upgrade_success_message"), upgradeTalentItemType.getDisplayName(), newLevel));
             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 2);
             return;
         }
-        player.sendMessage(String.format(LangLoader.get("talent_upgrade_failed_as_coin"), needCoinAmount - ownCoinAmount));
+        player.sendMessage(String.format(LangLoader.get("talent_upgrade_failed_as_coin"), Mth.formatDecimalWithFloor(needCoinAmount - ownCoinAmount, 1)));
         player.playSound(player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1, 1);
     }
 }
