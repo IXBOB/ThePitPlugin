@@ -56,7 +56,6 @@ public class OnPlayerJoinListener implements Listener {
             player.removePotionEffect(potionEffect.getType());
         }
 
-        Utils.backToLobby(player);
         player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(200);
         player.getInventory().clear();
         player.sendTitle(LangLoader.get("join_loading_title"), LangLoader.get("join_loading_subtitle"), 10, 60, 10);
@@ -109,6 +108,8 @@ public class OnPlayerJoinListener implements Listener {
                         }
                     }
                 }
+
+                Utils.backToLobby(player);
             });
         });
     }

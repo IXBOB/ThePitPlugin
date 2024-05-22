@@ -18,6 +18,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftServer;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
@@ -180,7 +181,7 @@ public class Utils {
         if (clear) {
             inventory.clear();
         }
-         inventory.addItem(CustomBasicTool.BASIC_STONE_SWORD.getItemStack());
+        inventory.addItem(CustomBasicTool.BASIC_STONE_SWORD.getItemStack());
         inventory.addItem(CustomBasicTool.BASIC_BOW.getItemStack());
         inventory.addItem(new ItemStack(Material.ARROW, 8));
         inventory.addItem(new ItemStack(Material.COOKED_BEEF, 64));
@@ -220,5 +221,9 @@ public class Utils {
         player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
         player.setFoodLevel(20);
         player.teleport(Main.spawnLocation);
+        //恢复弓箭数
+        Inventory inventory = player.getInventory();
+        inventory.remove(Material.ARROW);
+        inventory.addItem(new ItemStack(Material.ARROW, 8));
     }
 }

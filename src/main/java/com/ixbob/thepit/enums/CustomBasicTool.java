@@ -28,7 +28,10 @@ public enum CustomBasicTool {
         for (CustomBasicTool tool : CustomBasicTool.values()) {
             ItemStack itemStack1 = tool.getItemStack();
             ItemMeta itemMeta = itemStack1.getItemMeta();
-            if (tool == CustomBasicTool.BASIC_STONE_SWORD) {
+            if (tool == CustomBasicTool.BASIC_STONE_SWORD
+                    || tool == CustomBasicTool.BASIC_BOW
+                    || tool == CustomBasicTool.BASIC_CHAINMAIL_CHESTPLATE
+                    || tool == CustomBasicTool.BASIC_CHAINMAIL_LEGGINGS) {
                 itemMeta.setUnbreakable(true);
             }
             itemStack1.setItemMeta(itemMeta);

@@ -4,6 +4,7 @@ import com.ixbob.thepit.Main;
 import com.ixbob.thepit.PlayerDataBlock;
 import com.ixbob.thepit.event.custom.PlayerBattleStateChangeEvent;
 import com.ixbob.thepit.LangLoader;
+import com.ixbob.thepit.util.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -21,8 +22,7 @@ public class CommandSpawn implements CommandExecutor {
             boolean battleState = dataBlock.getBattleState();
             if (args.length == 0) {
                 if (!battleState) {
-                    player.teleport(Main.spawnLocation);
-                    player.sendMessage(LangLoader.get("command_spawn_success"));
+                    back(player);
                 } else {
                     dataBlock.setTypedSpawn(true);
                     player.sendMessage(LangLoader.get("command_spawn_deny_in_battlestate"));
@@ -31,8 +31,7 @@ public class CommandSpawn implements CommandExecutor {
             if (args.length == 1) {
                 if (args[0].equals("confirm")) {
                     if (dataBlock.isTypedSpawn()) {
-                        player.teleport(Main.spawnLocation);
-                        player.sendMessage(LangLoader.get("command_spawn_success"));
+                        back(player);
                         dataBlock.setTypedSpawn(false);
                         PlayerBattleStateChangeEvent damagerBattleStateChangeEvent = new PlayerBattleStateChangeEvent(player, false);
                         Bukkit.getPluginManager().callEvent(damagerBattleStateChangeEvent);
@@ -45,5 +44,11 @@ public class CommandSpawn implements CommandExecutor {
             Bukkit.getLogger().log(Level.SEVERE, LangLoader.get("command_error_not_on_player"));
         }
         return true;
+    }
+
+    private void back(Player player) {
+        player.teleport(Main.spawnLocation);
+        Utils.setMostBasicKit(player, true);
+        player.sendMessage(LangLoader.get("command_spawn_success"));
     }
 }
