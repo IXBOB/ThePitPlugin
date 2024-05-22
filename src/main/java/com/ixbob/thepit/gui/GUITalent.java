@@ -108,7 +108,7 @@ public class GUITalent extends AbstractGUI {
             inventory.setItem(index, new ItemStack(emptyWall));
         }
 
-        ItemStack locked = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 14);
+        ItemStack locked = new ItemStack(Material.BEDROCK);
         ItemMeta lockedItemMeta = locked.getItemMeta();
         lockedItemMeta.setDisplayName(LangLoader.get("talent_item_locked"));
         locked.setItemMeta(lockedItemMeta);
