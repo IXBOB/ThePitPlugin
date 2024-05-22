@@ -2,6 +2,7 @@ package com.ixbob.thepit.event;
 
 import com.ixbob.thepit.LangLoader;
 import com.ixbob.thepit.Main;
+import com.ixbob.thepit.Mth;
 import com.ixbob.thepit.PlayerDataBlock;
 import com.ixbob.thepit.enums.PitHitType;
 import com.ixbob.thepit.enums.PitItem;
@@ -125,9 +126,9 @@ public class OnEntityDamageEntityListener implements Listener {
     }
 
     private void onPlayerKillAnother(Player deathPlayer, Player killer) {
-        int addXp = (10 + (int) (Math.random() * 15))* (1 + Main.getPlayerDataBlock(deathPlayer).getConsecutiveKillAmount());
+        double addXp = (10 + (Math.random() * 15)) * (1 + Main.getPlayerDataBlock(deathPlayer).getConsecutiveKillAmount());
         Utils.addXp(killer, addXp);
-        int addCoin = (5 + (int) (Math.random() * 10))* (1 + Main.getPlayerDataBlock(deathPlayer).getConsecutiveKillAmount());
+        double addCoin = (5 + (Math.random() * 10)) * (1 + Main.getPlayerDataBlock(deathPlayer).getConsecutiveKillAmount());
         Utils.addCoin(killer, addCoin);
 
         killer.playSound(killer.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
@@ -145,7 +146,7 @@ public class OnEntityDamageEntityListener implements Listener {
 
         //广播消息不广播给killer和deathPlayer
         String broadcastMes = String.format(LangLoader.get("player_kill_other_message_broadcast"), Utils.getPitDisplayName(killer), Utils.getPitDisplayName(deathPlayer));
-        String toKillerMes = String.format(String.format(LangLoader.get("player_kill_other_message_to_killer"), Utils.getPitDisplayName(deathPlayer))) + " " + String.format(LangLoader.get("player_get_xp_message"), addXp) + " " + String.format(LangLoader.get("player_get_coin_message"), addCoin);
+        String toKillerMes = String.format(String.format(LangLoader.get("player_kill_other_message_to_killer"), Utils.getPitDisplayName(deathPlayer))) + " " + String.format(LangLoader.get("player_get_xp_message"), Mth.formatDecimalWithFloor(addXp, 2)) + " " + String.format(LangLoader.get("player_get_coin_message"), Mth.formatDecimalWithFloor(addCoin, 1));
         String toDeathPlayerMes = String.format(LangLoader.get("player_kill_other_message_to_death_player"), Utils.getPitDisplayName(killer));
 
         for (Player onlinePl : Bukkit.getOnlinePlayers()) {

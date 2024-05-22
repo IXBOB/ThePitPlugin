@@ -124,9 +124,9 @@ public class OnPlayerJoinListener implements Listener {
         dataDBObj.put("player_name", taskPlayer.getName());
         dataDBObj.put("level", 0);
         dataDBObj.put("rank", 0);
-        dataDBObj.put("this_level_own_xp", 0);
-        dataDBObj.put("next_level_need_xp",  2*(0+1) + (int)(Math.random()*2*(0+1)));
-        dataDBObj.put("coin_amount", (double) 0);
+        dataDBObj.put("this_level_own_xp", (double) 0);
+        dataDBObj.put("next_level_need_xp", (double)( 2*(0+1) + (Math.random()*2*(0+1)) ));
+        dataDBObj.put("coin_amount", (double) 5000);
         dataDBObj.put("prestige_level", 0);
         dataDBObj.put("prestige_point_amount", 0);
         dataDBObj.put("prefix", "0"); // 称号，0相当于什么都没有吧
@@ -162,7 +162,7 @@ public class OnPlayerJoinListener implements Listener {
         PlayerDataBlock playerData = Main.getPlayerDataBlock(taskPlayer);
         boardObj.getScore(LangLoader.get("main_scoreboard_line1")).setScore(0);
         boardObj.getScore(String.format(LangLoader.get("main_scoreboard_line2"), playerData.getLevel())).setScore(-1);
-        boardObj.getScore(String.format(LangLoader.get("main_scoreboard_line3"), playerData.getNextLevelNeedXp()-playerData.getThisLevelOwnXp())).setScore(-2);
+        boardObj.getScore(String.format(LangLoader.get("main_scoreboard_line3"), Mth.formatDecimalWithFloor(playerData.getNextLevelNeedXp()-playerData.getThisLevelOwnXp(), 2))).setScore(-2);
         boardObj.getScore(LangLoader.get("main_scoreboard_line4")).setScore(-3);
         boardObj.getScore(String.format(LangLoader.get("main_scoreboard_line5"), Mth.formatDecimalWithFloor(playerData.getCoinAmount(), 1))).setScore(-4);
         boardObj.getScore(LangLoader.get("main_scoreboard_line6")).setScore(-5);

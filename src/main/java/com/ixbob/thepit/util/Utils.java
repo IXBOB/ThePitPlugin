@@ -128,9 +128,9 @@ public class Utils {
         return result.toString();
     }
 
-    public static void addXp(Player player, int addXp) {
+    public static void addXp(Player player, double addXp) {
         PlayerDataBlock playerData = Main.getPlayerDataBlock(player);
-        int originXp = playerData.getThisLevelOwnXp();
+        double originXp = playerData.getThisLevelOwnXp();
 
         PlayerOwnXpModifiedEvent modifyXpEvent = new PlayerOwnXpModifiedEvent(player, originXp, addXp);
         Bukkit.getPluginManager().callEvent(modifyXpEvent);

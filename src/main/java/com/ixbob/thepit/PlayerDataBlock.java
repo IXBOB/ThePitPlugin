@@ -14,8 +14,8 @@ public class PlayerDataBlock {
     private final Player player;
     private int level;
     private int rank;
-    private int thisLevelOwnXp;
-    private int nextLevelNeedXp;
+    private double thisLevelOwnXp;
+    private double nextLevelNeedXp;
     private double coinAmount;
     private int prestigeLevel;
     private int prestigePointAmount;
@@ -91,7 +91,7 @@ public class PlayerDataBlock {
             int scoreInt = score.getScore();
             if (scoreInt == -2) {
                 scoreboardObj.getScoreboard().resetScores(score.getEntry());
-                scoreboardObj.getScore(String.format(LangLoader.get("main_scoreboard_line3"), nextLevelNeedXp-thisLevelOwnXp)).setScore(scoreInt);
+                scoreboardObj.getScore(String.format(LangLoader.get("main_scoreboard_line3"), Mth.formatDecimalWithFloor(nextLevelNeedXp-thisLevelOwnXp, 2))).setScore(scoreInt);
             }
         }
     }
@@ -216,19 +216,19 @@ public class PlayerDataBlock {
         }
     }
 
-    public int getNextLevelNeedXp() {
+    public double getNextLevelNeedXp() {
         return nextLevelNeedXp;
     }
 
-    public void setNextLevelNeedXp(int nextLevelNeedXp) {
+    public void setNextLevelNeedXp(double nextLevelNeedXp) {
         this.nextLevelNeedXp = nextLevelNeedXp;
     }
 
-    public int getThisLevelOwnXp() {
+    public double getThisLevelOwnXp() {
         return thisLevelOwnXp;
     }
 
-    public void setThisLevelOwnXp(int thisLevelOwnXp) {
+    public void setThisLevelOwnXp(double thisLevelOwnXp) {
         this.thisLevelOwnXp = thisLevelOwnXp;
     }
 

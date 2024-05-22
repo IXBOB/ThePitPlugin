@@ -7,11 +7,11 @@ import org.bukkit.event.HandlerList;
 public class PlayerOwnXpModifiedEvent extends Event {
     public static final HandlerList HANDLERS = new HandlerList();
     private final Player player;
-    private final int originXp;
-    private final int modifiedXp;
-    public final int newXp;
+    private final double originXp;
+    private final double modifiedXp;
+    public final double newXp;
 
-    public PlayerOwnXpModifiedEvent(Player player, int originXp, int modifiedXp) {
+    public PlayerOwnXpModifiedEvent(Player player, double originXp, double modifiedXp) {
         this.player = player;
         this.originXp = originXp;
         this.modifiedXp = modifiedXp;
@@ -22,15 +22,15 @@ public class PlayerOwnXpModifiedEvent extends Event {
         return player;
     }
 
-    public int getOriginXp() {
+    public double getOriginXp() {
         return originXp;
     }
 
-    public int getModifiedXp() {
+    public double getModifiedXp() {
         return modifiedXp;
     }
 
-    public int getNewXp() {
+    public double getNewXp() {
         return newXp;
     }
 

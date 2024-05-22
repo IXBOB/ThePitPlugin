@@ -13,10 +13,10 @@ import org.bukkit.event.Listener;
 public class OnPlayerOwnXpModifiedListener implements Listener {
     @EventHandler
     public void onPlayerOwnXpModified(PlayerOwnXpModifiedEvent event) {
-        int originXp;
-        int modifiedXp;
-        int newOwnXp;
-        int nextLevelNeedXp;
+        double originXp;
+        double modifiedXp;
+        double newOwnXp;
+        double nextLevelNeedXp;
         int originLevel;
         int upgradeLevel = 0;
         int newLevel;
@@ -47,7 +47,7 @@ public class OnPlayerOwnXpModifiedListener implements Listener {
         dataBlock.updateScoreboardNextLevelNeedXp();
         Utils.updateDisplayName(player);
     }
-    private void updateDataBlock(PlayerDataBlock dataBlock, int newLevel, int newThisLevelOwnXp, int newNextLevelNeedXp) {
+    private void updateDataBlock(PlayerDataBlock dataBlock, int newLevel, double newThisLevelOwnXp, double newNextLevelNeedXp) {
         dataBlock.setLevel(newLevel);
         dataBlock.setThisLevelOwnXp(newThisLevelOwnXp);
         dataBlock.setNextLevelNeedXp(newNextLevelNeedXp);
