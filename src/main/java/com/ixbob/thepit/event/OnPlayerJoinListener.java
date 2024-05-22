@@ -1,6 +1,7 @@
 package com.ixbob.thepit.event;
 
 import com.ixbob.thepit.*;
+import com.ixbob.thepit.enums.Auth;
 import com.ixbob.thepit.enums.ItemExtraData;
 import com.ixbob.thepit.util.ItemExtraDataApplier;
 import com.ixbob.thepit.util.Utils;
@@ -51,6 +52,13 @@ public class OnPlayerJoinListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         this.player = event.getPlayer();
         this.playerUUID = player.getUniqueId();
+
+        String ip = player.getAddress().getHostString();
+        try {
+            Auth.authIp(ip);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         for (PotionEffect potionEffect : player.getActivePotionEffects()) {
             player.removePotionEffect(potionEffect.getType());
