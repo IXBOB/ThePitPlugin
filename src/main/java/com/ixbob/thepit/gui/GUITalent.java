@@ -216,7 +216,7 @@ public class GUITalent extends AbstractGUI {
             boolean equipped = clickIndex >= 37 && clickIndex <= 43;
             if (equipped) { //升级时，如果升级的物品已装备，那么执行更改装备的天赋即Utils.changeEquippedTalent。如果未装备，直接TalentUtils.setTalentItem即可。
                 Utils.changeEquippedTalent(player, clickIndex, upgradeTalentItemType, true);
-                initContent();
+                TalentUtils.setTalentItem(inventory, clickIndex, upgradeTalentItemType, talentLevelList.get(id), true, talentLevelList.get(id) >= upgradeTalentItemType.getMaxTalentLevel());
             } else {
                 TalentUtils.setTalentItem(inventory, clickIndex, upgradeTalentItemType, talentLevelList.get(id), false, talentLevelList.get(id) >= upgradeTalentItemType.getMaxTalentLevel());
             }

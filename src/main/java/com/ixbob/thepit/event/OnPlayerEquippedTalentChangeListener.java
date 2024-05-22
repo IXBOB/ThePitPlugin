@@ -52,11 +52,7 @@ public class OnPlayerEquippedTalentChangeListener implements Listener {
                     player.setHealth(20);
                 } break;
             case GOLDEN_CHOCOLATE:
-                if (isEquipped) {
-                    System.out.println("equip!");
-                } else {
-                    System.out.println("Not Equip!");
-                } break;
+                break;
             case FISHERMAN:
                 if (isEquipped) {
                     player.getInventory().addItem(TalentGivingItems.DEFAULT_FISHING_ROD.getItemStack());

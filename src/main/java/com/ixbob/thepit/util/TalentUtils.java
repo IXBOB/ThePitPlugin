@@ -9,6 +9,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+
 public class TalentUtils {
     public static boolean setTalentItem(Inventory inventory, int index, TalentItemsEnum talentItem, int talentLevel, boolean equipped, boolean hasReachedMaxLevel) {
         Player player = (Player) inventory.getHolder();
@@ -54,5 +56,12 @@ public class TalentUtils {
             }
         }
         return null;
+    }
+
+    public static int getEquippedTalentIdByInventoryIndex(Player player, int inventoryIndex) {
+        PlayerDataBlock dataBlock = Main.getPlayerDataBlock(player);
+        ArrayList<?> equippedTalentList = dataBlock.getEquippedTalentList();
+        int gridId = getEquipGridIdByInventoryIndex(inventoryIndex);
+        return (int) equippedTalentList.get(gridId);
     }
 }
