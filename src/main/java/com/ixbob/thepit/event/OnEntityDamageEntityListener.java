@@ -3,10 +3,12 @@ package com.ixbob.thepit.event;
 import com.ixbob.thepit.LangLoader;
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.PlayerDataBlock;
+import com.ixbob.thepit.enums.PitHitType;
 import com.ixbob.thepit.enums.PitItem;
 import com.ixbob.thepit.enums.TalentItemsEnum;
 import com.ixbob.thepit.event.custom.PlayerBattleStateChangeEvent;
 import com.ixbob.thepit.util.NMSUtils;
+import com.ixbob.thepit.util.TalentCalcuUtils;
 import com.ixbob.thepit.util.Utils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -29,7 +31,7 @@ import java.util.Objects;
 
 public class OnEntityDamageEntityListener implements Listener {
     @EventHandler
-    public void onPlayerBeKilled(EntityDamageByEntityEvent event) {
+    public void onEntityDamagedByEntity(EntityDamageByEntityEvent event) {
         if (!(event.getDamager() instanceof Player) && event.getEntity() instanceof Player) {
             Entity damagerEntity = event.getDamager();
             if (Utils.isInLobbyArea(damagerEntity.getLocation())) {
@@ -44,8 +46,12 @@ public class OnEntityDamageEntityListener implements Listener {
                     Arrow damagerArrow = (Arrow) damagerEntity;
                     Player damager = (Player) damagerArrow.getShooter();
                     Player damagedPlayer = (Player) event.getEntity();
-
-                    damageEvent(damager, damagedPlayer, event);
+                    if (damagedPlayer == damager) {
+                        damagerEntity.remove();
+                        event.setCancelled(true);
+                        return;
+                    }
+                    damageEvent(damager, damagedPlayer, event, PitHitType.ARROW);
                 }
             }
         }
@@ -59,15 +65,26 @@ public class OnEntityDamageEntityListener implements Listener {
                 return;
             }
             //正常伤害逻辑
-            damageEvent(damager, damagedPlayer, event);
+            damageEvent(damager, damagedPlayer, event, PitHitType.NORMAL);
         }
     }
 
-    private void damageEvent(Player damager, Player damagedPlayer, EntityDamageByEntityEvent event) {
+    private void damageEvent(Player damager, Player damagedPlayer, EntityDamageByEntityEvent event, PitHitType hitType) {
         PlayerBattleStateChangeEvent damagerBattleStateChangeEvent = new PlayerBattleStateChangeEvent(damager, true);
         Bukkit.getPluginManager().callEvent(damagerBattleStateChangeEvent);
         PlayerBattleStateChangeEvent damagedPlayerBattleStateChangeEvent = new PlayerBattleStateChangeEvent(damagedPlayer, true);
         Bukkit.getPluginManager().callEvent(damagedPlayerBattleStateChangeEvent);
+
+        PlayerDataBlock damagerDataBlock = Main.getPlayerDataBlock(damager);
+        ArrayList<?> damagerEquippedTalentList = damagerDataBlock.getEquippedTalentList();
+        ArrayList<Integer> talentLevelList = damagerDataBlock.getTalentLevelList();
+
+        if (hitType == PitHitType.ARROW) {
+            int infiniteArrowsId = TalentItemsEnum.INFINITE_ARROWS.getId();
+            if (damagerEquippedTalentList.contains(infiniteArrowsId)) {
+                damager.getInventory().addItem(new ItemStack(Material.ARROW, (int) TalentCalcuUtils.getAddPointValue(infiniteArrowsId, talentLevelList.get(infiniteArrowsId))));
+            }
+        }
 
         double finalDamageAmount = event.getFinalDamage();
 
@@ -100,16 +117,9 @@ public class OnEntityDamageEntityListener implements Listener {
             damager.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(String.format(LangLoader.get("damage_kill_show_player_info"), Utils.getPitDisplayName(damagedPlayer))));
         }
 
-
         //若被击杀的玩家受到的伤害足以导致死亡
         if (allHealthAfter <= 0) {
             event.setCancelled(true);
-
-            if (damager == damagedPlayer) { //检测自己击杀自己
-                deathBackToLobby(damagedPlayer);
-                return;
-            }
-
             onPlayerKillAnother(damagedPlayer, damager);
         }
     }

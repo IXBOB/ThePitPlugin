@@ -13,14 +13,16 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum TalentItemsEnum {
-    HEALTH_BOOST(Material.REDSTONE, 0, 10, 0, 3, Utils.getInventoryIndex(2,2), 1, LangLoader.get("talent_item_id_0_name"), new ArrayList<>(Arrays.asList(
+    HEALTH_BOOST(Material.REDSTONE, 0, 10, 0, 3, Utils.getInventoryIndex(2,2), 1,
+            LangLoader.get("talent_item_id_0_name"), new ArrayList<>(Arrays.asList(
             LangLoader.get("talent_item_id_0_lore1"),
             LangLoader.get("talent_item_id_0_lore2"),
             LangLoader.get("talent_item_id_0_lore3"),
             LangLoader.get("talent_item_id_0_lore4"),
             LangLoader.get("talent_item_id_0_lore5"),
             LangLoader.get("talent_item_id_0_lore6")))),
-    GOLDEN_CHOCOLATE(Material.GOLDEN_APPLE, 1, 10, 0, 2, Utils.getInventoryIndex(2, 3), 1, LangLoader.get("talent_item_id_1_name"), new ArrayList<>(Arrays.asList(
+    GOLDEN_CHOCOLATE(Material.GOLDEN_APPLE, 1, 10, 0, 2, Utils.getInventoryIndex(2, 3), 1,
+            LangLoader.get("talent_item_id_1_name"), new ArrayList<>(Arrays.asList(
             LangLoader.get("talent_item_id_1_lore1"),
             LangLoader.get("talent_item_id_1_lore2"),
             LangLoader.get("talent_item_id_1_lore3"),
@@ -28,13 +30,22 @@ public enum TalentItemsEnum {
             LangLoader.get("talent_item_id_1_lore5"),
             LangLoader.get("talent_item_id_1_lore6"),
             LangLoader.get("talent_item_id_1_lore7")))),
-    FISHERMAN(Material.FISHING_ROD, 2, 10, 0, 0, Utils.getInventoryIndex(2, 4), 1, LangLoader.get("talent_item_id_2_name"), new ArrayList<>(Arrays.asList(
+    FISHERMAN(Material.FISHING_ROD, 2, 10, 0, 0, Utils.getInventoryIndex(2, 4), 1,
+            LangLoader.get("talent_item_id_2_name"), new ArrayList<>(Arrays.asList(
             LangLoader.get("talent_item_id_2_lore1"),
             LangLoader.get("talent_item_id_2_lore2"),
             LangLoader.get("talent_item_id_2_lore3"),
             LangLoader.get("talent_item_id_2_lore4"),
             LangLoader.get("talent_item_id_2_lore5"),
-            LangLoader.get("talent_item_id_2_lore6"))));
+            LangLoader.get("talent_item_id_2_lore6")))),
+    INFINITE_ARROWS(Material.ARROW, 3, 10, 0, 2, Utils.getInventoryIndex(2, 5), 1,
+            LangLoader.get("talent_item_id_3_name"), new ArrayList<>(Arrays.asList(
+            LangLoader.get("talent_item_id_3_lore1"),
+            LangLoader.get("talent_item_id_3_lore2"),
+            LangLoader.get("talent_item_id_3_lore3"),
+            LangLoader.get("talent_item_id_3_lore4"),
+            LangLoader.get("talent_item_id_3_lore5"),
+            LangLoader.get("talent_item_id_3_lore6"))));
 
     private final Material material;
     private final int id;

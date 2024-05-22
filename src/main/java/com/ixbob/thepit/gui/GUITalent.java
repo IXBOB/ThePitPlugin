@@ -41,15 +41,13 @@ public class GUITalent extends AbstractGUI {
     public void onClick(int index, ClickType clickType) {
         GUIGridTypeEnum type = getGridType(index, clickType);
         if (type == GUIGridTypeEnum.RIGHT_BUTTON) {  //升级天赋
-            TalentItemsEnum clickedTalentItem = null;
-            int talentItemId = -1;
             if ((index >= 10 && index <= 16) || (index >= 19 && index <= 25)) {
-                talentItemId = TalentUtils.getNotEquippedTalentIdByInventoryIndex(index);
-                clickedTalentItem = TalentUtils.getTalentItemEnumById(talentItemId);
+                int talentItemId = TalentUtils.getNotEquippedTalentIdByInventoryIndex(index);
+                TalentItemsEnum clickedTalentItem = TalentUtils.getTalentItemEnumById(talentItemId);
                 purchaseUpgrade(index, talentItemId, clickedTalentItem);
             } else if (index >= 37 && index <= 43) {
-                talentItemId = (int) Main.getPlayerDataBlock(player).getEquippedTalentList().get(TalentUtils.getEquipGridIdByInventoryIndex(index));
-                clickedTalentItem = TalentUtils.getTalentItemEnumById(talentItemId);
+                int talentItemId = (int) Main.getPlayerDataBlock(player).getEquippedTalentList().get(TalentUtils.getEquipGridIdByInventoryIndex(index));
+                TalentItemsEnum clickedTalentItem = TalentUtils.getTalentItemEnumById(talentItemId);
                 purchaseUpgrade(index, talentItemId, clickedTalentItem);
             }
 
@@ -218,11 +216,11 @@ public class GUITalent extends AbstractGUI {
             boolean equipped = clickIndex >= 37 && clickIndex <= 43;
             if (equipped) { //升级时，如果升级的物品已装备，那么执行更改装备的天赋即Utils.changeEquippedTalent。如果未装备，直接TalentUtils.setTalentItem即可。
                 Utils.changeEquippedTalent(player, clickIndex, upgradeTalentItemType, true);
+                initContent();
             } else {
                 TalentUtils.setTalentItem(inventory, clickIndex, upgradeTalentItemType, talentLevelList.get(id), false, talentLevelList.get(id) >= upgradeTalentItemType.getMaxTalentLevel());
             }
             Utils.addCoin(player, -needCoinAmount);
-
             player.sendMessage(String.format(LangLoader.get("talent_upgrade_success_message"), upgradeTalentItemType.getDisplayName(), newLevel));
             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 2);
             return;
