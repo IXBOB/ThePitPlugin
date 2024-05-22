@@ -37,8 +37,8 @@ public class PlayerDataBlock {
         this.player = player;
         this.level = (int) dataDBObj.get("level");
         this.rank = (int) dataDBObj.get("rank");
-        this.thisLevelOwnXp = (int) dataDBObj.get("this_level_own_xp");
-        this.nextLevelNeedXp = (int) dataDBObj.get("next_level_need_xp");
+        this.thisLevelOwnXp = (double) dataDBObj.get("this_level_own_xp");
+        this.nextLevelNeedXp = (double) dataDBObj.get("next_level_need_xp");
         this.coinAmount = (double) dataDBObj.get("coin_amount");
         this.prestigeLevel = (int) dataDBObj.get("prestige_level");
         this.prestigePointAmount = (int) dataDBObj.get("prestige_point_amount");
