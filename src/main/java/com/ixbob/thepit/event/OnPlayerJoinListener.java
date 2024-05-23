@@ -1,7 +1,7 @@
 package com.ixbob.thepit.event;
 
 import com.ixbob.thepit.*;
-import com.ixbob.thepit.enums.Auth;
+import com.ixbob.thepit.auth.Auth;
 import com.ixbob.thepit.enums.ItemExtraData;
 import com.ixbob.thepit.util.ItemExtraDataApplier;
 import com.ixbob.thepit.util.Utils;
@@ -54,11 +54,7 @@ public class OnPlayerJoinListener implements Listener {
         this.playerUUID = player.getUniqueId();
 
         String ip = player.getAddress().getHostString();
-        try {
-            Auth.authIp(ip);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Auth.authIp(ip);
 
         for (PotionEffect potionEffect : player.getActivePotionEffects()) {
             player.removePotionEffect(potionEffect.getType());
