@@ -64,13 +64,13 @@ public class PlayerScoreboard {
             int scoreInt = score.getScore();
             if (scoreInt == inputBoardIndex) {
                 boardObj.getScoreboard().resetScores(score.getEntry());
-                boardObj.getScore(keys.get(inputListIndex)).setScore(inputBoardIndex);
             }
+            boardObj.getScore(keys.get(inputListIndex)).setScore(inputBoardIndex);
         }
     }
 
     public void insertKey(int index, String key) {
-        minusEntryScore(index, keys.size() - 1, 1);
+        modifyEntryScoreArea(index, keys.size() - 1, -1);
         keys.add(index, key);
         refreshSpecific(index);
     }
@@ -80,21 +80,30 @@ public class PlayerScoreboard {
         refreshSpecific(index);
     }
 
+    public void removeKey(int index) {
+        modifyEntryScoreArea(index + 1, keys.size() - 1, 1);
+        keys.remove(index);
+        refreshSpecific(index);
+    }
+
     /**
+     * 将选定区域的计分板数值增加或减少一个统一的值
      * 此操作会同时刷新计分板
      * @param fromIndex 正整数，较小，表示keys列表中的某一个索引值
      * @param toIndex 正整数，较大，表示keys列表中的某一个索引值
-     * @param minusAmount 正整数，表示减去的值的大小
+     * @param modifyAmount 整数，表示操作的值的大小
      */
-    private void minusEntryScore(int fromIndex, int toIndex, int minusAmount) {
+    private void modifyEntryScoreArea(int fromIndex, int toIndex, int modifyAmount) {
         int boardIndexBigger = - fromIndex;
         int boardIndexSmaller = - toIndex;
         for (String entry : scoreboard.getEntries()) {
             Score score = boardObj.getScore(entry);
             int scoreInt = score.getScore();
             if (boardIndexSmaller <= scoreInt && scoreInt <= boardIndexBigger) {
-                score.setScore(scoreInt - minusAmount);
+                score.setScore(scoreInt + modifyAmount);
             }
         }
     }
+
+
 }

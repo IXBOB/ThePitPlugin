@@ -1,9 +1,6 @@
 package com.ixbob.thepit.event;
 
-import com.ixbob.thepit.LangLoader;
-import com.ixbob.thepit.Main;
-import com.ixbob.thepit.Mth;
-import com.ixbob.thepit.PlayerDataBlock;
+import com.ixbob.thepit.*;
 import com.ixbob.thepit.enums.PitHitType;
 import com.ixbob.thepit.enums.PitItem;
 import com.ixbob.thepit.enums.TalentItemsEnum;
@@ -134,11 +131,16 @@ public class OnEntityDamageEntityListener implements Listener {
         killer.playSound(killer.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
         deathPlayer.playSound(deathPlayer.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1, 1);
 
-        PlayerDataBlock dataBlock = Main.getPlayerDataBlock(killer);
-        ArrayList<?> equippedTalentList = dataBlock.getEquippedTalentList();
-        if (equippedTalentList.contains(TalentItemsEnum.GOLDEN_CHOCOLATE.getId())) {
+        PlayerDataBlock killerDataBlock = Main.getPlayerDataBlock(killer);
+        ArrayList<?> killerEquippedTalentList = killerDataBlock.getEquippedTalentList();
+        //天赋 金色巧克力
+        if (killerEquippedTalentList.contains(TalentItemsEnum.GOLDEN_CHOCOLATE.getId())) {
             killer.getInventory().addItem(PitItem.GOLDEN_CHOCOLATE.getItemStack());
         } else killer.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 1));
+        //天赋 力量
+        if (killerEquippedTalentList.contains(TalentItemsEnum.STRENGTH.getId())) {
+            killerDataBlock.updateTalentStrengthState(true);
+        }
 
         for (PotionEffect effect : deathPlayer.getActivePotionEffects()) {
             deathPlayer.removePotionEffect(effect.getType());

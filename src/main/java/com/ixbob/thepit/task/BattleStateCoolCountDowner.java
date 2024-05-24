@@ -9,8 +9,8 @@ import org.bukkit.entity.Player;
 public class BattleStateCoolCountDowner implements Runnable{
     private int taskID;
     private float timeLeft;
-    private Player player;
-    private PlayerDataBlock dataBlock;
+    private final Player player;
+    private final PlayerDataBlock dataBlock;
 
     public BattleStateCoolCountDowner(float timeLeft, Player player) {
         this.timeLeft = timeLeft;
@@ -21,14 +21,16 @@ public class BattleStateCoolCountDowner implements Runnable{
     @Override
     public void run() {
         timeLeft -= 0.05f;
-        dataBlock.updateScoreboardBattleState();
         if (timeLeft < 0) {
             Utils.setBattleState(player, false);
             cancel();
+            return;
         }
         if (!player.isOnline()) {
             cancel();
+            return;
         }
+        dataBlock.updateScoreboardBattleState();
     }
 
     public void setTaskID(int taskID) {
@@ -55,15 +57,7 @@ public class BattleStateCoolCountDowner implements Runnable{
         return player;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
     public PlayerDataBlock getDataBlock() {
         return dataBlock;
-    }
-
-    public void setDataBlock(PlayerDataBlock dataBlock) {
-        this.dataBlock = dataBlock;
     }
 }

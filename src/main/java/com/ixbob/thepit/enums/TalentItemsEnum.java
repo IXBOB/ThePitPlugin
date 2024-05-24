@@ -45,7 +45,15 @@ public enum TalentItemsEnum {
             LangLoader.get("talent_item_id_3_lore3"),
             LangLoader.get("talent_item_id_3_lore4"),
             LangLoader.get("talent_item_id_3_lore5"),
-            LangLoader.get("talent_item_id_3_lore6"))));
+            LangLoader.get("talent_item_id_3_lore6")))),
+    STRENGTH(Material.REDSTONE_BLOCK, 4, 15, 0, 3, Utils.getInventoryIndex(2, 6), 1,
+            LangLoader.get("talent_item_id_4_name"), new ArrayList<>(Arrays.asList(
+            LangLoader.get("talent_item_id_4_lore1"),
+            LangLoader.get("talent_item_id_4_lore2"),
+            LangLoader.get("talent_item_id_4_lore3"),
+            LangLoader.get("talent_item_id_4_lore4"),
+            LangLoader.get("talent_item_id_4_lore5"),
+            LangLoader.get("talent_item_id_4_lore6"))));
 
     private final Material material;
     private final int id;

@@ -1,6 +1,7 @@
 package com.ixbob.thepit;
 
 import com.ixbob.thepit.task.BattleStateCoolCountDowner;
+import com.ixbob.thepit.task.TalentStrengthValidCountDowner;
 import com.mongodb.DBObject;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -21,9 +22,11 @@ public class PlayerDataBlock {
     private int killAmount;
     private int deathAmount;
     private boolean battleState;
+    private boolean hasTalentStrength;
     private ArrayList<Integer> talentLevelList;
     private ArrayList<Integer> equippedTalentList;
     private BattleStateCoolCountDowner battleStateCoolCountDowner;
+    private TalentStrengthValidCountDowner talentStrengthValidCountDowner;
     private PlayerScoreboard playerScoreboard;
     private boolean typedSpawn;
 
@@ -71,7 +74,7 @@ public class PlayerDataBlock {
     }
 
     public void updateScoreboardLevel() {
-        playerScoreboard.replaceKey(1, String.format(LangLoader.get("main_scoreboard_line2")));
+        playerScoreboard.replaceKey(1, String.format(LangLoader.get("main_scoreboard_line2"), level));
     }
 
     public void updateScoreboardNextLevelNeedXp() {
@@ -87,6 +90,15 @@ public class PlayerDataBlock {
                 String.format(LangLoader.get("battle_state_true_scoreboard_line7"), Mth.formatDecimalWithFloor(battleStateCoolCountDowner.getTimeLeft(), 1))
                 :
                 LangLoader.get("battle_state_false_scoreboard_line7"));
+    }
+
+    public void updateScoreboardTalentStrength(boolean isInit) {
+        if (!isInit) {
+            playerScoreboard.removeKey(7);
+        }
+        playerScoreboard.insertKey(7, String.format(LangLoader.get("talent_item_id_4_scoreboard"),
+                talentStrengthValidCountDowner.getAddDamagePercentagePoint(),
+                Mth.formatDecimalWithFloor(talentStrengthValidCountDowner.getTimeLeft(), 1)));
     }
 
     public Player getPlayer() {
@@ -182,6 +194,27 @@ public class PlayerDataBlock {
             battleStateCoolCountDowner = null;
         }
     }
+
+    public void updateTalentStrengthState(boolean state) {
+        if (state) {
+            if (talentStrengthValidCountDowner == null) {
+                TalentStrengthValidCountDowner countDowner = new TalentStrengthValidCountDowner(7.0f, player);
+                int taskID = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), countDowner, 0, 1);
+                countDowner.setTaskID(taskID);
+                talentStrengthValidCountDowner = countDowner;
+                updateScoreboardTalentStrength(true);
+            }
+            else {
+                talentStrengthValidCountDowner.addStrengthLevel();
+                updateScoreboardTalentStrength(false);
+            }
+        }
+        else {
+            talentStrengthValidCountDowner = null;
+        }
+    }
+
+
 
     public double getNextLevelNeedXp() {
         return nextLevelNeedXp;
