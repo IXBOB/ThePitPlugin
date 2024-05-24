@@ -4,9 +4,6 @@ import com.ixbob.thepit.task.BattleStateCoolCountDowner;
 import com.mongodb.DBObject;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Score;
-import org.bukkit.scoreboard.Scoreboard;
 
 import java.util.ArrayList;
 
@@ -27,14 +24,15 @@ public class PlayerDataBlock {
     private ArrayList<Integer> talentLevelList;
     private ArrayList<Integer> equippedTalentList;
     private BattleStateCoolCountDowner battleStateCoolCountDowner;
+    private PlayerScoreboard playerScoreboard;
     private boolean typedSpawn;
 
-    private final Scoreboard scoreboard;
-    private final Objective scoreboardObj;
-
     public PlayerDataBlock(Player player) {
-        DBObject dataDBObj = Main.getDB().findByUUID(player.getUniqueId());
         this.player = player;
+    }
+
+    public void init() {
+        DBObject dataDBObj = Main.getDB().findByUUID(player.getUniqueId());
         this.level = (int) dataDBObj.get("level");
         this.rank = (int) dataDBObj.get("rank");
         this.thisLevelOwnXp = (double) dataDBObj.get("this_level_own_xp");
@@ -48,11 +46,9 @@ public class PlayerDataBlock {
         this.deathAmount = (int) dataDBObj.get("death_amount");
         this.talentLevelList = (ArrayList<Integer>) dataDBObj.get("TalentLevelList");
         this.equippedTalentList = (ArrayList<Integer>) dataDBObj.get("EquippedTalentList");
+        this.playerScoreboard = new PlayerScoreboard(player);
         this.battleState = false;
         this.typedSpawn = false;
-
-        this.scoreboard = player.getScoreboard();
-        this.scoreboardObj = scoreboard.getObjective("main");
     }
 
     public void updatePlayerDBData() {
@@ -75,51 +71,22 @@ public class PlayerDataBlock {
     }
 
     public void updateScoreboardLevel() {
-        for (String entry : scoreboard.getEntries()) {
-            Score score = scoreboardObj.getScore(entry);
-            int scoreInt = score.getScore();
-            if (scoreInt == -1) {
-                scoreboardObj.getScoreboard().resetScores(score.getEntry());
-                scoreboardObj.getScore(String.format(LangLoader.get("main_scoreboard_line2"), level)).setScore(scoreInt);
-            }
-        }
+        playerScoreboard.replaceKey(1, String.format(LangLoader.get("main_scoreboard_line2")));
     }
 
     public void updateScoreboardNextLevelNeedXp() {
-        for (String entry : scoreboard.getEntries()) {
-            Score score = scoreboardObj.getScore(entry);
-            int scoreInt = score.getScore();
-            if (scoreInt == -2) {
-                scoreboardObj.getScoreboard().resetScores(score.getEntry());
-                scoreboardObj.getScore(String.format(LangLoader.get("main_scoreboard_line3"), Mth.formatDecimalWithFloor(nextLevelNeedXp-thisLevelOwnXp, 2))).setScore(scoreInt);
-            }
-        }
+        playerScoreboard.replaceKey(2, String.format(LangLoader.get("main_scoreboard_line3"), Mth.formatDecimalWithFloor(nextLevelNeedXp-thisLevelOwnXp, 2)));
     }
 
     public void updateScoreboardOwnCoinAmount() {
-        for (String entry : scoreboard.getEntries()) {
-            Score score = scoreboardObj.getScore(entry);
-            int scoreInt = score.getScore();
-            if (scoreInt == -4) {
-                scoreboardObj.getScoreboard().resetScores(score.getEntry());
-                scoreboardObj.getScore(String.format(LangLoader.get("main_scoreboard_line5"), Mth.formatDecimalWithFloor(coinAmount, 1))).setScore(scoreInt);
-            }
-        }
+        playerScoreboard.replaceKey(4, String.format(LangLoader.get("main_scoreboard_line5"), Mth.formatDecimalWithFloor(coinAmount, 1)));
     }
 
     public void updateScoreboardBattleState() {
-        for (String entry : scoreboard.getEntries()) {
-            Score score = scoreboardObj.getScore(entry);
-            int scoreInt = score.getScore();
-            if (scoreInt == -6) {
-                scoreboardObj.getScoreboard().resetScores(score.getEntry());
-                if (battleState) {
-                    scoreboardObj.getScore(String.format(LangLoader.get("battle_state_true_scoreboard_line7"), Mth.formatDecimalWithFloor(battleStateCoolCountDowner.getTimeLeft(), 1))).setScore(scoreInt);
-                } else {
-                    scoreboardObj.getScore(LangLoader.get("battle_state_false_scoreboard_line7")).setScore(scoreInt);
-                }
-            }
-        }
+        playerScoreboard.replaceKey(6, battleState ?
+                String.format(LangLoader.get("battle_state_true_scoreboard_line7"), Mth.formatDecimalWithFloor(battleStateCoolCountDowner.getTimeLeft(), 1))
+                :
+                LangLoader.get("battle_state_false_scoreboard_line7"));
     }
 
     public Player getPlayer() {
@@ -274,5 +241,13 @@ public class PlayerDataBlock {
 
     public void setTalentLevelList(ArrayList<Integer> talentLevelList) {
         this.talentLevelList = talentLevelList;
+    }
+
+    public PlayerScoreboard getPlayerScoreboard() {
+        return playerScoreboard;
+    }
+
+    public void setPlayerScoreboard(PlayerScoreboard playerScoreboard) {
+        this.playerScoreboard = playerScoreboard;
     }
 }

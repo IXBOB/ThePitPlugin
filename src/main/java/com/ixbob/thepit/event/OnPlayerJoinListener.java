@@ -1,13 +1,15 @@
 package com.ixbob.thepit.event;
 
-import com.ixbob.thepit.*;
+import com.ixbob.thepit.LangLoader;
+import com.ixbob.thepit.Main;
+import com.ixbob.thepit.MongoDB;
+import com.ixbob.thepit.PlayerDataBlock;
 import com.ixbob.thepit.enums.ItemExtraData;
 import com.ixbob.thepit.util.ItemExtraDataApplier;
 import com.ixbob.thepit.util.Utils;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
@@ -17,9 +19,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.potion.PotionEffect;
-import org.bukkit.scoreboard.DisplaySlot;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Scoreboard;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -65,9 +64,7 @@ public class OnPlayerJoinListener implements Listener {
                  createDBData(taskPlayer);
             }
             Bukkit.getServer().getScheduler().runTask(Main.getPlugin(), () -> {
-                Scoreboard scoreboard = initScoreboardFrame(taskPlayer);
                 genPlayerDataBlock(taskPlayer);
-                initScoreboardContent(scoreboard, taskPlayer);
                 Utils.updateDisplayName(taskPlayer);
                 //读取并设置玩家物品栏
                 @SuppressWarnings("unchecked")
@@ -144,30 +141,6 @@ public class OnPlayerJoinListener implements Listener {
     private void genPlayerDataBlock(Player taskPlayer) {
         PlayerDataBlock dataBlock = new PlayerDataBlock(taskPlayer);
         Main.addPlayerDataBlock(taskPlayer, dataBlock);
-    }
-
-    private Scoreboard initScoreboardFrame(Player taskPlayer) {
-        Scoreboard scoreboard = taskPlayer.getServer().getScoreboardManager().getNewScoreboard();
-        Objective boardObj = scoreboard.registerNewObjective("main", "dummy");
-        boardObj.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + LangLoader.get("game_name"));
-        boardObj.setDisplaySlot(DisplaySlot.SIDEBAR);
-        taskPlayer.setScoreboard(scoreboard); //setScoreboard(): 设置玩家可见的计分板
-
-        return scoreboard;
-    }
-
-    private void initScoreboardContent(Scoreboard scoreboard, Player taskPlayer) {
-        Objective boardObj = scoreboard.getObjective("main");
-
-        PlayerDataBlock playerData = Main.getPlayerDataBlock(taskPlayer);
-        boardObj.getScore(LangLoader.get("main_scoreboard_line1")).setScore(0);
-        boardObj.getScore(String.format(LangLoader.get("main_scoreboard_line2"), playerData.getLevel())).setScore(-1);
-        boardObj.getScore(String.format(LangLoader.get("main_scoreboard_line3"), Mth.formatDecimalWithFloor(playerData.getNextLevelNeedXp()-playerData.getThisLevelOwnXp(), 2))).setScore(-2);
-        boardObj.getScore(LangLoader.get("main_scoreboard_line4")).setScore(-3);
-        boardObj.getScore(String.format(LangLoader.get("main_scoreboard_line5"), Mth.formatDecimalWithFloor(playerData.getCoinAmount(), 1))).setScore(-4);
-        boardObj.getScore(LangLoader.get("main_scoreboard_line6")).setScore(-5);
-        boardObj.getScore(LangLoader.get("battle_state_false_scoreboard_line7")).setScore(-6);
-        boardObj.getScore(LangLoader.get("main_scoreboard_line8")).setScore(-7);
-        boardObj.getScore(LangLoader.get("main_scoreboard_line9")).setScore(-8);
+        dataBlock.init();
     }
 }
