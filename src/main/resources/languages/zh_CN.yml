@@ -42,12 +42,16 @@ talent_upgrade_success_message: "%s §r§a现已被升至 §b§l%s §r§a级"
 talent_upgrade_failed_as_coin: "§c你没有足够的硬币来升级该天赋！ 还需要 %s"
 talent_upgrade_failed_as_already_level_max: "§c该天赋已被升级至满级！"
 
-pititem_basic_stone_sword: "石剑"
-pititem_basic_bow: "弓"
-pititem_basic_chainmail_chestplate: "锁链护甲"
-pititem_basic_chainmail_leggings: "锁链护腿"
+pititem_basic_stone_sword: "§r石剑" #加上§r以防止重命名时字体倾斜
+pititem_basic_bow: "§r弓"
+pititem_basic_chainmail_chestplate: "§r锁链护甲"
+pititem_basic_chainmail_leggings: "§r锁链护腿"
 
-pittalentitem_default_fishing_rod: "鱼竿"
+pittalentitem_default_iron_helmet: "§r铁头盔"
+pittalentitem_default_iron_chestplate: "§r铁胸甲"
+pittalentitem_default_iron_leggings: "§r铁护腿"
+pittalentitem_default_iron_boots: "§r铁靴子"
+pittalentitem_default_fishing_rod: "§r鱼竿"
 
 talent_item_click_action_equip: "装备"
 talent_item_click_action_off: "卸下"

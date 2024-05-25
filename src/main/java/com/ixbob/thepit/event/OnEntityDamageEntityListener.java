@@ -1,8 +1,11 @@
 package com.ixbob.thepit.event;
 
-import com.ixbob.thepit.*;
+import com.ixbob.thepit.LangLoader;
+import com.ixbob.thepit.Main;
+import com.ixbob.thepit.Mth;
+import com.ixbob.thepit.PlayerDataBlock;
 import com.ixbob.thepit.enums.PitHitType;
-import com.ixbob.thepit.enums.PitItem;
+import com.ixbob.thepit.enums.PitItems;
 import com.ixbob.thepit.enums.TalentItemsEnum;
 import com.ixbob.thepit.event.custom.PlayerBattleStateChangeEvent;
 import com.ixbob.thepit.util.NMSUtils;
@@ -14,10 +17,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -25,6 +25,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class OnEntityDamageEntityListener implements Listener {
@@ -87,7 +88,6 @@ public class OnEntityDamageEntityListener implements Listener {
         if (damagerDataBlock.getTalentStrengthValidCountDowner() != null) {
             event.setDamage(event.getDamage() * (1 + damagerDataBlock.getTalentStrengthValidCountDowner().getAddDamagePercentagePoint() / 100));
         }
-        System.out.println(event.getFinalDamage());
 
         double finalDamageAmount = event.getFinalDamage();
 
@@ -140,12 +140,20 @@ public class OnEntityDamageEntityListener implements Listener {
         ArrayList<?> killerEquippedTalentList = killerDataBlock.getEquippedTalentList();
         //天赋 金色巧克力
         if (killerEquippedTalentList.contains(TalentItemsEnum.GOLDEN_CHOCOLATE.getId())) {
-            killer.getInventory().addItem(PitItem.GOLDEN_CHOCOLATE.getItemStack());
+            killer.getInventory().addItem(PitItems.GOLDEN_CHOCOLATE.getItemStack());
         } else killer.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 1));
         //天赋 力量
         if (killerEquippedTalentList.contains(TalentItemsEnum.STRENGTH.getId())) {
             killerDataBlock.updateTalentStrengthState(true);
         }
+
+        ArrayList<PitItems> dropItemList = new ArrayList<PitItems>(Arrays.asList(
+                PitItems.DEFAULT_IRON_HELMET,
+                PitItems.DEFAULT_IRON_CHESTPLATE,
+                PitItems.DEFAULT_IRON_LEGGINGS,
+                PitItems.DEFAULT_IRON_BOOTS));
+        ItemStack randomDropItem = dropItemList.stream().skip((int) (dropItemList.size() * Math.random())).findFirst().get().getItemStack();
+        Bukkit.getWorlds().get(0).dropItemNaturally(deathPlayer.getLocation(), randomDropItem);
 
         for (PotionEffect effect : deathPlayer.getActivePotionEffects()) {
             deathPlayer.removePotionEffect(effect.getType());

@@ -5,6 +5,7 @@ import com.ixbob.thepit.command.CommandTalent;
 import com.ixbob.thepit.command.CommandTest;
 import com.ixbob.thepit.enums.CustomBasicTool;
 import com.ixbob.thepit.enums.CustomSkull;
+import com.ixbob.thepit.enums.DropItems;
 import com.ixbob.thepit.event.*;
 import com.ixbob.thepit.util.Utils;
 import org.bukkit.Bukkit;
@@ -42,6 +43,7 @@ public class Main extends JavaPlugin {
         LangLoader.init(this);
         CustomSkull.init();
         CustomBasicTool.init();
+        DropItems.init();
 
         this.saveDefaultConfig();
         lobbyAreaFromPosList = config.getIntegerList("lobby_area.from");
@@ -101,6 +103,9 @@ public class Main extends JavaPlugin {
 
         Listener onPlayerDropItemListener = new OnPlayerDropItemListener();
         getServer().getPluginManager().registerEvents(onPlayerDropItemListener, this);
+
+        Listener onEntityPickupItemListener = new OnEntityPickupItemListener();
+        getServer().getPluginManager().registerEvents(onEntityPickupItemListener, this);
     }
 
     @Override
