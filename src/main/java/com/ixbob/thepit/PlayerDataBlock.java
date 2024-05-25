@@ -283,4 +283,8 @@ public class PlayerDataBlock {
     public void setPlayerScoreboard(PlayerScoreboard playerScoreboard) {
         this.playerScoreboard = playerScoreboard;
     }
+
+    public TalentStrengthValidCountDowner getTalentStrengthValidCountDowner() {
+        return talentStrengthValidCountDowner;
+    }
 }

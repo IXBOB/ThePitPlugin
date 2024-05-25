@@ -1,10 +1,11 @@
 package com.ixbob.thepit.task;
 
-import com.ixbob.thepit.*;
+import com.ixbob.thepit.Main;
+import com.ixbob.thepit.PlayerDataBlock;
+import com.ixbob.thepit.PlayerScoreboard;
 import com.ixbob.thepit.enums.TalentItemsEnum;
 import com.ixbob.thepit.util.TalentCalcuUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 
 public class TalentStrengthValidCountDowner implements Runnable{
@@ -39,15 +40,11 @@ public class TalentStrengthValidCountDowner implements Runnable{
             return;
         }
         dataBlock.updateScoreboardTalentStrength(false);
-        //TODO: 没做完，下面的莫名其妙
-        double originDamageValue = player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue();
-        player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(originDamageValue + originDamageValue * (addDamagePercentagePoint / 100));
-        System.out.println(player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue());
     }
 
     public void addStrengthLevel() {
         this.timeLeft = 7.0f;
-        if (addDamagePercentagePoint < 39.9f) {
+        if (addDamagePercentagePoint < TalentCalcuUtils.getAddPointValue(talentId, dataBlock.getTalentLevelList().get(talentId)) * 10 - 0.1) {
             this.addDamagePercentagePoint += TalentCalcuUtils.getAddPointValue(talentId, dataBlock.getTalentLevelList().get(talentId));
         }
     }

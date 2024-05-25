@@ -84,6 +84,11 @@ public class OnEntityDamageEntityListener implements Listener {
             }
         }
 
+        if (damagerDataBlock.getTalentStrengthValidCountDowner() != null) {
+            event.setDamage(event.getDamage() * (1 + damagerDataBlock.getTalentStrengthValidCountDowner().getAddDamagePercentagePoint() / 100));
+        }
+        System.out.println(event.getFinalDamage());
+
         double finalDamageAmount = event.getFinalDamage();
 
         double absorptionHealthBefore = NMSUtils.getEntityPlayer(damagedPlayer).getAbsorptionHearts();
