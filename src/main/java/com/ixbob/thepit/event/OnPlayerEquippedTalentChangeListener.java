@@ -6,10 +6,12 @@ import com.ixbob.thepit.enums.TalentGivingItems;
 import com.ixbob.thepit.enums.TalentItemsEnum;
 import com.ixbob.thepit.event.custom.PlayerEquippedTalentChangeEvent;
 import com.ixbob.thepit.util.TalentUtils;
+import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
 
 public class OnPlayerEquippedTalentChangeListener implements Listener {
     private Player player;
@@ -42,7 +44,7 @@ public class OnPlayerEquippedTalentChangeListener implements Listener {
         int id = talentItem.getId();
         int level = dataBlock.getTalentLevelList().get(id);
         switch (talentItem) {
-            case HEALTH_BOOST:
+            case HEALTH_BOOST: {
                 if (isEquipped) {
                     float maxHealth = 20 + talentItem.getAddPointValue(level);
                     player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(maxHealth);
@@ -50,15 +52,29 @@ public class OnPlayerEquippedTalentChangeListener implements Listener {
                 } else {
                     player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
                     player.setHealth(20);
-                } break;
-            case GOLDEN_CHOCOLATE:
+                }
                 break;
-            case FISHERMAN:
+            }
+            case GOLDEN_CHOCOLATE: {
+                break;
+            }
+            case FISHERMAN: {
                 if (isEquipped) {
                     player.getInventory().addItem(TalentGivingItems.DEFAULT_FISHING_ROD.getItemStack());
                 } else {
                     player.getInventory().remove(TalentGivingItems.DEFAULT_FISHING_ROD.getItemStack());
-                } break;
+                }
+                break;
+            }
+            case SAFETY_FIRST: {
+                if (isEquipped) {
+                    player.getInventory().setHelmet(TalentGivingItems.DEFAULT_CHAINMAIL_HELMET.getItemStack());
+                } else {
+                    player.getInventory().setHelmet(new ItemStack(Material.AIR));
+                    player.getInventory().remove(TalentGivingItems.DEFAULT_CHAINMAIL_HELMET.getItemStack());
+                }
+                break;
+            }
         }
     }
 }

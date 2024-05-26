@@ -53,7 +53,15 @@ public enum TalentItemsEnum {
             LangLoader.get("talent_item_id_4_lore3"),
             LangLoader.get("talent_item_id_4_lore4"),
             LangLoader.get("talent_item_id_4_lore5"),
-            LangLoader.get("talent_item_id_4_lore6"))));
+            LangLoader.get("talent_item_id_4_lore6")))),
+    SAFETY_FIRST(Material.CHAINMAIL_HELMET, 5, 15, 0, 0, Utils.getInventoryIndex(2, 7), 1,
+            LangLoader.get("talent_item_id_5_name"), new ArrayList<>(Arrays.asList(
+            LangLoader.get("talent_item_id_5_lore1"),
+            LangLoader.get("talent_item_id_5_lore2"),
+            LangLoader.get("talent_item_id_5_lore3"),
+            LangLoader.get("talent_item_id_5_lore4"),
+            LangLoader.get("talent_item_id_5_lore5"),
+            LangLoader.get("talent_item_id_5_lore6"))));
 
     private final Material material;
     private final int id;

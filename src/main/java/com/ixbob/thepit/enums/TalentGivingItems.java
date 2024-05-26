@@ -5,7 +5,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public enum TalentGivingItems {
-    DEFAULT_FISHING_ROD(Material.FISHING_ROD);
+    DEFAULT_FISHING_ROD(Material.FISHING_ROD),
+    DEFAULT_CHAINMAIL_HELMET(Material.CHAINMAIL_HELMET);
 
     private final ItemStack itemStack;
 

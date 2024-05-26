@@ -9,6 +9,7 @@ public class TalentCalcuUtils {
             case 2: return 0;
             case 3: return (1 + level);
             case 4: return (1 + level);
+            case 5: return 0;
         }
         throw new NullPointerException();
     }
@@ -20,6 +21,7 @@ public class TalentCalcuUtils {
             case 2: return 0;
             case 3: return (currentLevel + 1) * 800;
             case 4: return (currentLevel + 1) * 500;
+            case 5: return 0;
         }
         throw new NullPointerException();
     }
