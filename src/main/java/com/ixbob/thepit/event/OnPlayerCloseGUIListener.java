@@ -10,6 +10,6 @@ public class OnPlayerCloseGUIListener implements Listener {
     @EventHandler
     public void onPlayerCloseGUI(InventoryCloseEvent event) {
         Player player = (Player) event.getPlayer();
-        Main.getGUIManager().onCloseTalentGUI(player);
+        Main.getGUIManager().onCloseGUI(player);
     }
 }

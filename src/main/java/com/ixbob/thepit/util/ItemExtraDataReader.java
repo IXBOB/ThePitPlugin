@@ -1,6 +1,6 @@
 package com.ixbob.thepit.util;
 
-import com.ixbob.thepit.enums.ItemExtraData;
+import com.ixbob.thepit.enums.ItemExtraDataEnum;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.inventory.ItemStack;
 
@@ -11,7 +11,7 @@ public class ItemExtraDataReader {
         ArrayList<String> list = new ArrayList<>();
         NBTItem nbtItem = new NBTItem(itemStack);
         if (itemStack.getItemMeta().isUnbreakable()) {
-            list.add(ItemExtraData.UNBREAKABLE.toString());
+            list.add(ItemExtraDataEnum.UNBREAKABLE.toString());
         }
         return (list.isEmpty() ? null : list);
     }

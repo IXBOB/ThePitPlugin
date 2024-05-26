@@ -1,11 +1,12 @@
 package com.ixbob.thepit;
 
+import com.ixbob.thepit.command.CommandShop;
 import com.ixbob.thepit.command.CommandSpawn;
 import com.ixbob.thepit.command.CommandTalent;
 import com.ixbob.thepit.command.CommandTest;
-import com.ixbob.thepit.enums.CustomBasicTool;
-import com.ixbob.thepit.enums.CustomSkull;
-import com.ixbob.thepit.enums.DropItems;
+import com.ixbob.thepit.enums.CustomBasicToolEnum;
+import com.ixbob.thepit.enums.CustomSkullEnum;
+import com.ixbob.thepit.enums.DropItemEnum;
 import com.ixbob.thepit.event.*;
 import com.ixbob.thepit.util.Utils;
 import org.bukkit.Bukkit;
@@ -41,9 +42,9 @@ public class Main extends JavaPlugin {
         Main.mongoDB = mongoDB;
 
         LangLoader.init(this);
-        CustomSkull.init();
-        CustomBasicTool.init();
-        DropItems.init();
+        CustomSkullEnum.init();
+        CustomBasicToolEnum.init();
+        DropItemEnum.init();
 
         this.saveDefaultConfig();
         lobbyAreaFromPosList = config.getIntegerList("lobby_area.from");
@@ -52,6 +53,7 @@ public class Main extends JavaPlugin {
         this.getCommand("test").setExecutor(new CommandTest());
         this.getCommand("spawn").setExecutor(new CommandSpawn());
         this.getCommand("talent").setExecutor(new CommandTalent());
+        this.getCommand("shop").setExecutor(new CommandShop());
 
         Listener onPlayerJoinListener = new OnPlayerJoinListener();
         getServer().getPluginManager().registerEvents(onPlayerJoinListener, this);

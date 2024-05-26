@@ -1,5 +1,5 @@
 package com.ixbob.thepit.enums;
 
-public enum ItemExtraData {
+public enum ItemExtraDataEnum {
     UNBREAKABLE;
 }

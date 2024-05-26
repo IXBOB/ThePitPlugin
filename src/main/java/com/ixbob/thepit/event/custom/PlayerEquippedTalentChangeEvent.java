@@ -1,6 +1,6 @@
 package com.ixbob.thepit.event.custom;
 
-import com.ixbob.thepit.enums.TalentItemsEnum;
+import com.ixbob.thepit.enums.GUITalentItemEnum;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -10,10 +10,10 @@ public class PlayerEquippedTalentChangeEvent extends Event {
 
     private final Player player;
     private final int equipToIndex;
-    private final TalentItemsEnum talentItem;
+    private final GUITalentItemEnum talentItem;
     private final boolean equipped;
 
-    public PlayerEquippedTalentChangeEvent(Player player, int equipToIndex, TalentItemsEnum talentItem, boolean equipped) {
+    public PlayerEquippedTalentChangeEvent(Player player, int equipToIndex, GUITalentItemEnum talentItem, boolean equipped) {
         this.player = player;
         this.equipToIndex = equipToIndex;
         this.talentItem = talentItem;
@@ -32,7 +32,7 @@ public class PlayerEquippedTalentChangeEvent extends Event {
         return equipToIndex;
     }
 
-    public TalentItemsEnum getTalentItem() {
+    public GUITalentItemEnum getTalentItem() {
         return talentItem;
     }
 

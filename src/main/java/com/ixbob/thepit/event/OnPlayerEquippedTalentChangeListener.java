@@ -2,8 +2,8 @@ package com.ixbob.thepit.event;
 
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.PlayerDataBlock;
-import com.ixbob.thepit.enums.TalentGivingItems;
-import com.ixbob.thepit.enums.TalentItemsEnum;
+import com.ixbob.thepit.enums.TalentGivingItemEnum;
+import com.ixbob.thepit.enums.GUITalentItemEnum;
 import com.ixbob.thepit.event.custom.PlayerEquippedTalentChangeEvent;
 import com.ixbob.thepit.util.TalentUtils;
 import org.bukkit.Material;
@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
 public class OnPlayerEquippedTalentChangeListener implements Listener {
     private Player player;
     private int equipToIndex;
-    private TalentItemsEnum talentItem;
+    private GUITalentItemEnum talentItem;
     private boolean isEquipped;
     private PlayerDataBlock dataBlock;
     @EventHandler
@@ -60,18 +60,18 @@ public class OnPlayerEquippedTalentChangeListener implements Listener {
             }
             case FISHERMAN: {
                 if (isEquipped) {
-                    player.getInventory().addItem(TalentGivingItems.DEFAULT_FISHING_ROD.getItemStack());
+                    player.getInventory().addItem(TalentGivingItemEnum.DEFAULT_FISHING_ROD.getItemStack());
                 } else {
-                    player.getInventory().remove(TalentGivingItems.DEFAULT_FISHING_ROD.getItemStack());
+                    player.getInventory().remove(TalentGivingItemEnum.DEFAULT_FISHING_ROD.getItemStack());
                 }
                 break;
             }
             case SAFETY_FIRST: {
                 if (isEquipped) {
-                    player.getInventory().setHelmet(TalentGivingItems.DEFAULT_CHAINMAIL_HELMET.getItemStack());
+                    player.getInventory().setHelmet(TalentGivingItemEnum.DEFAULT_CHAINMAIL_HELMET.getItemStack());
                 } else {
                     player.getInventory().setHelmet(new ItemStack(Material.AIR));
-                    player.getInventory().remove(TalentGivingItems.DEFAULT_CHAINMAIL_HELMET.getItemStack());
+                    player.getInventory().remove(TalentGivingItemEnum.DEFAULT_CHAINMAIL_HELMET.getItemStack());
                 }
                 break;
             }

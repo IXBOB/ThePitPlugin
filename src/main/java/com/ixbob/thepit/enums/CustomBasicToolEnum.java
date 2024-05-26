@@ -4,7 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public enum CustomBasicTool {
+public enum CustomBasicToolEnum {
     BASIC_STONE_SWORD(new ItemStack(Material.STONE_SWORD)),
     BASIC_BOW(new ItemStack(Material.BOW)),
     BASIC_CHAINMAIL_CHESTPLATE(new ItemStack(Material.CHAINMAIL_CHESTPLATE)),
@@ -12,7 +12,7 @@ public enum CustomBasicTool {
 
     private ItemStack itemStack;
 
-    CustomBasicTool(ItemStack itemStack) {
+    CustomBasicToolEnum(ItemStack itemStack) {
         this.itemStack = itemStack;
     }
 
@@ -25,13 +25,13 @@ public enum CustomBasicTool {
     }
 
     public static void init() {
-        for (CustomBasicTool tool : CustomBasicTool.values()) {
+        for (CustomBasicToolEnum tool : CustomBasicToolEnum.values()) {
             ItemStack itemStack1 = tool.getItemStack();
             ItemMeta itemMeta = itemStack1.getItemMeta();
-            if (tool == CustomBasicTool.BASIC_STONE_SWORD
-                    || tool == CustomBasicTool.BASIC_BOW
-                    || tool == CustomBasicTool.BASIC_CHAINMAIL_CHESTPLATE
-                    || tool == CustomBasicTool.BASIC_CHAINMAIL_LEGGINGS) {
+            if (tool == CustomBasicToolEnum.BASIC_STONE_SWORD
+                    || tool == CustomBasicToolEnum.BASIC_BOW
+                    || tool == CustomBasicToolEnum.BASIC_CHAINMAIL_CHESTPLATE
+                    || tool == CustomBasicToolEnum.BASIC_CHAINMAIL_LEGGINGS) {
                 itemMeta.setUnbreakable(true);
             }
             itemStack1.setItemMeta(itemMeta);

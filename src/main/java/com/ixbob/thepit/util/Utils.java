@@ -3,8 +3,9 @@ package com.ixbob.thepit.util;
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.MongoDB;
 import com.ixbob.thepit.PlayerDataBlock;
-import com.ixbob.thepit.enums.CustomBasicTool;
-import com.ixbob.thepit.enums.TalentItemsEnum;
+import com.ixbob.thepit.enums.CustomBasicToolEnum;
+import com.ixbob.thepit.enums.GUITalentItemEnum;
+import com.ixbob.thepit.enums.TalentGivingItemEnum;
 import com.ixbob.thepit.event.custom.*;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
@@ -159,7 +160,7 @@ public class Utils {
         Bukkit.getPluginManager().callEvent(playerTalentLevelChangeEvent);
     }
 
-    public static void changeEquippedTalent(Player player, int index, TalentItemsEnum talentItem, boolean equipped) {
+    public static void changeEquippedTalent(Player player, int index, GUITalentItemEnum talentItem, boolean equipped) {
         PlayerEquippedTalentChangeEvent playerEquippedTalentChangeEvent = new PlayerEquippedTalentChangeEvent(player, index, talentItem, equipped);
         Bukkit.getPluginManager().callEvent(playerEquippedTalentChangeEvent);
     }
@@ -178,15 +179,23 @@ public class Utils {
 
     public static void setMostBasicKit(Player player, boolean clear) {
         PlayerInventory inventory = player.getInventory();
+        PlayerDataBlock dataBlock = Main.getPlayerDataBlock(player);
+        ArrayList<?> equippedTalentList = dataBlock.getEquippedTalentList();
         if (clear) {
             inventory.clear();
         }
-        inventory.addItem(CustomBasicTool.BASIC_STONE_SWORD.getItemStack());
-        inventory.addItem(CustomBasicTool.BASIC_BOW.getItemStack());
+        inventory.addItem(CustomBasicToolEnum.BASIC_STONE_SWORD.getItemStack());
+        inventory.addItem(CustomBasicToolEnum.BASIC_BOW.getItemStack());
         inventory.addItem(new ItemStack(Material.ARROW, 8));
         inventory.addItem(new ItemStack(Material.COOKED_BEEF, 64));
-        inventory.setChestplate(CustomBasicTool.BASIC_CHAINMAIL_CHESTPLATE.getItemStack());
-        inventory.setLeggings(CustomBasicTool.BASIC_CHAINMAIL_LEGGINGS.getItemStack());
+        inventory.setChestplate(CustomBasicToolEnum.BASIC_CHAINMAIL_CHESTPLATE.getItemStack());
+        inventory.setLeggings(CustomBasicToolEnum.BASIC_CHAINMAIL_LEGGINGS.getItemStack());
+        if (equippedTalentList.contains(GUITalentItemEnum.FISHERMAN.getId())) {
+            inventory.addItem(TalentGivingItemEnum.DEFAULT_FISHING_ROD.getItemStack());
+        }
+        if (equippedTalentList.contains(GUITalentItemEnum.SAFETY_FIRST.getId())) {
+            inventory.addItem(TalentGivingItemEnum.DEFAULT_CHAINMAIL_HELMET.getItemStack());
+        }
     }
 
     public static int getInventoryIndex(int row, int column) {

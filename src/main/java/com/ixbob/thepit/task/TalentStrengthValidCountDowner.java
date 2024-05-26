@@ -3,7 +3,7 @@ package com.ixbob.thepit.task;
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.PlayerDataBlock;
 import com.ixbob.thepit.PlayerScoreboard;
-import com.ixbob.thepit.enums.TalentItemsEnum;
+import com.ixbob.thepit.enums.GUITalentItemEnum;
 import com.ixbob.thepit.util.TalentCalcuUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -15,7 +15,7 @@ public class TalentStrengthValidCountDowner implements Runnable{
     private final PlayerDataBlock dataBlock;
     private final PlayerScoreboard playerScoreboard;
     private int taskID;
-    private final int talentId = TalentItemsEnum.STRENGTH.getId();
+    private final int talentId = GUITalentItemEnum.STRENGTH.getId();
     private float addDamagePercentagePoint;
 
     public TalentStrengthValidCountDowner(float timeLeft, Player player) {

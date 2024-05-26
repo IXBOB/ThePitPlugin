@@ -1,6 +1,6 @@
 package com.ixbob.thepit.enums;
 
-public enum PitHitType {
+public enum PitHitTypeEnum {
     NORMAL,
     ARROW,
 

@@ -1,5 +1,6 @@
 package com.ixbob.thepit;
 
+import com.ixbob.thepit.gui.GUIShop;
 import com.ixbob.thepit.gui.GUITalent;
 import org.bukkit.entity.Player;
 
@@ -23,7 +24,15 @@ public class PlayerGUIManager {
         gui.initContent();
     }
 
-    public void onCloseTalentGUI(Player player) {
+    public void openShopGUI(Player player) {
+        GUIShop gui = new GUIShop(player);
+        addPlayerToHashMap(player, gui);
+        gui.initFrame(player);
+        gui.open();
+        gui.initContent();
+    }
+
+    public void onCloseGUI(Player player) {
         removePlayerFromHashMap(player);
     }
 

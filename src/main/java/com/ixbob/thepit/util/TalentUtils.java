@@ -2,9 +2,7 @@ package com.ixbob.thepit.util;
 
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.PlayerDataBlock;
-import com.ixbob.thepit.enums.TalentIdEnum;
-import com.ixbob.thepit.enums.TalentItemsEnum;
-import lombok.NonNull;
+import com.ixbob.thepit.enums.GUITalentItemEnum;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -12,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 
 public class TalentUtils {
-    public static boolean setTalentItem(Inventory inventory, int index, TalentItemsEnum talentItem, int talentLevel, boolean equipped, boolean hasReachedMaxLevel) {
+    public static boolean setTalentItem(Inventory inventory, int index, GUITalentItemEnum talentItem, int talentLevel, boolean equipped, boolean hasReachedMaxLevel) {
         Player player = (Player) inventory.getHolder();
         PlayerDataBlock playerDataBlock = Main.getPlayerDataBlock(player);
 
@@ -23,24 +21,21 @@ public class TalentUtils {
         if (playerPrestigeLevel < needPrestigeLevel || (playerPrestigeLevel == needPrestigeLevel && playerLevel < needLevel)) { //不满足条件，不放置
             return false;
         }
-        ItemStack item = getTalentItemStack(talentItem, talentLevel, equipped, hasReachedMaxLevel);
+        ItemStack item = talentItem.getNamedItem(talentLevel, equipped, hasReachedMaxLevel);
         inventory.setItem(index, item);
         return true;
     }
 
-    public static ItemStack getTalentItemStack(@NonNull TalentItemsEnum talentItemType, int level, boolean equipped, boolean hasReachedMaxLevel) {
-        return talentItemType.getNamedItem(level, equipped, hasReachedMaxLevel);
-    }
-
-    public static double getNextLevelNeedCoinAmount(TalentItemsEnum talentItemType, int currentLevel) {
+    public static double getNextLevelNeedCoinAmount(GUITalentItemEnum talentItemType, int currentLevel) {
         return talentItemType.getNextLevelNeedCoinValue(currentLevel + 1);
     }
 
     public static int getNotEquippedTalentIdByInventoryIndex(int inventoryIndex) {
-        for (TalentIdEnum talentId : TalentIdEnum.values()) {
-            if (talentId.getInventoryIndex() == inventoryIndex) {
-                return talentId.getId();
+        for (GUITalentItemEnum talentItemEnum : GUITalentItemEnum.values()) {
+            if (talentItemEnum.getIndex() == inventoryIndex) {
+                return talentItemEnum.getId();
             }
+            return -1;
         }
         throw new NullPointerException();
     }
@@ -49,10 +44,10 @@ public class TalentUtils {
         return inventoryIndex - 37;
     }
 
-    public static TalentItemsEnum getTalentItemEnumById(int id) {
-        for (TalentItemsEnum talentItemsEnum : TalentItemsEnum.values()) {
-            if (talentItemsEnum.getId() == id) {
-                return talentItemsEnum;
+    public static GUITalentItemEnum getGUITalentItemEnumById(int id) {
+        for (GUITalentItemEnum GUITalentItemEnum : GUITalentItemEnum.values()) {
+            if (GUITalentItemEnum.getId() == id) {
+                return GUITalentItemEnum;
             }
         }
         return null;

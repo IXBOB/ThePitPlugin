@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public enum DropItems {
+public enum DropItemEnum {
     IRON_HELMET(new ItemStack(Material.IRON_HELMET)),
     IRON_CHESTPLATE(new ItemStack(Material.IRON_CHESTPLATE)),
     IRON_LEGGINGS(new ItemStack(Material.IRON_LEGGINGS)),
@@ -14,7 +14,7 @@ public enum DropItems {
 
     private ItemStack itemStack;
 
-    DropItems(ItemStack itemStack) {
+    DropItemEnum(ItemStack itemStack) {
         this.itemStack = itemStack;
     }
 
@@ -46,13 +46,13 @@ public enum DropItems {
     }
 
     public static void init() {
-        for (DropItems item : DropItems.values()) {
+        for (DropItemEnum item : DropItemEnum.values()) {
             ItemStack itemStack1 = item.getItemStack();
             ItemMeta itemMeta = itemStack1.getItemMeta();
-            if (item == DropItems.IRON_HELMET
-                    || item == DropItems.IRON_CHESTPLATE
-                    || item == DropItems.IRON_LEGGINGS
-                    || item == DropItems.IRON_BOOTS) {
+            if (item == DropItemEnum.IRON_HELMET
+                    || item == DropItemEnum.IRON_CHESTPLATE
+                    || item == DropItemEnum.IRON_LEGGINGS
+                    || item == DropItemEnum.IRON_BOOTS) {
                 itemMeta.setUnbreakable(true);
             }
             itemStack1.setItemMeta(itemMeta);

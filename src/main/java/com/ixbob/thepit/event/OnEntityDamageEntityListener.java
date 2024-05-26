@@ -4,9 +4,9 @@ import com.ixbob.thepit.LangLoader;
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.Mth;
 import com.ixbob.thepit.PlayerDataBlock;
-import com.ixbob.thepit.enums.PitHitType;
-import com.ixbob.thepit.enums.PitItems;
-import com.ixbob.thepit.enums.TalentItemsEnum;
+import com.ixbob.thepit.enums.PitHitTypeEnum;
+import com.ixbob.thepit.enums.PitItemEnum;
+import com.ixbob.thepit.enums.GUITalentItemEnum;
 import com.ixbob.thepit.event.custom.PlayerBattleStateChangeEvent;
 import com.ixbob.thepit.util.NMSUtils;
 import com.ixbob.thepit.util.TalentCalcuUtils;
@@ -50,7 +50,7 @@ public class OnEntityDamageEntityListener implements Listener {
                         event.setCancelled(true);
                         return;
                     }
-                    damageEvent(damager, damagedPlayer, event, PitHitType.ARROW);
+                    damageEvent(damager, damagedPlayer, event, PitHitTypeEnum.ARROW);
                 }
             }
         }
@@ -64,11 +64,11 @@ public class OnEntityDamageEntityListener implements Listener {
                 return;
             }
             //正常伤害逻辑
-            damageEvent(damager, damagedPlayer, event, PitHitType.NORMAL);
+            damageEvent(damager, damagedPlayer, event, PitHitTypeEnum.NORMAL);
         }
     }
 
-    private void damageEvent(Player damager, Player damagedPlayer, EntityDamageByEntityEvent event, PitHitType hitType) {
+    private void damageEvent(Player damager, Player damagedPlayer, EntityDamageByEntityEvent event, PitHitTypeEnum hitType) {
         PlayerBattleStateChangeEvent damagerBattleStateChangeEvent = new PlayerBattleStateChangeEvent(damager, true);
         Bukkit.getPluginManager().callEvent(damagerBattleStateChangeEvent);
         PlayerBattleStateChangeEvent damagedPlayerBattleStateChangeEvent = new PlayerBattleStateChangeEvent(damagedPlayer, true);
@@ -78,8 +78,8 @@ public class OnEntityDamageEntityListener implements Listener {
         ArrayList<?> damagerEquippedTalentList = damagerDataBlock.getEquippedTalentList();
         ArrayList<Integer> talentLevelList = damagerDataBlock.getTalentLevelList();
 
-        if (hitType == PitHitType.ARROW) {
-            int infiniteArrowsId = TalentItemsEnum.INFINITE_ARROWS.getId();
+        if (hitType == PitHitTypeEnum.ARROW) {
+            int infiniteArrowsId = GUITalentItemEnum.INFINITE_ARROWS.getId();
             if (damagerEquippedTalentList.contains(infiniteArrowsId)) {
                 damager.getInventory().addItem(new ItemStack(Material.ARROW, (int) TalentCalcuUtils.getAddPointValue(infiniteArrowsId, talentLevelList.get(infiniteArrowsId))));
             }
@@ -139,19 +139,19 @@ public class OnEntityDamageEntityListener implements Listener {
         PlayerDataBlock killerDataBlock = Main.getPlayerDataBlock(killer);
         ArrayList<?> killerEquippedTalentList = killerDataBlock.getEquippedTalentList();
         //天赋 金色巧克力
-        if (killerEquippedTalentList.contains(TalentItemsEnum.GOLDEN_CHOCOLATE.getId())) {
-            killer.getInventory().addItem(PitItems.GOLDEN_CHOCOLATE.getItemStack());
+        if (killerEquippedTalentList.contains(GUITalentItemEnum.GOLDEN_CHOCOLATE.getId())) {
+            killer.getInventory().addItem(PitItemEnum.GOLDEN_CHOCOLATE.getItemStack());
         } else killer.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 1));
         //天赋 力量
-        if (killerEquippedTalentList.contains(TalentItemsEnum.STRENGTH.getId())) {
+        if (killerEquippedTalentList.contains(GUITalentItemEnum.STRENGTH.getId())) {
             killerDataBlock.updateTalentStrengthState(true);
         }
 
-        ArrayList<PitItems> dropItemList = new ArrayList<PitItems>(Arrays.asList(
-                PitItems.DEFAULT_IRON_HELMET,
-                PitItems.DEFAULT_IRON_CHESTPLATE,
-                PitItems.DEFAULT_IRON_LEGGINGS,
-                PitItems.DEFAULT_IRON_BOOTS));
+        ArrayList<PitItemEnum> dropItemList = new ArrayList<PitItemEnum>(Arrays.asList(
+                PitItemEnum.DEFAULT_IRON_HELMET,
+                PitItemEnum.DEFAULT_IRON_CHESTPLATE,
+                PitItemEnum.DEFAULT_IRON_LEGGINGS,
+                PitItemEnum.DEFAULT_IRON_BOOTS));
         ItemStack randomDropItem = dropItemList.stream().skip((int) (dropItemList.size() * Math.random())).findFirst().get().getItemStack();
         Bukkit.getWorlds().get(0).dropItemNaturally(deathPlayer.getLocation(), randomDropItem);
 

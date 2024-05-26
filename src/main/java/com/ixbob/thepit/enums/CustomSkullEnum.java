@@ -10,12 +10,12 @@ import org.bukkit.inventory.meta.SkullMeta;
 import java.lang.reflect.Field;
 import java.util.UUID;
 
-public enum CustomSkull {
+public enum CustomSkullEnum {
     GOLDEN_CHOCOLATE(new ItemStack(Material.SKULL_ITEM, 1, (short) 3));
 
     private ItemStack itemStack;
 
-    CustomSkull(ItemStack itemStack) {
+    CustomSkullEnum(ItemStack itemStack) {
         this.itemStack = itemStack;
     }
 
@@ -28,7 +28,7 @@ public enum CustomSkull {
     }
 
     public static void init() {
-        for (CustomSkull skullEnum : CustomSkull.values()) {
+        for (CustomSkullEnum skullEnum : CustomSkullEnum.values()) {
             if (skullEnum == GOLDEN_CHOCOLATE) {
                 ItemStack skull = skullEnum.getItemStack();
                 SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public enum TalentItemsEnum {
+public enum GUITalentItemEnum {
     HEALTH_BOOST(Material.REDSTONE, 0, 10, 0, 3, Utils.getInventoryIndex(2,2), 1,
             LangLoader.get("talent_item_id_0_name"), new ArrayList<>(Arrays.asList(
             LangLoader.get("talent_item_id_0_lore1"),
@@ -73,7 +73,7 @@ public enum TalentItemsEnum {
     private final String displayName;
     private final List<String> loreList;
 
-    TalentItemsEnum(Material material, int id, int needLevel, int needPrestigeLevel, int maxTalentLevel, int index, int page, String displayName, List<String> loreList) {
+    GUITalentItemEnum(Material material, int id, int needLevel, int needPrestigeLevel, int maxTalentLevel, int index, int page, String displayName, List<String> loreList) {
         this.material = material;
         this.id = id;
         this.needLevel = needLevel;

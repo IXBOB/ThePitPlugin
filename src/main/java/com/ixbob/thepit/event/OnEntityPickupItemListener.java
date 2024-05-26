@@ -1,6 +1,6 @@
 package com.ixbob.thepit.event;
 
-import com.ixbob.thepit.enums.DropItems;
+import com.ixbob.thepit.enums.DropItemEnum;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,7 +15,7 @@ public class OnEntityPickupItemListener implements Listener {
             Player player = (Player) event.getEntity();
             Item item = event.getItem();
             ItemStack itemStack = item.getItemStack();
-            for (DropItems dropItem : DropItems.values()) {
+            for (DropItemEnum dropItem : DropItemEnum.values()) {
                 if (itemStack.getType() == dropItem.getItemStack().getType()) {
                     dropItem.apply(player);
                     item.remove();
