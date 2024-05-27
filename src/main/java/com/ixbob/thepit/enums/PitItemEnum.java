@@ -18,6 +18,7 @@ public enum PitItemEnum {
     DEFAULT_DIAMOND_CHESTPLATE(ShopGivingItemEnum.DIAMOND_CHESTPLATE.getItemStack(), LangLoader.get("pitshopitem_default_diamond_chestplate")),
     DEFAULT_DIAMOND_LEGGINGS(ShopGivingItemEnum.DIAMOND_LEGGINGS.getItemStack(), LangLoader.get("pitshopitem_default_diamond_leggings")),
     DEFAULT_DIAMOND_BOOTS(ShopGivingItemEnum.DIAMOND_BOOTS.getItemStack(), LangLoader.get("pitshopitem_default_diamond_boots")),
+    DEFAULT_OBSIDIAN(ShopGivingItemEnum.OBSIDIAN.getItemStack(), LangLoader.get("pitshopitem_default_obsidian")),
     DEFAULT_FISHING_ROD(TalentGivingItemEnum.DEFAULT_FISHING_ROD.getItemStack(), LangLoader.get("pittalentitem_default_fishing_rod"));
 
     private final ItemStack itemStack;

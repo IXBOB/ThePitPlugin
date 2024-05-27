@@ -8,7 +8,8 @@ public enum ShopGivingItemEnum {
     DIAMOND_HELMET(Material.DIAMOND_HELMET),
     DIAMOND_CHESTPLATE(Material.DIAMOND_CHESTPLATE),
     DIAMOND_LEGGINGS(Material.DIAMOND_LEGGINGS),
-    DIAMOND_BOOTS(Material.DIAMOND_BOOTS);
+    DIAMOND_BOOTS(Material.DIAMOND_BOOTS),
+    OBSIDIAN(Material.OBSIDIAN);
 
     private final ItemStack itemStack;
 
@@ -21,7 +22,9 @@ public enum ShopGivingItemEnum {
                 || material == Material.DIAMOND_BOOTS){
             itemMeta.setUnbreakable(true);
         }
-        itemStack.setItemMeta(itemMeta);
+        if (material == Material.OBSIDIAN) {
+            itemStack.setAmount(GUIShopItemEnum.OBSIDIAN.getAmount());
+        }
         this.itemStack = itemStack;
     }
 

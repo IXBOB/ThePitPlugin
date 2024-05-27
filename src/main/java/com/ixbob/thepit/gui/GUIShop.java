@@ -93,11 +93,14 @@ public class GUIShop extends AbstractGUI {
                     player.getInventory().addItem(ShopGivingItemEnum.DIAMOND_BOOTS.getItemStack());
                     break;
                 }
+                case OBSIDIAN: {
+                    player.getInventory().addItem(ShopGivingItemEnum.OBSIDIAN.getItemStack());
+                }
             }
             return;
         }
         //购买失败
-        player.sendMessage(String.format(LangLoader.get("shop_purchase_fail_as_coin"), Mth.formatDecimalWithFloor(needCoinAmount - ownCoinAmount, 2)));
+        player.sendMessage(String.format(LangLoader.get("shop_purchase_fail_as_coin"), Mth.formatDecimalWithFloor(needCoinAmount - ownCoinAmount, 1)));
         player.playSound(player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1, 1);
 
     }
