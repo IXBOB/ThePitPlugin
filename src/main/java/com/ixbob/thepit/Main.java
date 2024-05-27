@@ -116,6 +116,9 @@ public class Main extends JavaPlugin {
 
         Listener onPlayerPlaceBlockListener = new OnPlayerPlaceBlockListener();
         getServer().getPluginManager().registerEvents(onPlayerPlaceBlockListener, this);
+
+        Listener onPlayerBreakBlockListener = new OnPlayerBreakBlockListener();
+        getServer().getPluginManager().registerEvents(onPlayerBreakBlockListener, this);
     }
 
     @Override
