@@ -1,5 +1,6 @@
 package com.ixbob.thepit;
 
+import com.ixbob.thepit.gui.AbstractGUI;
 import com.ixbob.thepit.gui.GUIShop;
 import com.ixbob.thepit.gui.GUITalent;
 import org.bukkit.entity.Player;
@@ -8,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PlayerGUIManager {
-    private Map<Player, AbstractGUI> playerOpeningCustomGUI = new HashMap<>();
+    private final Map<Player, AbstractGUI> playerOpeningCustomGUI = new HashMap<>();
 
     public PlayerGUIManager() {}
 

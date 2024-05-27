@@ -1,4 +1,4 @@
-package com.ixbob.thepit;
+package com.ixbob.thepit.gui;
 
 import com.ixbob.thepit.enums.GUIGridTypeEnum;
 import org.bukkit.entity.Player;

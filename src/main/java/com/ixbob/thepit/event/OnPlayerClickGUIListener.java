@@ -1,6 +1,6 @@
 package com.ixbob.thepit.event;
 
-import com.ixbob.thepit.AbstractGUI;
+import com.ixbob.thepit.gui.AbstractGUI;
 import com.ixbob.thepit.Main;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
