@@ -194,7 +194,7 @@ public class Utils {
             inventory.addItem(TalentGivingItemEnum.DEFAULT_FISHING_ROD.getItemStack());
         }
         if (equippedTalentList.contains(GUITalentItemEnum.SAFETY_FIRST.getId())) {
-            inventory.addItem(TalentGivingItemEnum.DEFAULT_CHAINMAIL_HELMET.getItemStack());
+            inventory.setHelmet(TalentGivingItemEnum.DEFAULT_CHAINMAIL_HELMET.getItemStack());
         }
     }
 

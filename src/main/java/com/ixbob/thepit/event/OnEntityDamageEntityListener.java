@@ -154,6 +154,15 @@ public class OnEntityDamageEntityListener implements Listener {
                 PitItemEnum.DEFAULT_IRON_BOOTS));
         ItemStack randomDropItem = dropItemList.stream().skip((int) (dropItemList.size() * Math.random())).findFirst().get().getItemStack();
         Bukkit.getWorlds().get(0).dropItemNaturally(deathPlayer.getLocation(), randomDropItem);
+        if (deathPlayer.getInventory().contains(Material.OBSIDIAN)) {
+            int obsidianAmount = 0;
+            for (ItemStack itemStack : deathPlayer.getInventory().getContents()) {
+                if (itemStack != null && itemStack.getType() == Material.OBSIDIAN) {
+                    obsidianAmount += itemStack.getAmount();
+                }
+            }
+            Bukkit.getWorlds().get(0).dropItemNaturally(deathPlayer.getLocation(), new ItemStack(Material.OBSIDIAN, obsidianAmount));
+        }
 
         for (PotionEffect effect : deathPlayer.getActivePotionEffects()) {
             deathPlayer.removePotionEffect(effect.getType());
