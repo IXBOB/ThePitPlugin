@@ -27,7 +27,6 @@ public class OnPlayerClickGUIListener implements Listener {
 
         //处理其他物品栏
         if (player.getInventory().getType() == InventoryType.PLAYER) {
-            System.out.println("normal");
             if (event.getRawSlot() == 45) {  //有时会触发 InventoryDragEvent。 因为玩家按住鼠标的时间太长，并向服务器发送了跨一个插槽的拖动意图。 //https://www.spigotmc.org/threads/inventoryclickevent-sometimes-not-firing.540695/
                 event.setCancelled(true);
             }

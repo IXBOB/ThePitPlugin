@@ -9,7 +9,6 @@ import org.bukkit.event.inventory.InventoryType;
 public class OnPlayerDragInventoryListener implements Listener {
     @EventHandler
     public void onPlayerDragInventory(InventoryDragEvent event) {
-        System.out.println("drag");
         Player player = (Player) event.getWhoClicked();
         if (player.getInventory().getType() == InventoryType.PLAYER) {
             if (event.getRawSlots().contains(45)) {

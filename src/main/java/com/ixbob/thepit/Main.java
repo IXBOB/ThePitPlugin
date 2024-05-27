@@ -30,6 +30,8 @@ public class Main extends JavaPlugin {
     public static List<Integer> lobbyAreaFromPosList;
     public static List<Integer> lobbyAreaToPosList;
     public static final PlayerGUIManager GUIManager = new PlayerGUIManager();
+    public static final TaskManager taskManager = new TaskManager();
+
     @Override
     public void onEnable() {
         Main.plugin = this;
@@ -111,6 +113,9 @@ public class Main extends JavaPlugin {
 
         Listener onEntityPickupItemListener = new OnEntityPickupItemListener();
         getServer().getPluginManager().registerEvents(onEntityPickupItemListener, this);
+
+        Listener onPlayerPlaceBlockListener = new OnPlayerPlaceBlockListener();
+        getServer().getPluginManager().registerEvents(onPlayerPlaceBlockListener, this);
     }
 
     @Override
@@ -118,6 +123,7 @@ public class Main extends JavaPlugin {
         for (Player player : Bukkit.getOnlinePlayers()) {
             Utils.storePlayerInventoryData(player);
         }
+        getTaskManager().getObsidianTaskHandler().removeAll();
     }
 
     public static Plugin getPlugin() {
@@ -130,6 +136,10 @@ public class Main extends JavaPlugin {
 
     public static PlayerGUIManager getGUIManager() {
         return GUIManager;
+    }
+
+    public static TaskManager getTaskManager() {
+        return taskManager;
     }
 
     public static PlayerDataBlock getPlayerDataBlock(Player player) {
