@@ -11,6 +11,10 @@ public class OnPlayerLeaveListener implements Listener {
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent event) {
         Player player = event.getPlayer();
+        if (Main.getPlayerDataBlock(player).getBattleState()) {
+            Utils.setMostBasicKit(player, true);
+            Utils.backToLobby(player);
+        }
         Utils.storePlayerInventoryData(player);
         Main.playerDataMap.remove(player);
     }

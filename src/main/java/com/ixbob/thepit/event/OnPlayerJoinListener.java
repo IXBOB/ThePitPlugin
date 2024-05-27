@@ -107,8 +107,6 @@ public class OnPlayerJoinListener implements Listener {
                         }
                     }
                 }
-
-                Utils.backToLobby(player);
             });
         });
     }

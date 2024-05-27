@@ -19,7 +19,6 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftServer;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
@@ -183,19 +182,22 @@ public class Utils {
         ArrayList<?> equippedTalentList = dataBlock.getEquippedTalentList();
         if (clear) {
             inventory.clear();
+            inventory.addItem(CustomBasicToolEnum.BASIC_STONE_SWORD.getItemStack());
+            inventory.addItem(CustomBasicToolEnum.BASIC_BOW.getItemStack());
+            if (equippedTalentList.contains(GUITalentItemEnum.FISHERMAN.getId())) {
+                inventory.addItem(TalentGivingItemEnum.DEFAULT_FISHING_ROD.getItemStack());
+            }
+            if (equippedTalentList.contains(GUITalentItemEnum.SAFETY_FIRST.getId())) {
+                inventory.setHelmet(TalentGivingItemEnum.DEFAULT_CHAINMAIL_HELMET.getItemStack());
+            }
+            inventory.setChestplate(CustomBasicToolEnum.BASIC_CHAINMAIL_CHESTPLATE.getItemStack());
+            inventory.setLeggings(CustomBasicToolEnum.BASIC_CHAINMAIL_LEGGINGS.getItemStack());
         }
-        inventory.addItem(CustomBasicToolEnum.BASIC_STONE_SWORD.getItemStack());
-        inventory.addItem(CustomBasicToolEnum.BASIC_BOW.getItemStack());
-        inventory.addItem(new ItemStack(Material.ARROW, 8));
+        inventory.remove(Material.COOKED_BEEF);
         inventory.addItem(new ItemStack(Material.COOKED_BEEF, 64));
-        inventory.setChestplate(CustomBasicToolEnum.BASIC_CHAINMAIL_CHESTPLATE.getItemStack());
-        inventory.setLeggings(CustomBasicToolEnum.BASIC_CHAINMAIL_LEGGINGS.getItemStack());
-        if (equippedTalentList.contains(GUITalentItemEnum.FISHERMAN.getId())) {
-            inventory.addItem(TalentGivingItemEnum.DEFAULT_FISHING_ROD.getItemStack());
-        }
-        if (equippedTalentList.contains(GUITalentItemEnum.SAFETY_FIRST.getId())) {
-            inventory.setHelmet(TalentGivingItemEnum.DEFAULT_CHAINMAIL_HELMET.getItemStack());
-        }
+        inventory.remove(Material.ARROW);
+        inventory.addItem(new ItemStack(Material.ARROW, 8));
+
     }
 
     public static int getInventoryIndex(int row, int column) {
@@ -230,9 +232,5 @@ public class Utils {
         player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
         player.setFoodLevel(20);
         player.teleport(Main.spawnLocation);
-        //恢复弓箭数
-        Inventory inventory = player.getInventory();
-        inventory.remove(Material.ARROW);
-        inventory.addItem(new ItemStack(Material.ARROW, 8));
     }
 }

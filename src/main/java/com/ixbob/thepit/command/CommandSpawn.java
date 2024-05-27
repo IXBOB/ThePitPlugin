@@ -22,7 +22,7 @@ public class CommandSpawn implements CommandExecutor {
             boolean battleState = dataBlock.getBattleState();
             if (args.length == 0) {
                 if (!battleState) {
-                    back(player);
+                    back(player, false);
                 } else {
                     dataBlock.setTypedSpawn(true);
                     player.sendMessage(LangLoader.get("command_spawn_deny_in_battlestate"));
@@ -31,7 +31,7 @@ public class CommandSpawn implements CommandExecutor {
             if (args.length == 1) {
                 if (args[0].equals("confirm")) {
                     if (dataBlock.isTypedSpawn()) {
-                        back(player);
+                        back(player, true);
                         dataBlock.setTypedSpawn(false);
                         PlayerBattleStateChangeEvent damagerBattleStateChangeEvent = new PlayerBattleStateChangeEvent(player, false);
                         Bukkit.getPluginManager().callEvent(damagerBattleStateChangeEvent);
@@ -46,9 +46,9 @@ public class CommandSpawn implements CommandExecutor {
         return true;
     }
 
-    private void back(Player player) {
+    private void back(Player player, boolean isClear) {
         player.teleport(Main.spawnLocation);
-        Utils.setMostBasicKit(player, true);
+        Utils.setMostBasicKit(player, isClear);
         player.sendMessage(LangLoader.get("command_spawn_success"));
     }
 }
