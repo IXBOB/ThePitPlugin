@@ -19,6 +19,6 @@ public class ShopUtils {
                 return shopItemEnum.getId();
             }
         }
-        throw new NullPointerException();
+        return -1;
     }
 }

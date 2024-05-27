@@ -85,6 +85,9 @@ public class Main extends JavaPlugin {
         Listener onPlayerClickGUIListener = new OnPlayerClickGUIListener();
         getServer().getPluginManager().registerEvents(onPlayerClickGUIListener, this);
 
+        Listener onPlayerDragInventoryListener = new OnPlayerDragInventoryListener();
+        getServer().getPluginManager().registerEvents(onPlayerDragInventoryListener, this);
+
         Listener onPlayerCloseGUIListener = new OnPlayerCloseGUIListener();
         getServer().getPluginManager().registerEvents(onPlayerCloseGUIListener, this);
 

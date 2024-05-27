@@ -41,7 +41,7 @@ public class GUIShop extends AbstractGUI {
 
         GUIUtils.fillAll(inventory, GUISystemItemEnum.DEFAULT_WALL.getItemStack());
 
-        for (int index = 10; index < 10 + GUIShopItemEnum.values().length; index ++) {
+        for (int index = 10; index < 17; index ++) {
 
             inventory.setItem(index, GUISystemItemEnum.DEFAULT_EMPTY.getItemStack());
 
