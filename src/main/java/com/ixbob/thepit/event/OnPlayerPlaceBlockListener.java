@@ -14,7 +14,7 @@ public class OnPlayerPlaceBlockListener implements Listener {
         Player player = event.getPlayer();
         Location location = event.getBlockPlaced().getLocation();
         if (event.getBlockPlaced().getType() == Material.OBSIDIAN) {
-            Main.getTaskManager().getObsidianTaskHandler().newDefaultTask(200, location);
+            Main.getTaskManager().getPlacedBlockTaskHandler().newDefaultTask(200, location);
         }
     }
 }

@@ -6,6 +6,7 @@ import com.ixbob.thepit.event.custom.PlayerBattleStateChangeEvent;
 import com.ixbob.thepit.LangLoader;
 import com.ixbob.thepit.util.Utils;
 import org.bukkit.Bukkit;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -50,5 +51,7 @@ public class CommandSpawn implements CommandExecutor {
         player.teleport(Main.spawnLocation);
         Utils.setMostBasicKit(player, isClear);
         player.sendMessage(LangLoader.get("command_spawn_success"));
+        player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+        player.setFoodLevel(20);
     }
 }

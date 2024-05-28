@@ -126,7 +126,7 @@ public class Main extends JavaPlugin {
         for (Player player : Bukkit.getOnlinePlayers()) {
             Utils.storePlayerInventoryData(player);
         }
-        getTaskManager().getObsidianTaskHandler().removeAll();
+        getTaskManager().getPlacedBlockTaskHandler().removeAll();
     }
 
     public static Plugin getPlugin() {
