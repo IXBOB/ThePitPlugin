@@ -35,9 +35,8 @@ public class TalentUtils {
             if (talentItemEnum.getIndex() == inventoryIndex) {
                 return talentItemEnum.getId();
             }
-            return -1;
         }
-        throw new NullPointerException();
+        return -1;
     }
 
     public static int getEquipGridIdByInventoryIndex(int inventoryIndex) {

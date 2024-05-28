@@ -13,7 +13,9 @@ public class OnPlayerPlaceBlockListener implements Listener {
     public void onPlayerPlaceBlock(BlockPlaceEvent event) {
         Player player = event.getPlayer();
         Location location = event.getBlockPlaced().getLocation();
-        if (event.getBlockPlaced().getType() == Material.OBSIDIAN) {
+        Material material = event.getBlockPlaced().getType();
+        if (material == Material.OBSIDIAN
+                || material == Material.COBBLESTONE) {
             Main.getTaskManager().getPlacedBlockTaskHandler().newDefaultTask(200, location);
         }
     }

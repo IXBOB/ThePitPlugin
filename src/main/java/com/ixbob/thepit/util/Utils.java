@@ -190,6 +190,10 @@ public class Utils {
             if (equippedTalentList.contains(GUITalentItemEnum.SAFETY_FIRST.getId())) {
                 inventory.setHelmet(TalentGivingItemEnum.DEFAULT_CHAINMAIL_HELMET.getItemStack());
             }
+            if (equippedTalentList.contains(GUITalentItemEnum.MINER.getId())) {
+                player.getInventory().addItem(TalentGivingItemEnum.DIAMOND_PICKAXE_EFFICIENCY_4.getItemStack());
+                player.getInventory().addItem(TalentGivingItemEnum.DEFAULT_COBBLESTONE.getItemStack((int) TalentCalcuUtils.getAddPointValue(GUITalentItemEnum.MINER.getId(), dataBlock.getTalentLevelList().get(GUITalentItemEnum.MINER.getId()))));
+            }
             inventory.setChestplate(CustomBasicToolEnum.BASIC_CHAINMAIL_CHESTPLATE.getItemStack());
             inventory.setLeggings(CustomBasicToolEnum.BASIC_CHAINMAIL_LEGGINGS.getItemStack());
         }

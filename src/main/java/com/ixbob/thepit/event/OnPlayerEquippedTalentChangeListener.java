@@ -5,6 +5,7 @@ import com.ixbob.thepit.PlayerDataBlock;
 import com.ixbob.thepit.enums.TalentGivingItemEnum;
 import com.ixbob.thepit.enums.GUITalentItemEnum;
 import com.ixbob.thepit.event.custom.PlayerEquippedTalentChangeEvent;
+import com.ixbob.thepit.util.TalentCalcuUtils;
 import com.ixbob.thepit.util.TalentUtils;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -74,6 +75,16 @@ public class OnPlayerEquippedTalentChangeListener implements Listener {
                     player.getInventory().remove(TalentGivingItemEnum.DEFAULT_CHAINMAIL_HELMET.getItemStack());
                 }
                 break;
+            }
+            case MINER: {
+                if (isEquipped) {
+                    id = GUITalentItemEnum.MINER.getId();
+                    player.getInventory().addItem(TalentGivingItemEnum.DIAMOND_PICKAXE_EFFICIENCY_4.getItemStack());
+                    player.getInventory().addItem(TalentGivingItemEnum.DEFAULT_COBBLESTONE.getItemStack((int) TalentCalcuUtils.getAddPointValue(id, dataBlock.getTalentLevelList().get(GUITalentItemEnum.MINER.getId()))));
+                } else {
+                    player.getInventory().remove(TalentGivingItemEnum.DIAMOND_PICKAXE_EFFICIENCY_4.getItemStack());
+                    player.getInventory().remove(TalentGivingItemEnum.DEFAULT_COBBLESTONE.getItemStack().getType());
+                }
             }
         }
     }

@@ -7,6 +7,7 @@ import com.ixbob.thepit.PlayerDataBlock;
 import com.ixbob.thepit.enums.PitHitTypeEnum;
 import com.ixbob.thepit.enums.PitItemEnum;
 import com.ixbob.thepit.enums.GUITalentItemEnum;
+import com.ixbob.thepit.enums.TalentGivingItemEnum;
 import com.ixbob.thepit.event.custom.PlayerBattleStateChangeEvent;
 import com.ixbob.thepit.util.NMSUtils;
 import com.ixbob.thepit.util.TalentCalcuUtils;
@@ -145,6 +146,10 @@ public class OnEntityDamageEntityListener implements Listener {
         //天赋 力量
         if (killerEquippedTalentList.contains(GUITalentItemEnum.STRENGTH.getId())) {
             killerDataBlock.updateTalentStrengthState(true);
+        }
+        //天赋 矿工
+        if (killerEquippedTalentList.contains(GUITalentItemEnum.MINER.getId())) {
+            killer.getInventory().addItem(TalentGivingItemEnum.DEFAULT_COBBLESTONE.getItemStack(4));
         }
 
         ArrayList<PitItemEnum> dropItemList = new ArrayList<PitItemEnum>(Arrays.asList(

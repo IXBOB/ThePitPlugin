@@ -1,6 +1,7 @@
 package com.ixbob.thepit.enums;
 
 import com.ixbob.thepit.LangLoader;
+import com.ixbob.thepit.event.OnPlayerEquippedTalentChangeListener;
 import com.ixbob.thepit.util.TalentCalcuUtils;
 import com.ixbob.thepit.util.TalentUtils;
 import com.ixbob.thepit.util.Utils;
@@ -13,7 +14,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum GUITalentItemEnum {
-    HEALTH_BOOST(Material.REDSTONE, 0, 10, 0, 3, Utils.getInventoryIndex(2,2), 1,
+    HEALTH_BOOST(Material.REDSTONE, 0, 10, 0, 3,
+            Utils.getInventoryIndex(2,2), 1,
             LangLoader.get("talent_item_id_0_name"), new ArrayList<>(Arrays.asList(
             LangLoader.get("talent_item_id_0_lore1"),
             LangLoader.get("talent_item_id_0_lore2"),
@@ -21,7 +23,8 @@ public enum GUITalentItemEnum {
             LangLoader.get("talent_item_id_0_lore4"),
             LangLoader.get("talent_item_id_0_lore5"),
             LangLoader.get("talent_item_id_0_lore6")))),
-    GOLDEN_CHOCOLATE(Material.GOLDEN_APPLE, 1, 10, 0, 2, Utils.getInventoryIndex(2, 3), 1,
+    GOLDEN_CHOCOLATE(Material.GOLDEN_APPLE, 1, 10, 0, 2,
+            Utils.getInventoryIndex(2, 3), 1,
             LangLoader.get("talent_item_id_1_name"), new ArrayList<>(Arrays.asList(
             LangLoader.get("talent_item_id_1_lore1"),
             LangLoader.get("talent_item_id_1_lore2"),
@@ -30,7 +33,8 @@ public enum GUITalentItemEnum {
             LangLoader.get("talent_item_id_1_lore5"),
             LangLoader.get("talent_item_id_1_lore6"),
             LangLoader.get("talent_item_id_1_lore7")))),
-    FISHERMAN(Material.FISHING_ROD, 2, 10, 0, 0, Utils.getInventoryIndex(2, 4), 1,
+    FISHERMAN(Material.FISHING_ROD, 2, 10, 0, 0,
+            Utils.getInventoryIndex(2, 4), 1,
             LangLoader.get("talent_item_id_2_name"), new ArrayList<>(Arrays.asList(
             LangLoader.get("talent_item_id_2_lore1"),
             LangLoader.get("talent_item_id_2_lore2"),
@@ -38,7 +42,8 @@ public enum GUITalentItemEnum {
             LangLoader.get("talent_item_id_2_lore4"),
             LangLoader.get("talent_item_id_2_lore5"),
             LangLoader.get("talent_item_id_2_lore6")))),
-    INFINITE_ARROWS(Material.ARROW, 3, 10, 0, 2, Utils.getInventoryIndex(2, 5), 1,
+    INFINITE_ARROWS(Material.ARROW, 3, 10, 0, 2,
+            Utils.getInventoryIndex(2, 5), 1,
             LangLoader.get("talent_item_id_3_name"), new ArrayList<>(Arrays.asList(
             LangLoader.get("talent_item_id_3_lore1"),
             LangLoader.get("talent_item_id_3_lore2"),
@@ -46,7 +51,8 @@ public enum GUITalentItemEnum {
             LangLoader.get("talent_item_id_3_lore4"),
             LangLoader.get("talent_item_id_3_lore5"),
             LangLoader.get("talent_item_id_3_lore6")))),
-    STRENGTH(Material.REDSTONE_BLOCK, 4, 15, 0, 3, Utils.getInventoryIndex(2, 6), 1,
+    STRENGTH(Material.REDSTONE_BLOCK, 4, 15, 0, 3,
+            Utils.getInventoryIndex(2, 6), 1,
             LangLoader.get("talent_item_id_4_name"), new ArrayList<>(Arrays.asList(
             LangLoader.get("talent_item_id_4_lore1"),
             LangLoader.get("talent_item_id_4_lore2"),
@@ -54,14 +60,32 @@ public enum GUITalentItemEnum {
             LangLoader.get("talent_item_id_4_lore4"),
             LangLoader.get("talent_item_id_4_lore5"),
             LangLoader.get("talent_item_id_4_lore6")))),
-    SAFETY_FIRST(Material.CHAINMAIL_HELMET, 5, 15, 0, 0, Utils.getInventoryIndex(2, 7), 1,
+    SAFETY_FIRST(Material.CHAINMAIL_HELMET, 5, 15, 0, 0,
+            Utils.getInventoryIndex(2, 7), 1,
             LangLoader.get("talent_item_id_5_name"), new ArrayList<>(Arrays.asList(
             LangLoader.get("talent_item_id_5_lore1"),
             LangLoader.get("talent_item_id_5_lore2"),
             LangLoader.get("talent_item_id_5_lore3"),
             LangLoader.get("talent_item_id_5_lore4"),
             LangLoader.get("talent_item_id_5_lore5"),
-            LangLoader.get("talent_item_id_5_lore6"))));
+            LangLoader.get("talent_item_id_5_lore6")))),
+    MINER(Material.DIAMOND_PICKAXE, 6, 15, 0, 3,
+            Utils.getInventoryIndex(2,8), 1,
+            LangLoader.get("talent_item_id_6_name"), new ArrayList<>(Arrays.asList(
+            LangLoader.get("talent_item_id_6_lore1"),
+            LangLoader.get("talent_item_id_6_lore2"),
+            LangLoader.get("talent_item_id_6_lore3"),
+            LangLoader.get("talent_item_id_6_lore4"),
+            LangLoader.get("talent_item_id_6_lore5"),
+            LangLoader.get("talent_item_id_6_lore6"),
+            LangLoader.get("talent_item_id_6_lore7"),
+            LangLoader.get("talent_item_id_6_lore8"),
+            LangLoader.get("talent_item_id_6_lore9"))));
+
+    /**
+     * {@link TalentCalcuUtils}
+     * {@link OnPlayerEquippedTalentChangeListener#applyEquipChangeResult()}
+     */
 
     private final Material material;
     private final int id;

@@ -1,6 +1,7 @@
 package com.ixbob.thepit.util;
 
 import com.ixbob.thepit.enums.ItemExtraDataEnum;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -13,6 +14,9 @@ public class ItemExtraDataApplier {
             ItemExtraDataEnum extraData = ItemExtraDataEnum.valueOf(extraDataStr);
             if (extraData == ItemExtraDataEnum.UNBREAKABLE) {
                 itemMeta.setUnbreakable(true);
+            }
+            if (extraData == ItemExtraDataEnum.EFFICIENCY_4) {
+                itemMeta.addEnchant(Enchantment.DIG_SPEED, 4, true);
             }
         }
         itemStack.setItemMeta(itemMeta);
