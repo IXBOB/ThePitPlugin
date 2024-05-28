@@ -63,7 +63,7 @@ public enum GUIShopItemEnum {
     }
 
     public ItemStack getItemStack() {
-        return new ItemStack(material);
+        return new ItemStack(material, amount);
     }
 
     public Material getMaterial() {

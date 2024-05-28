@@ -75,7 +75,7 @@ public class GUIShop extends AbstractGUI {
             //购买成功
             Utils.addCoin(player, -needCoinAmount);
             player.sendMessage(String.format(LangLoader.get("shop_purchase_success"), clickedShopItem.getDisplayName()));
-            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 2);
+            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
             switch (clickedShopItem) {
                 case DIAMOND_HELMET: {
                     player.getInventory().addItem(ShopGivingItemEnum.DIAMOND_HELMET.getItemStack());
