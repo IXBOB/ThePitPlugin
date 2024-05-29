@@ -6,6 +6,7 @@ import com.ixbob.thepit.util.TalentCalcuUtils;
 import com.ixbob.thepit.util.TalentUtils;
 import com.ixbob.thepit.util.Utils;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -14,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum GUITalentItemEnum {
-    HEALTH_BOOST(Material.REDSTONE, 0, 10, 0, 3,
+    HEALTH_BOOST(Material.REDSTONE, 0, null, 10, 0, 3,
             Utils.getInventoryIndex(2,2), 1,
             LangLoader.get("talent_item_id_0_name"), new ArrayList<>(Arrays.asList(
             LangLoader.get("talent_item_id_0_lore1"),
@@ -23,7 +24,7 @@ public enum GUITalentItemEnum {
             LangLoader.get("talent_item_id_0_lore4"),
             LangLoader.get("talent_item_id_0_lore5"),
             LangLoader.get("talent_item_id_0_lore6")))),
-    GOLDEN_CHOCOLATE(Material.GOLDEN_APPLE, 1, 10, 0, 2,
+    GOLDEN_CHOCOLATE(Material.GOLDEN_APPLE, 1, null, 10, 0, 2,
             Utils.getInventoryIndex(2, 3), 1,
             LangLoader.get("talent_item_id_1_name"), new ArrayList<>(Arrays.asList(
             LangLoader.get("talent_item_id_1_lore1"),
@@ -33,7 +34,7 @@ public enum GUITalentItemEnum {
             LangLoader.get("talent_item_id_1_lore5"),
             LangLoader.get("talent_item_id_1_lore6"),
             LangLoader.get("talent_item_id_1_lore7")))),
-    FISHERMAN(Material.FISHING_ROD, 2, 10, 0, 0,
+    FISHERMAN(Material.FISHING_ROD, 2, null, 10, 0, 0,
             Utils.getInventoryIndex(2, 4), 1,
             LangLoader.get("talent_item_id_2_name"), new ArrayList<>(Arrays.asList(
             LangLoader.get("talent_item_id_2_lore1"),
@@ -42,7 +43,7 @@ public enum GUITalentItemEnum {
             LangLoader.get("talent_item_id_2_lore4"),
             LangLoader.get("talent_item_id_2_lore5"),
             LangLoader.get("talent_item_id_2_lore6")))),
-    INFINITE_ARROWS(Material.ARROW, 3, 10, 0, 2,
+    INFINITE_ARROWS(Material.ARROW, 3, null, 10, 0, 2,
             Utils.getInventoryIndex(2, 5), 1,
             LangLoader.get("talent_item_id_3_name"), new ArrayList<>(Arrays.asList(
             LangLoader.get("talent_item_id_3_lore1"),
@@ -51,7 +52,7 @@ public enum GUITalentItemEnum {
             LangLoader.get("talent_item_id_3_lore4"),
             LangLoader.get("talent_item_id_3_lore5"),
             LangLoader.get("talent_item_id_3_lore6")))),
-    STRENGTH(Material.REDSTONE_BLOCK, 4, 15, 0, 3,
+    STRENGTH(Material.REDSTONE_BLOCK, 4, null, 15, 0, 3,
             Utils.getInventoryIndex(2, 6), 1,
             LangLoader.get("talent_item_id_4_name"), new ArrayList<>(Arrays.asList(
             LangLoader.get("talent_item_id_4_lore1"),
@@ -60,7 +61,7 @@ public enum GUITalentItemEnum {
             LangLoader.get("talent_item_id_4_lore4"),
             LangLoader.get("talent_item_id_4_lore5"),
             LangLoader.get("talent_item_id_4_lore6")))),
-    SAFETY_FIRST(Material.CHAINMAIL_HELMET, 5, 15, 0, 0,
+    SAFETY_FIRST(Material.CHAINMAIL_HELMET, 5, null, 15, 0, 0,
             Utils.getInventoryIndex(2, 7), 1,
             LangLoader.get("talent_item_id_5_name"), new ArrayList<>(Arrays.asList(
             LangLoader.get("talent_item_id_5_lore1"),
@@ -69,7 +70,7 @@ public enum GUITalentItemEnum {
             LangLoader.get("talent_item_id_5_lore4"),
             LangLoader.get("talent_item_id_5_lore5"),
             LangLoader.get("talent_item_id_5_lore6")))),
-    MINER(Material.DIAMOND_PICKAXE, 6, 15, 0, 3,
+    MINER(Material.DIAMOND_PICKAXE, 6, new ItemFlag[]{ItemFlag.HIDE_ATTRIBUTES}, 15, 0, 3,
             Utils.getInventoryIndex(2,8), 1,
             LangLoader.get("talent_item_id_6_name"), new ArrayList<>(Arrays.asList(
             LangLoader.get("talent_item_id_6_lore1"),
@@ -89,6 +90,7 @@ public enum GUITalentItemEnum {
 
     private final Material material;
     private final int id;
+    private final ItemFlag[] itemFlags;
     private final int needLevel;
     private final int needPrestigeLevel;
     private final int maxTalentLevel;
@@ -97,9 +99,10 @@ public enum GUITalentItemEnum {
     private final String displayName;
     private final List<String> loreList;
 
-    GUITalentItemEnum(Material material, int id, int needLevel, int needPrestigeLevel, int maxTalentLevel, int index, int page, String displayName, List<String> loreList) {
+    GUITalentItemEnum(Material material, int id, ItemFlag[] itemFlags, int needLevel, int needPrestigeLevel, int maxTalentLevel, int index, int page, String displayName, List<String> loreList) {
         this.material = material;
         this.id = id;
+        this.itemFlags = itemFlags;
         this.needLevel = needLevel;
         this.needPrestigeLevel = needPrestigeLevel;
         this.maxTalentLevel = maxTalentLevel;
@@ -107,6 +110,10 @@ public enum GUITalentItemEnum {
         this.page = page;
         this.displayName = displayName;
         this.loreList = loreList;
+    }
+
+    public ItemFlag[] getItemFlags() {
+        return itemFlags;
     }
 
     public Material getMaterial() {
@@ -134,7 +141,15 @@ public enum GUITalentItemEnum {
     }
 
     public ItemStack getItemStack(int amount) {
-        return new ItemStack(material, amount);
+        ItemStack itemStack = new ItemStack(material, amount);
+        if (itemFlags != null) {
+            ItemMeta itemMeta = itemStack.getItemMeta();
+            for (ItemFlag itemFlag : itemFlags) {
+                itemMeta.addItemFlags(itemFlag);
+            }
+            itemStack.setItemMeta(itemMeta);
+        }
+        return itemStack;
     }
 
     public String getDisplayName() {

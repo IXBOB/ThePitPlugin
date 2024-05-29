@@ -90,6 +90,10 @@ public class OnEntityDamageEntityListener implements Listener {
             event.setDamage(event.getDamage() * (1 + damagerDataBlock.getTalentStrengthValidCountDowner().getAddDamagePercentagePoint() / 100));
         }
 
+        if (damager.getInventory().getItemInMainHand().getType() == Material.DIAMOND_PICKAXE) {
+            event.setDamage(3);
+        }
+
         double finalDamageAmount = event.getFinalDamage();
 
         double absorptionHealthBefore = NMSUtils.getEntityPlayer(damagedPlayer).getAbsorptionHearts();
