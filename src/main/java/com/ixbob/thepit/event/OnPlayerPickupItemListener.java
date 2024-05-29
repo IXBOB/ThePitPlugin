@@ -2,11 +2,15 @@ package com.ixbob.thepit.event;
 
 import com.ixbob.thepit.LangLoader;
 import com.ixbob.thepit.Main;
+import com.ixbob.thepit.PlayerDataBlock;
 import com.ixbob.thepit.enums.DropItemEnum;
+import com.ixbob.thepit.enums.GUITalentItemEnum;
 import com.ixbob.thepit.task.handler.RandomGoldIngotSpawnSingleTaskHandler;
+import com.ixbob.thepit.util.TalentCalcuUtils;
 import com.ixbob.thepit.util.Utils;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -38,6 +42,18 @@ public class OnPlayerPickupItemListener implements Listener {
                         taskHandler.resume();
                     }
                     int addPoint = new Random().ints(amount, 1, 5).reduce(1, Integer::sum);
+
+                    PlayerDataBlock dataBlock = Main.getPlayerDataBlock(player);
+                    //涓流 天赋
+                    if (dataBlock.getEquippedTalentList().contains(GUITalentItemEnum.STREAM.getId())) {
+                        addPoint += 10 * amount;
+                        int id = GUITalentItemEnum.STREAM.getId();
+                        int level = dataBlock.getTalentLevelList().get(id);
+                        double applyHealth = player.getHealth() + TalentCalcuUtils.getAddPointValue(id, level);
+                        double maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+                        player.setHealth(Math.min(applyHealth, maxHealth));
+                    }
+
                     pickupGoldIngot(player, addPoint);
                     item.remove();
                     event.setCancelled(true);

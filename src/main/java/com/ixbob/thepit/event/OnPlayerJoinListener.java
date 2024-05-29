@@ -56,6 +56,7 @@ public class OnPlayerJoinListener implements Listener {
             player.removePotionEffect(potionEffect.getType());
         }
 
+        Utils.backToLobby(player);
         player.setGameMode(GameMode.SURVIVAL);
         player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(200);
         player.getInventory().clear();
