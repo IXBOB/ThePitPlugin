@@ -95,6 +95,11 @@ public class GUIShop extends AbstractGUI {
                 }
                 case OBSIDIAN: {
                     player.getInventory().addItem(ShopGivingItemEnum.OBSIDIAN.getItemStack());
+                    break;
+                }
+                case DIAMOND_SWORD: {
+                    player.getInventory().addItem(ShopGivingItemEnum.DIAMOND_SWORD.getItemStack());
+                    break;
                 }
             }
             return;

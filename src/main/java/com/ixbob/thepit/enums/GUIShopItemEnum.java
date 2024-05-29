@@ -35,12 +35,18 @@ public enum GUIShopItemEnum {
             LangLoader.get("shop_item_id_3_lore2"),
             LangLoader.get("shop_item_id_3_lore3"),
             LangLoader.get("shop_item_id_3_lore4")))),
-    OBSIDIAN(Material.OBSIDIAN, 8, 4, Utils.getInventoryIndex(2,6), 1, 100,
+    OBSIDIAN(Material.OBSIDIAN, 8, 4, Utils.getInventoryIndex(2,6), 1, 50,
             LangLoader.get("shop_item_id_4_name"), new ArrayList<>(Arrays.asList(
             LangLoader.get("shop_item_id_4_lore1"),
             LangLoader.get("shop_item_id_4_lore2"),
             LangLoader.get("shop_item_id_4_lore3"),
-            LangLoader.get("shop_item_id_4_lore4"))));
+            LangLoader.get("shop_item_id_4_lore4")))),
+    DIAMOND_SWORD(Material.DIAMOND_SWORD, 1, 5, Utils.getInventoryIndex(2,7), 1, 150,
+            LangLoader.get("shop_item_id_5_name"), new ArrayList<>(Arrays.asList(
+            LangLoader.get("shop_item_id_5_lore1"),
+            LangLoader.get("shop_item_id_5_lore2"),
+            LangLoader.get("shop_item_id_5_lore3"),
+            LangLoader.get("shop_item_id_5_lore4"))));
 
     private final Material material;
     private final int amount;
