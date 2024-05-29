@@ -1,6 +1,8 @@
 package com.ixbob.thepit.enums;
 
 public enum ItemExtraDataEnum {
-    UNBREAKABLE,
-    EFFICIENCY_4;
+    ENCHANT_UNBREAKABLE,
+    ENCHANT_EFFICIENCY_4,
+
+    FLAG_HIDE_ATTRIBUTES,
 }

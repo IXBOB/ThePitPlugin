@@ -38,13 +38,13 @@ public class OnPlayerJoinListener implements Listener {
     private final ArrayList<?> initEquippedTalent = new ArrayList<>(Collections.nCopies(7 ,null));
 
     public OnPlayerJoinListener() {
-        initHotBar.set(0, new ArrayList<>(Arrays.asList(Material.STONE_SWORD.name(), 1, new ArrayList<>(Arrays.asList(ItemExtraDataEnum.UNBREAKABLE.toString())))));
-        initHotBar.set(1, new ArrayList<>(Arrays.asList(Material.BOW.name(), 1, new ArrayList<>(Arrays.asList(ItemExtraDataEnum.UNBREAKABLE.toString())))));
+        initHotBar.set(0, new ArrayList<>(Arrays.asList(Material.STONE_SWORD.name(), 1, new ArrayList<>(Arrays.asList(ItemExtraDataEnum.ENCHANT_UNBREAKABLE.toString())))));
+        initHotBar.set(1, new ArrayList<>(Arrays.asList(Material.BOW.name(), 1, new ArrayList<>(Arrays.asList(ItemExtraDataEnum.ENCHANT_UNBREAKABLE.toString())))));
         initHotBar.set(2, new ArrayList<>(Arrays.asList(Material.ARROW.name(), 8, new ArrayList<>())));
         initHotBar.set(3, new ArrayList<>(Arrays.asList(Material.COOKED_BEEF.name(), 64, new ArrayList<>())));
 
-        initArmor.set(1, new ArrayList<>(Arrays.asList(Material.CHAINMAIL_CHESTPLATE.name(), 1, new ArrayList<>(Arrays.asList(ItemExtraDataEnum.UNBREAKABLE.toString())))));
-        initArmor.set(2, new ArrayList<>(Arrays.asList(Material.CHAINMAIL_LEGGINGS.name(), 1, new ArrayList<>(Arrays.asList(ItemExtraDataEnum.UNBREAKABLE.toString())))));
+        initArmor.set(1, new ArrayList<>(Arrays.asList(Material.CHAINMAIL_CHESTPLATE.name(), 1, new ArrayList<>(Arrays.asList(ItemExtraDataEnum.ENCHANT_UNBREAKABLE.toString())))));
+        initArmor.set(2, new ArrayList<>(Arrays.asList(Material.CHAINMAIL_LEGGINGS.name(), 1, new ArrayList<>(Arrays.asList(ItemExtraDataEnum.ENCHANT_UNBREAKABLE.toString())))));
     }
 
     @EventHandler
