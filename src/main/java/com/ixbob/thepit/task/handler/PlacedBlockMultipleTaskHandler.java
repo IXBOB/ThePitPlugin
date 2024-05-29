@@ -5,7 +5,7 @@ import com.ixbob.thepit.task.PlacedBlockRemoveRunnable;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
-public class PlacedBlockTaskHandler extends AbstractTaskHandler {
+public class PlacedBlockMultipleTaskHandler extends AbstractMultipleTaskHandler {
 
     /**
      *

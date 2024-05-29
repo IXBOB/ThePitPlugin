@@ -12,6 +12,8 @@ import com.ixbob.thepit.util.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
@@ -29,8 +31,8 @@ public class Main extends JavaPlugin {
     public static Location spawnLocation;
     public static List<Integer> lobbyAreaFromPosList;
     public static List<Integer> lobbyAreaToPosList;
-    public static final PlayerGUIManager GUIManager = new PlayerGUIManager();
-    public static final TaskManager taskManager = new TaskManager();
+    public static PlayerGUIManager GUIManager;
+    public static TaskManager taskManager;
 
     @Override
     public void onEnable() {
@@ -51,6 +53,21 @@ public class Main extends JavaPlugin {
         this.saveDefaultConfig();
         lobbyAreaFromPosList = config.getIntegerList("lobby_area.from");
         lobbyAreaToPosList = config.getIntegerList("lobby_area.to");
+
+        GUIManager = new PlayerGUIManager();
+        taskManager = new TaskManager();
+
+        for (Entity entity : Bukkit.getWorlds().get(0).getEntities()) {
+            if (entity instanceof Item) {
+                Item item = (Item) entity;
+                item.remove();
+            }
+        }
+
+//调试显示掉落物个数和getGoldIngotExistAmount()个数
+//        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
+//                System.out.println(Bukkit.getServer().getWorlds().get(0).getEntities().stream().filter(entity -> entity.getType() == EntityType.DROPPED_ITEM).count());
+//            System.out.println(taskManager.getRandomGoldIngotSpawnTaskHandler().getGoldIngotExistAmount());}, 0, 5);
 
         this.getCommand("test").setExecutor(new CommandTest());
         this.getCommand("spawn").setExecutor(new CommandSpawn());
@@ -111,7 +128,7 @@ public class Main extends JavaPlugin {
         Listener onPlayerDropItemListener = new OnPlayerDropItemListener();
         getServer().getPluginManager().registerEvents(onPlayerDropItemListener, this);
 
-        Listener onEntityPickupItemListener = new OnEntityPickupItemListener();
+        Listener onEntityPickupItemListener = new OnPlayerPickupItemListener();
         getServer().getPluginManager().registerEvents(onEntityPickupItemListener, this);
 
         Listener onPlayerPlaceBlockListener = new OnPlayerPlaceBlockListener();
@@ -119,6 +136,9 @@ public class Main extends JavaPlugin {
 
         Listener onPlayerBreakBlockListener = new OnPlayerBreakBlockListener();
         getServer().getPluginManager().registerEvents(onPlayerBreakBlockListener, this);
+
+        Listener onItemDespawnListener = new OnItemDespawnListener();
+        getServer().getPluginManager().registerEvents(onItemDespawnListener, this);
     }
 
     @Override

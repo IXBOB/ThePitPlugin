@@ -23,6 +23,7 @@ player_kill_other_message_to_killer: "§a§l击杀！ %s"
 player_kill_other_message_to_death_player: "§c你被 %s §c击杀了"
 player_get_xp_message: "§3+%s 经验"
 player_get_coin_message: "§6+%sg 硬币"
+player_pickup_coin_message: "§6§l捡起硬币！ §r§7你从地上捡起了 %sg 硬币"
 
 damage_show_heart_actionbar_healthful: "§4❤"
 damage_show_heart_actionbar_extra: "§e❤"

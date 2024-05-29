@@ -2,7 +2,7 @@ package com.ixbob.thepit.task.handler;
 
 import java.util.HashMap;
 
-public abstract class AbstractTaskHandler {
+public abstract class AbstractMultipleTaskHandler {
     private final HashMap<Integer, Runnable> tasks = new HashMap<>();
 
     public void add(int taskId, Runnable runnable) {

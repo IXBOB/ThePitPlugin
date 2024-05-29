@@ -20,10 +20,6 @@ public class PlacedBlockRemoveRunnable implements Runnable{
         Main.getTaskManager().getPlacedBlockTaskHandler().remove(taskID);
     }
 
-    public void instantRun() {
-        Bukkit.getWorlds().get(0).getBlockAt(placedBlockLoc).setType(Material.AIR);
-    }
-
     public void setTaskID(int taskID){
         this.taskID = taskID;
     }
