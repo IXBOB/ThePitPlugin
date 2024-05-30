@@ -248,7 +248,6 @@ public class Utils {
                 hashMap.merge(damager, (double) object.get(0), Double::sum);
             });
         }
-        System.out.println(allDamage[0]);
         //计算hashMap每个值伤害所占比例
         for (Map.Entry<Player, Double> entry : hashMap.entrySet()) {
             entry.setValue(entry.getValue() / allDamage[0]);

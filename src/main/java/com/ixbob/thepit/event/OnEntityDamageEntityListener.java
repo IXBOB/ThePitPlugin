@@ -200,7 +200,7 @@ public class OnEntityDamageEntityListener implements Listener {
         HashMap<Player, Double> damagePercentMap = Utils.getDamagePercentMapSum(damagedHistory);
         ArrayList<Player> helperList = new ArrayList<>();
         for (Player historyDamager : Utils.getDamageHistoryPlayers(damagedHistory)) {
-            if (!historyDamager.equals(killer)) {
+            if (!historyDamager.equals(killer) && historyDamager.isOnline()) {
                 helperList.add(historyDamager);
             }
         }
