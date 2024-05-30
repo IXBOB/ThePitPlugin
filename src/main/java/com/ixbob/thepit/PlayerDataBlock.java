@@ -7,6 +7,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
 
 public class PlayerDataBlock {
     private final Player player;
@@ -29,6 +31,7 @@ public class PlayerDataBlock {
     private TalentStrengthValidCountDowner talentStrengthValidCountDowner;
     private PlayerScoreboard playerScoreboard;
     private boolean typedSpawn;
+    private ArrayList<LinkedHashMap<Player, ArrayList<Object>>> playerGetDamagedHistory; //最里面使用的ArrayList便于后续添加更多受击信息
 
     public PlayerDataBlock(Player player) {
         this.player = player;
@@ -52,6 +55,7 @@ public class PlayerDataBlock {
         this.playerScoreboard = new PlayerScoreboard(player);
         this.battleState = false;
         this.typedSpawn = false;
+        this.playerGetDamagedHistory = new ArrayList<>();
     }
 
     public void updatePlayerDBData() {
@@ -99,6 +103,14 @@ public class PlayerDataBlock {
         playerScoreboard.insertKey(7, String.format(LangLoader.get("talent_item_id_4_scoreboard"),
                 talentStrengthValidCountDowner.getAddDamagePercentagePoint(),
                 Mth.formatDecimalWithFloor(talentStrengthValidCountDowner.getTimeLeft(), 1)));
+    }
+
+    public void addDamagedHistory(Player damager, double finalDamage) {
+        playerGetDamagedHistory.add(new LinkedHashMap<>() {{put(damager, new ArrayList<>(Arrays.asList(finalDamage)));}});
+    }
+
+    public ArrayList<LinkedHashMap<Player, ArrayList<Object>>> getPlayerGetDamagedHistory() {
+        return playerGetDamagedHistory;
     }
 
     public Player getPlayer() {

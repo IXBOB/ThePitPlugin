@@ -27,19 +27,23 @@ public enum DropItemEnum {
     }
 
     public void apply(Player player) {
-        if (this == IRON_HELMET) {
+        ItemStack itemHelmet = player.getInventory().getHelmet();
+        ItemStack itemChestplate = player.getInventory().getChestplate();
+        ItemStack itemLeggings = player.getInventory().getLeggings();
+        ItemStack itemBoots = player.getInventory().getBoots();
+        if (this == IRON_HELMET && itemHelmet == null) {
             player.getInventory().setHelmet(itemStack);
             player.playSound(player.getLocation(), Sound.ITEM_ARMOR_EQUIP_CHAIN, 1, 1);
         }
-        else if (this == IRON_CHESTPLATE) {
+        else if (this == IRON_CHESTPLATE && itemChestplate.getType() == Material.CHAINMAIL_CHESTPLATE) {
             player.getInventory().setChestplate(itemStack);
             player.playSound(player.getLocation(), Sound.ITEM_ARMOR_EQUIP_CHAIN, 1, 1);
         }
-        else if (this == IRON_LEGGINGS) {
+        else if (this == IRON_LEGGINGS && itemLeggings.getType() == Material.CHAINMAIL_LEGGINGS) {
             player.getInventory().setLeggings(itemStack);
             player.playSound(player.getLocation(), Sound.ITEM_ARMOR_EQUIP_CHAIN, 1, 1);
         }
-        else if (this == IRON_BOOTS) {
+        else if (this == IRON_BOOTS && itemLeggings.getType() == null) {
             player.getInventory().setBoots(itemStack);
             player.playSound(player.getLocation(), Sound.ITEM_ARMOR_EQUIP_CHAIN, 1, 1);
         }

@@ -48,6 +48,7 @@ public class CommandSpawn implements CommandExecutor {
     }
 
     private void back(Player player, boolean isClear) {
+        Main.getPlayerDataBlock(player).getPlayerGetDamagedHistory().clear();
         player.teleport(Main.spawnLocation);
         Utils.setMostBasicKit(player, isClear);
         player.sendMessage(LangLoader.get("command_spawn_success"));

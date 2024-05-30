@@ -4,9 +4,9 @@ import com.ixbob.thepit.LangLoader;
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.Mth;
 import com.ixbob.thepit.PlayerDataBlock;
+import com.ixbob.thepit.enums.GUITalentItemEnum;
 import com.ixbob.thepit.enums.PitHitTypeEnum;
 import com.ixbob.thepit.enums.PitItemEnum;
-import com.ixbob.thepit.enums.GUITalentItemEnum;
 import com.ixbob.thepit.enums.TalentGivingItemEnum;
 import com.ixbob.thepit.event.custom.PlayerBattleStateChangeEvent;
 import com.ixbob.thepit.util.NMSUtils;
@@ -18,18 +18,20 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.*;
 
 public class OnEntityDamageEntityListener implements Listener {
+    //TODO: 这个类里面各种方法DataBlock乱得要爆炸，有空都拿出来定义 public PlayerDataBlock damagedPlayerDataBlock = ....
     @EventHandler
     public void onEntityDamagedByEntity(EntityDamageByEntityEvent event) {
         if (!(event.getDamager() instanceof Player) && event.getEntity() instanceof Player) {
@@ -46,7 +48,7 @@ public class OnEntityDamageEntityListener implements Listener {
                     Arrow damagerArrow = (Arrow) damagerEntity;
                     Player damager = (Player) damagerArrow.getShooter();
                     Player damagedPlayer = (Player) event.getEntity();
-                    if (damagedPlayer == damager) {
+                    if (damagedPlayer == damager || Utils.isInLobbyArea(damager.getLocation())) {
                         damagerEntity.remove();
                         event.setCancelled(true);
                         return;
@@ -75,6 +77,7 @@ public class OnEntityDamageEntityListener implements Listener {
         PlayerBattleStateChangeEvent damagedPlayerBattleStateChangeEvent = new PlayerBattleStateChangeEvent(damagedPlayer, true);
         Bukkit.getPluginManager().callEvent(damagedPlayerBattleStateChangeEvent);
 
+        PlayerDataBlock damagedPlayerDataBlock = Main.getPlayerDataBlock(damagedPlayer);
         PlayerDataBlock damagerDataBlock = Main.getPlayerDataBlock(damager);
         ArrayList<?> damagerEquippedTalentList = damagerDataBlock.getEquippedTalentList();
         ArrayList<Integer> talentLevelList = damagerDataBlock.getTalentLevelList();
@@ -95,6 +98,8 @@ public class OnEntityDamageEntityListener implements Listener {
         }
 
         double finalDamageAmount = event.getFinalDamage();
+
+        damagedPlayerDataBlock.addDamagedHistory(damager, finalDamageAmount);
 
         double absorptionHealthBefore = NMSUtils.getEntityPlayer(damagedPlayer).getAbsorptionHearts();
         double normalHealthBefore = damagedPlayer.getHealth();
@@ -141,6 +146,7 @@ public class OnEntityDamageEntityListener implements Listener {
         killer.playSound(killer.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
         deathPlayer.playSound(deathPlayer.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1, 1);
 
+        PlayerDataBlock deathPlayerDataBlock = Main.getPlayerDataBlock(deathPlayer);
         PlayerDataBlock killerDataBlock = Main.getPlayerDataBlock(killer);
         ArrayList<?> killerEquippedTalentList = killerDataBlock.getEquippedTalentList();
         //天赋 金色巧克力
@@ -190,10 +196,34 @@ public class OnEntityDamageEntityListener implements Listener {
         killer.sendMessage(toKillerMes);
         deathPlayer.sendMessage(toDeathPlayerMes);
 
+        ArrayList<LinkedHashMap<Player, ArrayList<Object>>> damagedHistory = deathPlayerDataBlock.getPlayerGetDamagedHistory();
+        HashMap<Player, Double> damagePercentMap = Utils.getDamagePercentMapSum(damagedHistory);
+        ArrayList<Player> helperList = new ArrayList<>();
+        for (Player historyDamager : Utils.getDamageHistoryPlayers(damagedHistory)) {
+            if (!historyDamager.equals(killer)) {
+                helperList.add(historyDamager);
+            }
+        }
+        for (Player helper : helperList) {
+            double damagePercent = damagePercentMap.get(helper);
+            String displayDamagePercent = Mth.formatDecimalWithFloor(damagePercent * 100, 2); // 显示成百分数
+            double helperAddXp = addXp * damagePercent;
+            double helperAddCoin = addCoin * damagePercent;
+            String displayHelperAddXp = Mth.formatDecimalWithFloor(helperAddXp, 2);
+            String displayHelperAddCoin = Mth.formatDecimalWithFloor(helperAddCoin, 2);
+            helper.sendMessage(
+                    String.format(String.format(String.format(LangLoader.get("player_help_kill_other_message_to_helper"), Utils.getPitDisplayName(deathPlayer), displayDamagePercent)
+                            + LangLoader.get("player_get_xp_message"), displayHelperAddXp) + " "
+                            + LangLoader.get("player_get_coin_message"), displayHelperAddCoin));
+            Utils.addXp(helper, helperAddXp);
+            Utils.addCoin(helper, helperAddCoin);
+        }
+
         deathBackToLobby(deathPlayer);
     }
 
     private void deathBackToLobby(Player player) {
+        Main.getPlayerDataBlock(player).getPlayerGetDamagedHistory().clear();
         Utils.setMostBasicKit(player, true);
         Utils.setBattleState(player, false);
         Utils.setTypedSpawn(player, false);

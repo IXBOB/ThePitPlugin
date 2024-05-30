@@ -22,10 +22,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.UUID;
+import java.util.*;
 
 public class Utils {
     private static final MongoDB mongoDB = Main.getDB();
@@ -236,5 +233,38 @@ public class Utils {
         player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
         player.setFoodLevel(20);
         player.teleport(Main.spawnLocation);
+    }
+
+    /**
+     * 返回每个玩家总的伤害占比
+     */
+    public static HashMap<Player, Double> getDamagePercentMapSum(ArrayList<LinkedHashMap<Player, ArrayList<Object>>> damagedHistory) {
+        final double[] allDamage = {0};
+        HashMap<Player, Double> hashMap = new HashMap<>();
+        //先将每个 player,总伤害 键值对存入hashMap
+        for (HashMap<Player, ArrayList<Object>> history : damagedHistory) {
+            history.forEach((damager, object) -> {
+                allDamage[0] += (double) object.get(0);
+                hashMap.merge(damager, (double) object.get(0), Double::sum);
+            });
+        }
+        System.out.println(allDamage[0]);
+        //计算hashMap每个值伤害所占比例
+        for (Map.Entry<Player, Double> entry : hashMap.entrySet()) {
+            entry.setValue(entry.getValue() / allDamage[0]);
+        }
+        return hashMap;
+    }
+
+    public static ArrayList<Player> getDamageHistoryPlayers(ArrayList<LinkedHashMap<Player, ArrayList<Object>>> damagedHistory) {
+        ArrayList<Player> playerHistoryList = new ArrayList<>();
+        for (LinkedHashMap<Player, ArrayList<Object>> history : damagedHistory) {
+            Map.Entry<Player, ArrayList<Object>> firstEntry = history.entrySet().iterator().next();
+            Player player = firstEntry.getKey();
+            if (!playerHistoryList.contains(player)) {
+                playerHistoryList.add(player);
+            }
+        }
+        return playerHistoryList;
     }
 }
