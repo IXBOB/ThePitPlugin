@@ -23,7 +23,7 @@ public class OnPlayerInteractListener implements Listener {
         Action action = event.getAction();
         ItemStack item = event.getItem();
         PlayerDataBlock dataBlock = Main.getPlayerDataBlock(player);
-        ArrayList<Integer> talentLevelList = dataBlock.getTalentLevelList();
+        ArrayList<Integer> talentLevelList = dataBlock.getNormalTalentLevelList();
         if (action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK) {
             if (item != null) {
                 if (item.getType() == PitItemEnum.GOLDEN_CHOCOLATE.getItemStack().getType()) {

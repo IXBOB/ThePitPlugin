@@ -25,8 +25,8 @@ public class PlayerDataBlock {
     private int deathAmount;
     private boolean battleState;
     private boolean hasTalentStrength;
-    private ArrayList<Integer> talentLevelList;
-    private ArrayList<Integer> equippedTalentList;
+    private ArrayList<Integer> normalTalentLevelList;
+    private ArrayList<Integer> equippedNormalTalentList;
     private BattleStateCoolCountDowner battleStateCoolCountDowner;
     private TalentStrengthValidCountDowner talentStrengthValidCountDowner;
     private PlayerScoreboard playerScoreboard;
@@ -37,6 +37,7 @@ public class PlayerDataBlock {
         this.player = player;
     }
 
+    @SuppressWarnings("unchecked")
     public void init() {
         DBObject dataDBObj = Main.getDB().findByUUID(player.getUniqueId());
         this.level = (int) dataDBObj.get("level");
@@ -50,8 +51,8 @@ public class PlayerDataBlock {
         this.consecutiveKillAmount = (int) dataDBObj.get("consecutive_kill_amount");
         this.killAmount = (int) dataDBObj.get("kill_amount");
         this.deathAmount = (int) dataDBObj.get("death_amount");
-        this.talentLevelList = (ArrayList<Integer>) dataDBObj.get("TalentLevelList");
-        this.equippedTalentList = (ArrayList<Integer>) dataDBObj.get("EquippedTalentList");
+        this.normalTalentLevelList = (ArrayList<Integer>) dataDBObj.get("NormalTalentLevelList");
+        this.equippedNormalTalentList = (ArrayList<Integer>) dataDBObj.get("EquippedNormalTalentList");
         this.playerScoreboard = new PlayerScoreboard(player);
         this.battleState = false;
         this.typedSpawn = false;
@@ -72,8 +73,8 @@ public class PlayerDataBlock {
         dataObj.put("consecutive_kill_amount", consecutiveKillAmount);
         dataObj.put("kill_amount", killAmount);
         dataObj.put("death_amount", deathAmount);
-        dataObj.put("TalentLevelList", talentLevelList);
-        dataObj.put("EquippedTalentList", equippedTalentList);
+        dataObj.put("NormalTalentLevelList", normalTalentLevelList);
+        dataObj.put("EquippedNormalTalentList", equippedNormalTalentList);
         mongoDB.updateDataByUUID(dataObj, player.getUniqueId());
     }
 
@@ -142,15 +143,15 @@ public class PlayerDataBlock {
     }
 
     public void setTalentLevel(int id, int newLevel) {
-        this.talentLevelList.set(id, newLevel);
+        this.normalTalentLevelList.set(id, newLevel);
     }
 
     public void setEquippedTalent(int equipGridId, int talentId) {
-        this.equippedTalentList.set(equipGridId, talentId);
+        this.equippedNormalTalentList.set(equipGridId, talentId);
     }
 
     public void removeEquippedTalent(int equipGridId) {
-        this.equippedTalentList.set(equipGridId, null);
+        this.equippedNormalTalentList.set(equipGridId, null);
     }
 
     public int getPrestigeLevel() {
@@ -264,12 +265,12 @@ public class PlayerDataBlock {
         this.typedSpawn = typedSpawn;
     }
 
-    public ArrayList<?> getEquippedTalentList() {
-        return equippedTalentList;
+    public ArrayList<?> getEquippedNormalTalentList() {
+        return equippedNormalTalentList;
     }
 
-    public void setEquippedTalentList(ArrayList<Integer> equippedTalentList) {
-        this.equippedTalentList = equippedTalentList;
+    public void setEquippedNormalTalentList(ArrayList<Integer> equippedNormalTalentList) {
+        this.equippedNormalTalentList = equippedNormalTalentList;
     }
 
     public int getPrestigePointAmount() {
@@ -280,12 +281,12 @@ public class PlayerDataBlock {
         this.prestigePointAmount = prestigePointAmount;
     }
 
-    public ArrayList<Integer> getTalentLevelList() {
-        return talentLevelList;
+    public ArrayList<Integer> getNormalTalentLevelList() {
+        return normalTalentLevelList;
     }
 
-    public void setTalentLevelList(ArrayList<Integer> talentLevelList) {
-        this.talentLevelList = talentLevelList;
+    public void setNormalTalentLevelList(ArrayList<Integer> normalTalentLevelList) {
+        this.normalTalentLevelList = normalTalentLevelList;
     }
 
     public PlayerScoreboard getPlayerScoreboard() {

@@ -34,8 +34,8 @@ public class OnPlayerJoinListener implements Listener {
     private final ArrayList<ArrayList<?>> initHotBar = new ArrayList<>(Collections.nCopies(9 ,null));
     private final ArrayList<ArrayList<?>> initInventory = new ArrayList<>(Collections.nCopies(27 ,null));
     private final ArrayList<ArrayList<?>> initArmor = new ArrayList<>(Collections.nCopies(4 ,null));
-    private final ArrayList<Integer> initTalentLevel = new ArrayList<>(Collections.nCopies(100 ,0));
-    private final ArrayList<?> initEquippedTalent = new ArrayList<>(Collections.nCopies(7 ,null));
+    private final ArrayList<Integer> initNormalTalentLevel = new ArrayList<>(Collections.nCopies(100 ,0));
+    private final ArrayList<?> initEquippedNormalTalent = new ArrayList<>(Collections.nCopies(3 ,null));
 
     public OnPlayerJoinListener() {
         initHotBar.set(0, new ArrayList<>(Arrays.asList(Material.STONE_SWORD.name(), 1, new ArrayList<>(Arrays.asList(ItemExtraDataEnum.ENCHANT_UNBREAKABLE.toString())))));
@@ -123,7 +123,7 @@ public class OnPlayerJoinListener implements Listener {
         dataDBObj.put("level", 0);
         dataDBObj.put("rank", 0);
         dataDBObj.put("this_level_own_xp", (double) 0);
-        dataDBObj.put("next_level_need_xp", (double)( 2*(0+1) + (Math.random()*2*(0+1)) ));
+        dataDBObj.put("next_level_need_xp", (2 + (Math.random()*2)));
         dataDBObj.put("coin_amount", (double) 5000);
         dataDBObj.put("prestige_level", 0);
         dataDBObj.put("prestige_point_amount", 0);
@@ -134,8 +134,8 @@ public class OnPlayerJoinListener implements Listener {
         dataDBObj.put("HotBarItemList", initHotBar);
         dataDBObj.put("InventoryItemList", initInventory);
         dataDBObj.put("ArmorItemList", initArmor);
-        dataDBObj.put("TalentLevelList", initTalentLevel);
-        dataDBObj.put("EquippedTalentList", initEquippedTalent);
+        dataDBObj.put("NormalTalentLevelList", initNormalTalentLevel);
+        dataDBObj.put("EquippedNormalTalentList", initEquippedNormalTalent);
         mongoDB.insert(dataDBObj);
     }
 

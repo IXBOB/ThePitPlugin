@@ -2,7 +2,6 @@ package com.ixbob.thepit;
 
 import com.mongodb.*;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.plugin.Plugin;
 
 import java.net.UnknownHostException;

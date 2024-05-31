@@ -23,7 +23,7 @@ public class TalentStrengthValidCountDowner implements Runnable{
         this.player = player;
         this.dataBlock = Main.getPlayerDataBlock(player);
         this.playerScoreboard = dataBlock.getPlayerScoreboard();
-        addDamagePercentagePoint = TalentCalcuUtils.getAddPointValue(talentId, dataBlock.getTalentLevelList().get(talentId));
+        addDamagePercentagePoint = TalentCalcuUtils.getAddPointValue(talentId, dataBlock.getNormalTalentLevelList().get(talentId));
     }
 
     @Override
@@ -44,8 +44,8 @@ public class TalentStrengthValidCountDowner implements Runnable{
 
     public void addStrengthLevel() {
         this.timeLeft = 7.0f;
-        if (addDamagePercentagePoint < TalentCalcuUtils.getAddPointValue(talentId, dataBlock.getTalentLevelList().get(talentId)) * 10 - 0.1) {
-            this.addDamagePercentagePoint += TalentCalcuUtils.getAddPointValue(talentId, dataBlock.getTalentLevelList().get(talentId));
+        if (addDamagePercentagePoint < TalentCalcuUtils.getAddPointValue(talentId, dataBlock.getNormalTalentLevelList().get(talentId)) * 10 - 0.1) {
+            this.addDamagePercentagePoint += TalentCalcuUtils.getAddPointValue(talentId, dataBlock.getNormalTalentLevelList().get(talentId));
         }
     }
 

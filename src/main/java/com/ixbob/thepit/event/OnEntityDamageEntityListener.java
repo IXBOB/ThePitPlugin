@@ -80,8 +80,8 @@ public class OnEntityDamageEntityListener implements Listener {
 
         this.damagedPlayerDataBlock = Main.getPlayerDataBlock(damagedPlayer);
         this.damagerDataBlock = Main.getPlayerDataBlock(damager);
-        ArrayList<?> damagerEquippedTalentList = damagerDataBlock.getEquippedTalentList();
-        ArrayList<Integer> talentLevelList = damagerDataBlock.getTalentLevelList();
+        ArrayList<?> damagerEquippedTalentList = damagerDataBlock.getEquippedNormalTalentList();
+        ArrayList<Integer> talentLevelList = damagerDataBlock.getNormalTalentLevelList();
 
         if (hitType == PitHitTypeEnum.ARROW) {
             int infiniteArrowsId = GUITalentItemEnum.INFINITE_ARROWS.getId();
@@ -146,7 +146,7 @@ public class OnEntityDamageEntityListener implements Listener {
         damager.playSound(damager.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
         damagedPlayer.playSound(damagedPlayer.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1, 1);
         
-        ArrayList<?> damagerEquippedTalentList = damagerDataBlock.getEquippedTalentList();
+        ArrayList<?> damagerEquippedTalentList = damagerDataBlock.getEquippedNormalTalentList();
         //天赋 金色巧克力
         if (damagerEquippedTalentList.contains(GUITalentItemEnum.GOLDEN_CHOCOLATE.getId())) {
             damager.getInventory().addItem(PitItemEnum.GOLDEN_CHOCOLATE.getItemStack());

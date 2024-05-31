@@ -45,10 +45,10 @@ public class OnPlayerPickupItemListener implements Listener {
 
                     PlayerDataBlock dataBlock = Main.getPlayerDataBlock(player);
                     //涓流 天赋
-                    if (dataBlock.getEquippedTalentList().contains(GUITalentItemEnum.STREAM.getId())) {
+                    if (dataBlock.getEquippedNormalTalentList().contains(GUITalentItemEnum.STREAM.getId())) {
                         addPoint += 10 * amount;
                         int id = GUITalentItemEnum.STREAM.getId();
-                        int level = dataBlock.getTalentLevelList().get(id);
+                        int level = dataBlock.getNormalTalentLevelList().get(id);
                         double applyHealth = player.getHealth() + TalentCalcuUtils.getAddPointValue(id, level);
                         double maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
                         player.setHealth(Math.min(applyHealth, maxHealth));

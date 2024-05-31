@@ -43,7 +43,7 @@ public class OnPlayerEquippedTalentChangeListener implements Listener {
 
     private void applyEquipChangeResult() {
         int id = talentItem.getId();
-        int level = dataBlock.getTalentLevelList().get(id);
+        int level = dataBlock.getNormalTalentLevelList().get(id);
         switch (talentItem) {
             case HEALTH_BOOST: {
                 if (isEquipped) {
@@ -80,7 +80,7 @@ public class OnPlayerEquippedTalentChangeListener implements Listener {
                 if (isEquipped) {
                     id = GUITalentItemEnum.MINER.getId();
                     player.getInventory().addItem(TalentGivingItemEnum.DIAMOND_PICKAXE_EFFICIENCY_4.getItemStack());
-                    player.getInventory().addItem(TalentGivingItemEnum.DEFAULT_COBBLESTONE.getItemStack((int) TalentCalcuUtils.getAddPointValue(id, dataBlock.getTalentLevelList().get(GUITalentItemEnum.MINER.getId()))));
+                    player.getInventory().addItem(TalentGivingItemEnum.DEFAULT_COBBLESTONE.getItemStack((int) TalentCalcuUtils.getAddPointValue(id, dataBlock.getNormalTalentLevelList().get(GUITalentItemEnum.MINER.getId()))));
                 } else {
                     player.getInventory().remove(TalentGivingItemEnum.DIAMOND_PICKAXE_EFFICIENCY_4.getItemStack());
                     player.getInventory().remove(TalentGivingItemEnum.DEFAULT_COBBLESTONE.getItemStack().getType());

@@ -86,19 +86,19 @@ public class Utils {
         if (level <= 10) {
             color = ChatColor.GRAY;
         } else if (level <= 25) {
-            color = ChatColor.WHITE;
+            color = ChatColor.DARK_GREEN;
         } else if (level <= 40) {
-            color = ChatColor.LIGHT_PURPLE;
+            color = ChatColor.GREEN;
         } else if (level <= 60) {
             color = ChatColor.BLUE;
         } else if (level <= 80) {
-            color = ChatColor.GREEN;
-        } else if (level <= 100) {
             color = ChatColor.YELLOW;
-        } else if (level <= 110) {
+        } else if (level <= 100) {
             color = ChatColor.GOLD;
-        } else {
+        } else if (level <= 110) {
             color = ChatColor.RED;
+        } else {
+            color = ChatColor.DARK_RED;
         }
         return color;
     }
@@ -176,7 +176,7 @@ public class Utils {
     public static void setMostBasicKit(Player player, boolean clear) {
         PlayerInventory inventory = player.getInventory();
         PlayerDataBlock dataBlock = Main.getPlayerDataBlock(player);
-        ArrayList<?> equippedTalentList = dataBlock.getEquippedTalentList();
+        ArrayList<?> equippedTalentList = dataBlock.getEquippedNormalTalentList();
         if (clear) {
             inventory.clear();
             inventory.addItem(CustomBasicToolEnum.BASIC_STONE_SWORD.getItemStack());
@@ -189,7 +189,7 @@ public class Utils {
             }
             if (equippedTalentList.contains(GUITalentItemEnum.MINER.getId())) {
                 player.getInventory().addItem(TalentGivingItemEnum.DIAMOND_PICKAXE_EFFICIENCY_4.getItemStack());
-                player.getInventory().addItem(TalentGivingItemEnum.DEFAULT_COBBLESTONE.getItemStack((int) TalentCalcuUtils.getAddPointValue(GUITalentItemEnum.MINER.getId(), dataBlock.getTalentLevelList().get(GUITalentItemEnum.MINER.getId()))));
+                player.getInventory().addItem(TalentGivingItemEnum.DEFAULT_COBBLESTONE.getItemStack((int) TalentCalcuUtils.getAddPointValue(GUITalentItemEnum.MINER.getId(), dataBlock.getNormalTalentLevelList().get(GUITalentItemEnum.MINER.getId()))));
             }
             inventory.setChestplate(CustomBasicToolEnum.BASIC_CHAINMAIL_CHESTPLATE.getItemStack());
             inventory.setLeggings(CustomBasicToolEnum.BASIC_CHAINMAIL_LEGGINGS.getItemStack());

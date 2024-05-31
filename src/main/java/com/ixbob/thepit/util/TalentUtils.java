@@ -40,7 +40,7 @@ public class TalentUtils {
     }
 
     public static int getEquipGridIdByInventoryIndex(int inventoryIndex) {
-        return inventoryIndex - 37;
+        return inventoryIndex - 39;
     }
 
     public static GUITalentItemEnum getGUITalentItemEnumById(int id) {
@@ -54,8 +54,8 @@ public class TalentUtils {
 
     public static int getEquippedTalentIdByInventoryIndex(Player player, int inventoryIndex) {
         PlayerDataBlock dataBlock = Main.getPlayerDataBlock(player);
-        ArrayList<?> equippedTalentList = dataBlock.getEquippedTalentList();
+        ArrayList<?> equippedNormalTalentList = dataBlock.getEquippedNormalTalentList();
         int gridId = getEquipGridIdByInventoryIndex(inventoryIndex);
-        return (int) equippedTalentList.get(gridId);
+        return (int) equippedNormalTalentList.get(gridId);
     }
 }

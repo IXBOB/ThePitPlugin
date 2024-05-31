@@ -20,6 +20,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class GUITalent extends AbstractGUI {
     private static final int size = 54;
@@ -50,17 +51,17 @@ public class GUITalent extends AbstractGUI {
                 int talentItemId = TalentUtils.getNotEquippedTalentIdByInventoryIndex(index);
                 GUITalentItemEnum clickedTalentItem = TalentUtils.getGUITalentItemEnumById(talentItemId);
                 purchaseUpgrade(index, talentItemId, clickedTalentItem);
-            } else if (index >= 37 && index <= 43) {
-                int talentItemId = (int) Main.getPlayerDataBlock(player).getEquippedTalentList().get(TalentUtils.getEquipGridIdByInventoryIndex(index));
+            } else if (index >= 39 && index <= 41) {
+                int talentItemId = (int) Main.getPlayerDataBlock(player).getEquippedNormalTalentList().get(TalentUtils.getEquipGridIdByInventoryIndex(index));
                 GUITalentItemEnum clickedTalentItem = TalentUtils.getGUITalentItemEnumById(talentItemId);
                 purchaseUpgrade(index, talentItemId, clickedTalentItem);
             }
 
         } else if (type == GUIGridTypeEnum.LEFT_BUTTON) {
-            if (!movingState && index >= 37 && index <= 43) {
+            if (!movingState && index >= 39 && index <= 41) {
                 //移除天赋
                 PlayerDataBlock dataBlock = Main.getPlayerDataBlock(player);
-                ArrayList<?> equippedTalentList = dataBlock.getEquippedTalentList();
+                ArrayList<?> equippedTalentList = dataBlock.getEquippedNormalTalentList();
                 GUITalentItemEnum clickTalentItem = TalentUtils.getGUITalentItemEnumById((int) equippedTalentList.get(TalentUtils.getEquipGridIdByInventoryIndex(index)));
                 setEquipTalent(index, clickTalentItem, false);
                 initContent();
@@ -75,7 +76,7 @@ public class GUITalent extends AbstractGUI {
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_HARP, 1, 1);
             } else if (movingState) {
                 //装备天赋
-                if (index >= 37 && index <= 43) {
+                if (index >= 39 && index <= 41) {
                     setEquipTalent(index, movingTalentItem, true);
                 }
                 movingState = false;
@@ -105,8 +106,8 @@ public class GUITalent extends AbstractGUI {
         PlayerDataBlock dataBlock = Main.getPlayerDataBlock(player);
         int playerLevel = dataBlock.getLevel();
         int playerPrestigeLevel = dataBlock.getPrestigeLevel();
-        ArrayList<Integer> talentLevelList = dataBlock.getTalentLevelList();
-        ArrayList<?> equippedTalentList = dataBlock.getEquippedTalentList();
+        ArrayList<Integer> talentLevelList = dataBlock.getNormalTalentLevelList();
+        ArrayList<?> equippedTalentList = dataBlock.getEquippedNormalTalentList();
 
         GUIUtils.fillAll(inventory, GUISystemItemEnum.DEFAULT_WALL.getItemStack());
 
@@ -135,21 +136,21 @@ public class GUITalent extends AbstractGUI {
             }
         }
 
-        ItemStack barrier = GUISystemItemEnum.TALENT_WALL_EQUIP_GRID_LOCKED.getItemStack();
         ItemStack empty = new ItemStack(Material.AIR);
-        for (int index = 37; index <= 43; index++) {
-            int needLevel = (index - 36) * 15; //每15级解锁一个天赋槽位
+        for (int index = 39; index <= 41; index++) {
+            int needLevel = (index - 38) * 15; //每15级解锁一个天赋槽位
             int needPrestigeLevel = 0;
             if (playerPrestigeLevel < needPrestigeLevel || (playerPrestigeLevel == needPrestigeLevel && playerLevel < needLevel)) {
-                inventory.setItem(index, barrier);
+                ItemStack lockedItem = GUISystemItemEnum.TALENT_WALL_EQUIP_GRID_LOCKED.getItemStack(new ArrayList<>(Arrays.asList(Utils.getLevelStrWithStyle(0, needLevel))));
+                inventory.setItem(index, lockedItem);
             } else {
-                if (dataBlock.getEquippedTalentList().get(TalentUtils.getEquipGridIdByInventoryIndex(index)) != null) {
-                    int talentId = (int) dataBlock.getEquippedTalentList().get(TalentUtils.getEquipGridIdByInventoryIndex(index)); //获得已装备的talent id
+                if (dataBlock.getEquippedNormalTalentList().get(TalentUtils.getEquipGridIdByInventoryIndex(index)) != null) {
+                    int talentId = (int) dataBlock.getEquippedNormalTalentList().get(TalentUtils.getEquipGridIdByInventoryIndex(index)); //获得已装备的talent id
                     GUITalentItemEnum GUITalentItemEnum = TalentUtils.getGUITalentItemEnumById(talentId);
                     if (GUITalentItemEnum == null) { //id不存在
                         continue;
                     }
-                    TalentUtils.setTalentItem(inventory, index, GUITalentItemEnum, dataBlock.getTalentLevelList().get(talentId), true, talentLevelList.get(talentId) >= GUITalentItemEnum.getMaxTalentLevel());
+                    TalentUtils.setTalentItem(inventory, index, GUITalentItemEnum, dataBlock.getNormalTalentLevelList().get(talentId), true, talentLevelList.get(talentId) >= GUITalentItemEnum.getMaxTalentLevel());
                     leftButton.add(index);
                     rightButton.add(index);
                 } else {
@@ -174,7 +175,7 @@ public class GUITalent extends AbstractGUI {
         }
 
         ItemStack equipButton = GUISystemItemEnum.TALENT_BUTTON_APPLY.getItemStack();
-        for (int index = 37; index <= 43; index++) {
+        for (int index = 39; index <= 41; index++) {
             if (inventory.getItem(index) == null) {
                 inventory.setItem(index, equipButton);
                 leftButton.add(index);
@@ -185,14 +186,14 @@ public class GUITalent extends AbstractGUI {
 
     public void purchaseUpgrade(int clickIndex, int id, @NonNull GUITalentItemEnum upgradeTalentItemType) {
         PlayerDataBlock playerDataBlock = Main.getPlayerDataBlock(player);
-        ArrayList<Integer> talentLevelList = playerDataBlock.getTalentLevelList();
+        ArrayList<Integer> talentLevelList = playerDataBlock.getNormalTalentLevelList();
         int currentTalentLevel = talentLevelList.get(id);
         int maxTalentLevel = upgradeTalentItemType.getMaxTalentLevel();
         double ownCoinAmount = playerDataBlock.getCoinAmount();
         double needCoinAmount = TalentUtils.getNextLevelNeedCoinAmount(upgradeTalentItemType, currentTalentLevel);
 
         if (currentTalentLevel >= maxTalentLevel) {
-            player.sendMessage(LangLoader.get("talent_upgrade_failed_as_already_level_max"));
+            player.sendMessage(LangLoader.get("talent_upgrade_failed_as_already_level_max_message"));
             player.playSound(player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1, 1);
             return;
         }
@@ -201,7 +202,7 @@ public class GUITalent extends AbstractGUI {
             //购买成功
             int newLevel = currentTalentLevel + 1;
             Utils.setTalentLevel(player, id, newLevel);
-            boolean equipped = clickIndex >= 37 && clickIndex <= 43;
+            boolean equipped = clickIndex >= 39 && clickIndex <= 41;
             if (equipped) { //升级时，如果升级的物品已装备，那么执行更改装备的天赋即Utils.changeEquippedTalent。如果未装备，直接TalentUtils.setTalentItem即可。
                 Utils.changeEquippedTalent(player, clickIndex, upgradeTalentItemType, true);
                 TalentUtils.setTalentItem(inventory, clickIndex, upgradeTalentItemType, talentLevelList.get(id), true, talentLevelList.get(id) >= upgradeTalentItemType.getMaxTalentLevel());
@@ -214,7 +215,7 @@ public class GUITalent extends AbstractGUI {
             return;
         }
         //购买失败
-        player.sendMessage(String.format(LangLoader.get("talent_upgrade_failed_as_coin"), Mth.formatDecimalWithFloor(needCoinAmount - ownCoinAmount, 1)));
+        player.sendMessage(String.format(LangLoader.get("talent_upgrade_failed_as_coin_message"), Mth.formatDecimalWithFloor(needCoinAmount - ownCoinAmount, 1)));
         player.playSound(player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1, 1);
     }
 }
