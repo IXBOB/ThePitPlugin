@@ -104,17 +104,23 @@ public class OnEntityDamageEntityListener implements Listener {
         double absorptionHealthBefore = NMSUtils.getEntityPlayer(damagedPlayer).getAbsorptionHearts();
         double normalHealthBefore = damagedPlayer.getHealth();
         double allHealthBefore = absorptionHealthBefore + normalHealthBefore;
-
-        double absorptionHealthAfter = absorptionHealthBefore - event.getDamage(); //getDamage()? 但是实际似乎比getFinalDamage准确，不懂其计算方式·_·
+        double absorptionHealthAfter = absorptionHealthBefore <= 0 ? 0 : absorptionHealthBefore - event.getFinalDamage();
         double allHealthAfter;
         double normalHealthAfter;
         if (absorptionHealthAfter < 0) {
             normalHealthAfter = normalHealthBefore + absorptionHealthAfter;
             allHealthAfter = normalHealthAfter;
         } else {
-            normalHealthAfter = normalHealthBefore;
+            normalHealthAfter = normalHealthBefore - finalDamageAmount;
             allHealthAfter = normalHealthAfter + absorptionHealthAfter;
         }
+
+
+        System.out.println("absorptionHealthBefore: " + absorptionHealthBefore);
+        System.out.println("normalHealthBefore: " + normalHealthBefore);
+        System.out.println("absorptionHealthAfter: " + absorptionHealthAfter);
+        System.out.println("normalHealthAfter: " + normalHealthAfter);
+        System.out.println("allHealthAfter: " + allHealthAfter);
 
         if (allHealthAfter > 0) {
             StringBuilder actionbarBuilder = new StringBuilder();
