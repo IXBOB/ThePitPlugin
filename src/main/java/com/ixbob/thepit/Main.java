@@ -38,7 +38,7 @@ public class Main extends JavaPlugin {
     public void onEnable() {
         Main.plugin = this;
 
-        spawnLocation = new Location(Bukkit.getWorlds().get(0), 6, 153, 5);
+        spawnLocation = new Location(Bukkit.getWorlds().get(0), -8, 153, -5);
 
         MongoDB mongoDB = new MongoDB();
         mongoDB.connect("127.0.0.1", 27017, this);

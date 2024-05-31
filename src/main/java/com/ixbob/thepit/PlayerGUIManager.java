@@ -45,7 +45,7 @@ public class PlayerGUIManager {
         if (playerOpeningCustomGUI.containsKey(player)) {
             player.closeInventory();
             try {
-                throw new IllegalArgumentException("Player " + player + " is already has opening custom gui");
+                throw new IllegalArgumentException("Player " + player + " has already opening a custom gui");
             } catch (IllegalArgumentException e) {
                 player.sendMessage(ChatColor.RED + (new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")).format(new Date()) + " " + e.getMessage() + " " + Arrays.toString(e.getStackTrace()));
                 player.sendMessage(LangLoader.get("system_error_message"));
