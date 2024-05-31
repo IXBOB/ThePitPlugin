@@ -1,6 +1,9 @@
 package com.ixbob.thepit.gui;
 
-import com.ixbob.thepit.*;
+import com.ixbob.thepit.LangLoader;
+import com.ixbob.thepit.Main;
+import com.ixbob.thepit.Mth;
+import com.ixbob.thepit.PlayerDataBlock;
 import com.ixbob.thepit.enums.GUIGridTypeEnum;
 import com.ixbob.thepit.enums.GUISystemItemEnum;
 import com.ixbob.thepit.enums.GUITalentItemEnum;
@@ -15,7 +18,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 
@@ -108,14 +110,8 @@ public class GUITalent extends AbstractGUI {
 
         GUIUtils.fillAll(inventory, GUISystemItemEnum.DEFAULT_WALL.getItemStack());
 
-        ItemStack locked = new ItemStack(Material.BEDROCK);
-        ItemMeta lockedItemMeta = locked.getItemMeta();
-        lockedItemMeta.setDisplayName(LangLoader.get("talent_item_locked"));
-        locked.setItemMeta(lockedItemMeta);
-        ItemStack equippedItem = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 12);
-        ItemMeta hasEquippedItemMeta = equippedItem.getItemMeta();
-        hasEquippedItemMeta.setDisplayName(LangLoader.get("talent_item_has_equipped"));
-        equippedItem.setItemMeta(hasEquippedItemMeta);
+        ItemStack locked = GUISystemItemEnum.TALENT_WALL_LOCKED.getItemStack();
+        ItemStack equippedItem = GUISystemItemEnum.TALENT_WALL_ALREADY_EQUIPPED.getItemStack();
         for (int index = 10; index <= 25; index++) {
             if (index == 17 || index == 18 ) {
                 continue;
@@ -139,10 +135,7 @@ public class GUITalent extends AbstractGUI {
             }
         }
 
-        ItemStack barrier = new ItemStack(Material.BARRIER);
-        ItemMeta barrierItemMeta = barrier.getItemMeta();
-        barrierItemMeta.setDisplayName(LangLoader.get("talent_equip_grid_locked"));
-        barrier.setItemMeta(barrierItemMeta);
+        ItemStack barrier = GUISystemItemEnum.TALENT_WALL_EQUIP_GRID_LOCKED.getItemStack();
         ItemStack empty = new ItemStack(Material.AIR);
         for (int index = 37; index <= 43; index++) {
             int needLevel = (index - 36) * 15; //每15级解锁一个天赋槽位
@@ -170,10 +163,7 @@ public class GUITalent extends AbstractGUI {
         leftButton.clear();
         rightButton.clear();
 
-        ItemStack dropButton = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 14);
-        ItemMeta dropItemMeta = dropButton.getItemMeta();
-        dropItemMeta.setDisplayName(LangLoader.get("talent_system_item_drop_name"));
-        dropButton.setItemMeta(dropItemMeta);
+        ItemStack dropButton = GUISystemItemEnum.TALENT_BUTTON_CANCEL.getItemStack();
         for (int index = 10; index <= 16; index++) {
             inventory.setItem(index, dropButton);
             leftButton.add(index);
@@ -183,10 +173,7 @@ public class GUITalent extends AbstractGUI {
             leftButton.add(index);
         }
 
-        ItemStack equipButton = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 5);
-        ItemMeta equipItemMeta = equipButton.getItemMeta();
-        equipItemMeta.setDisplayName(LangLoader.get("talent_system_item_equip_name"));
-        equipButton.setItemMeta(equipItemMeta);
+        ItemStack equipButton = GUISystemItemEnum.TALENT_BUTTON_APPLY.getItemStack();
         for (int index = 37; index <= 43; index++) {
             if (inventory.getItem(index) == null) {
                 inventory.setItem(index, equipButton);
