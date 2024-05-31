@@ -2,8 +2,8 @@ package com.ixbob.thepit.event;
 
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.PlayerDataBlock;
-import com.ixbob.thepit.enums.TalentGivingItemEnum;
-import com.ixbob.thepit.enums.GUITalentItemEnum;
+import com.ixbob.thepit.enums.gui.talent.TalentGivingItemEnum;
+import com.ixbob.thepit.enums.gui.talent.GUITalentItemEnum;
 import com.ixbob.thepit.event.custom.PlayerEquippedTalentChangeEvent;
 import com.ixbob.thepit.util.TalentCalcuUtils;
 import com.ixbob.thepit.util.TalentUtils;

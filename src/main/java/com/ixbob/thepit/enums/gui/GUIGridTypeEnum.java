@@ -1,4 +1,4 @@
-package com.ixbob.thepit.enums;
+package com.ixbob.thepit.enums.gui;
 
 public enum GUIGridTypeEnum {
     INVALID,

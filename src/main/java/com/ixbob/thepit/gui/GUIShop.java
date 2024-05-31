@@ -1,10 +1,10 @@
 package com.ixbob.thepit.gui;
 
 import com.ixbob.thepit.*;
-import com.ixbob.thepit.enums.GUIGridTypeEnum;
-import com.ixbob.thepit.enums.GUIShopItemEnum;
-import com.ixbob.thepit.enums.GUISystemItemEnum;
-import com.ixbob.thepit.enums.ShopGivingItemEnum;
+import com.ixbob.thepit.enums.gui.GUIGridTypeEnum;
+import com.ixbob.thepit.enums.gui.shop.GUIShopItemEnum;
+import com.ixbob.thepit.enums.gui.GUISystemItemEnum;
+import com.ixbob.thepit.enums.gui.shop.ShopGivingItemEnum;
 import com.ixbob.thepit.util.GUIUtils;
 import com.ixbob.thepit.util.ShopUtils;
 import com.ixbob.thepit.util.Utils;

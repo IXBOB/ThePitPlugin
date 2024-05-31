@@ -1,6 +1,6 @@
 package com.ixbob.thepit.util;
 
-import com.ixbob.thepit.enums.GUIShopItemEnum;
+import com.ixbob.thepit.enums.gui.shop.GUIShopItemEnum;
 
 public class ShopUtils {
 

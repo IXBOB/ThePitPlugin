@@ -1,4 +1,4 @@
-package com.ixbob.thepit.enums;
+package com.ixbob.thepit.enums.gui.talent;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;

@@ -1,4 +1,4 @@
-package com.ixbob.thepit.enums;
+package com.ixbob.thepit.enums.gui.talent;
 
 import com.ixbob.thepit.LangLoader;
 import com.ixbob.thepit.event.OnPlayerEquippedTalentChangeListener;

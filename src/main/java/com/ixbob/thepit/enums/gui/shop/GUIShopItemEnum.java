@@ -1,4 +1,4 @@
-package com.ixbob.thepit.enums;
+package com.ixbob.thepit.enums.gui.shop;
 
 import com.ixbob.thepit.LangLoader;
 import com.ixbob.thepit.util.Utils;

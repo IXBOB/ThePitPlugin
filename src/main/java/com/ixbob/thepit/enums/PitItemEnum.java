@@ -1,6 +1,8 @@
 package com.ixbob.thepit.enums;
 
 import com.ixbob.thepit.LangLoader;
+import com.ixbob.thepit.enums.gui.shop.ShopGivingItemEnum;
+import com.ixbob.thepit.enums.gui.talent.TalentGivingItemEnum;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 

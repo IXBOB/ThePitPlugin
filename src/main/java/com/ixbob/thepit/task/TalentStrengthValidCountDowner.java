@@ -3,7 +3,7 @@ package com.ixbob.thepit.task;
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.PlayerDataBlock;
 import com.ixbob.thepit.PlayerScoreboard;
-import com.ixbob.thepit.enums.GUITalentItemEnum;
+import com.ixbob.thepit.enums.gui.talent.GUITalentItemEnum;
 import com.ixbob.thepit.util.TalentCalcuUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

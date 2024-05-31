@@ -4,7 +4,7 @@ import com.ixbob.thepit.LangLoader;
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.PlayerDataBlock;
 import com.ixbob.thepit.enums.DropItemEnum;
-import com.ixbob.thepit.enums.GUITalentItemEnum;
+import com.ixbob.thepit.enums.gui.talent.GUITalentItemEnum;
 import com.ixbob.thepit.task.handler.RandomGoldIngotSpawnSingleTaskHandler;
 import com.ixbob.thepit.util.TalentCalcuUtils;
 import com.ixbob.thepit.util.Utils;

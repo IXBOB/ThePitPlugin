@@ -1,4 +1,4 @@
-package com.ixbob.thepit.enums;
+package com.ixbob.thepit.enums.gui;
 
 import com.ixbob.thepit.LangLoader;
 import org.bukkit.Material;
