@@ -1,3 +1,5 @@
+system_error_message: "§c§l插件正产生严重错误！请将上述聊天信息及一部分上下文截图给管理员或开发者！"
+
 command_error_not_on_player: "§c该指令仅可以玩家身份执行"
 command_spawn_success: "§a你回到了出生点！"
 command_spawn_deny_in_battlestate: "§c§l你正在战斗中！输入/spawn confirm以确认返回出生点。"

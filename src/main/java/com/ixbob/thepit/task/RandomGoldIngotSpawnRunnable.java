@@ -18,8 +18,8 @@ public class RandomGoldIngotSpawnRunnable implements Runnable {
             return;
         }
         World world = Bukkit.getWorlds().get(0);
-        double randomX = -20 + Math.random() * 20;
-        double randomZ = -20 + Math.random() * 20;
+        double randomX = -50 + Math.random() * 50;
+        double randomZ = -50 + Math.random() * 50;
         double randomY = world.getHighestBlockYAt((int) randomX, (int) randomZ);
         Location location = new Location(world, randomX, randomY, randomZ);
         world.dropItemNaturally(location, new ItemStack(Material.GOLD_INGOT));

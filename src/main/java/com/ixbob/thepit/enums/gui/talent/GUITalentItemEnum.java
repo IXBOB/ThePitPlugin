@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum GUITalentItemEnum {
+    //TODO: 参数第一项更改为ItemStack类型以方便添加特殊类型物品，将GOLDEN_CHOCOLATE显示图标更改为skull里面的金色巧克力
     HEALTH_BOOST(Material.REDSTONE, 0, null, 10, 0, 3,
             Utils.getInventoryIndex(2,2), 1,
             LangLoader.get("talent_item_id_0_name"), new ArrayList<>(Arrays.asList(
