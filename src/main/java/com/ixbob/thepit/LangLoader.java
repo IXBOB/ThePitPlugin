@@ -10,8 +10,9 @@ import java.util.HashMap;
 public class LangLoader {
 
     public static HashMap<String, String> translationMap = new HashMap<>();
+    public static Plugin plugin = Main.getPlugin();
 
-    public static void init (Plugin plugin) {
+    public static void init () {
         plugin.saveResource("languages/zh_CN.yml", true);
         File languageFile = new File(plugin.getDataFolder(), "languages/zh_CN.yml");
         FileConfiguration translations = YamlConfiguration.loadConfiguration(languageFile.getAbsoluteFile());

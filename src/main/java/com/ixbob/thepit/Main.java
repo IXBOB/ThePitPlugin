@@ -45,7 +45,7 @@ public class Main extends JavaPlugin {
         mongoDB.setCollection("ThePit_IXBOB");
         Main.mongoDB = mongoDB;
 
-        LangLoader.init(this);
+        LangLoader.init();
         CustomSkullEnum.init();
         CustomBasicToolEnum.init();
         DropItemEnum.init();
@@ -74,71 +74,30 @@ public class Main extends JavaPlugin {
         this.getCommand("talent").setExecutor(new CommandTalent());
         this.getCommand("shop").setExecutor(new CommandShop());
 
-        Listener onPlayerJoinListener = new OnPlayerJoinListener();
-        getServer().getPluginManager().registerEvents(onPlayerJoinListener, this);
-
-        Listener onPlayerQuitListener = new OnPlayerLeaveListener();
-        getServer().getPluginManager().registerEvents(onPlayerQuitListener, this);
-
-        Listener onEntityDamageEntityListener = new OnEntityDamageEntityListener();
-        getServer().getPluginManager().registerEvents(onEntityDamageEntityListener, this);
-
-        Listener onPlayerOwnXpModifiedListener = new OnPlayerOwnXpModifiedListener();
-        getServer().getPluginManager().registerEvents(onPlayerOwnXpModifiedListener, this);
-
-        Listener onPlayerOwnCoinModifiedListener = new OnPlayerOwnCoinModifiedListener();
-        getServer().getPluginManager().registerEvents(onPlayerOwnCoinModifiedListener, this);
-
-        Listener onPlayerUpgradeLevelListener = new OnPlayerUpgradeLevelListener();
-        getServer().getPluginManager().registerEvents(onPlayerUpgradeLevelListener, this);
-
-        Listener onEntityDamagedListener = new OnEntityDamagedListener();
-        getServer().getPluginManager().registerEvents(onEntityDamagedListener, this);
-
-        Listener onPlayerBattleStateChangeListener = new OnPlayerBattleStateChangeListener();
-        getServer().getPluginManager().registerEvents(onPlayerBattleStateChangeListener, this);
-
-        Listener onPlayerTypedSpawnChangeListener = new OnPlayerTypedSpawnChangeListener();
-        getServer().getPluginManager().registerEvents(onPlayerTypedSpawnChangeListener, this);
-
-        Listener onPlayerClickGUIListener = new OnPlayerClickGUIListener();
-        getServer().getPluginManager().registerEvents(onPlayerClickGUIListener, this);
-
-        Listener onPlayerDragInventoryListener = new OnPlayerDragInventoryListener();
-        getServer().getPluginManager().registerEvents(onPlayerDragInventoryListener, this);
-
-        Listener onPlayerCloseGUIListener = new OnPlayerCloseGUIListener();
-        getServer().getPluginManager().registerEvents(onPlayerCloseGUIListener, this);
-
-        Listener onPlayerTalentLevelChangeListener = new OnPlayerTalentLevelChangeListener();
-        getServer().getPluginManager().registerEvents(onPlayerTalentLevelChangeListener, this);
-
-        Listener onPlayerEquippedTalentChangeListener = new OnPlayerEquippedTalentChangeListener();
-        getServer().getPluginManager().registerEvents(onPlayerEquippedTalentChangeListener, this);
-
-        Listener onPlayerInteractListener = new OnPlayerInteractListener();
-        getServer().getPluginManager().registerEvents(onPlayerInteractListener, this);
-
-        Listener onPlayerConsumeItemListener = new OnPlayerConsumeItemListener();
-        getServer().getPluginManager().registerEvents(onPlayerConsumeItemListener, this);
-
-        Listener onPlayerSwapHandItemsListener = new OnPlayerSwapHandItemsListener();
-        getServer().getPluginManager().registerEvents(onPlayerSwapHandItemsListener, this);
-
-        Listener onPlayerDropItemListener = new OnPlayerDropItemListener();
-        getServer().getPluginManager().registerEvents(onPlayerDropItemListener, this);
-
-        Listener onEntityPickupItemListener = new OnPlayerPickupItemListener();
-        getServer().getPluginManager().registerEvents(onEntityPickupItemListener, this);
-
-        Listener onPlayerPlaceBlockListener = new OnPlayerPlaceBlockListener();
-        getServer().getPluginManager().registerEvents(onPlayerPlaceBlockListener, this);
-
-        Listener onPlayerBreakBlockListener = new OnPlayerBreakBlockListener();
-        getServer().getPluginManager().registerEvents(onPlayerBreakBlockListener, this);
-
-        Listener onItemDespawnListener = new OnItemDespawnListener();
-        getServer().getPluginManager().registerEvents(onItemDespawnListener, this);
+        registerEvents(
+                new OnPlayerJoinListener(),
+                new OnPlayerLeaveListener(),
+                new OnEntityDamageEntityListener(),
+                new OnPlayerOwnXpModifiedListener(),
+                new OnPlayerOwnCoinModifiedListener(),
+                new OnPlayerUpgradeLevelListener(),
+                new OnEntityDamagedListener(),
+                new OnPlayerBattleStateChangeListener(),
+                new OnPlayerTypedSpawnChangeListener(),
+                new OnPlayerClickGUIListener(),
+                new OnPlayerDragInventoryListener(),
+                new OnPlayerCloseGUIListener(),
+                new OnPlayerTalentLevelChangeListener(),
+                new OnPlayerEquippedTalentChangeListener(),
+                new OnPlayerInteractListener(),
+                new OnPlayerConsumeItemListener(),
+                new OnPlayerSwapHandItemsListener(),
+                new OnPlayerDropItemListener(),
+                new OnPlayerPickupItemListener(), // 请确认这个监听器类名是否正确
+                new OnPlayerPlaceBlockListener(),
+                new OnPlayerBreakBlockListener(),
+                new OnItemDespawnListener()
+        );
     }
 
     @Override
@@ -147,6 +106,12 @@ public class Main extends JavaPlugin {
             Utils.storePlayerInventoryData(player);
         }
         getTaskManager().getPlacedBlockTaskHandler().removeAll();
+    }
+
+    private void registerEvents(Listener... listeners) {
+        for (Listener listener : listeners) {
+            getServer().getPluginManager().registerEvents(listener, this);
+        }
     }
 
     public static Plugin getPlugin() {
