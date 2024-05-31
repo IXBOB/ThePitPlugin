@@ -19,7 +19,7 @@ public class ItemExtraDataApplier {
             if (extraData == ItemExtraDataEnum.ENCHANT_EFFICIENCY_4) {
                 itemMeta.addEnchant(Enchantment.DIG_SPEED, 4, true);
             }
-            if (extraData == ItemExtraDataEnum.ENCHANT_UNBREAKABLE) {
+            if (extraData == ItemExtraDataEnum.FLAG_HIDE_ATTRIBUTES) {
                 itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
             }
         }

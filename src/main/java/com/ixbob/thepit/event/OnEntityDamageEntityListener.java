@@ -115,13 +115,6 @@ public class OnEntityDamageEntityListener implements Listener {
             allHealthAfter = normalHealthAfter + absorptionHealthAfter;
         }
 
-
-        System.out.println("absorptionHealthBefore: " + absorptionHealthBefore);
-        System.out.println("normalHealthBefore: " + normalHealthBefore);
-        System.out.println("absorptionHealthAfter: " + absorptionHealthAfter);
-        System.out.println("normalHealthAfter: " + normalHealthAfter);
-        System.out.println("allHealthAfter: " + allHealthAfter);
-
         if (allHealthAfter > 0) {
             StringBuilder actionbarBuilder = new StringBuilder();
             actionbarBuilder.append(LangLoader.get("damage_show_heart_actionbar_empty").repeat((int) Math.ceil(damagedPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() / 2)))
