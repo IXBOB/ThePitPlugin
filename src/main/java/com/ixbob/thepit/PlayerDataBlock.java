@@ -32,6 +32,7 @@ public class PlayerDataBlock {
     private PlayerScoreboard playerScoreboard;
     private boolean typedSpawn;
     private ArrayList<LinkedHashMap<Player, ArrayList<Object>>> playerGetDamagedHistory; //最里面使用的ArrayList便于后续添加更多受击信息
+    private ArrayList<Player> damagedByArrowPlayers;
 
     public PlayerDataBlock(Player player) {
         this.player = player;
@@ -57,6 +58,7 @@ public class PlayerDataBlock {
         this.battleState = false;
         this.typedSpawn = false;
         this.playerGetDamagedHistory = new ArrayList<>();
+        this.damagedByArrowPlayers = new ArrayList<>();
     }
 
     public void updatePlayerDBData() {
@@ -299,5 +301,9 @@ public class PlayerDataBlock {
 
     public TalentStrengthValidCountDowner getTalentStrengthValidCountDowner() {
         return talentStrengthValidCountDowner;
+    }
+
+    public ArrayList<Player> getDamagedByArrowPlayers() {
+        return damagedByArrowPlayers;
     }
 }

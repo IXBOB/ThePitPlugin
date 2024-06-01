@@ -127,6 +127,9 @@ public class Utils {
 
     public static void addXp(Player player, double addXp) {
         PlayerDataBlock playerData = Main.getPlayerDataBlock(player);
+        if (playerData == null) {
+            return; //有人退出就不可以判定助攻
+        }
         double originXp = playerData.getThisLevelOwnXp();
 
         PlayerOwnXpModifiedEvent modifyXpEvent = new PlayerOwnXpModifiedEvent(player, originXp, addXp);
@@ -135,6 +138,9 @@ public class Utils {
 
     public static void addCoin(Player player, double addCoin) {
         PlayerDataBlock playerData = Main.getPlayerDataBlock(player);
+        if (playerData == null) {
+            return; //有人退出就不可以判定助攻 //TODO: 疾速修复的bug，需要细致思考
+        }
         double originCoin = playerData.getCoinAmount();
 
         PlayerOwnCoinModifiedEvent modifyCoinEvent = new PlayerOwnCoinModifiedEvent(player, originCoin, addCoin);

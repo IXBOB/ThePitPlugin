@@ -92,7 +92,17 @@ public enum GUITalentItemEnum {
             LangLoader.get("talent_item_id_7_lore4"),
             LangLoader.get("talent_item_id_7_lore5"),
             LangLoader.get("talent_item_id_7_lore6"),
-            LangLoader.get("talent_item_id_7_lore7"))));
+            LangLoader.get("talent_item_id_7_lore7")))),
+    FLEXIBLE_TACTICS(Material.STRING, 8, null, 20, 0, 3,
+            Utils.getInventoryIndex(3,3), 1,
+            LangLoader.get("talent_item_id_8_name"), new ArrayList<>(Arrays.asList(
+            LangLoader.get("talent_item_id_8_lore1"),
+            LangLoader.get("talent_item_id_8_lore2"),
+            LangLoader.get("talent_item_id_8_lore3"),
+            LangLoader.get("talent_item_id_8_lore4"),
+            LangLoader.get("talent_item_id_8_lore5"),
+            LangLoader.get("talent_item_id_8_lore6"),
+            LangLoader.get("talent_item_id_8_lore7"))));
 
     /**
      * {@link TalentCalcuUtils}

@@ -88,6 +88,9 @@ public class OnEntityDamageEntityListener implements Listener {
             if (damagerEquippedTalentList.contains(infiniteArrowsId)) {
                 damager.getInventory().addItem(new ItemStack(Material.ARROW, (int) TalentCalcuUtils.getAddPointValue(infiniteArrowsId, talentLevelList.get(infiniteArrowsId))));
             }
+            if (damagerEquippedTalentList.contains(GUITalentItemEnum.FLEXIBLE_TACTICS.getId())) {
+                damagedPlayerDataBlock.getDamagedByArrowPlayers().add(damager);
+            }
         }
 
         if (damagerDataBlock.getTalentStrengthValidCountDowner() != null) {
@@ -138,10 +141,17 @@ public class OnEntityDamageEntityListener implements Listener {
     }
 
     private void onPlayerKillAnother(Player damagedPlayer, Player damager) {
-        double addXp = (10 + (Math.random() * 15)) * (1 + Main.getPlayerDataBlock(damagedPlayer).getConsecutiveKillAmount());
-        Utils.addXp(damager, addXp);
-        double addCoin = (5 + (Math.random() * 10)) * (1 + Main.getPlayerDataBlock(damagedPlayer).getConsecutiveKillAmount());
-        Utils.addCoin(damager, addCoin);
+        double killAddXp = (10 + (Math.random() * 15)) * (1 + Main.getPlayerDataBlock(damagedPlayer).getConsecutiveKillAmount());
+        Utils.addXp(damager, killAddXp);
+        double killAddCoin = (5 + (Math.random() * 10)) * (1 + Main.getPlayerDataBlock(damagedPlayer).getConsecutiveKillAmount());
+        Utils.addCoin(damager, killAddCoin);
+
+        if (damagerDataBlock.getEquippedNormalTalentList().contains(GUITalentItemEnum.FLEXIBLE_TACTICS.getId())) {
+            int id = GUITalentItemEnum.FLEXIBLE_TACTICS.getId();
+            int level = damagedPlayerDataBlock.getNormalTalentLevelList().get(id);
+            float addPoint = TalentCalcuUtils.getAddPointValue(id, level);
+            Utils.addCoin(damager, killAddCoin * addPoint * 0.01);
+        }
 
         damager.playSound(damager.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
         damagedPlayer.playSound(damagedPlayer.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1, 1);
@@ -183,7 +193,7 @@ public class OnEntityDamageEntityListener implements Listener {
 
         //广播消息不广播给damager和damagedPlayer
         String broadcastMes = String.format(LangLoader.get("player_kill_other_message_broadcast"), Utils.getPitDisplayName(damager), Utils.getPitDisplayName(damagedPlayer));
-        String toDamagerMes = String.format(String.format(LangLoader.get("player_kill_other_message_to_damager"), Utils.getPitDisplayName(damagedPlayer))) + " " + String.format(LangLoader.get("player_get_xp_message"), Mth.formatDecimalWithFloor(addXp, 2)) + " " + String.format(LangLoader.get("player_get_coin_message"), Mth.formatDecimalWithFloor(addCoin, 1));
+        String toDamagerMes = String.format(String.format(LangLoader.get("player_kill_other_message_to_damager"), Utils.getPitDisplayName(damagedPlayer))) + " " + String.format(LangLoader.get("player_get_xp_message"), Mth.formatDecimalWithFloor(killAddXp, 2)) + " " + String.format(LangLoader.get("player_get_coin_message"), Mth.formatDecimalWithFloor(killAddCoin, 1));
         String toDamagedPlayerMes = String.format(LangLoader.get("player_kill_other_message_to_damaged_player"), Utils.getPitDisplayName(damager));
 
         for (Player onlinePl : Bukkit.getOnlinePlayers()) {
@@ -205,26 +215,52 @@ public class OnEntityDamageEntityListener implements Listener {
         for (Player helper : helperList) {
             double damagePercent = damagePercentMap.get(helper);
             String displayDamagePercent = Mth.formatDecimalWithFloor(damagePercent * 100, 2); // 显示成百分数
-            double helperAddXp = addXp * damagePercent;
-            double helperAddCoin = addCoin * damagePercent;
+            double helperAddXp = killAddXp * damagePercent;
+            double helperAddCoin = killAddCoin * damagePercent;
+            Utils.addXp(helper, helperAddXp);
+            Utils.addCoin(helper, helperAddCoin);
+
+            PlayerDataBlock helperDataBlock = Main.getPlayerDataBlock(helper);
+            System.out.println("1");
+            System.out.println(helperDataBlock.getEquippedNormalTalentList());
+            if (helperDataBlock.getEquippedNormalTalentList().contains(GUITalentItemEnum.FLEXIBLE_TACTICS.getId())) {
+                System.out.println("true");
+                Utils.addCoin(helper, 2);
+                helperAddCoin += 2;
+                for (Player damagedPl : damagedPlayerDataBlock.getDamagedByArrowPlayers()) {
+                    if (damagedPl.isOnline()) {
+                        if (Main.getPlayerDataBlock(damagedPl).getEquippedNormalTalentList().contains(GUITalentItemEnum.FLEXIBLE_TACTICS.getId())) {
+                            PlayerDataBlock damagedPlayerDataBlock = Main.getPlayerDataBlock(damagedPl);
+                            int id = GUITalentItemEnum.FLEXIBLE_TACTICS.getId();
+                            int level = damagedPlayerDataBlock.getNormalTalentLevelList().get(id);
+                            float addPoint = TalentCalcuUtils.getAddPointValue(id, level);
+                            double addCoin = helperAddCoin * addPoint * 0.01;
+                            System.out.println("addCoin: " + addCoin);
+                            Utils.addCoin(helper, addCoin);
+                            helperAddCoin += addCoin;
+                        }
+                    }
+                }
+            }
             String displayHelperAddXp = Mth.formatDecimalWithFloor(helperAddXp, 2);
             String displayHelperAddCoin = Mth.formatDecimalWithFloor(helperAddCoin, 2);
             helper.sendMessage(
                     String.format(String.format(String.format(LangLoader.get("player_help_kill_other_message_to_helper"), Utils.getPitDisplayName(damagedPlayer), displayDamagePercent)
                             + LangLoader.get("player_get_xp_message"), displayHelperAddXp) + " "
                             + LangLoader.get("player_get_coin_message"), displayHelperAddCoin));
-            Utils.addXp(helper, helperAddXp);
-            Utils.addCoin(helper, helperAddCoin);
         }
 
         deathBackToLobby(damagedPlayer);
     }
 
     private void deathBackToLobby(Player player) {
-        Main.getPlayerDataBlock(player).getPlayerGetDamagedHistory().clear();
+        PlayerDataBlock dataBlock = Main.getPlayerDataBlock(player);
+        dataBlock.getPlayerGetDamagedHistory().clear();
         Utils.setMostBasicKit(player, true);
         Utils.setBattleState(player, false);
         Utils.setTypedSpawn(player, false);
         Utils.backToLobby(player);
     }
+
+
 }
