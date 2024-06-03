@@ -62,6 +62,7 @@ public class OnPlayerJoinListener implements Listener {
         player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(200);
         player.getInventory().clear();
         player.sendTitle(LangLoader.get("join_loading_title"), LangLoader.get("join_loading_subtitle"), 10, 60, 10);
+
         Bukkit.getServer().getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
             Player taskPlayer = player;
             if (!mongoDB.isFindByUUIDExist(playerUUID)) {
@@ -70,6 +71,9 @@ public class OnPlayerJoinListener implements Listener {
             Bukkit.getServer().getScheduler().runTask(Main.getInstance(), () -> {
                 genPlayerDataBlock(taskPlayer);
                 PlayerUtils.updateDisplayName(taskPlayer);
+
+
+
                 //读取并设置玩家物品栏
                 @SuppressWarnings("unchecked")
                 ArrayList<ArrayList<?>> storedHotBarItemList = (ArrayList<ArrayList<?>>) mongoDB.findByUUID(playerUUID).get("HotBarItemList");
@@ -86,7 +90,7 @@ public class OnPlayerJoinListener implements Listener {
                         ItemStack itemStack = new ItemStack(Material.valueOf((String) handlingInsideList.get(0)), (int) handlingInsideList.get(1));
                         @SuppressWarnings("unchecked")
                         ArrayList<String> dataList = (ArrayList<String>) handlingInsideList.get(2);
-                        inventory.setItem(i, getItemIfWithExtraData(itemStack, dataList));
+                        inventory.setItem(i, getItem(itemStack, dataList));
                     }
                 }
                 for (int i = 0; i <= 26; i++) {
@@ -95,7 +99,7 @@ public class OnPlayerJoinListener implements Listener {
                         ItemStack itemStack = new ItemStack(Material.valueOf((String) handlingInsideList.get(0)), (int) handlingInsideList.get(1));
                         @SuppressWarnings("unchecked")
                         ArrayList<String> dataList = (ArrayList<String>) handlingInsideList.get(2);
-                        inventory.setItem(i+9, getItemIfWithExtraData(itemStack, dataList));
+                        inventory.setItem(i+9, getItem(itemStack, dataList));
                     }
                 }
                 for (int i = 0; i <= 3; i++) {
@@ -105,10 +109,10 @@ public class OnPlayerJoinListener implements Listener {
                         @SuppressWarnings("unchecked")
                         ArrayList<String> dataList = (ArrayList<String>) handlingInsideList.get(2);
                         switch (i) {
-                            case 0: inventory.setHelmet(getItemIfWithExtraData(itemStack, dataList)); break;
-                            case 1: inventory.setChestplate(getItemIfWithExtraData(itemStack, dataList)); break;
-                            case 2: inventory.setLeggings(getItemIfWithExtraData(itemStack, dataList)); break;
-                            case 3: inventory.setBoots(getItemIfWithExtraData(itemStack, dataList)); break;
+                            case 0: inventory.setHelmet(getItem(itemStack, dataList)); break;
+                            case 1: inventory.setChestplate(getItem(itemStack, dataList)); break;
+                            case 2: inventory.setLeggings(getItem(itemStack, dataList)); break;
+                            case 3: inventory.setBoots(getItem(itemStack, dataList)); break;
                         }
                     }
                 }
@@ -116,7 +120,7 @@ public class OnPlayerJoinListener implements Listener {
         });
     }
 
-    private ItemStack getItemIfWithExtraData(ItemStack itemStack, ArrayList<String> dataList) {
+    private ItemStack getItem(ItemStack itemStack, ArrayList<String> dataList) {
         return dataList == null ? itemStack : ItemExtraDataApplier.applyFromList(itemStack, dataList);
     }
 
