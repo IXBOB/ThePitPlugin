@@ -14,10 +14,10 @@ public class OnPlayerUpgradeLevelListener implements Listener {
         Player player = event.getPlayer();
         int originLevel = event.getOriginLevel();
         int newLevel = event.getNewLevel();
-        int rank = event.getRank();
+        int prestigeLevel = event.getPrestigeLevel();
 
-        String originLevelText = Utils.getLevelStrWithStyle(rank, originLevel);
-        String newLevelText = Utils.getLevelStrWithStyle(rank, newLevel);
+        String originLevelText = Utils.getLevelStrWithStyle(prestigeLevel, originLevel);
+        String newLevelText = Utils.getLevelStrWithStyle(prestigeLevel, newLevel);
         player.sendTitle(LangLoader.get("upgrade_title"),
                 String.format(LangLoader.get("upgrade_subtitle"), originLevelText, newLevelText),
                 10, 50, 10);

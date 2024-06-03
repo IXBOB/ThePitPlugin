@@ -10,17 +10,17 @@ public class PlayerUpgradeLevelEvent extends Event {
     private final Player player;
     private final int originLevel;
     private final int newLevel;
-    private final int rank;
+    private final int prestigeLevel;
 
     public PlayerUpgradeLevelEvent(Player player, int originLevel, int newLevel) {
         this.player = player;
         this.originLevel = originLevel;
         this.newLevel = newLevel;
-        this.rank = Main.getPlayerDataBlock(player).getRank();
+        this.prestigeLevel = Main.getPlayerDataBlock(player).getPrestigeLevel();
     }
 
-    public int getRank() {
-        return rank;
+    public int getPrestigeLevel() {
+        return prestigeLevel;
     }
 
     public Player getPlayer() {

@@ -131,11 +131,11 @@ public class PlayerUtils {
 
     public static String getPitDisplayName(Player player) {
         PlayerDataBlock playerData = Main.getPlayerDataBlock(player);
-        int rank = playerData.getRank();
+        int prestigeLevel = playerData.getPrestigeLevel();
         int level = playerData.getLevel();
         String prefix;
         ChatColor color = Utils.getChatColorByLevel(level);
-        prefix = Utils.getLevelStrWithStyle(rank, level);
+        prefix = Utils.getLevelStrWithStyle(prestigeLevel, level);
         return prefix + color + player.getName() + ChatColor.RESET;
     }
 }

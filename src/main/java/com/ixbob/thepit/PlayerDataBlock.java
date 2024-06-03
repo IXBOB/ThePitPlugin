@@ -13,12 +13,12 @@ import java.util.LinkedHashMap;
 public class PlayerDataBlock {
     private final Player player;
     private int level;
-    private int rank;
-    private double thisLevelOwnXp;
-    private double nextLevelNeedXp;
-    private double coinAmount;
     private int prestigeLevel;
     private int prestigePointAmount;
+    private double thisLevelOwnXp;
+    private double nextLevelNeedXp;
+    private double xpAmount;
+    private double coinAmount;
     private String prefix;
     private int consecutiveKillAmount;
     private int killAmount;
@@ -42,14 +42,13 @@ public class PlayerDataBlock {
     public void init() {
         DBObject dataDBObj = Main.getDB().findByUUID(player.getUniqueId());
         this.level = (int) dataDBObj.get("level");
-        this.rank = (int) dataDBObj.get("rank");
-        this.thisLevelOwnXp = (double) dataDBObj.get("this_level_own_xp");
-        this.nextLevelNeedXp = (double) dataDBObj.get("next_level_need_xp");
-        this.coinAmount = (double) dataDBObj.get("coin_amount");
         this.prestigeLevel = (int) dataDBObj.get("prestige_level");
         this.prestigePointAmount = (int) dataDBObj.get("prestige_point_amount");
+        this.thisLevelOwnXp = (double) dataDBObj.get("this_level_own_xp");
+        this.nextLevelNeedXp = (double) dataDBObj.get("next_level_need_xp");
+        this.xpAmount = (double) dataDBObj.get("xp_amount");
+        this.coinAmount = (double) dataDBObj.get("coin_amount");
         this.prefix = (String) dataDBObj.get("prefix");
-        this.consecutiveKillAmount = (int) dataDBObj.get("consecutive_kill_amount");
         this.killAmount = (int) dataDBObj.get("kill_amount");
         this.deathAmount = (int) dataDBObj.get("death_amount");
         this.normalTalentLevelList = (ArrayList<Integer>) dataDBObj.get("NormalTalentLevelList");
@@ -65,14 +64,13 @@ public class PlayerDataBlock {
         MongoDB mongoDB = Main.getDB();
         DBObject dataObj = mongoDB.findByUUID(player.getUniqueId());
         dataObj.put("level", level);
-        dataObj.put("rank", rank);
-        dataObj.put("this_level_own_xp", thisLevelOwnXp);
-        dataObj.put("next_level_need_xp", nextLevelNeedXp);
-        dataObj.put("coin_amount", coinAmount);
         dataObj.put("prestige_level", prestigeLevel);
         dataObj.put("prestige_point_amount", prestigePointAmount);
+        dataObj.put("this_level_own_xp", thisLevelOwnXp);
+        dataObj.put("next_level_need_xp", nextLevelNeedXp);
+        dataObj.put("xp_amount", xpAmount);
+        dataObj.put("coin_amount", coinAmount);
         dataObj.put("prefix", prefix);
-        dataObj.put("consecutive_kill_amount", consecutiveKillAmount);
         dataObj.put("kill_amount", killAmount);
         dataObj.put("death_amount", deathAmount);
         dataObj.put("NormalTalentLevelList", normalTalentLevelList);
@@ -126,14 +124,6 @@ public class PlayerDataBlock {
 
     public void setLevel(int level) {
         this.level = level;
-    }
-
-    public int getRank() {
-        return rank;
-    }
-
-    public void setRank(int rank) {
-        this.rank = rank;
     }
 
     public double getCoinAmount() {

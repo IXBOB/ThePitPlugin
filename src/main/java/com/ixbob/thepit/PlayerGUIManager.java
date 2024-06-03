@@ -51,12 +51,10 @@ public class PlayerGUIManager {
             try {
                 throw new IllegalArgumentException("Player " + player + " has already opening a custom gui");
             } catch (IllegalArgumentException e) {
-
                 player.sendMessage(ChatColor.RED + Utils.getFormattedNowTime() + " " + e.getMessage() + " " + Arrays.toString(e.getStackTrace()));
                 player.sendMessage(LangLoader.get("system_error_message"));
                 Main.getInstance().getLogger().log(Level.SEVERE, e.getMessage(), e);
             }
-
         }
         playerOpeningCustomGUI.put(player, gui);
     }

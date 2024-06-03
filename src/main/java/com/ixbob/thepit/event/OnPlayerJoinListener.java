@@ -84,6 +84,7 @@ public class OnPlayerJoinListener implements Listener {
                     ArrayList<?> handlingInsideList = storedHotBarItemList.get(i);
                     if (handlingInsideList != null) {
                         ItemStack itemStack = new ItemStack(Material.valueOf((String) handlingInsideList.get(0)), (int) handlingInsideList.get(1));
+                        @SuppressWarnings("unchecked")
                         ArrayList<String> dataList = (ArrayList<String>) handlingInsideList.get(2);
                         inventory.setItem(i, getItemIfWithExtraData(itemStack, dataList));
                     }
@@ -92,6 +93,7 @@ public class OnPlayerJoinListener implements Listener {
                     ArrayList<?> handlingInsideList = storedInventoryItemList.get(i);
                     if (handlingInsideList != null) {
                         ItemStack itemStack = new ItemStack(Material.valueOf((String) handlingInsideList.get(0)), (int) handlingInsideList.get(1));
+                        @SuppressWarnings("unchecked")
                         ArrayList<String> dataList = (ArrayList<String>) handlingInsideList.get(2);
                         inventory.setItem(i+9, getItemIfWithExtraData(itemStack, dataList));
                     }
@@ -100,6 +102,7 @@ public class OnPlayerJoinListener implements Listener {
                     ArrayList<?> handlingInsideList = storedArmorItemList.get(i);
                     if (handlingInsideList != null) {
                         ItemStack itemStack = new ItemStack(Material.valueOf((String) handlingInsideList.get(0)), (int) handlingInsideList.get(1));
+                        @SuppressWarnings("unchecked")
                         ArrayList<String> dataList = (ArrayList<String>) handlingInsideList.get(2);
                         switch (i) {
                             case 0: inventory.setHelmet(getItemIfWithExtraData(itemStack, dataList)); break;
@@ -122,14 +125,13 @@ public class OnPlayerJoinListener implements Listener {
         DBObject dataDBObj = new BasicDBObject("UUID", playerUUIDString);
         dataDBObj.put("player_name", taskPlayer.getName());
         dataDBObj.put("level", 0);
-        dataDBObj.put("rank", 0);
-        dataDBObj.put("this_level_own_xp", (double) 0);
-        dataDBObj.put("next_level_need_xp", (2 + (Math.random()*2)));
-        dataDBObj.put("coin_amount", (double) 5000);
         dataDBObj.put("prestige_level", 0);
         dataDBObj.put("prestige_point_amount", 0);
+        dataDBObj.put("this_level_own_xp", (double) 0);
+        dataDBObj.put("next_level_need_xp", (2 + (Math.random()*2)));
+        dataDBObj.put("xp_amount", (double) 0);
+        dataDBObj.put("coin_amount", (double) 5000);
         dataDBObj.put("prefix", "0"); // 称号，0相当于什么都没有吧
-        dataDBObj.put("consecutive_kill_amount", 0);
         dataDBObj.put("kill_amount", 0);
         dataDBObj.put("death_amount", 0);
         dataDBObj.put("HotBarItemList", initHotBar);
