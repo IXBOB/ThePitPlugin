@@ -1,9 +1,6 @@
 package com.ixbob.thepit;
 
-import com.ixbob.thepit.command.CommandShop;
-import com.ixbob.thepit.command.CommandSpawn;
-import com.ixbob.thepit.command.CommandTalent;
-import com.ixbob.thepit.command.CommandTest;
+import com.ixbob.thepit.command.*;
 import com.ixbob.thepit.enums.CustomBasicToolEnum;
 import com.ixbob.thepit.enums.CustomSkullEnum;
 import com.ixbob.thepit.enums.DropItemEnum;
@@ -70,6 +67,7 @@ public class Main extends JavaPlugin {
         this.getCommand("spawn").setExecutor(new CommandSpawn());
         this.getCommand("talent").setExecutor(new CommandTalent());
         this.getCommand("shop").setExecutor(new CommandShop());
+        this.getCommand("help").setExecutor(new CommandHelp());
 
         registerEvents(
                 new OnPlayerJoinListener(),
