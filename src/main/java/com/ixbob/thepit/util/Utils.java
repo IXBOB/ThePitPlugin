@@ -1,6 +1,7 @@
 package com.ixbob.thepit.util;
 
 import com.ixbob.thepit.Main;
+import com.ixbob.thepit.config.PitConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
@@ -71,9 +72,11 @@ public class Utils {
     }
 
     public static boolean isInLobbyArea(Location location) {
-        return (Main.lobbyAreaFromPosList.get(0) <= location.getX() && location.getX() <= Main.lobbyAreaToPosList.get(0))
-                && (Main.lobbyAreaFromPosList.get(1) <= location.getY() && location.getY() <= Main.lobbyAreaToPosList.get(1))
-                && (Main.lobbyAreaFromPosList.get(2) <= location.getZ() && location.getZ() <= Main.lobbyAreaToPosList.get(2));
+        Location lobbyAreaFromPos = PitConfig.getInstance().getLobbyAreaFromLoc();
+        Location lobbyAreaToPos = PitConfig.getInstance().getLobbyAreaToLoc();
+        return (lobbyAreaFromPos.getX() <= location.getX() && location.getX() <= lobbyAreaToPos.getX())
+                && (lobbyAreaFromPos.getY() <= location.getY() && location.getY() <= lobbyAreaToPos.getY())
+                && (lobbyAreaFromPos.getZ() <= location.getZ() && location.getZ() <= lobbyAreaToPos.getZ());
     }
 
     public static int getInventoryIndex(int row, int column) {

@@ -72,8 +72,6 @@ public class OnPlayerJoinListener implements Listener {
                 genPlayerDataBlock(taskPlayer);
                 PlayerUtils.updateDisplayName(taskPlayer);
 
-
-
                 //读取并设置玩家物品栏
                 @SuppressWarnings("unchecked")
                 ArrayList<ArrayList<?>> storedHotBarItemList = (ArrayList<ArrayList<?>>) mongoDB.findByUUID(playerUUID).get("HotBarItemList");

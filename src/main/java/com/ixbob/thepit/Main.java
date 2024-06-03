@@ -5,10 +5,11 @@ import com.ixbob.thepit.enums.CustomBasicToolEnum;
 import com.ixbob.thepit.enums.CustomSkullEnum;
 import com.ixbob.thepit.enums.DropItemEnum;
 import com.ixbob.thepit.event.*;
+import com.ixbob.thepit.event.citizens.OnCitizensEnableListener;
+import com.ixbob.thepit.event.citizens.OnNPCRightClickListener;
 import com.ixbob.thepit.util.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -17,22 +18,19 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Main extends JavaPlugin {
     private static Plugin instance;
     private static MongoDB mongoDB;
-    private final FileConfiguration config = getConfig();
     public static Map<Player, PlayerDataBlock> playerDataMap = new HashMap<>();
     public static Location spawnLocation;
-    public static List<Integer> lobbyAreaFromPosList;
-    public static List<Integer> lobbyAreaToPosList;
     public static PlayerGUIManager GUIManager;
     public static TaskManager taskManager;
 
     @Override
     public void onEnable() {
+        this.saveDefaultConfig();
         Main.instance = this;
 
         spawnLocation = new Location(Bukkit.getWorlds().get(0), -8, 153, -5);
@@ -43,10 +41,6 @@ public class Main extends JavaPlugin {
         CustomSkullEnum.init();
         CustomBasicToolEnum.init();
         DropItemEnum.init();
-
-        this.saveDefaultConfig();
-        lobbyAreaFromPosList = config.getIntegerList("lobby_area.from");
-        lobbyAreaToPosList = config.getIntegerList("lobby_area.to");
 
         GUIManager = PlayerGUIManager.getInstance();
         taskManager = TaskManager.getInstance();
@@ -88,10 +82,12 @@ public class Main extends JavaPlugin {
                 new OnPlayerConsumeItemListener(),
                 new OnPlayerSwapHandItemsListener(),
                 new OnPlayerDropItemListener(),
-                new OnPlayerPickupItemListener(), // 请确认这个监听器类名是否正确
+                new OnPlayerPickupItemListener(),
                 new OnPlayerPlaceBlockListener(),
                 new OnPlayerBreakBlockListener(),
-                new OnItemDespawnListener()
+                new OnItemDespawnListener(),
+                new OnCitizensEnableListener(),
+                new OnNPCRightClickListener()
         );
     }
 

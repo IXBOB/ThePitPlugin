@@ -29,6 +29,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.32'
     annotationProcessor 'org.projectlombok:lombok:1.18.32'
     compileOnly 'com.github.decentsoftware-eu:decentholograms:2.8.8'
+    compileOnly files('lib/Citizens-2.0.32-b3124.jar')
 }
 
 shadowJar {
