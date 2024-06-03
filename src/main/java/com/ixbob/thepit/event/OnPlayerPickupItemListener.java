@@ -6,8 +6,8 @@ import com.ixbob.thepit.PlayerDataBlock;
 import com.ixbob.thepit.enums.DropItemEnum;
 import com.ixbob.thepit.enums.gui.talent.GUITalentItemEnum;
 import com.ixbob.thepit.task.handler.RandomGoldIngotSpawnSingleTaskHandler;
+import com.ixbob.thepit.util.PlayerUtils;
 import com.ixbob.thepit.util.TalentCalcuUtils;
-import com.ixbob.thepit.util.Utils;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
@@ -64,7 +64,7 @@ public class OnPlayerPickupItemListener implements Listener {
     }
 
     private void pickupGoldIngot(Player player, int addPoint) {
-        Utils.addCoin(player, addPoint);
+        PlayerUtils.addCoin(player, addPoint);
         player.sendMessage(String.format(LangLoader.get("player_pickup_coin_message"), addPoint));
         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
     }

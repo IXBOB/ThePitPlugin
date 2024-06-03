@@ -1,13 +1,8 @@
 package com.ixbob.thepit.util;
 
 import com.ixbob.thepit.Main;
-import com.ixbob.thepit.MongoDB;
-import com.ixbob.thepit.PlayerDataBlock;
-import com.ixbob.thepit.enums.gui.talent.GUITalentItemEnum;
-import com.ixbob.thepit.event.custom.*;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
-import com.mongodb.DBObject;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -21,50 +16,9 @@ import org.bukkit.inventory.ItemStack;
 import java.util.*;
 
 public class Utils {
-    private static final MongoDB mongoDB = Main.getDB();
-    public static void storePlayerInventoryData(Player player) {
-        UUID playerUUID = player.getUniqueId();
-        DBObject dataDBObj = mongoDB.findByUUID(playerUUID);
-        ArrayList<ArrayList<?>> hotBarItemList = new ArrayList<>(Collections.nCopies(9 ,null));
-        ArrayList<ArrayList<?>> inventoryItemList = new ArrayList<>(Collections.nCopies(27 ,null));
-        ArrayList<ArrayList<?>> armorItemList = new ArrayList<>(Collections.nCopies(4 ,null));
-        for (int i = 0; i <= 8; i++) {
-            ItemStack indexItem = player.getInventory().getItem(i);
-            if (indexItem != null) {
-                hotBarItemList.set(i, new ArrayList<>(Arrays.asList(indexItem.getType().name(), indexItem.getAmount(), readItemExtraData(indexItem))));
-            }
-        }
-        for (int i = 0; i <= 26; i++) {
-            ItemStack indexItem = player.getInventory().getItem(i+9);
-            if (indexItem != null) {
-                inventoryItemList.set(i, new ArrayList<>(Arrays.asList(indexItem.getType().name(), indexItem.getAmount(), readItemExtraData(indexItem))));
-            }
-        }
-        for (int i = 0; i <= 3; i++) {
-            ItemStack indexItem = player.getInventory().getArmorContents()[3 - i];  //默认i=0:脚，3-i:从头上往脚下读
-            if (indexItem != null) {
-                armorItemList.set(i, new ArrayList<>(Arrays.asList(indexItem.getType().name(), indexItem.getAmount(), readItemExtraData(indexItem))));
-            }
-        }
-
-        dataDBObj.put("HotBarItemList", hotBarItemList);
-        dataDBObj.put("InventoryItemList", inventoryItemList);
-        dataDBObj.put("ArmorItemList", armorItemList);
-        mongoDB.updateDataByUUID(dataDBObj, playerUUID);
-    }
 
     public static ArrayList<String> readItemExtraData(ItemStack itemStack) {
         return ItemExtraDataReader.readFromItem(itemStack);
-    }
-
-    public static String getPitDisplayName(Player player) {
-        PlayerDataBlock playerData = Main.getPlayerDataBlock(player);
-        int rank = playerData.getRank();
-        int level = playerData.getLevel();
-        String prefix;
-        ChatColor color = getChatColorByLevel(level);
-        prefix = getLevelStrWithStyle(rank, level);
-        return prefix + color + player.getName() + ChatColor.RESET;
     }
 
     public static String getLevelStrWithStyle(int rank, int level) {
@@ -77,7 +31,7 @@ public class Utils {
         }
     }
 
-    private static ChatColor getChatColorByLevel(int level) {
+    public static ChatColor getChatColorByLevel(int level) {
         ChatColor color;
         if (level <= 10) {
             color = ChatColor.GRAY;
@@ -119,54 +73,6 @@ public class Utils {
         }
 
         return result.toString();
-    }
-
-    public static void addXp(Player player, double addXp) {
-        if (!player.isOnline()) {
-            return;
-        }
-        PlayerDataBlock playerData = Main.getPlayerDataBlock(player);
-        double originXp = playerData.getThisLevelOwnXp();
-
-        PlayerOwnXpModifiedEvent modifyXpEvent = new PlayerOwnXpModifiedEvent(player, originXp, addXp);
-        Bukkit.getPluginManager().callEvent(modifyXpEvent);
-    }
-
-    public static void addCoin(Player player, double addCoin) {
-        if (!player.isOnline()) {
-            return;
-        }
-        PlayerDataBlock playerData = Main.getPlayerDataBlock(player);
-        double originCoin = playerData.getCoinAmount();
-
-        PlayerOwnCoinModifiedEvent modifyCoinEvent = new PlayerOwnCoinModifiedEvent(player, originCoin, addCoin);
-        Bukkit.getPluginManager().callEvent(modifyCoinEvent);
-    }
-
-    public static void setBattleState(Player player, boolean battleState) {
-        PlayerBattleStateChangeEvent playerBattleStateChangeEvent = new PlayerBattleStateChangeEvent(player, battleState);
-        Bukkit.getPluginManager().callEvent(playerBattleStateChangeEvent);
-    }
-
-    public static void setTypedSpawn(Player player, boolean typedSpawn) {
-        PlayerTypedSpawnChangeEvent playerTypedSpawnChangeEvent = new PlayerTypedSpawnChangeEvent(player, typedSpawn);
-        Bukkit.getPluginManager().callEvent(playerTypedSpawnChangeEvent);
-    }
-
-    public static void setTalentLevel(Player player, int id, int level) {
-        PlayerTalentLevelChangeEvent playerTalentLevelChangeEvent = new PlayerTalentLevelChangeEvent(player, id, level);
-        Bukkit.getPluginManager().callEvent(playerTalentLevelChangeEvent);
-    }
-
-    public static void changeEquippedTalent(Player player, int index, GUITalentItemEnum talentItem, boolean equipped) {
-        PlayerEquippedTalentChangeEvent playerEquippedTalentChangeEvent = new PlayerEquippedTalentChangeEvent(player, index, talentItem, equipped);
-        Bukkit.getPluginManager().callEvent(playerEquippedTalentChangeEvent);
-    }
-
-    public static void updateDisplayName(Player player) {
-        String displayName = getPitDisplayName(player);
-        player.setDisplayName(displayName);
-        player.setPlayerListName(displayName);
     }
 
     public static boolean isInLobbyArea(Location location) {

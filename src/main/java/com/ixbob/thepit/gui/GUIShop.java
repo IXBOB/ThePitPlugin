@@ -1,13 +1,16 @@
 package com.ixbob.thepit.gui;
 
-import com.ixbob.thepit.*;
+import com.ixbob.thepit.LangLoader;
+import com.ixbob.thepit.Main;
+import com.ixbob.thepit.Mth;
+import com.ixbob.thepit.PlayerDataBlock;
 import com.ixbob.thepit.enums.gui.GUIGridTypeEnum;
-import com.ixbob.thepit.enums.gui.shop.GUIShopItemEnum;
 import com.ixbob.thepit.enums.gui.GUISystemItemEnum;
+import com.ixbob.thepit.enums.gui.shop.GUIShopItemEnum;
 import com.ixbob.thepit.enums.gui.shop.ShopGivingItemEnum;
 import com.ixbob.thepit.util.GUIUtils;
+import com.ixbob.thepit.util.PlayerUtils;
 import com.ixbob.thepit.util.ShopUtils;
-import com.ixbob.thepit.util.Utils;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -73,7 +76,7 @@ public class GUIShop extends AbstractGUI {
         double needCoinAmount = clickedShopItem.getNeedCoinAmount();
         if (ownCoinAmount >= needCoinAmount) {
             //购买成功
-            Utils.addCoin(player, -needCoinAmount);
+            PlayerUtils.addCoin(player, -needCoinAmount);
             player.sendMessage(String.format(LangLoader.get("shop_purchase_success"), clickedShopItem.getDisplayName()));
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
             switch (clickedShopItem) {

@@ -2,6 +2,7 @@ package com.ixbob.thepit.task;
 
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.PlayerDataBlock;
+import com.ixbob.thepit.util.PlayerUtils;
 import com.ixbob.thepit.util.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -22,7 +23,7 @@ public class BattleStateCoolCountDowner implements Runnable{
     public void run() {
         timeLeft -= 0.05f;
         if (timeLeft < 0) {
-            Utils.setBattleState(player, false);
+            PlayerUtils.setBattleState(player, false);
             cancel();
             return;
         }

@@ -128,10 +128,10 @@ public class OnEntityDamageEntityListener implements Listener {
                     .append(LangLoader.get("damage_show_heart_actionbar_extra").repeat(
                             absorptionHealthAfter > 0 ? (int) Math.ceil(absorptionHealthAfter / 2) : 0
                     ));
-            damager.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Utils.getPitDisplayName(damagedPlayer) + " " + actionbarBuilder));
+            damager.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(PlayerUtils.getPitDisplayName(damagedPlayer) + " " + actionbarBuilder));
         }
         else {
-            damager.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(String.format(LangLoader.get("damage_kill_show_player_info"), Utils.getPitDisplayName(damagedPlayer))));
+            damager.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(String.format(LangLoader.get("damage_kill_show_player_info"), PlayerUtils.getPitDisplayName(damagedPlayer))));
         }
 
         //若被击杀的玩家受到的伤害足以导致死亡
@@ -143,15 +143,15 @@ public class OnEntityDamageEntityListener implements Listener {
 
     private void onPlayerKillAnother(Player damagedPlayer, Player damager) {
         double killAddXp = (10 + (Math.random() * 15)) * (1 + Main.getPlayerDataBlock(damagedPlayer).getConsecutiveKillAmount());
-        Utils.addXp(damager, killAddXp);
+        PlayerUtils.addXp(damager, killAddXp);
         double killAddCoin = (5 + (Math.random() * 10)) * (1 + Main.getPlayerDataBlock(damagedPlayer).getConsecutiveKillAmount());
-        Utils.addCoin(damager, killAddCoin);
+        PlayerUtils.addCoin(damager, killAddCoin);
 
         if (damagerDataBlock.getEquippedNormalTalentList().contains(GUITalentItemEnum.FLEXIBLE_TACTICS.getId())) {
             int id = GUITalentItemEnum.FLEXIBLE_TACTICS.getId();
             int level = damagedPlayerDataBlock.getNormalTalentLevelList().get(id);
             float addPoint = TalentCalcuUtils.getAddPointValue(id, level);
-            Utils.addCoin(damager, killAddCoin * addPoint * 0.01);
+            PlayerUtils.addCoin(damager, killAddCoin * addPoint * 0.01);
         }
 
         damager.playSound(damager.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
@@ -193,9 +193,9 @@ public class OnEntityDamageEntityListener implements Listener {
         }
 
         //广播消息不广播给damager和damagedPlayer
-        String broadcastMes = String.format(LangLoader.get("player_kill_other_message_broadcast"), Utils.getPitDisplayName(damager), Utils.getPitDisplayName(damagedPlayer));
-        String toDamagerMes = String.format(String.format(LangLoader.get("player_kill_other_message_to_damager"), Utils.getPitDisplayName(damagedPlayer))) + " " + String.format(LangLoader.get("player_get_xp_message"), Mth.formatDecimalWithFloor(killAddXp, 2)) + " " + String.format(LangLoader.get("player_get_coin_message"), Mth.formatDecimalWithFloor(killAddCoin, 1));
-        String toDamagedPlayerMes = String.format(LangLoader.get("player_kill_other_message_to_damaged_player"), Utils.getPitDisplayName(damager));
+        String broadcastMes = String.format(LangLoader.get("player_kill_other_message_broadcast"), PlayerUtils.getPitDisplayName(damager), PlayerUtils.getPitDisplayName(damagedPlayer));
+        String toDamagerMes = String.format(String.format(LangLoader.get("player_kill_other_message_to_damager"), PlayerUtils.getPitDisplayName(damagedPlayer))) + " " + String.format(LangLoader.get("player_get_xp_message"), Mth.formatDecimalWithFloor(killAddXp, 2)) + " " + String.format(LangLoader.get("player_get_coin_message"), Mth.formatDecimalWithFloor(killAddCoin, 1));
+        String toDamagedPlayerMes = String.format(LangLoader.get("player_kill_other_message_to_damaged_player"), PlayerUtils.getPitDisplayName(damager));
 
         for (Player onlinePl : Bukkit.getOnlinePlayers()) {
             if ( ! (Objects.equals(onlinePl.getName(), damager.getName()) || Objects.equals(onlinePl.getName(), damagedPlayer.getName()))  ) {
@@ -218,12 +218,12 @@ public class OnEntityDamageEntityListener implements Listener {
             String displayDamagePercent = Mth.formatDecimalWithFloor(damagePercent * 100, 2); // 显示成百分数
             double helperAddXp = killAddXp * damagePercent;
             double helperAddCoin = killAddCoin * damagePercent;
-            Utils.addXp(helper, helperAddXp);
-            Utils.addCoin(helper, helperAddCoin);
+            PlayerUtils.addXp(helper, helperAddXp);
+            PlayerUtils.addCoin(helper, helperAddCoin);
 
             PlayerDataBlock helperDataBlock = Main.getPlayerDataBlock(helper);
             if (helperDataBlock.getEquippedNormalTalentList().contains(GUITalentItemEnum.FLEXIBLE_TACTICS.getId())) {
-                Utils.addCoin(helper, 2);
+                PlayerUtils.addCoin(helper, 2);
                 helperAddCoin += 2;
                 for (Player damagedPl : damagedPlayerDataBlock.getDamagedByArrowPlayers()) {
                     if (damagedPl.isOnline()) {
@@ -233,7 +233,7 @@ public class OnEntityDamageEntityListener implements Listener {
                             int level = damagedPlayerDataBlock.getNormalTalentLevelList().get(id);
                             float addPoint = TalentCalcuUtils.getAddPointValue(id, level);
                             double addCoin = helperAddCoin * addPoint * 0.01;
-                            Utils.addCoin(helper, addCoin);
+                            PlayerUtils.addCoin(helper, addCoin);
                             helperAddCoin += addCoin;
                         }
                     }
@@ -242,15 +242,15 @@ public class OnEntityDamageEntityListener implements Listener {
             String displayHelperAddXp = Mth.formatDecimalWithFloor(helperAddXp, 2);
             String displayHelperAddCoin = Mth.formatDecimalWithFloor(helperAddCoin, 2);
             helper.sendMessage(
-                    String.format(String.format(String.format(LangLoader.get("player_help_kill_other_message_to_helper"), Utils.getPitDisplayName(damagedPlayer), displayDamagePercent)
+                    String.format(String.format(String.format(LangLoader.get("player_help_kill_other_message_to_helper"), PlayerUtils.getPitDisplayName(damagedPlayer), displayDamagePercent)
                             + LangLoader.get("player_get_xp_message"), displayHelperAddXp) + " "
                             + LangLoader.get("player_get_coin_message"), displayHelperAddCoin));
         }
 
         damagedPlayerDataBlock.getPlayerGetDamagedHistory().clear();
         PlayerUtils.setMostBasicKit(damagedPlayer, true);
-        Utils.setBattleState(damagedPlayer, false);
-        Utils.setTypedSpawn(damagedPlayer, false);
+        PlayerUtils.setBattleState(damagedPlayer, false);
+        PlayerUtils.setTypedSpawn(damagedPlayer, false);
         Utils.backToLobby(damagedPlayer);
     }
 

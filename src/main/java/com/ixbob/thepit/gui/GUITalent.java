@@ -8,6 +8,7 @@ import com.ixbob.thepit.enums.gui.GUIGridTypeEnum;
 import com.ixbob.thepit.enums.gui.GUISystemItemEnum;
 import com.ixbob.thepit.enums.gui.talent.GUITalentItemEnum;
 import com.ixbob.thepit.util.GUIUtils;
+import com.ixbob.thepit.util.PlayerUtils;
 import com.ixbob.thepit.util.TalentUtils;
 import com.ixbob.thepit.util.Utils;
 import lombok.NonNull;
@@ -89,7 +90,7 @@ public class GUITalent extends AbstractGUI {
     }
 
     public void setEquipTalent(int index, GUITalentItemEnum talentItem, boolean isEquipped) {
-        Utils.changeEquippedTalent(player, index, talentItem, isEquipped);
+        PlayerUtils.changeEquippedTalent(player, index, talentItem, isEquipped);
         if (isEquipped) {
             player.sendMessage(String.format(LangLoader.get("talent_equip_success_message"), talentItem.getDisplayName(), TalentUtils.getEquipGridIdByInventoryIndex(index) + 1)); //!!!  装备天赋显示的槽位比代码内槽位id + 1
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
@@ -138,7 +139,7 @@ public class GUITalent extends AbstractGUI {
 
         ItemStack empty = new ItemStack(Material.AIR);
         for (int index = 39; index <= 41; index++) {
-            int needLevel = (index - 38) * 15; //每15级解锁一个天赋槽位
+            int needLevel = 10 + (index - 39) * 20; //每15级解锁一个天赋槽位
             int needPrestigeLevel = 0;
             if (playerPrestigeLevel < needPrestigeLevel || (playerPrestigeLevel == needPrestigeLevel && playerLevel < needLevel)) {
                 ItemStack lockedItem = GUISystemItemEnum.TALENT_WALL_EQUIP_GRID_LOCKED.getItemStack(new ArrayList<>(Arrays.asList(Utils.getLevelStrWithStyle(0, needLevel))));
@@ -201,15 +202,15 @@ public class GUITalent extends AbstractGUI {
         if (ownCoinAmount >= needCoinAmount) {
             //购买成功
             int newLevel = currentTalentLevel + 1;
-            Utils.setTalentLevel(player, id, newLevel);
+            PlayerUtils.setTalentLevel(player, id, newLevel);
             boolean equipped = clickIndex >= 39 && clickIndex <= 41;
             if (equipped) { //升级时，如果升级的物品已装备，那么执行更改装备的天赋即Utils.changeEquippedTalent。如果未装备，直接TalentUtils.setTalentItem即可。
-                Utils.changeEquippedTalent(player, clickIndex, upgradeTalentItemType, true);
+                PlayerUtils.changeEquippedTalent(player, clickIndex, upgradeTalentItemType, true);
                 TalentUtils.setTalentItem(inventory, clickIndex, upgradeTalentItemType, talentLevelList.get(id), true, talentLevelList.get(id) >= upgradeTalentItemType.getMaxTalentLevel());
             } else {
                 TalentUtils.setTalentItem(inventory, clickIndex, upgradeTalentItemType, talentLevelList.get(id), false, talentLevelList.get(id) >= upgradeTalentItemType.getMaxTalentLevel());
             }
-            Utils.addCoin(player, -needCoinAmount);
+            PlayerUtils.addCoin(player, -needCoinAmount);
             player.sendMessage(String.format(LangLoader.get("talent_upgrade_success_message"), upgradeTalentItemType.getDisplayName(), newLevel));
             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 2);
             return;

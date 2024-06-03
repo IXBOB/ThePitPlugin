@@ -6,6 +6,7 @@ import com.ixbob.thepit.MongoDB;
 import com.ixbob.thepit.PlayerDataBlock;
 import com.ixbob.thepit.enums.ItemExtraDataEnum;
 import com.ixbob.thepit.util.ItemExtraDataApplier;
+import com.ixbob.thepit.util.PlayerUtils;
 import com.ixbob.thepit.util.Utils;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -68,7 +69,7 @@ public class OnPlayerJoinListener implements Listener {
             }
             Bukkit.getServer().getScheduler().runTask(Main.getInstance(), () -> {
                 genPlayerDataBlock(taskPlayer);
-                Utils.updateDisplayName(taskPlayer);
+                PlayerUtils.updateDisplayName(taskPlayer);
                 //读取并设置玩家物品栏
                 @SuppressWarnings("unchecked")
                 ArrayList<ArrayList<?>> storedHotBarItemList = (ArrayList<ArrayList<?>>) mongoDB.findByUUID(playerUUID).get("HotBarItemList");

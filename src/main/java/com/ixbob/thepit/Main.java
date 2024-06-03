@@ -8,7 +8,7 @@ import com.ixbob.thepit.enums.CustomBasicToolEnum;
 import com.ixbob.thepit.enums.CustomSkullEnum;
 import com.ixbob.thepit.enums.DropItemEnum;
 import com.ixbob.thepit.event.*;
-import com.ixbob.thepit.util.Utils;
+import com.ixbob.thepit.util.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -100,7 +100,7 @@ public class Main extends JavaPlugin {
     @Override
     public void onDisable() {
         for (Player player : Bukkit.getOnlinePlayers()) {
-            Utils.storePlayerInventoryData(player);
+            PlayerUtils.storePlayerInventoryData(player);
         }
         getTaskManager().getPlacedBlockTaskHandler().removeAll();
     }

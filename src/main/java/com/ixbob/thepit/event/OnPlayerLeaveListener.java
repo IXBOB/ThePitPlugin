@@ -16,7 +16,7 @@ public class OnPlayerLeaveListener implements Listener {
             PlayerUtils.setMostBasicKit(player, true);
             Utils.backToLobby(player);
         }
-        Utils.storePlayerInventoryData(player);
+        PlayerUtils.storePlayerInventoryData(player);
         Main.playerDataMap.remove(player);
     }
 }
