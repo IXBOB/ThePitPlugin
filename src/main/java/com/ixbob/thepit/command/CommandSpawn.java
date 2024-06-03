@@ -1,10 +1,10 @@
 package com.ixbob.thepit.command;
 
+import com.ixbob.thepit.LangLoader;
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.PlayerDataBlock;
 import com.ixbob.thepit.event.custom.PlayerBattleStateChangeEvent;
-import com.ixbob.thepit.LangLoader;
-import com.ixbob.thepit.util.Utils;
+import com.ixbob.thepit.util.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
@@ -50,7 +50,7 @@ public class CommandSpawn implements CommandExecutor {
     private void back(Player player, boolean isClear) {
         Main.getPlayerDataBlock(player).getPlayerGetDamagedHistory().clear();
         player.teleport(Main.spawnLocation);
-        Utils.setMostBasicKit(player, isClear);
+        PlayerUtils.setMostBasicKit(player, isClear);
         player.sendMessage(LangLoader.get("command_spawn_success"));
         player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
         player.setFoodLevel(20);

@@ -1,6 +1,7 @@
 package com.ixbob.thepit.event;
 
 import com.ixbob.thepit.Main;
+import com.ixbob.thepit.util.PlayerUtils;
 import com.ixbob.thepit.util.Utils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,7 +13,7 @@ public class OnPlayerLeaveListener implements Listener {
     public void onPlayerLeave(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         if (Main.getPlayerDataBlock(player).getBattleState()) {
-            Utils.setMostBasicKit(player, true);
+            PlayerUtils.setMostBasicKit(player, true);
             Utils.backToLobby(player);
         }
         Utils.storePlayerInventoryData(player);

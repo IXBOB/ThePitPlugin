@@ -10,6 +10,7 @@ import com.ixbob.thepit.enums.PitItemEnum;
 import com.ixbob.thepit.enums.gui.talent.TalentGivingItemEnum;
 import com.ixbob.thepit.event.custom.PlayerBattleStateChangeEvent;
 import com.ixbob.thepit.util.NMSUtils;
+import com.ixbob.thepit.util.PlayerUtils;
 import com.ixbob.thepit.util.TalentCalcuUtils;
 import com.ixbob.thepit.util.Utils;
 import net.md_5.bungee.api.ChatMessageType;
@@ -221,10 +222,7 @@ public class OnEntityDamageEntityListener implements Listener {
             Utils.addCoin(helper, helperAddCoin);
 
             PlayerDataBlock helperDataBlock = Main.getPlayerDataBlock(helper);
-            System.out.println("1");
-            System.out.println(helperDataBlock.getEquippedNormalTalentList());
             if (helperDataBlock.getEquippedNormalTalentList().contains(GUITalentItemEnum.FLEXIBLE_TACTICS.getId())) {
-                System.out.println("true");
                 Utils.addCoin(helper, 2);
                 helperAddCoin += 2;
                 for (Player damagedPl : damagedPlayerDataBlock.getDamagedByArrowPlayers()) {
@@ -235,7 +233,6 @@ public class OnEntityDamageEntityListener implements Listener {
                             int level = damagedPlayerDataBlock.getNormalTalentLevelList().get(id);
                             float addPoint = TalentCalcuUtils.getAddPointValue(id, level);
                             double addCoin = helperAddCoin * addPoint * 0.01;
-                            System.out.println("addCoin: " + addCoin);
                             Utils.addCoin(helper, addCoin);
                             helperAddCoin += addCoin;
                         }
@@ -250,16 +247,11 @@ public class OnEntityDamageEntityListener implements Listener {
                             + LangLoader.get("player_get_coin_message"), displayHelperAddCoin));
         }
 
-        deathBackToLobby(damagedPlayer);
-    }
-
-    private void deathBackToLobby(Player player) {
-        PlayerDataBlock dataBlock = Main.getPlayerDataBlock(player);
-        dataBlock.getPlayerGetDamagedHistory().clear();
-        Utils.setMostBasicKit(player, true);
-        Utils.setBattleState(player, false);
-        Utils.setTypedSpawn(player, false);
-        Utils.backToLobby(player);
+        damagedPlayerDataBlock.getPlayerGetDamagedHistory().clear();
+        PlayerUtils.setMostBasicKit(damagedPlayer, true);
+        Utils.setBattleState(damagedPlayer, false);
+        Utils.setTypedSpawn(damagedPlayer, false);
+        Utils.backToLobby(damagedPlayer);
     }
 
 
