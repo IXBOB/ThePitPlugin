@@ -2,7 +2,7 @@ system_error_message: "§c§l插件正产生严重错误！请将上述聊天信
 
 command_help_message_line1: "§e此服务器正在运行 天坑乱斗插件, 作者 IXBOB"
 command_help_message_line2: "§7支持此插件的开发！ afdian.net/a/IXBOB"
-command_help_message_line3: "赞助者名单: §aRuoyanzz, 咲小宝, §rBilibili_库巴大人"
+command_help_message_line3: "赞助者名单: §aRuoyanzz, 咲小宝,§r laiyipianVC, Bilibili_库巴大人"
 
 npc_talent_name: "天赋"
 npc_shop_name: "商店"
