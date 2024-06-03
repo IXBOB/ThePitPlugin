@@ -12,10 +12,20 @@ public class MongoDB {
     private DBCollection collection;
     private static DB mcserverdb;
     private static MongoClient client;
-    public MongoDB(String collectionName) {
-        collection = mcserverdb.getCollection(collectionName);
+    private static MongoDB instance;
+
+    private MongoDB() {
     }
-    public MongoDB() {}
+
+    public static MongoDB getInstance() {
+        if (instance == null) {
+            instance = new MongoDB();
+            instance.connect("127.0.0.1", 27017, Main.getInstance());
+            instance.setCollection("ThePit_IXBOB");
+        }
+        return instance;
+    }
+
     public void setCollection(String collectionName) {
         collection = mcserverdb.getCollection(collectionName);
     }

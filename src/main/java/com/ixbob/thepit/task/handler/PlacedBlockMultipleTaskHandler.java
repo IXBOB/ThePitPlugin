@@ -13,7 +13,7 @@ public class PlacedBlockMultipleTaskHandler extends AbstractMultipleTaskHandler 
      */
     public void newDefaultTask(int placedBlockAliveTime, Location placedBlockLocation) {
         PlacedBlockRemoveRunnable runnable = new PlacedBlockRemoveRunnable(placedBlockLocation);
-        int taskID = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), runnable, placedBlockAliveTime);
+        int taskID = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), runnable, placedBlockAliveTime);
         runnable.setTaskID(taskID);
         add(taskID, runnable);
     }

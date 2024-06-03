@@ -61,12 +61,12 @@ public class OnPlayerJoinListener implements Listener {
         player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(200);
         player.getInventory().clear();
         player.sendTitle(LangLoader.get("join_loading_title"), LangLoader.get("join_loading_subtitle"), 10, 60, 10);
-        Bukkit.getServer().getScheduler().runTaskAsynchronously(Main.getPlugin(), () -> {
+        Bukkit.getServer().getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
             Player taskPlayer = player;
             if (!mongoDB.isFindByUUIDExist(playerUUID)) {
                  createDBData(taskPlayer);
             }
-            Bukkit.getServer().getScheduler().runTask(Main.getPlugin(), () -> {
+            Bukkit.getServer().getScheduler().runTask(Main.getInstance(), () -> {
                 genPlayerDataBlock(taskPlayer);
                 Utils.updateDisplayName(taskPlayer);
                 //读取并设置玩家物品栏

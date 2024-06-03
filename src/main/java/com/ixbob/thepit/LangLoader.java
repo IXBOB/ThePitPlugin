@@ -10,7 +10,7 @@ import java.util.HashMap;
 public class LangLoader {
 
     public static HashMap<String, String> translationMap = new HashMap<>();
-    public static Plugin plugin = Main.getPlugin();
+    public static Plugin plugin = Main.getInstance();
 
     public static void init () {
         plugin.saveResource("languages/zh_CN.yml", true);

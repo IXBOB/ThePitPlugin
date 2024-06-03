@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Main extends JavaPlugin {
-    private static Plugin plugin;
+    private static Plugin instance;
     private static MongoDB mongoDB;
     private final FileConfiguration config = getConfig();
     public static Map<Player, PlayerDataBlock> playerDataMap = new HashMap<>();
@@ -36,14 +36,11 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        Main.plugin = this;
+        Main.instance = this;
 
         spawnLocation = new Location(Bukkit.getWorlds().get(0), -8, 153, -5);
 
-        MongoDB mongoDB = new MongoDB();
-        mongoDB.connect("127.0.0.1", 27017, this);
-        mongoDB.setCollection("ThePit_IXBOB");
-        Main.mongoDB = mongoDB;
+        Main.mongoDB = MongoDB.getInstance();
 
         LangLoader.init();
         CustomSkullEnum.init();
@@ -54,8 +51,8 @@ public class Main extends JavaPlugin {
         lobbyAreaFromPosList = config.getIntegerList("lobby_area.from");
         lobbyAreaToPosList = config.getIntegerList("lobby_area.to");
 
-        GUIManager = new PlayerGUIManager();
-        taskManager = new TaskManager();
+        GUIManager = PlayerGUIManager.getInstance();
+        taskManager = TaskManager.getInstance();
 
         for (Entity entity : Bukkit.getWorlds().get(0).getEntities()) {
             if (entity instanceof Item) {
@@ -114,8 +111,8 @@ public class Main extends JavaPlugin {
         }
     }
 
-    public static Plugin getPlugin() {
-        return plugin;
+    public static Plugin getInstance() {
+        return instance;
     }
 
     public static MongoDB getDB() {

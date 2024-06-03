@@ -11,7 +11,7 @@ public abstract class AbstractSingleTaskHandler {
     private boolean isPaused = false;
 
     public AbstractSingleTaskHandler(Runnable runnable, int firstDelay, int periodDelay) {
-        this.taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), runnable, firstDelay, periodDelay);
+        this.taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), runnable, firstDelay, periodDelay);
         this.runnable = runnable;
         this.firstDelay = firstDelay;
         this.periodDelay = periodDelay;
@@ -25,7 +25,7 @@ public abstract class AbstractSingleTaskHandler {
 
     //其他地方的事件触发resume
     public void resume() {
-        this.taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), runnable, firstDelay, periodDelay);
+        this.taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), runnable, firstDelay, periodDelay);
         isPaused = false;
     }
 

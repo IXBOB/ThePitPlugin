@@ -13,9 +13,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PlayerGUIManager {
+    private static PlayerGUIManager instance;
     private final Map<Player, AbstractGUI> playerOpeningCustomGUI = new HashMap<>();
 
-    public PlayerGUIManager() {}
+    private PlayerGUIManager() {}
+
+    public static PlayerGUIManager getInstance() {
+        if (instance == null) {
+            instance = new PlayerGUIManager();
+        }
+        return instance;
+    }
 
     public AbstractGUI getOpeningGUI(Player player) {
         return playerOpeningCustomGUI.get(player);

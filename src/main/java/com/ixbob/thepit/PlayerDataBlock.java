@@ -197,7 +197,7 @@ public class PlayerDataBlock {
         if (battleState) {
             if (battleStateCoolCountDowner == null) {
                 BattleStateCoolCountDowner countDowner = new BattleStateCoolCountDowner(20.0f, player);
-                int taskID = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), countDowner, 0, 1);
+                int taskID = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), countDowner, 0, 1);
                 countDowner.setTaskID(taskID);
                 battleStateCoolCountDowner = countDowner;
             }
@@ -214,7 +214,7 @@ public class PlayerDataBlock {
         if (state) {
             if (talentStrengthValidCountDowner == null) {
                 TalentStrengthValidCountDowner countDowner = new TalentStrengthValidCountDowner(7.0f, player);
-                int taskID = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), countDowner, 0, 1);
+                int taskID = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), countDowner, 0, 1);
                 countDowner.setTaskID(taskID);
                 talentStrengthValidCountDowner = countDowner;
                 updateScoreboardTalentStrength(true);
