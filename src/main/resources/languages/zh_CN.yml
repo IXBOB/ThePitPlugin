@@ -38,6 +38,8 @@ damage_show_heart_actionbar_damaged: "§c❤"
 damage_show_heart_actionbar_empty: "§7❤"
 damage_kill_show_player_info: "§a§l击杀！ §r%s"
 
+gui_open_failed: "§c等级不足！ 需要等级 %s"
+
 talent_gui_title: "管理天赋"
 talent_item_locked: "§r§c§o后面的区域， 以后再来探索吧"
 talent_item_has_equipped: "§r§c此天赋已被装备"

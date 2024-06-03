@@ -3,14 +3,14 @@ package com.ixbob.thepit;
 import com.ixbob.thepit.gui.AbstractGUI;
 import com.ixbob.thepit.gui.GUIShop;
 import com.ixbob.thepit.gui.GUITalent;
+import com.ixbob.thepit.util.Utils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 
 public class PlayerGUIManager {
     private static PlayerGUIManager instance;
@@ -32,13 +32,13 @@ public class PlayerGUIManager {
     public void openTalentGUI(Player player) {
         GUITalent gui = new GUITalent(player);
         addPlayerToHashMap(player, gui);
-        gui.display();
+        gui.display(LangLoader.get("talent_gui_title"));
     }
 
     public void openShopGUI(Player player) {
         GUIShop gui = new GUIShop(player);
         addPlayerToHashMap(player, gui);
-        gui.display();
+        gui.display(LangLoader.get("shop_gui_title"));
     }
 
     public void onCloseGUI(Player player) {
@@ -51,8 +51,10 @@ public class PlayerGUIManager {
             try {
                 throw new IllegalArgumentException("Player " + player + " has already opening a custom gui");
             } catch (IllegalArgumentException e) {
-                player.sendMessage(ChatColor.RED + (new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")).format(new Date()) + " " + e.getMessage() + " " + Arrays.toString(e.getStackTrace()));
+
+                player.sendMessage(ChatColor.RED + Utils.getFormattedNowTime() + " " + e.getMessage() + " " + Arrays.toString(e.getStackTrace()));
                 player.sendMessage(LangLoader.get("system_error_message"));
+                Main.getInstance().getLogger().log(Level.SEVERE, e.getMessage(), e);
             }
 
         }

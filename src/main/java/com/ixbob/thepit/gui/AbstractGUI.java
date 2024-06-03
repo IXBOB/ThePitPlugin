@@ -1,22 +1,33 @@
 package com.ixbob.thepit.gui;
 
+import com.ixbob.thepit.LangLoader;
+import com.ixbob.thepit.Main;
 import com.ixbob.thepit.enums.gui.GUIGridTypeEnum;
+import com.ixbob.thepit.util.Utils;
+import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
+import org.bukkit.inventory.Inventory;
 
 import java.util.ArrayList;
 
-public abstract class AbstractGUI {
-    private final Player player;
-    private final int size;
+public abstract class AbstractGUI implements OpenableGUI {
+    protected final Player player;
+    protected final int size;
+    private final int needLevel;
+    private final int needPrestigeLevel;
+    protected Inventory inventory;
     protected final ArrayList<Integer> leftButton;
     protected final ArrayList<Integer> rightButton;
     protected final ArrayList<Integer> leftMoveable;
     protected final ArrayList<Integer> rightMoveable;
 
-    public AbstractGUI(Player player, int size, ArrayList<Integer> leftButton, ArrayList<Integer> rightButton, ArrayList<Integer> leftMoveable, ArrayList<Integer> rightMoveable) {
+    public AbstractGUI(Player player, int size, int needLevel, int needPrestigeLevel, ArrayList<Integer> leftButton, ArrayList<Integer> rightButton, ArrayList<Integer> leftMoveable, ArrayList<Integer> rightMoveable) {
         this.player = player;
         this.size = size;
+        this.needLevel = needLevel;
+        this.needPrestigeLevel = needPrestigeLevel;
         this.leftButton = leftButton;
         this.rightButton = rightButton;
         this.leftMoveable = leftMoveable;
@@ -53,6 +64,34 @@ public abstract class AbstractGUI {
     }
 
     public void onClick(int index, ClickType clickType) {}
+
+    @Override
+    public void display(String title) {
+        int playerLevel = Main.getPlayerDataBlock(player).getLevel();
+        int playerPrestigeLevel = Main.getPlayerDataBlock(player).getPrestigeLevel();
+        if (playerPrestigeLevel < needPrestigeLevel || (playerPrestigeLevel == needPrestigeLevel && playerLevel < needLevel)) {
+            player.sendMessage(String.format(LangLoader.get("gui_open_failed"), Utils.getLevelStrWithStyle(needPrestigeLevel, needLevel)));
+            player.playSound(player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1, 1);
+            Main.getGUIManager().onCloseGUI(player);
+            return;
+        }
+        initFrame(title);
+        open();
+        initContent();
+    }
+
+    @Override
+    public void initFrame(String title) {
+        inventory = Bukkit.createInventory(player, size, title);
+    }
+
+    @Override
+    public void open() {
+        player.openInventory(inventory);
+    }
+
+    @Override
+    public void initContent() {}
 
     public Player getPlayer() {
         return player;

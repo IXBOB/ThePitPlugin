@@ -7,10 +7,8 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class Utils {
 
@@ -18,13 +16,13 @@ public class Utils {
         return ItemExtraDataReader.readFromItem(itemStack);
     }
 
-    public static String getLevelStrWithStyle(int rank, int level) {
+    public static String getLevelStrWithStyle(int prestigeLevel, int level) {
         ChatColor color = getChatColorByLevel(level);
-        if (rank == 0) {
+        if (prestigeLevel == 0) {
             return ChatColor.RESET + "[" + color + level + ChatColor.RESET + "]";
         }
         else {
-            return ChatColor.RESET + "[" + ChatColor.YELLOW + convertToRoman(rank) + ChatColor.RESET+ "-" + color + level + ChatColor.RESET +"]";
+            return ChatColor.RESET + "[" + ChatColor.YELLOW + convertToRoman(prestigeLevel) + ChatColor.RESET+ "-" + color + level + ChatColor.RESET +"]";
         }
     }
 
@@ -119,5 +117,15 @@ public class Utils {
             }
         }
         return playerHistoryList;
+    }
+
+    public static String getFormattedNowTime() {
+        Date now = new Date();
+        TimeZone tz = TimeZone.getTimeZone("GMT+8");
+        Calendar calendar = Calendar.getInstance(tz);
+        calendar.setTime(now);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.setTimeZone(tz);
+        return sdf.format(calendar.getTime());
     }
 }

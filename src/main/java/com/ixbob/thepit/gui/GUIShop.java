@@ -12,38 +12,16 @@ import com.ixbob.thepit.util.GUIUtils;
 import com.ixbob.thepit.util.PlayerUtils;
 import com.ixbob.thepit.util.ShopUtils;
 import lombok.NonNull;
-import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
-import org.bukkit.inventory.Inventory;
 
 import java.util.ArrayList;
 
-public class GUIShop extends AbstractGUI implements initGUI {
-    private static final int size = 54;
-    private Inventory inventory;
-    private final Player player;
+public class GUIShop extends AbstractGUI {
 
     public GUIShop(Player player) {
-        super(player, size, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
-        this.player = player;
-    }
-
-    public void display() {
-        initFrame();
-        open();
-        initContent();
-    }
-
-    @Override
-    public void initFrame() {
-        this.inventory = Bukkit.createInventory(player, size, LangLoader.get("shop_gui_title"));
-    }
-
-    @Override
-    public void open() {
-        player.openInventory(inventory);
+        super(player, 54, 0, 0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
     }
 
     @Override
