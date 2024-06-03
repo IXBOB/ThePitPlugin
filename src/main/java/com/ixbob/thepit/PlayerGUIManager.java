@@ -32,17 +32,13 @@ public class PlayerGUIManager {
     public void openTalentGUI(Player player) {
         GUITalent gui = new GUITalent(player);
         addPlayerToHashMap(player, gui);
-        gui.initFrame(player);
-        gui.open();
-        gui.initContent();
+        gui.display();
     }
 
     public void openShopGUI(Player player) {
         GUIShop gui = new GUIShop(player);
         addPlayerToHashMap(player, gui);
-        gui.initFrame(player);
-        gui.open();
-        gui.initContent();
+        gui.display();
     }
 
     public void onCloseGUI(Player player) {

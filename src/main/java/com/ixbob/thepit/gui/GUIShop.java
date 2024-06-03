@@ -20,24 +20,33 @@ import org.bukkit.inventory.Inventory;
 
 import java.util.ArrayList;
 
-public class GUIShop extends AbstractGUI {
+public class GUIShop extends AbstractGUI implements initGUI {
     private static final int size = 54;
     private Inventory inventory;
-    private Player player;
+    private final Player player;
 
     public GUIShop(Player player) {
         super(player, size, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
-    }
-
-    public void initFrame(Player player) {
-        this.inventory = Bukkit.createInventory(player, size, LangLoader.get("shop_gui_title"));
         this.player = player;
     }
 
+    public void display() {
+        initFrame();
+        open();
+        initContent();
+    }
+
+    @Override
+    public void initFrame() {
+        this.inventory = Bukkit.createInventory(player, size, LangLoader.get("shop_gui_title"));
+    }
+
+    @Override
     public void open() {
         player.openInventory(inventory);
     }
 
+    @Override
     public void initContent() {
         leftButton.clear();
         rightButton.clear();

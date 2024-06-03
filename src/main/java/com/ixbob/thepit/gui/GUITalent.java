@@ -23,81 +23,32 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class GUITalent extends AbstractGUI {
+public class GUITalent extends AbstractGUI implements initGUI{
     private static final int size = 54;
     private Inventory inventory;
-    private Player player;
+    private final Player player;
     private boolean movingState = false;
     private GUITalentItemEnum movingTalentItem;
 
     public GUITalent(Player player) {
         super(player, size, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
-    }
-
-    public void initFrame(Player player) {
-        this.inventory = Bukkit.createInventory(player, size, LangLoader.get("talent_gui_title"));
         this.player = player;
     }
 
-    public void open() {
-        player.openInventory(inventory);
+    public void display() {
+        initFrame();
+        open();
+        initContent();
     }
 
     @Override
-    public void onClick(int index, ClickType clickType) {
-        GUIGridTypeEnum type = getGridType(index, clickType);
-        if (type == GUIGridTypeEnum.RIGHT_BUTTON) {
-            //升级天赋
-            if ((index >= 10 && index <= 16) || (index >= 19 && index <= 25)) {
-                int talentItemId = TalentUtils.getNotEquippedTalentIdByInventoryIndex(index);
-                GUITalentItemEnum clickedTalentItem = TalentUtils.getGUITalentItemEnumById(talentItemId);
-                purchaseUpgrade(index, talentItemId, clickedTalentItem);
-            } else if (index >= 39 && index <= 41) {
-                int talentItemId = (int) Main.getPlayerDataBlock(player).getEquippedNormalTalentList().get(TalentUtils.getEquipGridIdByInventoryIndex(index));
-                GUITalentItemEnum clickedTalentItem = TalentUtils.getGUITalentItemEnumById(talentItemId);
-                purchaseUpgrade(index, talentItemId, clickedTalentItem);
-            }
-
-        } else if (type == GUIGridTypeEnum.LEFT_BUTTON) {
-            if (!movingState && index >= 39 && index <= 41) {
-                //移除天赋
-                PlayerDataBlock dataBlock = Main.getPlayerDataBlock(player);
-                ArrayList<?> equippedTalentList = dataBlock.getEquippedNormalTalentList();
-                GUITalentItemEnum clickTalentItem = TalentUtils.getGUITalentItemEnumById((int) equippedTalentList.get(TalentUtils.getEquipGridIdByInventoryIndex(index)));
-                setEquipTalent(index, clickTalentItem, false);
-                initContent();
-                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_HARP, 1, 1);
-            }
-
-            if (!movingState && ((index >= 10 && index <= 16) || (index >= 19 && index <= 25))) {
-                //进入装备天赋装填
-                movingTalentItem = TalentUtils.getGUITalentItemEnumById(TalentUtils.getNotEquippedTalentIdByInventoryIndex(index));
-                movingState = true;
-                initMovingContent(); //传入点击的index
-                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_HARP, 1, 1);
-            } else if (movingState) {
-                //装备天赋
-                if (index >= 39 && index <= 41) {
-                    setEquipTalent(index, movingTalentItem, true);
-                }
-                movingState = false;
-                initContent();
-            }
-        } else {
-            System.out.println("this is invalid");
-            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_HAT, 1, 1);
-        }
+    public void initFrame() {
+        this.inventory = Bukkit.createInventory(player, size, LangLoader.get("talent_gui_title"));
     }
 
-    public void setEquipTalent(int index, GUITalentItemEnum talentItem, boolean isEquipped) {
-        PlayerUtils.changeEquippedTalent(player, index, talentItem, isEquipped);
-        if (isEquipped) {
-            player.sendMessage(String.format(LangLoader.get("talent_equip_success_message"), talentItem.getDisplayName(), TalentUtils.getEquipGridIdByInventoryIndex(index) + 1)); //!!!  装备天赋显示的槽位比代码内槽位id + 1
-            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
-        } else {
-            player.sendMessage(String.format(LangLoader.get("talent_drop_success_message"), talentItem.getDisplayName()));
-        }
-
+    @Override
+    public void open() {
+        player.openInventory(inventory);
     }
 
     public void initContent() {
@@ -159,6 +110,63 @@ public class GUITalent extends AbstractGUI {
                 }
             }
         }
+    }
+
+    @Override
+    public void onClick(int index, ClickType clickType) {
+        GUIGridTypeEnum type = getGridType(index, clickType);
+        if (type == GUIGridTypeEnum.RIGHT_BUTTON) {
+            //升级天赋
+            if ((index >= 10 && index <= 16) || (index >= 19 && index <= 25)) {
+                int talentItemId = TalentUtils.getNotEquippedTalentIdByInventoryIndex(index);
+                GUITalentItemEnum clickedTalentItem = TalentUtils.getGUITalentItemEnumById(talentItemId);
+                purchaseUpgrade(index, talentItemId, clickedTalentItem);
+            } else if (index >= 39 && index <= 41) {
+                int talentItemId = (int) Main.getPlayerDataBlock(player).getEquippedNormalTalentList().get(TalentUtils.getEquipGridIdByInventoryIndex(index));
+                GUITalentItemEnum clickedTalentItem = TalentUtils.getGUITalentItemEnumById(talentItemId);
+                purchaseUpgrade(index, talentItemId, clickedTalentItem);
+            }
+
+        } else if (type == GUIGridTypeEnum.LEFT_BUTTON) {
+            if (!movingState && index >= 39 && index <= 41) {
+                //移除天赋
+                PlayerDataBlock dataBlock = Main.getPlayerDataBlock(player);
+                ArrayList<?> equippedTalentList = dataBlock.getEquippedNormalTalentList();
+                GUITalentItemEnum clickTalentItem = TalentUtils.getGUITalentItemEnumById((int) equippedTalentList.get(TalentUtils.getEquipGridIdByInventoryIndex(index)));
+                setEquipTalent(index, clickTalentItem, false);
+                initContent();
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_HARP, 1, 1);
+            }
+
+            if (!movingState && ((index >= 10 && index <= 16) || (index >= 19 && index <= 25))) {
+                //进入装备天赋装填
+                movingTalentItem = TalentUtils.getGUITalentItemEnumById(TalentUtils.getNotEquippedTalentIdByInventoryIndex(index));
+                movingState = true;
+                initMovingContent(); //传入点击的index
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_HARP, 1, 1);
+            } else if (movingState) {
+                //装备天赋
+                if (index >= 39 && index <= 41) {
+                    setEquipTalent(index, movingTalentItem, true);
+                }
+                movingState = false;
+                initContent();
+            }
+        } else {
+            System.out.println("this is invalid");
+            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_HAT, 1, 1);
+        }
+    }
+
+    public void setEquipTalent(int index, GUITalentItemEnum talentItem, boolean isEquipped) {
+        PlayerUtils.changeEquippedTalent(player, index, talentItem, isEquipped);
+        if (isEquipped) {
+            player.sendMessage(String.format(LangLoader.get("talent_equip_success_message"), talentItem.getDisplayName(), TalentUtils.getEquipGridIdByInventoryIndex(index) + 1)); //!!!  装备天赋显示的槽位比代码内槽位id + 1
+            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
+        } else {
+            player.sendMessage(String.format(LangLoader.get("talent_drop_success_message"), talentItem.getDisplayName()));
+        }
+
     }
 
     public void initMovingContent() {
