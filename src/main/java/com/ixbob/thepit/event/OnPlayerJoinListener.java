@@ -2,11 +2,12 @@ package com.ixbob.thepit.event;
 
 import com.ixbob.thepit.LangLoader;
 import com.ixbob.thepit.Main;
-import com.ixbob.thepit.MongoDB;
+import com.ixbob.thepit.service.MongoDBService;
 import com.ixbob.thepit.PlayerDataBlock;
 import com.ixbob.thepit.enums.ItemExtraDataEnum;
 import com.ixbob.thepit.util.ItemExtraDataApplier;
 import com.ixbob.thepit.util.PlayerUtils;
+import com.ixbob.thepit.util.ServiceUtils;
 import com.ixbob.thepit.util.Utils;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -29,7 +30,7 @@ import java.util.UUID;
 
 public class OnPlayerJoinListener implements Listener {
     private Player player;
-    private final MongoDB mongoDB = Main.getDB();
+    private final MongoDBService mongoDB = ServiceUtils.getMongoDBService();
     private UUID playerUUID;
     private String playerUUIDString;
     private final ArrayList<ArrayList<?>> initHotBar = new ArrayList<>(Collections.nCopies(9 ,null));

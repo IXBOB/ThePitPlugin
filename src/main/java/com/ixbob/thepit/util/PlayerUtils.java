@@ -1,7 +1,7 @@
 package com.ixbob.thepit.util;
 
 import com.ixbob.thepit.Main;
-import com.ixbob.thepit.MongoDB;
+import com.ixbob.thepit.service.MongoDBService;
 import com.ixbob.thepit.PlayerDataBlock;
 import com.ixbob.thepit.enums.CustomBasicToolEnum;
 import com.ixbob.thepit.enums.gui.talent.GUITalentItemEnum;
@@ -22,7 +22,7 @@ import java.util.UUID;
 
 public class PlayerUtils {
     public static void storePlayerInventoryData(Player player) {
-        MongoDB mongoDB = Main.getDB();
+        MongoDBService mongoDB = ServiceUtils.getMongoDBService();
         UUID playerUUID = player.getUniqueId();
         DBObject dataDBObj = mongoDB.findByUUID(playerUUID);
         ArrayList<ArrayList<?>> hotBarItemList = new ArrayList<>(Collections.nCopies(9 ,null));

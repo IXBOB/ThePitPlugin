@@ -7,6 +7,7 @@ import com.ixbob.thepit.enums.DropItemEnum;
 import com.ixbob.thepit.event.*;
 import com.ixbob.thepit.event.citizens.OnCitizensEnableListener;
 import com.ixbob.thepit.event.citizens.OnNPCRightClickListener;
+import com.ixbob.thepit.service.MongoDBService;
 import com.ixbob.thepit.util.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -15,6 +16,7 @@ import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
@@ -22,7 +24,6 @@ import java.util.Map;
 
 public class Main extends JavaPlugin {
     private static Plugin instance;
-    private static MongoDB mongoDB;
     public static Map<Player, PlayerDataBlock> playerDataMap = new HashMap<>();
     public static Location spawnLocation;
     public static PlayerGUIManager GUIManager;
@@ -33,9 +34,10 @@ public class Main extends JavaPlugin {
         this.saveDefaultConfig();
         Main.instance = this;
 
-        spawnLocation = new Location(Bukkit.getWorlds().get(0), -8, 153, -5);
+        MongoDBService mongoDBService = MongoDBService.getInstance();
+        getServer().getServicesManager().register(MongoDBService.class, mongoDBService, this, ServicePriority.Normal);
 
-        Main.mongoDB = MongoDB.getInstance();
+        spawnLocation = new Location(Bukkit.getWorlds().get(0), -8, 153, -5);
 
         LangLoader.init();
         CustomSkullEnum.init();
@@ -89,6 +91,7 @@ public class Main extends JavaPlugin {
                 new OnCitizensEnableListener(),
                 new OnNPCRightClickListener()
         );
+
     }
 
     @Override
@@ -107,10 +110,6 @@ public class Main extends JavaPlugin {
 
     public static Plugin getInstance() {
         return instance;
-    }
-
-    public static MongoDB getDB() {
-        return mongoDB;
     }
 
     public static PlayerGUIManager getGUIManager() {

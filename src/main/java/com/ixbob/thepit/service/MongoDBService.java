@@ -1,5 +1,6 @@
-package com.ixbob.thepit;
+package com.ixbob.thepit.service;
 
+import com.ixbob.thepit.Main;
 import com.mongodb.*;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -8,18 +9,18 @@ import java.net.UnknownHostException;
 import java.util.UUID;
 import java.util.logging.Level;
 
-public class MongoDB {
+public class MongoDBService {
     private DBCollection collection;
     private static DB mcserverdb;
     private static MongoClient client;
-    private static MongoDB instance;
+    private static MongoDBService instance;
 
-    private MongoDB() {
+    private MongoDBService() {
     }
 
-    public static MongoDB getInstance() {
+    public static MongoDBService getInstance() {
         if (instance == null) {
-            instance = new MongoDB();
+            instance = new MongoDBService();
             instance.connect("127.0.0.1", 27017, Main.getInstance());
             instance.setCollection("ThePit_IXBOB");
         }

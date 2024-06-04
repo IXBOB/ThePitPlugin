@@ -1,7 +1,9 @@
 package com.ixbob.thepit;
 
+import com.ixbob.thepit.service.MongoDBService;
 import com.ixbob.thepit.task.BattleStateCoolCountDowner;
 import com.ixbob.thepit.task.TalentStrengthValidCountDowner;
+import com.ixbob.thepit.util.ServiceUtils;
 import com.mongodb.DBObject;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -40,7 +42,7 @@ public class PlayerDataBlock {
 
     @SuppressWarnings("unchecked")
     public void init() {
-        DBObject dataDBObj = Main.getDB().findByUUID(player.getUniqueId());
+        DBObject dataDBObj = ServiceUtils.getMongoDBService().findByUUID(player.getUniqueId());
         this.level = (int) dataDBObj.get("level");
         this.prestigeLevel = (int) dataDBObj.get("prestige_level");
         this.prestigePointAmount = (int) dataDBObj.get("prestige_point_amount");
@@ -61,7 +63,7 @@ public class PlayerDataBlock {
     }
 
     public void updatePlayerDBData() {
-        MongoDB mongoDB = Main.getDB();
+        MongoDBService mongoDB = ServiceUtils.getMongoDBService();
         DBObject dataObj = mongoDB.findByUUID(player.getUniqueId());
         dataObj.put("level", level);
         dataObj.put("prestige_level", prestigeLevel);
