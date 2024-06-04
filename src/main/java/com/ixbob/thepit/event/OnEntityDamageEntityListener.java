@@ -104,14 +104,16 @@ public class OnEntityDamageEntityListener implements Listener {
         double absorptionHealthBefore = NMSUtils.getEntityPlayer(damagedPlayer).getAbsorptionHearts();
         double normalHealthBefore = damagedPlayer.getHealth();
         double allHealthBefore = absorptionHealthBefore + normalHealthBefore;
-        double absorptionHealthAfter = absorptionHealthBefore <= 0 ? 0 : absorptionHealthBefore - event.getFinalDamage();
+
+        double absorptionHealthAfter = Math.max(0, absorptionHealthBefore - finalDamageAmount);
         double allHealthAfter;
         double normalHealthAfter;
-        if (absorptionHealthAfter < 0) {
-            normalHealthAfter = normalHealthBefore + absorptionHealthAfter;
+
+        if (absorptionHealthBefore - finalDamageAmount < 0) {
+            normalHealthAfter = normalHealthBefore + absorptionHealthBefore - finalDamageAmount;
             allHealthAfter = normalHealthAfter;
         } else {
-            normalHealthAfter = normalHealthBefore - finalDamageAmount;
+            normalHealthAfter = normalHealthBefore;
             allHealthAfter = normalHealthAfter + absorptionHealthAfter;
         }
 
