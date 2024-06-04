@@ -19,6 +19,8 @@ public class OnCitizensEnableListener implements Listener {
         npcRegistry.deregisterAll();
 
         PitConfig config = PitConfig.getInstance();
+
+        //生成NPC
         NPC talentNPC = npcRegistry.createNPC(EntityType.PLAYER, LangLoader.get("npc_talent_name"));
         talentNPC.spawn(config.getNPCTalentLoc());
         talentNPC.addTrait(new CommandTalentTrait());

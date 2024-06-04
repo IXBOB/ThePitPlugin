@@ -41,15 +41,16 @@ public class OnPlayerOwnXpModifiedListener implements Listener {
             Bukkit.getPluginManager().callEvent(upgradeLevelEvent);
         }
 
-        updateDataBlock(dataBlock, newLevel, newOwnXp, nextLevelNeedXp);
+        updateDataBlock(dataBlock, newLevel, newOwnXp, nextLevelNeedXp, modifiedXp);
         dataBlock.updatePlayerDBData();
         dataBlock.updateScoreboardLevel();
         dataBlock.updateScoreboardNextLevelNeedXp();
         PlayerUtils.updateDisplayName(player);
     }
-    private void updateDataBlock(PlayerDataBlock dataBlock, int newLevel, double newThisLevelOwnXp, double newNextLevelNeedXp) {
+    private void updateDataBlock(PlayerDataBlock dataBlock, int newLevel, double newThisLevelOwnXp, double newNextLevelNeedXp, double modifiedXp) {
         dataBlock.setLevel(newLevel);
         dataBlock.setThisLevelOwnXp(newThisLevelOwnXp);
         dataBlock.setNextLevelNeedXp(newNextLevelNeedXp);
+        dataBlock.setXpAmount(dataBlock.getXpAmount() + modifiedXp);
     }
 }

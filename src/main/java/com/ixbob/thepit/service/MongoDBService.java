@@ -23,8 +23,9 @@ public class MongoDBService {
             instance = new MongoDBService();
             instance.connect("127.0.0.1", 27017, Main.getInstance());
             instance.setCollection("ThePit_IXBOB");
+            return instance;
         }
-        return instance;
+        throw new RuntimeException("DO NOT directly get MongoDBService instance. Please use service!");
     }
 
     public void setCollection(String collectionName) {
@@ -97,5 +98,9 @@ public class MongoDBService {
         DBObject r = new BasicDBObject("id", id);
         DBObject found = collection.findOne(r);
         return found != null;
+    }
+
+    public DBCursor getCollectionFindings() {
+        return collection.find();
     }
 }

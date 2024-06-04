@@ -3,7 +3,6 @@ package com.ixbob.thepit.command;
 import com.ixbob.thepit.LangLoader;
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.PlayerDataBlock;
-import com.ixbob.thepit.event.custom.PlayerBattleStateChangeEvent;
 import com.ixbob.thepit.util.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
@@ -32,10 +31,7 @@ public class CommandSpawn implements CommandExecutor {
             if (args.length == 1) {
                 if (args[0].equals("confirm")) {
                     if (dataBlock.isTypedSpawn()) {
-                        back(player, true);
-                        dataBlock.setTypedSpawn(false);
-                        PlayerBattleStateChangeEvent damagerBattleStateChangeEvent = new PlayerBattleStateChangeEvent(player, false);
-                        Bukkit.getPluginManager().callEvent(damagerBattleStateChangeEvent);
+                        PlayerUtils.onPlayerEscapePunish(player);
                     } else {
                         player.sendMessage(LangLoader.get("command_spawn_deny_in_battlestate_confirm_failed"));
                     }

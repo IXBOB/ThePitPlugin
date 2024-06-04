@@ -298,4 +298,12 @@ public class PlayerDataBlock {
     public ArrayList<Player> getDamagedByArrowPlayers() {
         return damagedByArrowPlayers;
     }
+
+    public double getXpAmount() {
+        return xpAmount;
+    }
+
+    public void setXpAmount(double xpAmount) {
+        this.xpAmount = xpAmount;
+    }
 }
