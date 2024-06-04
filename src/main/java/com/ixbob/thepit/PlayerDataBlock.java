@@ -1,8 +1,8 @@
 package com.ixbob.thepit;
 
 import com.ixbob.thepit.service.MongoDBService;
-import com.ixbob.thepit.task.BattleStateCoolCountDowner;
-import com.ixbob.thepit.task.TalentStrengthValidCountDowner;
+import com.ixbob.thepit.task.BattleStateCoolCountDownerRunnable;
+import com.ixbob.thepit.task.TalentStrengthValidCountDownerRunnable;
 import com.ixbob.thepit.util.ServiceUtils;
 import com.mongodb.DBObject;
 import org.bukkit.Bukkit;
@@ -29,8 +29,8 @@ public class PlayerDataBlock {
     private boolean hasTalentStrength;
     private ArrayList<Integer> normalTalentLevelList;
     private ArrayList<Integer> equippedNormalTalentList;
-    private BattleStateCoolCountDowner battleStateCoolCountDowner;
-    private TalentStrengthValidCountDowner talentStrengthValidCountDowner;
+    private BattleStateCoolCountDownerRunnable battleStateCoolCountDownerRunnable;
+    private TalentStrengthValidCountDownerRunnable talentStrengthValidCountDownerRunnable;
     private PlayerScoreboard playerScoreboard;
     private boolean typedSpawn;
     private ArrayList<LinkedHashMap<Player, ArrayList<Object>>> playerGetDamagedHistory; //最里面使用的ArrayList便于后续添加更多受击信息
@@ -81,31 +81,31 @@ public class PlayerDataBlock {
     }
 
     public void updateScoreboardLevel() {
-        playerScoreboard.replaceKey(1, String.format(LangLoader.get("main_scoreboard_line2"), level));
+        playerScoreboard.replaceKey(1, String.format(LangLoader.getString("main_scoreboard_line2"), level));
     }
 
     public void updateScoreboardNextLevelNeedXp() {
-        playerScoreboard.replaceKey(2, String.format(LangLoader.get("main_scoreboard_line3"), Mth.formatDecimalWithFloor(nextLevelNeedXp-thisLevelOwnXp, 2)));
+        playerScoreboard.replaceKey(2, String.format(LangLoader.getString("main_scoreboard_line3"), Mth.formatDecimalWithFloor(nextLevelNeedXp-thisLevelOwnXp, 2)));
     }
 
     public void updateScoreboardOwnCoinAmount() {
-        playerScoreboard.replaceKey(4, String.format(LangLoader.get("main_scoreboard_line5"), Mth.formatDecimalWithFloor(coinAmount, 1)));
+        playerScoreboard.replaceKey(4, String.format(LangLoader.getString("main_scoreboard_line5"), Mth.formatDecimalWithFloor(coinAmount, 1)));
     }
 
     public void updateScoreboardBattleState() {
         playerScoreboard.replaceKey(6, battleState ?
-                String.format(LangLoader.get("battle_state_true_scoreboard_line7"), Mth.formatDecimalWithFloor(battleStateCoolCountDowner.getTimeLeft(), 1))
+                String.format(LangLoader.getString("battle_state_true_scoreboard_line7"), Mth.formatDecimalWithFloor(battleStateCoolCountDownerRunnable.getTimeLeft(), 1))
                 :
-                LangLoader.get("battle_state_false_scoreboard_line7"));
+                LangLoader.getString("battle_state_false_scoreboard_line7"));
     }
 
     public void updateScoreboardTalentStrength(boolean isInit) {
         if (!isInit) {
             playerScoreboard.removeKey(7);
         }
-        playerScoreboard.insertKey(7, String.format(LangLoader.get("talent_item_id_4_scoreboard"),
-                talentStrengthValidCountDowner.getAddDamagePercentagePoint(),
-                Mth.formatDecimalWithFloor(talentStrengthValidCountDowner.getTimeLeft(), 1)));
+        playerScoreboard.insertKey(7, String.format(LangLoader.getString("talent_item_id_4_scoreboard"),
+                talentStrengthValidCountDownerRunnable.getAddDamagePercentagePoint(),
+                Mth.formatDecimalWithFloor(talentStrengthValidCountDownerRunnable.getTimeLeft(), 1)));
     }
 
     public void addDamagedHistory(Player damager, double finalDamage) {
@@ -187,37 +187,37 @@ public class PlayerDataBlock {
     public void setBattleState(boolean battleState) {
         this.battleState = battleState;
         if (battleState) {
-            if (battleStateCoolCountDowner == null) {
-                BattleStateCoolCountDowner countDowner = new BattleStateCoolCountDowner(20.0f, player);
+            if (battleStateCoolCountDownerRunnable == null) {
+                BattleStateCoolCountDownerRunnable countDowner = new BattleStateCoolCountDownerRunnable(20.0f, player);
                 int taskID = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), countDowner, 0, 1);
                 countDowner.setTaskID(taskID);
-                battleStateCoolCountDowner = countDowner;
+                battleStateCoolCountDownerRunnable = countDowner;
             }
             else {
-                battleStateCoolCountDowner.setTimeLeft(20.0f);
+                battleStateCoolCountDownerRunnable.setTimeLeft(20.0f);
             }
         }
         else {
-            battleStateCoolCountDowner = null;
+            battleStateCoolCountDownerRunnable = null;
         }
     }
 
     public void updateTalentStrengthState(boolean state) {
         if (state) {
-            if (talentStrengthValidCountDowner == null) {
-                TalentStrengthValidCountDowner countDowner = new TalentStrengthValidCountDowner(7.0f, player);
+            if (talentStrengthValidCountDownerRunnable == null) {
+                TalentStrengthValidCountDownerRunnable countDowner = new TalentStrengthValidCountDownerRunnable(7.0f, player);
                 int taskID = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), countDowner, 0, 1);
                 countDowner.setTaskID(taskID);
-                talentStrengthValidCountDowner = countDowner;
+                talentStrengthValidCountDownerRunnable = countDowner;
                 updateScoreboardTalentStrength(true);
             }
             else {
-                talentStrengthValidCountDowner.addStrengthLevel();
+                talentStrengthValidCountDownerRunnable.addStrengthLevel();
                 updateScoreboardTalentStrength(false);
             }
         }
         else {
-            talentStrengthValidCountDowner = null;
+            talentStrengthValidCountDownerRunnable = null;
         }
     }
 
@@ -291,8 +291,8 @@ public class PlayerDataBlock {
         this.playerScoreboard = playerScoreboard;
     }
 
-    public TalentStrengthValidCountDowner getTalentStrengthValidCountDowner() {
-        return talentStrengthValidCountDowner;
+    public TalentStrengthValidCountDownerRunnable getTalentStrengthValidCountDowner() {
+        return talentStrengthValidCountDownerRunnable;
     }
 
     public ArrayList<Player> getDamagedByArrowPlayers() {

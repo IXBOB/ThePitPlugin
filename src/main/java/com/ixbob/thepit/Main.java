@@ -8,6 +8,7 @@ import com.ixbob.thepit.event.*;
 import com.ixbob.thepit.event.citizens.OnCitizensEnableListener;
 import com.ixbob.thepit.event.citizens.OnNPCRightClickListener;
 import com.ixbob.thepit.service.MongoDBService;
+import com.ixbob.thepit.task.onstart.ResetHologramsRunnable;
 import com.ixbob.thepit.util.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -91,6 +92,8 @@ public class Main extends JavaPlugin {
                 new OnCitizensEnableListener(),
                 new OnNPCRightClickListener()
         );
+
+        getServer().getScheduler().runTaskLater(this, new ResetHologramsRunnable(), 20);
 
     }
 

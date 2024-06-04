@@ -32,13 +32,13 @@ public class PlayerGUIManager {
     public void openTalentGUI(Player player) {
         GUITalent gui = new GUITalent(player);
         addPlayerToHashMap(player, gui);
-        gui.display(LangLoader.get("talent_gui_title"));
+        gui.display(LangLoader.getString("talent_gui_title"));
     }
 
     public void openShopGUI(Player player) {
         GUIShop gui = new GUIShop(player);
         addPlayerToHashMap(player, gui);
-        gui.display(LangLoader.get("shop_gui_title"));
+        gui.display(LangLoader.getString("shop_gui_title"));
     }
 
     public void onCloseGUI(Player player) {
@@ -52,7 +52,7 @@ public class PlayerGUIManager {
                 throw new IllegalArgumentException("Player " + player + " has already opening a custom gui");
             } catch (IllegalArgumentException e) {
                 player.sendMessage(ChatColor.RED + Utils.getFormattedNowTime() + " " + e.getMessage() + " " + Arrays.toString(e.getStackTrace()));
-                player.sendMessage(LangLoader.get("system_error_message"));
+                player.sendMessage(LangLoader.getString("system_error_message"));
                 Main.getInstance().getLogger().log(Level.SEVERE, e.getMessage(), e);
             }
         }

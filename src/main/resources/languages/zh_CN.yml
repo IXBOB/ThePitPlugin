@@ -1,4 +1,6 @@
 system_error_message: "§c§l插件正产生严重错误！请将上述聊天信息及一部分上下文截图给管理员或开发者！"
+system_load_citizens_npcs_finish_info: "citizens NPC 初始化完成"
+system_load_hds_finish_info: "holograms 初始化完成"
 
 command_help_message_line1: "§e此服务器正在运行 天坑乱斗插件, 作者 IXBOB"
 command_help_message_line2: "§7支持此插件的开发！ afdian.net/a/IXBOB"
@@ -6,6 +8,9 @@ command_help_message_line3: "赞助者名单: §aRuoyanzz, 咲小宝,§r laiyipi
 
 npc_talent_name: "天赋"
 npc_shop_name: "商店"
+
+hd_tip_info_contents: ["§e§l亲爱的玩家" , "§b天坑乱斗插件 by IXBOB 正在开发中"]
+hd_tip_jump_contents: ["§c§l天坑乱斗" , "§7跳下去， 开始战斗！"]
 
 command_error_not_on_player: "§c该指令仅可以玩家身份执行"
 command_spawn_success: "§a你回到了出生点！"
@@ -78,106 +83,121 @@ talent_item_click_action_off: "卸下"
 talent_item_next_level_tip_need_coin: "§6下一等级所需: %NextLevelNeedCoin%g 硬币"
 talent_item_next_level_tip_already_max: "§e已满级"
 talent_item_id_0_name: "§e§l活跃血液"
-talent_item_id_0_lore1: "§7--------------------------------"
-talent_item_id_0_lore2: "§r§b等级: %Level%  %NextLevelTip%"
-talent_item_id_0_lore3: "§r§a§l左键%ActionLeftClick%， 右键升级"
-talent_item_id_0_lore4: " "
-talent_item_id_0_lore5: "§7天赋携带期间额外获得以下效果："
-talent_item_id_0_lore6: "§7 → 初始最大生命值提高 %AddPoint% 点"
+talent_item_id_0_lores: [
+  "§7--------------------------------",
+  "§r§b等级: %Level%  %NextLevelTip%",
+  "§r§a§l左键%ActionLeftClick%， 右键升级",
+  " ",
+  "§7天赋携带期间额外获得以下效果：",
+  "§7 → 初始最大生命值提高 %AddPoint% 点"]
 talent_item_id_1_name: "§e§l金色巧克力"
-talent_item_id_1_lore1: "§7--------------------------------"
-talent_item_id_1_lore2: "§r§b等级: %Level%  %NextLevelTip%"
-talent_item_id_1_lore3: "§r§a§l左键%ActionLeftClick%， 右键升级"
-talent_item_id_1_lore4: " "
-talent_item_id_1_lore5: "§7天赋携带期间， 击败玩家掉落可瞬间食用的金色巧克力并取代金苹果。 食用后提供："
-talent_item_id_1_lore6: "§7 → 伤害吸收 %AddPoint% 点 （2分钟）"
-talent_item_id_1_lore7: "§7 → 生命恢复 II （5秒）"
+talent_item_id_1_lores: [
+  "§7--------------------------------",
+  "§r§b等级: %Level%  %NextLevelTip%",
+  "§r§a§l左键%ActionLeftClick%， 右键升级",
+  " ",
+  "§7天赋携带期间， 击败玩家掉落可瞬间食用的金色巧克力并取代金苹果。 食用后提供：",
+  "§7 → 伤害吸收 %AddPoint% 点 （2分钟）",
+  "§7 → 生命恢复 II （5秒）"]
 talent_item_id_2_name: "§e§l渔夫"
-talent_item_id_2_lore1: "§7--------------------------------"
-talent_item_id_2_lore2: "§r§b等级: %Level%  %NextLevelTip%"
-talent_item_id_2_lore3: "§r§a§l左键%ActionLeftClick%， 右键升级"
-talent_item_id_2_lore4: " "
-talent_item_id_2_lore5: "§7天赋携带期间额外获得以下物品："
-talent_item_id_2_lore6: "§7 → 钓鱼竿"
+talent_item_id_2_lores: [
+  "§7--------------------------------",
+  "§r§b等级: %Level%  %NextLevelTip%",
+  "§r§a§l左键%ActionLeftClick%， 右键升级",
+  " ",
+  "§7天赋携带期间额外获得以下物品：",
+  "§7 → 钓鱼竿"]
 talent_item_id_3_name: "§e§l无尽箭袋"
-talent_item_id_3_lore1: "§7--------------------------------"
-talent_item_id_3_lore2: "§r§b等级: %Level%  %NextLevelTip%"
-talent_item_id_3_lore3: "§r§a§l左键%ActionLeftClick%， 右键升级"
-talent_item_id_3_lore4: " "
-talent_item_id_3_lore5: "§7每次使用弓箭击中玩家， 你会获得："
-talent_item_id_3_lore6: "§7 → %AddPoint% 支箭"
+talent_item_id_3_lores: [
+  "§7--------------------------------",
+  "§r§b等级: %Level%  %NextLevelTip%",
+  "§r§a§l左键%ActionLeftClick%， 右键升级",
+  " ",
+  "§7每次使用弓箭击中玩家， 你会获得：",
+  "§7 → %AddPoint% 支箭"]
 talent_item_id_4_name: "§e§l力量"
-talent_item_id_4_lore1: "§7--------------------------------"
-talent_item_id_4_lore2: "§r§b等级: %Level%  %NextLevelTip%"
-talent_item_id_4_lore3: "§r§a§l左键%ActionLeftClick%， 右键升级"
-talent_item_id_4_lore4: " "
-talent_item_id_4_lore5: "§7每击杀一名玩家， 你在7秒内的攻击力 §c+%AddPoint%％"
-talent_item_id_4_lore6: "§7攻击力增益可叠加， 最高10层， 每次增加重置持续时间"
+talent_item_id_4_lores: [
+  "§7--------------------------------",
+  "§r§b等级: %Level%  %NextLevelTip%",
+  "§r§a§l左键%ActionLeftClick%， 右键升级",
+  " ",
+  "§7每击杀一名玩家， 你在7秒内的攻击力 §c+%AddPoint%％",
+  "§7攻击力增益可叠加， 最高10层， 每次增加重置持续时间"]
 talent_item_id_4_scoreboard: "§c力量+%s％ §7（%ss）"
 talent_item_id_5_name: "§e§l安全第一"
-talent_item_id_5_lore1: "§7--------------------------------"
-talent_item_id_5_lore2: "§r§b等级: %Level%  %NextLevelTip%"
-talent_item_id_5_lore3: "§r§a§l左键%ActionLeftClick%， 右键升级"
-talent_item_id_5_lore4: " "
-talent_item_id_5_lore5: "§7天赋携带期间额外获得以下物品："
-talent_item_id_5_lore6: "§7 → 锁链头盔"
+talent_item_id_5_lores: [
+  "§7--------------------------------",
+  "§r§b等级: %Level%  %NextLevelTip%",
+  "§r§a§l左键%ActionLeftClick%， 右键升级",
+  " ",
+  "§7天赋携带期间额外获得以下物品：",
+  "§7 → 锁链头盔"]
 talent_item_id_6_name: "§e§l矿工"
-talent_item_id_6_lore1: "§7--------------------------------"
-talent_item_id_6_lore2: "§r§b等级: %Level%  %NextLevelTip%"
-talent_item_id_6_lore3: "§r§a§l左键%ActionLeftClick%， 右键升级"
-talent_item_id_6_lore4: " "
-talent_item_id_6_lore5: "§7天赋携带期间额外获得以下物品："
-talent_item_id_6_lore6: "§7 → 钻石镐 （效率 IV）"
-talent_item_id_6_lore7: "§7 → 圆石 * %AddPoint%"
-talent_item_id_6_lore8: "§7击杀玩家额外获得以下物品："
-talent_item_id_6_lore9: "§7 → 圆石 * 4"
+talent_item_id_6_lores: [
+  "§7--------------------------------",
+  "§r§b等级: %Level%  %NextLevelTip%",
+  "§r§a§l左键%ActionLeftClick%， 右键升级",
+  " ",
+  "§7天赋携带期间额外获得以下物品：",
+  "§7 → 钻石镐 （效率 IV）",
+  "§7 → 圆石 * %AddPoint%",
+  "§7击杀玩家额外获得以下物品：",
+  "§7 → 圆石 * 4"]
 talent_item_id_7_name: "§e§l涓流"
-talent_item_id_7_lore1: "§7--------------------------------"
-talent_item_id_7_lore2: "§r§b等级: %Level%  %NextLevelTip%"
-talent_item_id_7_lore3: "§r§a§l左键%ActionLeftClick%， 右键升级"
-talent_item_id_7_lore4: " "
-talent_item_id_7_lore5: "§7捡起硬币时额外获得："
-talent_item_id_7_lore6: "§7 → 10g 硬币"
-talent_item_id_7_lore7: "§7 → 恢复自身 %AddPoint% 点生命"
+talent_item_id_7_lores: [
+  "§7--------------------------------",
+  "§r§b等级: %Level%  %NextLevelTip%",
+  "§r§a§l左键%ActionLeftClick%， 右键升级",
+  " ",
+  "§7捡起硬币时额外获得：",
+  "§7 → 10g 硬币",
+  "§7 → 恢复自身 %AddPoint% 点生命"]
 talent_item_id_8_name: "§e§l灵活战术"
-talent_item_id_8_lore1: "§7--------------------------------"
-talent_item_id_8_lore2: "§r§b等级: %Level%  %NextLevelTip%"
-talent_item_id_8_lore3: "§r§a§l左键%ActionLeftClick%， 右键升级"
-talent_item_id_8_lore4: " "
-talent_item_id_8_lore5: "§7助攻获得的硬币 +2"
-talent_item_id_8_lore6: "§7箭矢命中其他玩家后， 该玩家死亡时"
-talent_item_id_8_lore7: "§7你参与击杀/助攻获得的硬币 +%AddPoint%％"
+talent_item_id_8_lores: [
+  "§7--------------------------------",
+  "§r§b等级: %Level%  %NextLevelTip%",
+  "§r§a§l左键%ActionLeftClick%， 右键升级",
+  " ",
+  "§7助攻获得的硬币 +2",
+  "§7箭矢命中其他玩家后， 该玩家死亡时",
+  "§7你参与击杀/助攻获得的硬币 +%AddPoint%％"]
 
 shop_purchase_success: "§a购买 §r%s §r§a成功！ "
 shop_purchase_fail_as_coin: "§c购买失败！ 您还需 %sg 硬币"
 
 shop_item_id_0_name: "§r钻石头盔"
-shop_item_id_0_lore1: "§r§e价格： 300g硬币"
-shop_item_id_0_lore2: "§r§a§l左键购买"
-shop_item_id_0_lore3: " "
-shop_item_id_0_lore4: "§c死亡后消失！"
+shop_item_id_0_lores: [
+  "§r§e价格： 300g硬币",
+  "§r§a§l左键购买",
+  " ",
+  "§c死亡后消失！"]
 shop_item_id_1_name: "§r钻石胸甲"
-shop_item_id_1_lore1: "§r§e价格： 450g硬币"
-shop_item_id_1_lore2: "§r§a§l左键购买"
-shop_item_id_1_lore3: " "
-shop_item_id_1_lore4: "§c死亡后消失！"
+shop_item_id_1_lores: [
+  "§r§e价格： 450g硬币",
+  "§r§a§l左键购买",
+  " ",
+  "§c死亡后消失！"]
 shop_item_id_2_name: "§r钻石护腿"
-shop_item_id_2_lore1: "§r§e价格： 350g硬币"
-shop_item_id_2_lore2: "§r§a§l左键购买"
-shop_item_id_2_lore3: " "
-shop_item_id_2_lore4: "§c死亡后消失！"
+shop_item_id_2_lores: [
+  "§r§e价格： 350g硬币",
+  "§r§a§l左键购买",
+  " ",
+  "§c死亡后消失！"]
 shop_item_id_3_name: "§r钻石靴子"
-shop_item_id_3_lore1: "§r§e价格： 260g硬币"
-shop_item_id_3_lore2: "§r§a§l左键购买"
-shop_item_id_3_lore3: " "
-shop_item_id_3_lore4: "§c死亡后消失！"
+shop_item_id_3_lores: [
+  "§r§e价格： 260g硬币",
+  "§r§a§l左键购买",
+  " ",
+  "§c死亡后消失！"]
 shop_item_id_4_name: "§r黑曜石 * 8"
-shop_item_id_4_lore1: "§r§e价格： 50g硬币"
-shop_item_id_4_lore2: "§r§a§l左键购买"
-shop_item_id_4_lore3: " "
-shop_item_id_4_lore4: "§c死亡后掉落！"
+shop_item_id_4_lores: [
+  "§r§e价格： 50g硬币",
+  "§r§a§l左键购买",
+  " ",
+  "§c死亡后掉落！"]
 shop_item_id_5_name: "§r钻石剑"
-shop_item_id_5_lore1: "§r§e价格： 150g硬币"
-shop_item_id_5_lore2: "§r§a§l左键购买"
-shop_item_id_5_lore3: " "
-shop_item_id_5_lore4: "§c死亡后消失！"
+shop_item_id_5_lores: [
+  "§r§e价格： 150g硬币",
+  "§r§a§l左键购买",
+  " ",
+  "§c死亡后消失！"]

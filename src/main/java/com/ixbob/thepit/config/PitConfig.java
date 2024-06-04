@@ -11,6 +11,8 @@ public class PitConfig implements BasicConfig {
     public static PitConfig instance;
     private static Location lobbyAreaFromLoc;
     private static Location lobbyAreaToLoc;
+    private static Location dhInfoTipLoc;
+    private static Location dhJumpTipLoc;
     private static Location npcTalentLoc;
     private static Location npcShopLoc;
 
@@ -26,14 +28,12 @@ public class PitConfig implements BasicConfig {
 
     public void init() {
         FileConfiguration config = Main.getInstance().getConfig();
-        List<Double> lobbyAreaFromLocList = config.getDoubleList("lobby_area.from");
-        lobbyAreaFromLoc = listToLoc(lobbyAreaFromLocList);
-        List<Double> lobbyAreaToLocList = config.getDoubleList("lobby_area.to");
-        lobbyAreaToLoc = listToLoc(lobbyAreaToLocList);
-        List<Double> npcTalentLocation = config.getDoubleList("npc_talent_location");
-        npcTalentLoc = listToLoc(npcTalentLocation);
-        List<Double> npcShopLocation = config.getDoubleList("npc_shop_location");
-        npcShopLoc = listToLoc(npcShopLocation);
+        lobbyAreaFromLoc = listToLoc(config.getDoubleList("lobby_area.from"));
+        lobbyAreaToLoc = listToLoc(config.getDoubleList("lobby_area.to"));
+        dhInfoTipLoc = listToLoc(config.getDoubleList("dh_info_tip_location"));
+        dhJumpTipLoc = listToLoc(config.getDoubleList("dh_jump_tip_location"));
+        npcTalentLoc = listToLoc(config.getDoubleList("npc_talent_location"));
+        npcShopLoc = listToLoc(config.getDoubleList("npc_shop_location"));
     }
 
 
@@ -46,6 +46,17 @@ public class PitConfig implements BasicConfig {
     public Location getLobbyAreaToLoc() {
         return lobbyAreaToLoc;
     }
+
+    @Override
+    public Location getDhInfoTipLoc() {
+        return dhInfoTipLoc;
+    }
+
+    @Override
+    public Location getDhJumpTipLoc() {
+        return dhJumpTipLoc;
+    }
+
 
     @Override
     public Location getNPCTalentLoc() {

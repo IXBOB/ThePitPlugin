@@ -62,7 +62,7 @@ public class OnPlayerJoinListener implements Listener {
         player.setGameMode(GameMode.SURVIVAL);
         player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(200);
         player.getInventory().clear();
-        player.sendTitle(LangLoader.get("join_loading_title"), LangLoader.get("join_loading_subtitle"), 10, 60, 10);
+        player.sendTitle(LangLoader.getString("join_loading_title"), LangLoader.getString("join_loading_subtitle"), 10, 60, 10);
 
         Bukkit.getServer().getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
             Player taskPlayer = player;

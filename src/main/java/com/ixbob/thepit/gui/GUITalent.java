@@ -140,10 +140,10 @@ public class GUITalent extends AbstractGUI{
     public void setEquipTalent(int index, GUITalentItemEnum talentItem, boolean isEquipped) {
         PlayerUtils.changeEquippedTalent(player, index, talentItem, isEquipped);
         if (isEquipped) {
-            player.sendMessage(String.format(LangLoader.get("talent_equip_success_message"), talentItem.getDisplayName(), TalentUtils.getEquipGridIdByInventoryIndex(index) + 1)); //!!!  装备天赋显示的槽位比代码内槽位id + 1
+            player.sendMessage(String.format(LangLoader.getString("talent_equip_success_message"), talentItem.getDisplayName(), TalentUtils.getEquipGridIdByInventoryIndex(index) + 1)); //!!!  装备天赋显示的槽位比代码内槽位id + 1
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
         } else {
-            player.sendMessage(String.format(LangLoader.get("talent_drop_success_message"), talentItem.getDisplayName()));
+            player.sendMessage(String.format(LangLoader.getString("talent_drop_success_message"), talentItem.getDisplayName()));
         }
 
     }
@@ -181,7 +181,7 @@ public class GUITalent extends AbstractGUI{
         double needCoinAmount = TalentUtils.getNextLevelNeedCoinAmount(upgradeTalentItemType, currentTalentLevel);
 
         if (currentTalentLevel >= maxTalentLevel) {
-            player.sendMessage(LangLoader.get("talent_upgrade_failed_as_already_level_max_message"));
+            player.sendMessage(LangLoader.getString("talent_upgrade_failed_as_already_level_max_message"));
             player.playSound(player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1, 1);
             return;
         }
@@ -198,12 +198,12 @@ public class GUITalent extends AbstractGUI{
                 TalentUtils.setTalentItem(inventory, clickIndex, upgradeTalentItemType, talentLevelList.get(id), false, talentLevelList.get(id) >= upgradeTalentItemType.getMaxTalentLevel());
             }
             PlayerUtils.addCoin(player, -needCoinAmount);
-            player.sendMessage(String.format(LangLoader.get("talent_upgrade_success_message"), upgradeTalentItemType.getDisplayName(), newLevel));
+            player.sendMessage(String.format(LangLoader.getString("talent_upgrade_success_message"), upgradeTalentItemType.getDisplayName(), newLevel));
             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 2);
             return;
         }
         //购买失败
-        player.sendMessage(String.format(LangLoader.get("talent_upgrade_failed_as_coin_message"), Mth.formatDecimalWithFloor(needCoinAmount - ownCoinAmount, 1)));
+        player.sendMessage(String.format(LangLoader.getString("talent_upgrade_failed_as_coin_message"), Mth.formatDecimalWithFloor(needCoinAmount - ownCoinAmount, 1)));
         player.playSound(player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1, 1);
     }
 }

@@ -23,19 +23,19 @@ public class PlayerScoreboard {
 
     private void init() {
         PlayerDataBlock playerData = Main.getPlayerDataBlock(player);
-        keys.add(LangLoader.get("main_scoreboard_line1"));
-        keys.add(String.format(LangLoader.get("main_scoreboard_line2"), playerData.getLevel()));
-        keys.add(String.format(LangLoader.get("main_scoreboard_line3"), Mth.formatDecimalWithFloor(playerData.getNextLevelNeedXp()-playerData.getThisLevelOwnXp(), 2)));
-        keys.add(LangLoader.get("main_scoreboard_line4"));
-        keys.add(String.format(LangLoader.get("main_scoreboard_line5"), Mth.formatDecimalWithFloor(playerData.getCoinAmount(), 1)));
-        keys.add(LangLoader.get("main_scoreboard_line6"));
-        keys.add(LangLoader.get("battle_state_false_scoreboard_line7"));
-        keys.add(LangLoader.get("main_scoreboard_line8"));
-        keys.add(LangLoader.get("main_scoreboard_line9"));
+        keys.add(LangLoader.getString("main_scoreboard_line1"));
+        keys.add(String.format(LangLoader.getString("main_scoreboard_line2"), playerData.getLevel()));
+        keys.add(String.format(LangLoader.getString("main_scoreboard_line3"), Mth.formatDecimalWithFloor(playerData.getNextLevelNeedXp()-playerData.getThisLevelOwnXp(), 2)));
+        keys.add(LangLoader.getString("main_scoreboard_line4"));
+        keys.add(String.format(LangLoader.getString("main_scoreboard_line5"), Mth.formatDecimalWithFloor(playerData.getCoinAmount(), 1)));
+        keys.add(LangLoader.getString("main_scoreboard_line6"));
+        keys.add(LangLoader.getString("battle_state_false_scoreboard_line7"));
+        keys.add(LangLoader.getString("main_scoreboard_line8"));
+        keys.add(LangLoader.getString("main_scoreboard_line9"));
 
         this.scoreboard = player.getServer().getScoreboardManager().getNewScoreboard();
         this.boardObj = scoreboard.registerNewObjective("main", "dummy");
-        boardObj.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + LangLoader.get("game_name"));
+        boardObj.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + LangLoader.getString("game_name"));
         boardObj.setDisplaySlot(DisplaySlot.SIDEBAR);
         player.setScoreboard(scoreboard); //setScoreboard(): 设置玩家可见的计分板
     }

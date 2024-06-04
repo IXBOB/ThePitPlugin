@@ -9,9 +9,9 @@ public class CommandHelp implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        sender.sendMessage(LangLoader.get("command_help_message_line1"));
-        sender.sendMessage(LangLoader.get("command_help_message_line2"));
-        sender.sendMessage(LangLoader.get("command_help_message_line3"));
+        sender.sendMessage(LangLoader.getString("command_help_message_line1"));
+        sender.sendMessage(LangLoader.getString("command_help_message_line2"));
+        sender.sendMessage(LangLoader.getString("command_help_message_line3"));
         return true;
     }
 }

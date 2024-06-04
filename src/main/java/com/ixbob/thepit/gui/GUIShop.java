@@ -64,7 +64,7 @@ public class GUIShop extends AbstractGUI {
         if (ownCoinAmount >= needCoinAmount) {
             //购买成功
             PlayerUtils.addCoin(player, -needCoinAmount);
-            player.sendMessage(String.format(LangLoader.get("shop_purchase_success"), clickedShopItem.getDisplayName()));
+            player.sendMessage(String.format(LangLoader.getString("shop_purchase_success"), clickedShopItem.getDisplayName()));
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
             switch (clickedShopItem) {
                 case DIAMOND_HELMET: {
@@ -95,7 +95,7 @@ public class GUIShop extends AbstractGUI {
             return;
         }
         //购买失败
-        player.sendMessage(String.format(LangLoader.get("shop_purchase_fail_as_coin"), Mth.formatDecimalWithFloor(needCoinAmount - ownCoinAmount, 1)));
+        player.sendMessage(String.format(LangLoader.getString("shop_purchase_fail_as_coin"), Mth.formatDecimalWithFloor(needCoinAmount - ownCoinAmount, 1)));
         player.playSound(player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1, 1);
 
     }

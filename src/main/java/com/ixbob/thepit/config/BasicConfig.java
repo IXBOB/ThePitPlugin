@@ -7,6 +7,10 @@ public interface BasicConfig {
 
     Location getLobbyAreaToLoc();
 
+    Location getDhInfoTipLoc();
+
+    Location getDhJumpTipLoc();
+
     Location getNPCTalentLoc();
 
     Location getNPCShopLoc();

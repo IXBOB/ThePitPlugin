@@ -117,16 +117,16 @@ public class OnEntityDamageEntityListener implements Listener {
 
         if (allHealthAfter > 0) {
             StringBuilder actionbarBuilder = new StringBuilder();
-            actionbarBuilder.append(LangLoader.get("damage_show_heart_actionbar_empty").repeat((int) Math.ceil(damagedPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() / 2)))
-                    .replace(0, (int) Math.ceil(normalHealthAfter / 2) * 3, LangLoader.get("damage_show_heart_actionbar_healthful").repeat((int) Math.ceil(normalHealthAfter / 2)))
-                    .replace((int) Math.ceil(normalHealthAfter / 2) * 3, (int) Math.ceil(normalHealthAfter / 2) * 3 + (int) Math.ceil(finalDamageAmount / 2) * 3, LangLoader.get("damage_show_heart_actionbar_damaged").repeat((int) Math.ceil(finalDamageAmount / 2)))
-                    .append(LangLoader.get("damage_show_heart_actionbar_extra").repeat(
+            actionbarBuilder.append(LangLoader.getString("damage_show_heart_actionbar_empty").repeat((int) Math.ceil(damagedPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() / 2)))
+                    .replace(0, (int) Math.ceil(normalHealthAfter / 2) * 3, LangLoader.getString("damage_show_heart_actionbar_healthful").repeat((int) Math.ceil(normalHealthAfter / 2)))
+                    .replace((int) Math.ceil(normalHealthAfter / 2) * 3, (int) Math.ceil(normalHealthAfter / 2) * 3 + (int) Math.ceil(finalDamageAmount / 2) * 3, LangLoader.getString("damage_show_heart_actionbar_damaged").repeat((int) Math.ceil(finalDamageAmount / 2)))
+                    .append(LangLoader.getString("damage_show_heart_actionbar_extra").repeat(
                             absorptionHealthAfter > 0 ? (int) Math.ceil(absorptionHealthAfter / 2) : 0
                     ));
             damager.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(PlayerUtils.getPitDisplayName(damagedPlayer) + " " + actionbarBuilder));
         }
         else {
-            damager.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(String.format(LangLoader.get("damage_kill_show_player_info"), PlayerUtils.getPitDisplayName(damagedPlayer))));
+            damager.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(String.format(LangLoader.getString("damage_kill_show_player_info"), PlayerUtils.getPitDisplayName(damagedPlayer))));
         }
 
         //若被击杀的玩家受到的伤害足以导致死亡

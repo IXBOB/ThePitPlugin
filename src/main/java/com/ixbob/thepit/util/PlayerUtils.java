@@ -199,9 +199,9 @@ public class PlayerUtils {
             damagedPlayer.removePotionEffect(effect.getType());
         }
 
-        String broadcastMes = String.format(LangLoader.get("player_kill_other_message_broadcast"), PlayerUtils.getPitDisplayName(damager), PlayerUtils.getPitDisplayName(damagedPlayer));
-        String toDamagerMes = String.format(String.format(LangLoader.get("player_kill_other_message_to_damager"), PlayerUtils.getPitDisplayName(damagedPlayer))) + " " + String.format(LangLoader.get("player_get_xp_message"), Mth.formatDecimalWithFloor(killAddXp, 2)) + " " + String.format(LangLoader.get("player_get_coin_message"), Mth.formatDecimalWithFloor(killAddCoin, 1));
-        String toDamagedPlayerMes = String.format(LangLoader.get("player_kill_other_message_to_damaged_player"), PlayerUtils.getPitDisplayName(damager));
+        String broadcastMes = String.format(LangLoader.getString("player_kill_other_message_broadcast"), PlayerUtils.getPitDisplayName(damager), PlayerUtils.getPitDisplayName(damagedPlayer));
+        String toDamagerMes = String.format(String.format(LangLoader.getString("player_kill_other_message_to_damager"), PlayerUtils.getPitDisplayName(damagedPlayer))) + " " + String.format(LangLoader.getString("player_get_xp_message"), Mth.formatDecimalWithFloor(killAddXp, 2)) + " " + String.format(LangLoader.getString("player_get_coin_message"), Mth.formatDecimalWithFloor(killAddCoin, 1));
+        String toDamagedPlayerMes = String.format(LangLoader.getString("player_kill_other_message_to_damaged_player"), PlayerUtils.getPitDisplayName(damager));
 
         for (Player onlinePl : Bukkit.getOnlinePlayers()) {
             if ( ! (Objects.equals(onlinePl.getName(), damager.getName()) || Objects.equals(onlinePl.getName(), damagedPlayer.getName()))  ) {
@@ -251,9 +251,9 @@ public class PlayerUtils {
             String displayHelperAddXp = Mth.formatDecimalWithFloor(helperAddXp, 2);
             String displayHelperAddCoin = Mth.formatDecimalWithFloor(helperAddCoin, 2);
             helper.sendMessage(
-                    String.format(String.format(String.format(LangLoader.get("player_help_kill_other_message_to_helper"), PlayerUtils.getPitDisplayName(damagedPlayer), displayDamagePercent)
-                            + LangLoader.get("player_get_xp_message"), displayHelperAddXp) + " "
-                            + LangLoader.get("player_get_coin_message"), displayHelperAddCoin));
+                    String.format(String.format(String.format(LangLoader.getString("player_help_kill_other_message_to_helper"), PlayerUtils.getPitDisplayName(damagedPlayer), displayDamagePercent)
+                            + LangLoader.getString("player_get_xp_message"), displayHelperAddXp) + " "
+                            + LangLoader.getString("player_get_coin_message"), displayHelperAddCoin));
         }
 
         damagedPlayerDataBlock.getPlayerGetDamagedHistory().clear();

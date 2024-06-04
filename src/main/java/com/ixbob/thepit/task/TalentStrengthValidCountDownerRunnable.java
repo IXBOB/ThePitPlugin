@@ -8,7 +8,7 @@ import com.ixbob.thepit.util.TalentCalcuUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-public class TalentStrengthValidCountDowner implements Runnable{
+public class TalentStrengthValidCountDownerRunnable implements Runnable{
 
     private float timeLeft;
     private final Player player;
@@ -18,7 +18,7 @@ public class TalentStrengthValidCountDowner implements Runnable{
     private final int talentId = GUITalentItemEnum.STRENGTH.getId();
     private float addDamagePercentagePoint;
 
-    public TalentStrengthValidCountDowner(float timeLeft, Player player) {
+    public TalentStrengthValidCountDownerRunnable(float timeLeft, Player player) {
         this.timeLeft = timeLeft;
         this.player = player;
         this.dataBlock = Main.getPlayerDataBlock(player);

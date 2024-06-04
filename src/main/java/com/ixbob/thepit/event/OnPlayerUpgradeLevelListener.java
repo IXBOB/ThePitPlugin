@@ -18,8 +18,8 @@ public class OnPlayerUpgradeLevelListener implements Listener {
 
         String originLevelText = Utils.getLevelStrWithStyle(prestigeLevel, originLevel);
         String newLevelText = Utils.getLevelStrWithStyle(prestigeLevel, newLevel);
-        player.sendTitle(LangLoader.get("upgrade_title"),
-                String.format(LangLoader.get("upgrade_subtitle"), originLevelText, newLevelText),
+        player.sendTitle(LangLoader.getString("upgrade_title"),
+                String.format(LangLoader.getString("upgrade_subtitle"), originLevelText, newLevelText),
                 10, 50, 10);
         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
     }

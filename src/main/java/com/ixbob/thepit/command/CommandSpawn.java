@@ -25,7 +25,7 @@ public class CommandSpawn implements CommandExecutor {
                     back(player, false);
                 } else {
                     dataBlock.setTypedSpawn(true);
-                    player.sendMessage(LangLoader.get("command_spawn_deny_in_battlestate"));
+                    player.sendMessage(LangLoader.getString("command_spawn_deny_in_battlestate"));
                 }
             }
             if (args.length == 1) {
@@ -33,12 +33,12 @@ public class CommandSpawn implements CommandExecutor {
                     if (dataBlock.isTypedSpawn()) {
                         PlayerUtils.onPlayerEscapePunish(player);
                     } else {
-                        player.sendMessage(LangLoader.get("command_spawn_deny_in_battlestate_confirm_failed"));
+                        player.sendMessage(LangLoader.getString("command_spawn_deny_in_battlestate_confirm_failed"));
                     }
                 }
             }
         } else {
-            Bukkit.getLogger().log(Level.SEVERE, LangLoader.get("command_error_not_on_player"));
+            Bukkit.getLogger().log(Level.SEVERE, LangLoader.getString("command_error_not_on_player"));
         }
         return true;
     }
@@ -47,7 +47,7 @@ public class CommandSpawn implements CommandExecutor {
         Main.getPlayerDataBlock(player).getPlayerGetDamagedHistory().clear();
         player.teleport(Main.spawnLocation);
         PlayerUtils.setMostBasicKit(player, isClear);
-        player.sendMessage(LangLoader.get("command_spawn_success"));
+        player.sendMessage(LangLoader.getString("command_spawn_success"));
         player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
         player.setFoodLevel(20);
     }

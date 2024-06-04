@@ -2,5 +2,9 @@ lobby_area:
   from: [-28.0, 142.0, -28.0]
   to: [27.0, 175.0, 27.0]
 #  from内每个数值都要比to内小
+
+dh_info_tip_location: [-8.0, 154.5, 0.0]
+dh_jump_tip_location: [0.0, 154.0, 0.0]
+
 npc_talent_location: [10.0, 153.0, 0.0, 90.0, 0.0]
 npc_shop_location: [6.0, 153.0, 6.0, 135.0, 0.0]
