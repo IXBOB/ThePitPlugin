@@ -265,9 +265,28 @@ public class PlayerUtils {
         Utils.backToLobby(damagedPlayer);
     }
 
+    public static void onPlayerSuicide(@NonNull Player player) {
+        player.sendMessage(LangLoader.getString("player_suicide_message_to_player"));
+        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            if (!onlinePlayer.equals(player)) {
+                onlinePlayer.sendMessage(String.format(LangLoader.getString("player_suicide_message_broadcast"), PlayerUtils.getPitDisplayName(player)));
+            }
+        }
+
+        PlayerDataBlock playerDataBlock = Main.getPlayerDataBlock(player);
+        playerDataBlock.getPlayerGetDamagedHistory().clear();
+        PlayerUtils.setMostBasicKit(player, true);
+        PlayerUtils.setBattleState(player, false);
+        PlayerUtils.setTypedSpawn(player, false);
+        playerDataBlock.setDeathAmount(playerDataBlock.getDeathAmount() + 1);
+        Utils.backToLobby(player);
+    }
+
     public static void onPlayerEscapePunish(Player player) {
 
         EntityDamageEvent event = player.getLastDamageCause();
+
+        //玩家输入/spawn confirm前受伤了
         if (event != null && !event.isCancelled() && (event instanceof EntityDamageByEntityEvent)) {
             EntityDamageByEntityEvent entityDamageByEntityEvent = (EntityDamageByEntityEvent) event;
             Entity lastDamageEntity = entityDamageByEntityEvent.getDamager();
@@ -281,6 +300,11 @@ public class PlayerUtils {
                 return;
             }
             PlayerUtils.onPlayerKillAnother(player, damager);
+        }
+
+        //玩家输入/spawn confirm前没有受伤
+        if (event == null) {
+            PlayerUtils.onPlayerSuicide(player);
         }
 
     }
