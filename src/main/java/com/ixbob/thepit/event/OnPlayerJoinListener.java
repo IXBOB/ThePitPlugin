@@ -1,13 +1,13 @@
 package com.ixbob.thepit.event;
 
-import com.ixbob.thepit.*;
-import com.ixbob.thepit.service.MongoDBService;
+import com.ixbob.thepit.HologramManager;
+import com.ixbob.thepit.LangLoader;
+import com.ixbob.thepit.Main;
+import com.ixbob.thepit.PlayerDataBlock;
 import com.ixbob.thepit.enums.ItemExtraDataEnum;
+import com.ixbob.thepit.service.MongoDBService;
 import com.ixbob.thepit.task.RefreshPlayerHologramVisibleStateRunnable;
-import com.ixbob.thepit.util.ItemExtraDataApplier;
-import com.ixbob.thepit.util.PlayerUtils;
-import com.ixbob.thepit.util.ServiceUtils;
-import com.ixbob.thepit.util.Utils;
+import com.ixbob.thepit.util.*;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import org.bukkit.Bukkit;
@@ -76,6 +76,8 @@ public class OnPlayerJoinListener implements Listener {
                 genPlayerDataBlock(taskPlayer);
                 PlayerUtils.updateDisplayName(taskPlayer);
                 Bukkit.getScheduler().runTask(Main.getInstance(), new RefreshPlayerHologramVisibleStateRunnable(player));
+//                TeamManager.getInstance().joinRandomTeamToChangeDisplayName(player);
+
 
                 //读取并设置玩家物品栏
                 @SuppressWarnings("unchecked")
