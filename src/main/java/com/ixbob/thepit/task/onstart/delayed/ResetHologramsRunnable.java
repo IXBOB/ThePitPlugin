@@ -1,4 +1,4 @@
-package com.ixbob.thepit.task.onstart;
+package com.ixbob.thepit.task.onstart.delayed;
 
 import com.ixbob.thepit.LangLoader;
 import com.ixbob.thepit.Main;
@@ -17,6 +17,7 @@ public class ResetHologramsRunnable implements Runnable{
         for (HologramEnum hdEnum : HologramEnum.values()) {
             DHAPI.removeHologram(hdEnum.getName());
         }
+
         //添加hologram
         Hologram hd_tip_info = DHAPI.createHologram(HologramEnum.TIP_INFO.getName(), PitConfig.getInstance().getDhInfoTipLoc());
         for (String content : LangLoader.getStringList("hd_tip_info_contents")) {

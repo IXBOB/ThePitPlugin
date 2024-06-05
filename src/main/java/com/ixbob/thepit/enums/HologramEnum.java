@@ -1,6 +1,7 @@
 package com.ixbob.thepit.enums;
 
 public enum HologramEnum {
+    LOCKED("locked"),
     TIP_INFO("tip_info"),
     TIP_JUMP("tip_jump");
 

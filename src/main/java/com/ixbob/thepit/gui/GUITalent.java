@@ -24,9 +24,12 @@ import java.util.Arrays;
 public class GUITalent extends AbstractGUI{
     private boolean movingState = false;
     private GUITalentItemEnum movingTalentItem;
+    public static final int size = 54;
+    public static final int needLevel = 10;
+    public static final int needPrestigeLevel = 0;
 
     public GUITalent(Player player) {
-        super(player, 54, 10, 0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        super(player, size, needLevel, needPrestigeLevel, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
     }
 
     @Override
@@ -206,4 +209,6 @@ public class GUITalent extends AbstractGUI{
         player.sendMessage(String.format(LangLoader.getString("talent_upgrade_failed_as_coin_message"), Mth.formatDecimalWithFloor(needCoinAmount - ownCoinAmount, 1)));
         player.playSound(player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1, 1);
     }
+
+
 }

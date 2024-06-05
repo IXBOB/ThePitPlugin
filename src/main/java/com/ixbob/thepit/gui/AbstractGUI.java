@@ -100,4 +100,8 @@ public abstract class AbstractGUI implements OpenableGUI {
     public int getSize() {
         return size;
     }
+
+    public int getNeedLevel() {
+        return needLevel;
+    }
 }

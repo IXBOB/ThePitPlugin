@@ -1,10 +1,9 @@
 package com.ixbob.thepit.event;
 
-import com.ixbob.thepit.LangLoader;
-import com.ixbob.thepit.Main;
+import com.ixbob.thepit.*;
 import com.ixbob.thepit.service.MongoDBService;
-import com.ixbob.thepit.PlayerDataBlock;
 import com.ixbob.thepit.enums.ItemExtraDataEnum;
+import com.ixbob.thepit.task.RefreshPlayerHologramVisibleStateRunnable;
 import com.ixbob.thepit.util.ItemExtraDataApplier;
 import com.ixbob.thepit.util.PlayerUtils;
 import com.ixbob.thepit.util.ServiceUtils;
@@ -54,6 +53,10 @@ public class OnPlayerJoinListener implements Listener {
         this.player = event.getPlayer();
         this.playerUUID = player.getUniqueId();
 
+        if (!HologramManager.getInstance().isInitialized()) {
+            player.kickPlayer(LangLoader.getString("server_prepare_not_finished_kick_message"));
+        }
+
         for (PotionEffect potionEffect : player.getActivePotionEffects()) {
             player.removePotionEffect(potionEffect.getType());
         }
@@ -72,6 +75,7 @@ public class OnPlayerJoinListener implements Listener {
             Bukkit.getServer().getScheduler().runTask(Main.getInstance(), () -> {
                 genPlayerDataBlock(taskPlayer);
                 PlayerUtils.updateDisplayName(taskPlayer);
+                Bukkit.getScheduler().runTask(Main.getInstance(), new RefreshPlayerHologramVisibleStateRunnable(player));
 
                 //读取并设置玩家物品栏
                 @SuppressWarnings("unchecked")

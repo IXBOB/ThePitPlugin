@@ -8,7 +8,7 @@ import com.ixbob.thepit.event.*;
 import com.ixbob.thepit.event.citizens.OnCitizensEnableListener;
 import com.ixbob.thepit.event.citizens.OnNPCRightClickListener;
 import com.ixbob.thepit.service.MongoDBService;
-import com.ixbob.thepit.task.onstart.ResetHologramsRunnable;
+import com.ixbob.thepit.task.onstart.delayed.ResetHologramsRunnable;
 import com.ixbob.thepit.util.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
