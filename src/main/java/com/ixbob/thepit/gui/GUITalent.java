@@ -117,7 +117,7 @@ public class GUITalent extends AbstractGUI{
                 GUITalentItemEnum clickTalentItem = TalentUtils.getGUITalentItemEnumById((int) equippedTalentList.get(TalentUtils.getEquipGridIdByInventoryIndex(index)));
                 setEquipTalent(index, clickTalentItem, false);
                 initContent();
-                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_HARP, 1, 1);
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1, 1);
             }
 
             if (!movingState && ((index >= 10 && index <= 16) || (index >= 19 && index <= 25))) {
@@ -125,7 +125,7 @@ public class GUITalent extends AbstractGUI{
                 movingTalentItem = TalentUtils.getGUITalentItemEnumById(TalentUtils.getNotEquippedTalentIdByInventoryIndex(index));
                 movingState = true;
                 initMovingContent(); //传入点击的index
-                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_HARP, 1, 1);
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1, 1);
             } else if (movingState) {
                 //装备天赋
                 if (index >= 39 && index <= 41) {
@@ -136,7 +136,7 @@ public class GUITalent extends AbstractGUI{
             }
         } else {
             System.out.println("this is invalid");
-            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_HAT, 1, 1);
+            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 1, 1);
         }
     }
 
@@ -144,7 +144,7 @@ public class GUITalent extends AbstractGUI{
         PlayerUtils.changeEquippedTalent(player, index, talentItem, isEquipped);
         if (isEquipped) {
             player.sendMessage(String.format(LangLoader.getString("talent_equip_success_message"), talentItem.getDisplayName(), TalentUtils.getEquipGridIdByInventoryIndex(index) + 1)); //!!!  装备天赋显示的槽位比代码内槽位id + 1
-            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
+            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 2);
         } else {
             player.sendMessage(String.format(LangLoader.getString("talent_drop_success_message"), talentItem.getDisplayName()));
         }
@@ -185,7 +185,7 @@ public class GUITalent extends AbstractGUI{
 
         if (currentTalentLevel >= maxTalentLevel) {
             player.sendMessage(LangLoader.getString("talent_upgrade_failed_as_already_level_max_message"));
-            player.playSound(player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1, 1);
+            player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
             return;
         }
 
@@ -207,7 +207,7 @@ public class GUITalent extends AbstractGUI{
         }
         //购买失败
         player.sendMessage(String.format(LangLoader.getString("talent_upgrade_failed_as_coin_message"), Mth.formatDecimalWithFloor(needCoinAmount - ownCoinAmount, 1)));
-        player.playSound(player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1, 1);
+        player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
     }
 
 

@@ -1,5 +1,6 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "6.1.0"
+    id "com.github.johnrengelman.shadow" version "8.1.1"
+    id 'io.papermc.paperweight.userdev' version '1.7.1'
     id 'java'
 }
 
@@ -9,6 +10,12 @@ version = '1.0'
 repositories {
     maven{ url 'https://maven.aliyun.com/nexus/content/groups/public/'}
     mavenCentral()
+    maven { url "https://repo.papermc.io/repository/maven-public/" }
+    maven {
+        name = 'papermc-repo'
+        url = 'https://papermc.io/repo/repository/maven-public/'
+    }
+
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
     maven { url "https://repo.codemc.org/repository/maven-public/" }
@@ -17,10 +24,12 @@ repositories {
 }
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
-    compileOnly 'org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT'
-    compileOnly 'org.spigotmc:spigot:1.12.2-R0.1-SNAPSHOT'
+    compileOnly("io.papermc.paper:paper-api:1.18.1-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.18.1-R0.1-SNAPSHOT")
+//    compileOnly files('lib/spigot-1.18.1-R0.1-SNAPSHOT.jar')
+//    compileOnly files('lib/authlib-3.2.38.jar')
     implementation 'org.mongodb:mongo-java-driver:2.13.1'
     implementation 'org.mongodb:mongodb-driver-sync:4.2.1'
     implementation 'de.tr7zw:item-nbt-api-plugin:2.12.3'
@@ -29,7 +38,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.32'
     annotationProcessor 'org.projectlombok:lombok:1.18.32'
     compileOnly 'com.github.decentsoftware-eu:decentholograms:2.8.8'
-    compileOnly files('lib/Citizens-2.0.32-b3124.jar')
+    compileOnly files('lib/citizens-2.0.29-SNAPSHOT.jar')
 }
 
 shadowJar {
@@ -45,7 +54,15 @@ javadoc {
     options.encoding = 'UTF-8'
 }
 
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+}
+
 tasks.register('moveOutput', Exec) {
     workingDir = file('C:\\Users\\IXBOB\\Desktop\\ThePitPlugin\\ThePitPlugin')
     commandLine 'cmd', '/c', 'move_output.bat'
 }
+
+tasks.assemble {
+    dependsOn(reobfJar)
+} //https://docs.papermc.io/paper/dev/userdev

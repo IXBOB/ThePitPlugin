@@ -9,17 +9,17 @@ import java.util.ArrayList;
 
 public enum GUISystemItemEnum {
     DEFAULT_EMPTY(),
-    DEFAULT_WALL(Material.STAINED_GLASS_PANE, 1, (short) 7, " "),
-    TALENT_BUTTON_CANCEL(Material.STAINED_GLASS_PANE, 1, (short) 14, LangLoader.getString("talent_system_item_cancel_name")),
-    TALENT_BUTTON_APPLY(Material.STAINED_GLASS_PANE, 1, (short) 5, LangLoader.getString("talent_system_item_equip_name")),
-    TALENT_WALL_ALREADY_EQUIPPED(Material.STAINED_GLASS_PANE, 1, (short) 12, LangLoader.getString("talent_item_has_equipped")),
-    TALENT_WALL_EQUIP_GRID_LOCKED(Material.BARRIER, 1, (short) 0, LangLoader.getString("talent_equip_grid_locked")),
-    TALENT_WALL_LOCKED(Material.BEDROCK, 1, (short) 0, LangLoader.getString("talent_item_locked"));
+    DEFAULT_WALL(Material.GRAY_STAINED_GLASS_PANE, 1, " "),
+    TALENT_BUTTON_CANCEL(Material.RED_STAINED_GLASS_PANE, 1, LangLoader.getString("talent_system_item_cancel_name")),
+    TALENT_BUTTON_APPLY(Material.LIME_STAINED_GLASS_PANE, 1, LangLoader.getString("talent_system_item_equip_name")),
+    TALENT_WALL_ALREADY_EQUIPPED(Material.MAGENTA_STAINED_GLASS_PANE, 1, LangLoader.getString("talent_item_has_equipped")),
+    TALENT_WALL_EQUIP_GRID_LOCKED(Material.BARRIER, 1, LangLoader.getString("talent_equip_grid_locked")),
+    TALENT_WALL_LOCKED(Material.BEDROCK, 1, LangLoader.getString("talent_item_locked"));
 
     private final ItemStack itemStack;
 
-    GUISystemItemEnum(Material material, int amount, short extraData, String displayName) {
-        this.itemStack = new ItemStack(material, amount, extraData);
+    GUISystemItemEnum(Material material, int amount, String displayName) {
+        this.itemStack = new ItemStack(material, amount);
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.setDisplayName(displayName);
         itemStack.setItemMeta(itemMeta);

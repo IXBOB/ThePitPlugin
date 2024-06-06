@@ -66,6 +66,6 @@ public class OnPlayerPickupItemListener implements Listener {
     private void pickupGoldIngot(Player player, int addPoint) {
         PlayerUtils.addCoin(player, addPoint);
         player.sendMessage(String.format(LangLoader.getString("player_pickup_coin_message"), addPoint));
-        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
+        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 2);
     }
 }

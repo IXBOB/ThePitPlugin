@@ -2,11 +2,18 @@ package com.ixbob.thepit.util;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
-import net.minecraft.server.v1_12_R1.*;
+import net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.network.ServerPlayerConnection;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_12_R1.CraftServer;
-import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_18_R1.CraftServer;
+import org.bukkit.craftbukkit.v1_18_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_18_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Field;
@@ -22,39 +29,39 @@ public class NMSUtils {
         }
     }
 
-    public static PlayerConnection getPlayerConnection(Player player) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchFieldException {
+    public static ServerPlayerConnection getPlayerConnection(Player player) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchFieldException {
         Method getHandle = player.getClass().getMethod("getHandle");
         Object nmsPlayer = getHandle.invoke(player);
         Field conField = nmsPlayer.getClass().getField("playerConnection");
-        return (PlayerConnection) conField.get(nmsPlayer);
+        return (ServerPlayerConnection) conField.get(nmsPlayer);
     }
 
     public static Class<?> getNMSClass(String clazz) throws Exception {
-        return Class.forName("net.minecraft.server.v1_12_R1." + clazz);
+        return Class.forName("net.minecraft.server.v1_18_R1." + clazz);
     }
 
-    public static EntityPlayer getEntityPlayer(Player player) {
+    public static ServerPlayer getEntityPlayer(Player player) {
         return ((CraftPlayer)player).getHandle();
     }
 
-    public static EntityPlayer getNewNMSPlayer(String name, String texture, String signature) throws Exception {
+    public static ServerPlayer getNewNMSPlayer(String name, String texture, String signature) throws Exception {
         MinecraftServer minecraftServer = ((CraftServer) Bukkit.getServer()).getServer();
-        WorldServer worldServer = ((CraftWorld) Bukkit.getWorlds().get(0)).getHandle();
+        ServerLevel worldServer = ((CraftWorld) Bukkit.getWorlds().get(0)).getHandle();
         GameProfile gameProfile = new GameProfile(UUID.randomUUID(), "golden_chocolate");
 
         gameProfile.getProperties().put("textures", new Property("textures", texture, signature));
 
-        EntityPlayer entityPlayer = new EntityPlayer(minecraftServer, worldServer, gameProfile, new PlayerInteractManager(minecraftServer.getWorld()));
+        ServerPlayer entityPlayer = new ServerPlayer(minecraftServer, worldServer, gameProfile);
         int entityID = (int)Math.ceil(Math.random() * 1000) + 2000;
-        entityPlayer.h(entityID); //h: setID
+        entityPlayer.setId(entityID);
 
         //启用双层皮肤
-        DataWatcher dataWatcher = new DataWatcher(null);
+        SynchedEntityData dataWatcher = new SynchedEntityData(null);
 //        https://wiki.vg/Entity_metadata#Player
-        DataWatcherObject<Byte> displayedPartsObject = new DataWatcherObject<>(13, DataWatcherRegistry.a);
+        EntityDataAccessor<Byte> displayedPartsObject = new EntityDataAccessor<>(13, EntityDataSerializers.BYTE);
         byte displayedSkinParts = (byte) (0x01 | 0x02 | 0x04 | 0x08 | 0x10 | 0x20 | 0x40);
-        dataWatcher.register(displayedPartsObject, displayedSkinParts);
-        PacketPlayOutEntityMetadata packet = new PacketPlayOutEntityMetadata(entityID, dataWatcher, true);
+        dataWatcher.define(displayedPartsObject, displayedSkinParts);
+        ClientboundSetEntityDataPacket packet = new ClientboundSetEntityDataPacket(entityID, dataWatcher, true);
         NMSUtils.sendNMSPacketToAllPlayers(packet);
 
         return entityPlayer;

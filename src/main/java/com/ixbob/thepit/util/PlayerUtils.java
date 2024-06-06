@@ -162,7 +162,7 @@ public class PlayerUtils {
         }
 
         damager.playSound(damager.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
-        damagedPlayer.playSound(damagedPlayer.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1, 1);
+        damagedPlayer.playSound(damagedPlayer.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
 
         ArrayList<?> damagerEquippedTalentList = damagerDataBlock.getEquippedNormalTalentList();
         //天赋 金色巧克力

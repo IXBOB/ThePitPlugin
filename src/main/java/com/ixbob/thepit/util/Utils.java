@@ -84,7 +84,7 @@ public class Utils {
     }
 
     public static void backToLobby(Player player) {
-        NMSUtils.getEntityPlayer(player).setAbsorptionHearts(0);
+        NMSUtils.getEntityPlayer(player).setAbsorptionAmount(0);
         player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
         player.setFoodLevel(20);
         player.teleport(Main.spawnLocation);

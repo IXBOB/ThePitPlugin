@@ -17,7 +17,7 @@ public class OnPlayerConsumeItemListener implements Listener {
         ItemStack item = event.getItem();
         if (item.getType() == Material.GOLDEN_APPLE) {
             event.setCancelled(true);
-            NMSUtils.getEntityPlayer(player).setAbsorptionHearts(8);
+            NMSUtils.getEntityPlayer(player).setAbsorptionAmount(8);
             player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 100, 1), false);
             int newAmount = item.getAmount() - 1;
             item.setAmount(newAmount);

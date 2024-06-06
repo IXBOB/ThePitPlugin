@@ -101,7 +101,7 @@ public class OnEntityDamageEntityListener implements Listener {
 
         damagedPlayerDataBlock.addDamagedHistory(damager, finalDamageAmount);
 
-        double absorptionHealthBefore = NMSUtils.getEntityPlayer(damagedPlayer).getAbsorptionHearts();
+        double absorptionHealthBefore = NMSUtils.getEntityPlayer(damagedPlayer).getAbsorptionAmount();
         double normalHealthBefore = damagedPlayer.getHealth();
         double allHealthBefore = absorptionHealthBefore + normalHealthBefore;
 

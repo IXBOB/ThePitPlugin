@@ -71,7 +71,7 @@ public abstract class AbstractGUI implements OpenableGUI {
         int playerPrestigeLevel = Main.getPlayerDataBlock(player).getPrestigeLevel();
         if (playerPrestigeLevel < needPrestigeLevel || (playerPrestigeLevel == needPrestigeLevel && playerLevel < needLevel)) {
             player.sendMessage(String.format(LangLoader.getString("gui_open_failed"), Utils.getLevelStrWithStyle(needPrestigeLevel, needLevel)));
-            player.playSound(player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1, 1);
+            player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
             Main.getGUIManager().onCloseGUI(player);
             return;
         }
