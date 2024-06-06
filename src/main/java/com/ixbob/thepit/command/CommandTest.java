@@ -11,8 +11,8 @@ public class CommandTest implements CommandExecutor {
 //        if (commandSender instanceof Player) {
 //            Player player = (Player) commandSender;
 //            CraftPlayer craftPlayer = (CraftPlayer) player;
-//            EntityPlayer entityPlayer = craftPlayer.getHandle();
-//            GameProfile gameProfile = entityPlayer.getProfile();
+//            ServerPlayer entityPlayer = craftPlayer.getHandle();
+//            GameProfile gameProfile = entityPlayer.getGameProfile();
 //
 //            // 创建一个新的GameProfile，使用新的名字
 //            GameProfile newProfile = new GameProfile(gameProfile.getId(), "123456");
@@ -20,7 +20,7 @@ public class CommandTest implements CommandExecutor {
 //            // 更新玩家的GameProfile
 //            try {
 //                // 使用反射来设置新的GameProfile
-//                java.lang.reflect.Field profileField = EntityPlayer.class.getDeclaredField("displayName");
+//                java.lang.reflect.Field profileField = ServerPlayer.class.getDeclaredField("displayName");
 //                profileField.setAccessible(true);
 //                profileField.set(entityPlayer, newProfile);
 //            } catch (Exception e) {
@@ -29,9 +29,9 @@ public class CommandTest implements CommandExecutor {
 //
 //            // 发送包来刷新玩家信息
 //            for (Player onlinePl : Bukkit.getOnlinePlayers()) {
-//                PlayerConnection connection = ((CraftPlayer)onlinePl).getHandle().playerConnection;
-//                connection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, entityPlayer));
-//                connection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, entityPlayer));
+//                ServerPlayerConnection connection = ((CraftPlayer)onlinePl).getHandle().playerConnection;
+//                connection.send(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, entityPlayer));
+//                connection.send(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, entityPlayer));
 //            }
 //
 //        }

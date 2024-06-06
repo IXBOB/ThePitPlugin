@@ -7,6 +7,7 @@ import com.ixbob.thepit.enums.DropItemEnum;
 import com.ixbob.thepit.event.*;
 import com.ixbob.thepit.event.citizens.OnCitizensEnableListener;
 import com.ixbob.thepit.event.citizens.OnNPCRightClickListener;
+import com.ixbob.thepit.event.paper.OnPlayerChatListener;
 import com.ixbob.thepit.service.MongoDBService;
 import com.ixbob.thepit.task.onstart.delayed.ResetHologramsRunnable;
 import com.ixbob.thepit.util.PlayerUtils;
@@ -90,11 +91,13 @@ public class Main extends JavaPlugin {
                 new OnPlayerBreakBlockListener(),
                 new OnItemDespawnListener(),
                 new OnCitizensEnableListener(),
-                new OnNPCRightClickListener()
+                new OnNPCRightClickListener(),
+                new OnPlayerChatListener()
         );
 
         getServer().getScheduler().runTaskLater(this, new ResetHologramsRunnable(), 20);
 
+//        getServer().getScheduler().runTask(this, new RegisterPlayerNamePacketAdapterRunnable());
     }
 
     @Override

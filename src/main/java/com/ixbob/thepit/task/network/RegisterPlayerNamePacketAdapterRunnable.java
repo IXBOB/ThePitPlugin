@@ -1,12 +1,9 @@
 package com.ixbob.thepit.task.network;
 
+//R.I.P.
 //public class RegisterPlayerNamePacketAdapterRunnable implements Runnable{
 //    ProtocolManager manager = ProtocolLibrary.getProtocolManager();
-
-//======================================================================
-//曾经用于修改玩家显示名称的方法，但是由于限制16个字符，无解决办法。 R.I.P.  立碑
-//======================================================================
-
+//
 //    @Override
 //    public void run() {
 //        manager.addPacketListener(new PacketAdapter(Main.getInstance(), ListenerPriority.NORMAL, PacketType.Play.Server.PLAYER_INFO) {
@@ -26,8 +23,8 @@ package com.ixbob.thepit.task.network;
 //                        UUID uniqueId = data.getProfile().getUUID();
 //
 //                       for (Player onlinePl : Bukkit.getOnlinePlayers()) {
-//                           EntityPlayer onlinePlHandle = ((CraftPlayer) onlinePl).getHandle();
-//                           if (onlinePlHandle.getUniqueID() == uniqueId) {
+//                           ServerPlayer onlinePlHandle = ((CraftPlayer) onlinePl).getHandle();
+//                           if (onlinePlHandle.getUUID() == uniqueId) {
 //                               dataList.set(i, new PlayerInfoData(
 //                                       new WrappedGameProfile(uniqueId, PlayerUtils.getPitDisplayName(onlinePl)),
 //                                       data.getLatency(),

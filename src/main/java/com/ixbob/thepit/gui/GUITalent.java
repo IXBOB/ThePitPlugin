@@ -21,7 +21,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class GUITalent extends AbstractGUI{
+public class GUITalent extends BasicGUIImpl {
     private boolean movingState = false;
     private GUITalentItemEnum movingTalentItem;
     public static final int size = 54;

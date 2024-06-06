@@ -18,7 +18,7 @@ import org.bukkit.event.inventory.ClickType;
 
 import java.util.ArrayList;
 
-public class GUIShop extends AbstractGUI {
+public class GUIShop extends BasicGUIImpl {
 
     public GUIShop(Player player) {
         super(player, 54, 0, 0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
@@ -53,7 +53,11 @@ public class GUIShop extends AbstractGUI {
         if (type == GUIGridTypeEnum.LEFT_BUTTON) {
             int id = ShopUtils.getShopItemIdByInventoryIndex(index);
             GUIShopItemEnum clickedShopItem = ShopUtils.getGUIShopItemEnumById(id);
-            purchaseShop(clickedShopItem);
+            if (clickedShopItem != null) {
+                purchaseShop(clickedShopItem);
+                return;
+            }
+            throw new NullPointerException();
         }
     }
 

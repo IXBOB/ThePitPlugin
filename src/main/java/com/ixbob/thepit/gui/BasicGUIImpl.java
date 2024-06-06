@@ -12,7 +12,7 @@ import org.bukkit.inventory.Inventory;
 
 import java.util.ArrayList;
 
-public abstract class AbstractGUI implements OpenableGUI {
+public abstract class BasicGUIImpl implements BasicGUI {
     protected final Player player;
     protected final int size;
     private final int needLevel;
@@ -23,7 +23,7 @@ public abstract class AbstractGUI implements OpenableGUI {
     protected final ArrayList<Integer> leftMoveable;
     protected final ArrayList<Integer> rightMoveable;
 
-    public AbstractGUI(Player player, int size, int needLevel, int needPrestigeLevel, ArrayList<Integer> leftButton, ArrayList<Integer> rightButton, ArrayList<Integer> leftMoveable, ArrayList<Integer> rightMoveable) {
+    public BasicGUIImpl(Player player, int size, int needLevel, int needPrestigeLevel, ArrayList<Integer> leftButton, ArrayList<Integer> rightButton, ArrayList<Integer> leftMoveable, ArrayList<Integer> rightMoveable) {
         this.player = player;
         this.size = size;
         this.needLevel = needLevel;

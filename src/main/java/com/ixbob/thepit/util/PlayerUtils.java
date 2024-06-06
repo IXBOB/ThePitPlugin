@@ -130,12 +130,6 @@ public class PlayerUtils {
         Bukkit.getPluginManager().callEvent(playerEquippedTalentChangeEvent);
     }
 
-    public static void updateDisplayName(Player player) {
-        String displayName = getPitDisplayName(player);
-        player.setDisplayName(displayName);
-        player.setPlayerListName(displayName);
-    }
-
     public static String getPitDisplayName(Player player) {
         PlayerDataBlock playerData = Main.getPlayerDataBlock(player);
         int prestigeLevel = playerData.getPrestigeLevel();

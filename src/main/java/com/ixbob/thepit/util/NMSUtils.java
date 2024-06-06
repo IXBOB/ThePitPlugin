@@ -67,40 +67,37 @@ public class NMSUtils {
         return entityPlayer;
     }
 
-//=================================================================================================
-//曾经用于修改玩家显示名称的方法，配合PacketAdapter一起用。但是由于玩家名限制16个字符，无解决办法。 R.I.P.  立碑
-//=================================================================================================
-
+//R.I.P.
 //    /**
 //     * {@link com.ixbob.thepit.task.network.RegisterPlayerNamePacketAdapterRunnable}
 //     */
 //    public static void sendPacketForChangeDisplayName(Player player) {
 //
-//        EntityPlayer handle = ((CraftPlayer) player).getHandle();
+//        ServerPlayer handle = ((CraftPlayer) player).getHandle();
 //
 //        //玩家加入时，其他玩家似乎不会接收到ADD_PLAYER包，这里模拟玩家发送ADD_PLAYER包
 //        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-//            EntityPlayer onlinePlHandle = ((CraftPlayer) onlinePlayer).getHandle();
-//            PlayerConnection onlinePlConnection = onlinePlHandle.playerConnection;
+//            ServerPlayer onlinePlHandle = ((CraftPlayer) onlinePlayer).getHandle();
+//            ServerPlayerConnection onlinePlConnection = onlinePlHandle.connection;
 //
-//            Packet<PacketListenerPlayOut> handlerRemovePacket = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, handle);
+//            ClientboundPlayerInfoPacket handlerRemovePacket = new ClientboundPlayerInfoPacket(ClientboundPlayerInfoPacket.Action.REMOVE_PLAYER, handle);
 //
-//            Packet<PacketListenerPlayOut> handlerAddPacket = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, handle);
+//            ClientboundPlayerInfoPacket handlerAddPacket = new ClientboundPlayerInfoPacket(ClientboundPlayerInfoPacket.Action.ADD_PLAYER, handle);
 //
-//            onlinePlConnection.sendPacket(handlerRemovePacket);
-//            onlinePlConnection.sendPacket(handlerAddPacket);
+//            onlinePlConnection.send(handlerRemovePacket);
+//            onlinePlConnection.send(handlerAddPacket);
 //
 //            if (!onlinePlHandle.equals(handle)) {
 //
-//                PacketPlayOutEntityDestroy handlerDesPacket = new PacketPlayOutEntityDestroy(handle.getId());
+//                ClientboundRemoveEntitiesPacket handlerDesPacket = new ClientboundRemoveEntitiesPacket(handle.getId());
 //
-//                PacketPlayOutNamedEntitySpawn packetPlayOutNamedEntitySpawn = new PacketPlayOutNamedEntitySpawn(handle);
+//                ClientboundAddPlayerPacket packetPlayOutNamedEntitySpawn = new ClientboundAddPlayerPacket(handle);
 //
-//                onlinePlConnection.sendPacket(handlerDesPacket);
-//                onlinePlConnection.sendPacket(packetPlayOutNamedEntitySpawn);
+//                onlinePlConnection.send(handlerDesPacket);
+//                onlinePlConnection.send(packetPlayOutNamedEntitySpawn);
 //            }
 //        }
 //    }
-//
+
 
 }

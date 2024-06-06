@@ -1,6 +1,6 @@
 package com.ixbob.thepit;
 
-import com.ixbob.thepit.gui.AbstractGUI;
+import com.ixbob.thepit.gui.BasicGUIImpl;
 import com.ixbob.thepit.gui.GUIShop;
 import com.ixbob.thepit.gui.GUITalent;
 import com.ixbob.thepit.util.Utils;
@@ -14,7 +14,7 @@ import java.util.logging.Level;
 
 public class PlayerGUIManager {
     private static PlayerGUIManager instance;
-    private final Map<Player, AbstractGUI> playerOpeningCustomGUI = new HashMap<>();
+    private final Map<Player, BasicGUIImpl> playerOpeningCustomGUI = new HashMap<>();
 
     private PlayerGUIManager() {}
 
@@ -25,7 +25,7 @@ public class PlayerGUIManager {
         return instance;
     }
 
-    public AbstractGUI getOpeningGUI(Player player) {
+    public BasicGUIImpl getOpeningGUI(Player player) {
         return playerOpeningCustomGUI.get(player);
     }
 
@@ -45,7 +45,7 @@ public class PlayerGUIManager {
         removePlayerFromHashMap(player);
     }
 
-    private void addPlayerToHashMap(Player player, AbstractGUI gui) {
+    private void addPlayerToHashMap(Player player, BasicGUIImpl gui) {
         if (playerOpeningCustomGUI.containsKey(player)) {
             player.closeInventory();
             try {

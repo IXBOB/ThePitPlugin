@@ -1,6 +1,6 @@
 package com.ixbob.thepit.event;
 
-import com.ixbob.thepit.gui.AbstractGUI;
+import com.ixbob.thepit.gui.BasicGUIImpl;
 import com.ixbob.thepit.Main;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,7 +13,7 @@ public class OnPlayerClickGUIListener implements Listener {
     @EventHandler
     public void onPlayerClickGUI(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
-        AbstractGUI openingGUI = Main.getGUIManager().getOpeningGUI(player);
+        BasicGUIImpl openingGUI = Main.getGUIManager().getOpeningGUI(player);
         //处理自定义物品栏
         if (openingGUI != null) {
             int index = event.getSlot();

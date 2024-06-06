@@ -23,7 +23,7 @@ public class Utils {
             return ChatColor.RESET + "[" + color + level + ChatColor.RESET + "]";
         }
         else {
-            return ChatColor.RESET + "[" + ChatColor.YELLOW + convertToRoman(prestigeLevel) + ChatColor.RESET+ "-" + color + level + ChatColor.RESET +"]";
+            return ChatColor.RESET + "" + ChatColor.GRAY + "[" + ChatColor.YELLOW + convertToRoman(prestigeLevel) + ChatColor.RESET+ "-" + color + level + ChatColor.GRAY + "]" + ChatColor.RESET + " ";
         }
     }
 
