@@ -33,7 +33,7 @@ public class PlayerScoreboard {
         keys.add(LangLoader.getString("main_scoreboard_line8"));
         keys.add(LangLoader.getString("main_scoreboard_line9"));
 
-        this.scoreboard = player.getServer().getScoreboardManager().getNewScoreboard();
+        this.scoreboard = player.getServer().getScoreboardManager().getMainScoreboard();
         this.boardObj = scoreboard.registerNewObjective("main", "dummy");
         boardObj.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + LangLoader.getString("game_name"));
         boardObj.setDisplaySlot(DisplaySlot.SIDEBAR);

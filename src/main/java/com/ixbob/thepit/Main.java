@@ -20,9 +20,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scoreboard.Objective;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Main extends JavaPlugin {
     private static Plugin instance;
@@ -106,6 +108,10 @@ public class Main extends JavaPlugin {
             PlayerUtils.storePlayerInventoryData(player);
         }
         getTaskManager().getPlacedBlockTaskHandler().removeAll();
+        for (Objective obj : this.getServer().getScoreboardManager().getMainScoreboard().getObjectives()) {
+            obj.unregister();
+        }
+        Objects.requireNonNull(getServer().getScoreboardManager().getMainScoreboard().getObjective("main")).unregister();
     }
 
     private void registerEvents(Listener... listeners) {

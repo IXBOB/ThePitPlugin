@@ -14,8 +14,6 @@ public class OnPlayerChatListener implements Listener, ChatRenderer {
     @EventHandler
     public void onPlayerChat(AsyncChatEvent event) {
         event.renderer(this);
-
-
     }
 
     @Override
