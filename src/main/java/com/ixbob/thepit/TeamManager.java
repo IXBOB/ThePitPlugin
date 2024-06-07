@@ -38,7 +38,6 @@ public class TeamManager {
         joinedTeamNameMap.put(player, randomTeamName);
         team.prefix(Component.text(Utils.getLevelStrWithStyle(playerDataBlock.getPrestigeLevel(), playerDataBlock.getLevel())));
         team.addEntry(player.getName());
-        player.setScoreboard(board);
     }
 
     public void leaveTeam(Player player) {

@@ -4,10 +4,13 @@ import com.ixbob.thepit.Main;
 import com.ixbob.thepit.PlayerDataBlock;
 import com.ixbob.thepit.TeamManager;
 import com.ixbob.thepit.util.PlayerUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
+
+import java.util.Objects;
 
 public class OnPlayerLeaveListener implements Listener {
     @EventHandler
@@ -19,6 +22,8 @@ public class OnPlayerLeaveListener implements Listener {
         }
         TeamManager.getInstance().leaveTeam(player);
         PlayerUtils.storePlayerInventoryData(player);
+        Objects.requireNonNull(Bukkit.getServer().getScoreboardManager().getMainScoreboard().getObjective(player.getName() + "_display")).unregister();
+
         Main.playerDataMap.remove(player);
     }
 }
