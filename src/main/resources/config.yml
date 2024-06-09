@@ -5,6 +5,7 @@ lobby_area:
 
 dh_info_tip_location: [-8.0, 154.5, 0.0]
 dh_jump_tip_location: [0.0, 154.0, 0.0]
+dh_lobby_rankings_location: [0.0, 158.0, 7.0]
 
 npc_talent_location: [10.0, 153.0, 0.0, 90.0, 0.0]
 npc_shop_location: [6.0, 153.0, 6.0, 135.0, 0.0]

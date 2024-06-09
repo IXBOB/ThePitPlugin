@@ -11,6 +11,8 @@ public interface BasicConfig {
 
     Location getDhJumpTipLoc();
 
+    Location getDhLobbyRankingsLoc();
+
     Location getNPCTalentLoc();
 
     Location getNPCShopLoc();

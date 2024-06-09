@@ -13,6 +13,7 @@ public class PitConfig implements BasicConfig {
     private static Location lobbyAreaToLoc;
     private static Location dhInfoTipLoc;
     private static Location dhJumpTipLoc;
+    private static Location dhLobbyRankingsLoc;
     private static Location npcTalentLoc;
     private static Location npcShopLoc;
 
@@ -32,6 +33,7 @@ public class PitConfig implements BasicConfig {
         lobbyAreaToLoc = listToLoc(config.getDoubleList("lobby_area.to"));
         dhInfoTipLoc = listToLoc(config.getDoubleList("dh_info_tip_location"));
         dhJumpTipLoc = listToLoc(config.getDoubleList("dh_jump_tip_location"));
+        dhLobbyRankingsLoc = listToLoc(config.getDoubleList("dh_lobby_rankings_location"));
         npcTalentLoc = listToLoc(config.getDoubleList("npc_talent_location"));
         npcShopLoc = listToLoc(config.getDoubleList("npc_shop_location"));
     }
@@ -57,6 +59,10 @@ public class PitConfig implements BasicConfig {
         return dhJumpTipLoc;
     }
 
+    @Override
+    public Location getDhLobbyRankingsLoc() {
+        return dhLobbyRankingsLoc;
+    }
 
     @Override
     public Location getNPCTalentLoc() {
