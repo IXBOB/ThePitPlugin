@@ -34,7 +34,7 @@ public class PlayerScoreboard {
         keys.add(LangLoader.getString("main_scoreboard_line9"));
 
         this.scoreboard = player.getServer().getScoreboardManager().getMainScoreboard();
-        this.boardObj = scoreboard.registerNewObjective(player.getName()+"_display", "dummy");
+        this.boardObj = scoreboard.registerNewObjective(playerData.getScoreboardObjName(), "dummy");
         boardObj.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + LangLoader.getString("game_name"));
         boardObj.setDisplaySlot(DisplaySlot.SIDEBAR);
         player.setScoreboard(scoreboard); //setScoreboard(): 设置玩家可见的计分板

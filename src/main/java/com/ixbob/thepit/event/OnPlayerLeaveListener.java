@@ -22,7 +22,7 @@ public class OnPlayerLeaveListener implements Listener {
         }
         TeamManager.getInstance().leaveTeam(player);
         PlayerUtils.storePlayerInventoryData(player);
-        Objects.requireNonNull(Bukkit.getServer().getScoreboardManager().getMainScoreboard().getObjective(player.getName() + "_display")).unregister();
+        Objects.requireNonNull(Bukkit.getServer().getScoreboardManager().getMainScoreboard().getObjective(playerDataBlock.getScoreboardObjName())).unregister();
 
         Main.playerDataMap.remove(player);
     }

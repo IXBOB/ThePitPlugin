@@ -153,6 +153,7 @@ public class OnPlayerJoinListener implements Listener {
     private void genPlayerDataBlock(Player taskPlayer) {
         PlayerDataBlock dataBlock = new PlayerDataBlock(taskPlayer);
         Main.addPlayerDataBlock(taskPlayer, dataBlock);
+        Main.getMongoDBService().addTotalRegisteredPlayerAmount(1);
         dataBlock.init();
     }
 }

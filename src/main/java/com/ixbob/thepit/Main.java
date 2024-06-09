@@ -26,6 +26,7 @@ import java.util.Map;
 
 public class Main extends JavaPlugin {
     private static Plugin instance;
+    private static MongoDBService mongoDBService;
     public static Map<Player, PlayerDataBlock> playerDataMap = new HashMap<>();
     public static Location spawnLocation;
     public static PlayerGUIManager GUIManager;
@@ -38,6 +39,7 @@ public class Main extends JavaPlugin {
 
         MongoDBService mongoDBService = MongoDBService.getInstance();
         getServer().getServicesManager().register(MongoDBService.class, mongoDBService, this, ServicePriority.Normal);
+        this.mongoDBService = mongoDBService;
 
         spawnLocation = new Location(Bukkit.getWorlds().get(0), -8, 153, -5);
 
@@ -132,5 +134,9 @@ public class Main extends JavaPlugin {
 
     public static void addPlayerDataBlock(Player player, PlayerDataBlock playerDataBlock) {
         playerDataMap.put(player, playerDataBlock);
+    }
+
+    public static MongoDBService getMongoDBService() {
+        return mongoDBService;
     }
 }

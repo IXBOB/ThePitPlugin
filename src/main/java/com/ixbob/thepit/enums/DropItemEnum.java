@@ -6,6 +6,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Objects;
+
 public enum DropItemEnum {
     IRON_HELMET(new ItemStack(Material.IRON_HELMET)),
     IRON_CHESTPLATE(new ItemStack(Material.IRON_CHESTPLATE)),
@@ -35,15 +37,15 @@ public enum DropItemEnum {
             player.getInventory().setHelmet(itemStack);
             player.playSound(player.getLocation(), Sound.ITEM_ARMOR_EQUIP_CHAIN, 1, 1);
         }
-        else if (this == IRON_CHESTPLATE && itemChestplate.getType() == Material.CHAINMAIL_CHESTPLATE) {
+        else if (this == IRON_CHESTPLATE && Objects.requireNonNull(itemChestplate).getType() == Material.CHAINMAIL_CHESTPLATE) {
             player.getInventory().setChestplate(itemStack);
             player.playSound(player.getLocation(), Sound.ITEM_ARMOR_EQUIP_CHAIN, 1, 1);
         }
-        else if (this == IRON_LEGGINGS && itemLeggings.getType() == Material.CHAINMAIL_LEGGINGS) {
+        else if (this == IRON_LEGGINGS && Objects.requireNonNull(itemLeggings).getType() == Material.CHAINMAIL_LEGGINGS) {
             player.getInventory().setLeggings(itemStack);
             player.playSound(player.getLocation(), Sound.ITEM_ARMOR_EQUIP_CHAIN, 1, 1);
         }
-        else if (this == IRON_BOOTS && itemLeggings.getType() == null) {
+        else if (this == IRON_BOOTS && itemBoots == null) {
             player.getInventory().setBoots(itemStack);
             player.playSound(player.getLocation(), Sound.ITEM_ARMOR_EQUIP_CHAIN, 1, 1);
         }

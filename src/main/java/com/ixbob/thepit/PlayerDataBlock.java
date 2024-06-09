@@ -35,6 +35,8 @@ public class PlayerDataBlock {
     private boolean typedSpawn;
     private ArrayList<LinkedHashMap<Player, ArrayList<Object>>> playerGetDamagedHistory; //最里面使用的ArrayList便于后续添加更多受击信息
     private ArrayList<Player> damagedByArrowPlayers;
+    private String scoreboardObjName;
+    private int id;
 
     public PlayerDataBlock(Player player) {
         this.player = player;
@@ -55,11 +57,14 @@ public class PlayerDataBlock {
         this.deathAmount = (int) dataDBObj.get("death_amount");
         this.normalTalentLevelList = (ArrayList<Integer>) dataDBObj.get("NormalTalentLevelList");
         this.equippedNormalTalentList = (ArrayList<Integer>) dataDBObj.get("EquippedNormalTalentList");
-        this.playerScoreboard = new PlayerScoreboard(player);
         this.battleState = false;
         this.typedSpawn = false;
         this.playerGetDamagedHistory = new ArrayList<>();
         this.damagedByArrowPlayers = new ArrayList<>();
+        this.id = Main.getMongoDBService().getTotalRegisteredPlayerAmount();
+        this.scoreboardObjName = "pit_" + id + "_display";
+
+        this.playerScoreboard = new PlayerScoreboard(player);
     }
 
     public void updatePlayerDBData() {
@@ -305,5 +310,13 @@ public class PlayerDataBlock {
 
     public void setXpAmount(double xpAmount) {
         this.xpAmount = xpAmount;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getScoreboardObjName() {
+        return scoreboardObjName;
     }
 }
