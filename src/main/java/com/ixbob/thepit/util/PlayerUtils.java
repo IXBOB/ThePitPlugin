@@ -16,6 +16,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -24,6 +25,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.*;
 
@@ -160,9 +162,17 @@ public class PlayerUtils {
 
         ArrayList<?> damagerEquippedTalentList = damagerDataBlock.getEquippedNormalTalentList();
         //天赋 金色巧克力
-        if (damagerEquippedTalentList.contains(GUITalentItemEnum.GOLDEN_CHOCOLATE.getId())) {
+        if (damagerEquippedTalentList.contains(GUITalentItemEnum.GOLDEN_CHOCOLATE.getId()) && !damagerEquippedTalentList.contains(GUITalentItemEnum.BLOOD_SUCKER.getId())) {
             damager.getInventory().addItem(PitItemEnum.GOLDEN_CHOCOLATE.getItemStack());
-        } else damager.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 1));
+        } else if (!damagerEquippedTalentList.contains(GUITalentItemEnum.BLOOD_SUCKER.getId())) {
+            damager.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 1));
+        }
+        //天赋 吸血鬼
+        if (damagerEquippedTalentList.contains(GUITalentItemEnum.BLOOD_SUCKER.getId())) {
+            int id = GUITalentItemEnum.BLOOD_SUCKER.getId();
+            damager.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, (int)TalentCalcuUtils.getAddPointValue(
+                    id, damagerDataBlock.getNormalTalentLevelList().get(id)), 1));
+        }
         //天赋 力量
         if (damagerEquippedTalentList.contains(GUITalentItemEnum.STRENGTH.getId())) {
             damagerDataBlock.updateTalentStrengthState(true);
@@ -301,5 +311,9 @@ public class PlayerUtils {
             PlayerUtils.onPlayerSuicide(player);
         }
 
+    }
+
+    public static void addHealth(Player player, int amount) {
+        player.setHealth(Math.min(player.getHealth() + 1, player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()));
     }
 }

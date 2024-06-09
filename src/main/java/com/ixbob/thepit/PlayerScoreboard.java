@@ -33,11 +33,8 @@ public class PlayerScoreboard {
         keys.add(LangLoader.getString("main_scoreboard_line8"));
         keys.add(LangLoader.getString("main_scoreboard_line9"));
 
-        this.scoreboard = player.getServer().getScoreboardManager().getMainScoreboard();
-        this.boardObj = scoreboard.getObjective(playerData.getScoreboardObjName());
-        if (this.boardObj == null) {
-            this.boardObj = scoreboard.registerNewObjective(playerData.getScoreboardObjName(), "dummy");
-        }
+        this.scoreboard = player.getServer().getScoreboardManager().getNewScoreboard();
+        this.boardObj = scoreboard.registerNewObjective("display", "dummy");
         boardObj.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + LangLoader.getString("game_name"));
         boardObj.setDisplaySlot(DisplaySlot.SIDEBAR);
         player.setScoreboard(scoreboard); //setScoreboard(): 设置玩家可见的计分板

@@ -166,6 +166,16 @@ talent_item_id_8_lores: [
   "§7助攻获得的硬币 +2",
   "§7箭矢命中其他玩家后， 该玩家死亡时",
   "§7你参与击杀/助攻获得的硬币 +%AddPoint%％"]
+talent_item_id_9_name: "§e§l吸血鬼"
+talent_item_id_9_lores: [
+  "§7--------------------------------",
+  "§r§b等级: %Level%  %NextLevelTip%",
+  "§r§a§l左键%ActionLeftClick%， 右键升级",
+  " ",
+  "§7攻击击中其他玩家时恢复自身 0.5❤ 生命值",
+  "§7使用弓箭命中其他玩家时， 恢复自身的生命值提升至 1.5❤",
+  "§7击杀玩家时额外获得 生命恢复 II (00:0%AddPoint%)",
+  "§c但你不会获得恢复道具！"]
 
 shop_purchase_success: "§a购买 §r%s §r§a成功！ "
 shop_purchase_fail_as_coin: "§c购买失败！ 您还需 %sg 硬币"

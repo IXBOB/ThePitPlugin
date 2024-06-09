@@ -45,6 +45,7 @@ public class OnPlayerEquippedTalentChangeListener implements Listener {
         int id = talentItem.getId();
         int level = dataBlock.getNormalTalentLevelList().get(id);
         switch (talentItem) {
+            //天赋 活跃血液
             case HEALTH_BOOST: {
                 if (isEquipped) {
                     float maxHealth = 20 + talentItem.getAddPointValue(level);
@@ -56,9 +57,11 @@ public class OnPlayerEquippedTalentChangeListener implements Listener {
                 }
                 break;
             }
+            //天赋 金色巧克力
             case GOLDEN_CHOCOLATE: {
                 break;
             }
+            //天赋 渔夫
             case FISHERMAN: {
                 if (isEquipped) {
                     player.getInventory().addItem(TalentGivingItemEnum.DEFAULT_FISHING_ROD.getItemStack());
@@ -67,6 +70,7 @@ public class OnPlayerEquippedTalentChangeListener implements Listener {
                 }
                 break;
             }
+            //天赋 安全第一
             case SAFETY_FIRST: {
                 if (isEquipped) {
                     player.getInventory().setHelmet(TalentGivingItemEnum.DEFAULT_CHAINMAIL_HELMET.getItemStack());
@@ -76,6 +80,7 @@ public class OnPlayerEquippedTalentChangeListener implements Listener {
                 }
                 break;
             }
+            //天赋 矿工
             case MINER: {
                 if (isEquipped) {
                     id = GUITalentItemEnum.MINER.getId();

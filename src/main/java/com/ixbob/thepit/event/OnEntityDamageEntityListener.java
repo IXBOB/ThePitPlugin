@@ -84,8 +84,17 @@ public class OnEntityDamageEntityListener implements Listener {
             if (damagerEquippedTalentList.contains(infiniteArrowsId)) {
                 damager.getInventory().addItem(new ItemStack(Material.ARROW, (int) TalentCalcuUtils.getAddPointValue(infiniteArrowsId, talentLevelList.get(infiniteArrowsId))));
             }
+            //天赋 灵活战术
             if (damagerEquippedTalentList.contains(GUITalentItemEnum.FLEXIBLE_TACTICS.getId())) {
                 damagedPlayerDataBlock.getDamagedByArrowPlayers().add(damager);
+            }
+        }
+
+        //天赋 吸血鬼
+        if (damagerEquippedTalentList.contains(GUITalentItemEnum.BLOOD_SUCKER.getId())) {
+            PlayerUtils.addHealth(damager, 1);
+            if (hitType == PitHitTypeEnum.ARROW) {
+                PlayerUtils.addHealth(damager, 3);
             }
         }
 
