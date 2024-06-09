@@ -13,7 +13,7 @@ public class TalentCalcuUtils {
             case 6 -> (6 + level * 6);
             case 7 -> (float) (1 + level);
             case 8 -> 20 + level * 10;
-            case 9 -> 2 + level * 3;
+            case 9 -> 40 + level * 3 * 20;
             default -> throw new NullPointerException();
         };
     }
