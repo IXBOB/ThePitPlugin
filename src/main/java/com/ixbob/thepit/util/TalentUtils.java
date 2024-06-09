@@ -21,7 +21,7 @@ public class TalentUtils {
         if (playerPrestigeLevel < needPrestigeLevel || (playerPrestigeLevel == needPrestigeLevel && playerLevel < needLevel)) { //不满足条件，不放置
             return false;
         }
-        ItemStack item = talentItem.getNamedItem(talentLevel, equipped, hasReachedMaxLevel);
+        ItemStack item = talentItem.getNamedItemStack(talentLevel, equipped, hasReachedMaxLevel);
         inventory.setItem(index, item);
         return true;
     }

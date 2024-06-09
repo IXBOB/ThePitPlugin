@@ -130,7 +130,7 @@ public enum GUITalentItemEnum {
         return TalentCalcuUtils.getAddPointValue(id, level);
     }
 
-    public ItemStack getNamedItem(int level, boolean equipped, boolean hasReachedMaxLevel) {
+    public ItemStack getNamedItemStack(int level, boolean equipped, boolean hasReachedMaxLevel) {
         ItemStack itemStack = this.getItemStack();
         ItemMeta itemMeta = itemStack.getItemMeta();
         return defaultNameMethod(level, equipped, hasReachedMaxLevel, itemStack, itemMeta);

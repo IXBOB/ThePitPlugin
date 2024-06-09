@@ -16,6 +16,7 @@ public class PitConfig implements BasicConfig {
     private static Location dhLobbyRankingsLoc;
     private static Location npcTalentLoc;
     private static Location npcShopLoc;
+    private static Location npcWatchmanLoc;
 
     private PitConfig() {}
 
@@ -36,6 +37,7 @@ public class PitConfig implements BasicConfig {
         dhLobbyRankingsLoc = listToLoc(config.getDoubleList("dh_lobby_rankings_location"));
         npcTalentLoc = listToLoc(config.getDoubleList("npc_talent_location"));
         npcShopLoc = listToLoc(config.getDoubleList("npc_shop_location"));
+        npcWatchmanLoc = listToLoc(config.getDoubleList("npc_watchman_location"));
     }
 
 
@@ -73,6 +75,10 @@ public class PitConfig implements BasicConfig {
     public Location getNPCShopLoc() {
         return npcShopLoc;
     }
+
+    @Override
+    public Location getNPCWatchmanLoc() {
+        return npcWatchmanLoc;    }
 
     private static Location listToLoc(List<?> list) {
         Location loc = new Location(Bukkit.getWorlds().get(0), (Double) list.get(0), (Double) list.get(1), (Double) list.get(2));

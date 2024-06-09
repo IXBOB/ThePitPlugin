@@ -31,9 +31,12 @@ public class Main extends JavaPlugin {
     public static Location spawnLocation;
     public static PlayerGUIManager GUIManager;
     public static TaskManager taskManager;
+    public static String bungeecordChannelName = "ixbob_thepit:bungeecord";
 
     @Override
     public void onEnable() {
+        this.getServer().getMessenger().registerOutgoingPluginChannel(this, bungeecordChannelName);
+
         this.saveDefaultConfig();
         Main.instance = this;
 
@@ -67,6 +70,7 @@ public class Main extends JavaPlugin {
         this.getCommand("spawn").setExecutor(new CommandSpawn());
         this.getCommand("talent").setExecutor(new CommandTalent());
         this.getCommand("shop").setExecutor(new CommandShop());
+        this.getCommand("watchman").setExecutor(new CommandWatchman());
         this.getCommand("help").setExecutor(new CommandHelp());
 
         registerEvents(

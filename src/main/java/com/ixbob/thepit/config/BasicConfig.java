@@ -16,4 +16,6 @@ public interface BasicConfig {
     Location getNPCTalentLoc();
 
     Location getNPCShopLoc();
+
+    Location getNPCWatchmanLoc();
 }

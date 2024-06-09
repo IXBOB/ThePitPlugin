@@ -8,8 +8,9 @@ command_help_message_line1: "§e此服务器正在运行 天坑乱斗插件, 作
 command_help_message_line2: "§7支持此插件的开发！ afdian.net/a/IXBOB"
 command_help_message_line3: "赞助者名单: §aRuoyanzz, 咲小宝,§r laiyipianVC, Bilibili_库巴大人, §c§o§l§m§kZF_ruozhi和他的女朋友¼"
 
-npc_talent_name: "§e天赋"
-npc_shop_name: "§e商店"
+npc_talent_name: "§e§l天赋"
+npc_shop_name: "§e§l商店"
+npc_watchman_name: "§e§l看门人"
 
 hd_tip_info_contents: ["§e§l亲爱的玩家" , "§b天坑乱斗插件 by IXBOB 正在开发中"]
 hd_tip_jump_contents: ["§c§l天坑乱斗" , "§7跳下去， 开始战斗！"]
@@ -85,6 +86,13 @@ pittalentitem_default_iron_chestplate: "§r铁胸甲"
 pittalentitem_default_iron_leggings: "§r铁护腿"
 pittalentitem_default_iron_boots: "§r铁靴子"
 pittalentitem_default_fishing_rod: "§r鱼竿"
+
+watchman_gui_title: "看门人"
+
+watchman_item_id_0_name: "§a§l返回大厅"
+watchman_item_id_0_lores: [
+  "§7单击以返回大厅，",
+  "§7请确保你不处在战斗状态中！"]
 
 talent_item_click_action_equip: "装备"
 talent_item_click_action_off: "卸下"

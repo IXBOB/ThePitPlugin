@@ -3,6 +3,7 @@ package com.ixbob.thepit;
 import com.ixbob.thepit.gui.BasicGUIImpl;
 import com.ixbob.thepit.gui.GUIShop;
 import com.ixbob.thepit.gui.GUITalent;
+import com.ixbob.thepit.gui.GUIWatchman;
 import com.ixbob.thepit.util.Utils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -39,6 +40,12 @@ public class PlayerGUIManager {
         GUIShop gui = new GUIShop(player);
         addPlayerToHashMap(player, gui);
         gui.display(LangLoader.getString("shop_gui_title"));
+    }
+
+    public void openWatchmanGUI(Player player) {
+        GUIWatchman gui = new GUIWatchman(player);
+        addPlayerToHashMap(player, gui);
+        gui.display(LangLoader.getString("watchman_gui_title"));
     }
 
     public void onCloseGUI(Player player) {

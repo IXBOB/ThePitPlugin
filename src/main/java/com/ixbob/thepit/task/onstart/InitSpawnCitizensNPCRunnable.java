@@ -6,6 +6,7 @@ import com.ixbob.thepit.Main;
 import com.ixbob.thepit.config.PitConfig;
 import com.ixbob.thepit.npc.ShopNPC;
 import com.ixbob.thepit.npc.TalentNPC;
+import com.ixbob.thepit.npc.WatchmanNPC;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPCRegistry;
 
@@ -22,6 +23,7 @@ public class InitSpawnCitizensNPCRunnable implements Runnable{
         //生成NPC
         ShopNPC shopNPC = ShopNPC.spawn();
         TalentNPC talentNPC = TalentNPC.spawn();
+        WatchmanNPC watchmanNPC = WatchmanNPC.spawn();
 
         //NPC配置完毕后设置HologramManager的初始化状态
         HologramManager.getInstance().setInitialized();
