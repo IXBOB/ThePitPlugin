@@ -54,6 +54,7 @@ public class OnPlayerJoinListener implements Listener {
 
         if (!HologramManager.getInstance().isInitialized()) {
             player.kickPlayer(LangLoader.getString("server_prepare_not_finished_kick_message"));
+            return;
         }
 
         for (PotionEffect potionEffect : player.getActivePotionEffects()) {

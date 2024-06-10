@@ -1,5 +1,6 @@
 package com.ixbob.thepit;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -13,7 +14,7 @@ public class PlayerScoreboard {
     private final Player player;
     private ArrayList<String> keys = new ArrayList<>();
     private Scoreboard scoreboard;
-    Objective boardObj;
+    private Objective boardObj;
 
     public PlayerScoreboard(Player player) {
         this.player = player;
@@ -33,9 +34,14 @@ public class PlayerScoreboard {
         keys.add(LangLoader.getString("main_scoreboard_line8"));
         keys.add(LangLoader.getString("main_scoreboard_line9"));
 
-        this.scoreboard = player.getServer().getScoreboardManager().getNewScoreboard();
-        this.boardObj = scoreboard.registerNewObjective("display", "dummy");
-        boardObj.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + LangLoader.getString("game_name"));
+        this.scoreboard = Bukkit.getServer().getScoreboardManager().getMainScoreboard();
+
+        Objective getObjective = scoreboard.getObjective(String.valueOf(playerData.getId()));
+        if (getObjective != null) {
+            getObjective.unregister();
+        }
+        this.boardObj = scoreboard.registerNewObjective(String.valueOf(playerData.getId()), "dummy", ChatColor.YELLOW + "" + ChatColor.BOLD + LangLoader.getString("game_name"));
+
         boardObj.setDisplaySlot(DisplaySlot.SIDEBAR);
         player.setScoreboard(scoreboard); //setScoreboard(): 设置玩家可见的计分板
     }
@@ -103,10 +109,6 @@ public class PlayerScoreboard {
                 score.setScore(scoreInt + modifyAmount);
             }
         }
-    }
-
-    public Scoreboard getScoreboard() {
-        return scoreboard;
     }
 
     public Player getPlayer() {
