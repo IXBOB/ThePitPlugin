@@ -32,6 +32,7 @@ public class Main extends JavaPlugin {
     public static PlayerGUIManager GUIManager;
     public static TaskManager taskManager;
     public static String bungeecordChannelName = "ixbob_thepit:bungeecord";
+    public static int signInPlayerAmountFromLaunch = 0;
 
     @Override
     public void onEnable() {

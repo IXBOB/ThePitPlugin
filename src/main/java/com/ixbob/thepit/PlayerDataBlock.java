@@ -60,7 +60,7 @@ public class PlayerDataBlock {
         this.typedSpawn = false;
         this.playerGetDamagedHistory = new ArrayList<>();
         this.damagedByArrowPlayers = new ArrayList<>();
-        this.id = Main.getMongoDBService().getTotalRegisteredPlayerAmount();
+        this.id = Main.signInPlayerAmountFromLaunch;
 
         this.playerScoreboard = new PlayerScoreboard(player);
     }
@@ -288,10 +288,6 @@ public class PlayerDataBlock {
 
     public PlayerScoreboard getPlayerScoreboard() {
         return playerScoreboard;
-    }
-
-    public void setPlayerScoreboard(PlayerScoreboard playerScoreboard) {
-        this.playerScoreboard = playerScoreboard;
     }
 
     public TalentStrengthValidCountDownerRunnable getTalentStrengthValidCountDowner() {

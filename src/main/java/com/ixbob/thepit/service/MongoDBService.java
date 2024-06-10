@@ -14,7 +14,6 @@ public class MongoDBService {
     private static DB mcserverdb;
     private static MongoClient client;
     private static MongoDBService instance;
-    private static int totalRegisteredPlayerAmount;
 
     private MongoDBService() {
     }
@@ -103,13 +102,5 @@ public class MongoDBService {
 
     public DBCursor getCollectionFindings() {
         return collection.find();
-    }
-
-    public int getTotalRegisteredPlayerAmount() {
-        return totalRegisteredPlayerAmount;
-    }
-
-    public void addTotalRegisteredPlayerAmount(int amount) {
-        MongoDBService.totalRegisteredPlayerAmount += amount;
     }
 }

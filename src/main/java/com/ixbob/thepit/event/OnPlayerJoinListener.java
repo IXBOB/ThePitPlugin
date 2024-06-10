@@ -60,6 +60,7 @@ public class OnPlayerJoinListener implements Listener {
             player.removePotionEffect(potionEffect.getType());
         }
 
+        Main.signInPlayerAmountFromLaunch++;
         Utils.backToLobby(player);
         player.setGameMode(GameMode.SURVIVAL);
         player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(200);
@@ -75,7 +76,7 @@ public class OnPlayerJoinListener implements Listener {
                 genPlayerDataBlock(taskPlayer);
                 Bukkit.getScheduler().runTask(Main.getInstance(), new RefreshPlayerHologramVisibleStateRunnable(player));
 //                NMSUtils.sendPacketForChangeDisplayName(player);
-                TeamManager.getInstance().joinRandomTeamToChangeDisplayName(player);
+                TeamManager.getInstance().joinTeamToChangeDisplayName(player);
 
 
                 //读取并设置玩家物品栏
@@ -153,7 +154,6 @@ public class OnPlayerJoinListener implements Listener {
     private void genPlayerDataBlock(Player taskPlayer) {
         PlayerDataBlock dataBlock = new PlayerDataBlock(taskPlayer);
         Main.addPlayerDataBlock(taskPlayer, dataBlock);
-        Main.getMongoDBService().addTotalRegisteredPlayerAmount(1);
         dataBlock.init();
     }
 }

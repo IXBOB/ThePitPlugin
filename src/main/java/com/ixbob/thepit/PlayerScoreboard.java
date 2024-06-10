@@ -105,5 +105,19 @@ public class PlayerScoreboard {
         }
     }
 
+    public Scoreboard getScoreboard() {
+        return scoreboard;
+    }
 
+    public Player getPlayer() {
+        return player;
+    }
+
+    public ArrayList<String> getKeys() {
+        return keys;
+    }
+
+    public Objective getBoardObj() {
+        return boardObj;
+    }
 }

@@ -314,6 +314,6 @@ public class PlayerUtils {
     }
 
     public static void addHealth(Player player, int amount) {
-        player.setHealth(Math.min(player.getHealth() + 1, player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()));
+        player.setHealth(Math.min(player.getHealth() + amount, player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()));
     }
 }
