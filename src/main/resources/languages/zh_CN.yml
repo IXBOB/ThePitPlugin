@@ -6,7 +6,7 @@ system_load_hds_finish_info: "holograms 初始化完成"
 
 command_help_message_line1: "§e此服务器正在运行 天坑乱斗插件, 作者 IXBOB"
 command_help_message_line2: "§7支持此插件的开发！ afdian.net/a/IXBOB"
-command_help_message_line3: "赞助者名单: §aRuoyanzz, 咲小宝,§r laiyipianVC, Bilibili_库巴大人, §c§o§l§m§kZF_ruozhi和他的女朋友¼"
+command_help_message_line3: "赞助者名单: §aRuoyanzz, 咲小宝,§r laiyipianVC, Bilibili_库巴大人, ZF_zhi"
 
 npc_talent_name: "§e§l天赋"
 npc_shop_name: "§e§l商店"
