@@ -9,7 +9,6 @@ public class OnEntityDamagedListener implements Listener {
     @EventHandler
     public void onEntityDamaged(EntityDamageEvent event) {
         if (event.getEntity() instanceof Player) {
-            Player player = (Player) event.getEntity();
             if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {
                 event.setCancelled(true);
             }

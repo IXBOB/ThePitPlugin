@@ -9,6 +9,9 @@ import com.ixbob.thepit.util.ServiceUtils;
 import com.ixbob.thepit.util.Utils;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.title.Title;
+import net.kyori.adventure.util.Ticks;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -53,7 +56,7 @@ public class OnPlayerJoinListener implements Listener {
         this.playerUUID = player.getUniqueId();
 
         if (!HologramManager.getInstance().isInitialized()) {
-            player.kickPlayer(LangLoader.getString("server_prepare_not_finished_kick_message"));
+            player.kick(Component.text(LangLoader.getString("server_prepare_not_finished_kick_message")));
             return;
         }
 
@@ -66,7 +69,10 @@ public class OnPlayerJoinListener implements Listener {
         player.setGameMode(GameMode.SURVIVAL);
         player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(200);
         player.getInventory().clear();
-        player.sendTitle(LangLoader.getString("join_loading_title"), LangLoader.getString("join_loading_subtitle"), 10, 60, 10);
+        Title title = Title.title(Component.text(LangLoader.getString("join_loading_title")),
+                Component.text(LangLoader.getString("join_loading_subtitle")),
+                Title.Times.of(Ticks.duration(10L), Ticks.duration(60L), Ticks.duration(10L)));
+        player.showTitle(title);
 
         Bukkit.getServer().getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
             Player taskPlayer = player;

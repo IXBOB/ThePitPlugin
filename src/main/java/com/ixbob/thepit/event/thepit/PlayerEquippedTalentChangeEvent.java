@@ -4,6 +4,7 @@ import com.ixbob.thepit.enums.gui.talent.GUITalentItemEnum;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
 public class PlayerEquippedTalentChangeEvent extends Event {
     public static final HandlerList HANDLERS = new HandlerList();
@@ -41,7 +42,7 @@ public class PlayerEquippedTalentChangeEvent extends Event {
     }
 
     @Override
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return HANDLERS;
     }
 }

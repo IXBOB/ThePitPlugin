@@ -24,6 +24,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Main extends JavaPlugin {
     private static Plugin instance;
@@ -44,7 +45,7 @@ public class Main extends JavaPlugin {
 
         MongoDBService mongoDBService = MongoDBService.getInstance();
         getServer().getServicesManager().register(MongoDBService.class, mongoDBService, this, ServicePriority.Normal);
-        this.mongoDBService = mongoDBService;
+        Main.mongoDBService = mongoDBService;
 
         spawnLocation = new Location(Bukkit.getWorlds().get(0), -8, 153, -5);
 
@@ -58,8 +59,7 @@ public class Main extends JavaPlugin {
         taskManager = TaskManager.getInstance();
 
         for (Entity entity : Bukkit.getWorlds().get(0).getEntities()) {
-            if (entity instanceof Item) {
-                Item item = (Item) entity;
+            if (entity instanceof Item item) {
                 item.remove();
             }
         }
@@ -69,12 +69,12 @@ public class Main extends JavaPlugin {
 //                System.out.println(Bukkit.getServer().getWorlds().get(0).getEntities().stream().filter(entity -> entity.getType() == EntityType.DROPPED_ITEM).count());
 //            System.out.println(taskManager.getRandomGoldIngotSpawnTaskHandler().getGoldIngotExistAmount());}, 0, 5);
 
-        this.getCommand("test").setExecutor(new CommandTest());
-        this.getCommand("spawn").setExecutor(new CommandSpawn());
-        this.getCommand("talent").setExecutor(new CommandTalent());
-        this.getCommand("shop").setExecutor(new CommandShop());
-        this.getCommand("watchman").setExecutor(new CommandWatchman());
-        this.getCommand("help").setExecutor(new CommandHelp());
+        Objects.requireNonNull(this.getCommand("test")).setExecutor(new CommandTest());
+        Objects.requireNonNull(this.getCommand("spawn")).setExecutor(new CommandSpawn());
+        Objects.requireNonNull(this.getCommand("talent")).setExecutor(new CommandTalent());
+        Objects.requireNonNull(this.getCommand("shop")).setExecutor(new CommandShop());
+        Objects.requireNonNull(this.getCommand("watchman")).setExecutor(new CommandWatchman());
+        Objects.requireNonNull(this.getCommand("help")).setExecutor(new CommandHelp());
 
         registerEvents(
                 new OnPlayerJoinListener(),

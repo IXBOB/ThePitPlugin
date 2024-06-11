@@ -5,6 +5,9 @@ import com.ixbob.thepit.Main;
 import com.ixbob.thepit.event.thepit.PlayerUpgradeLevelEvent;
 import com.ixbob.thepit.task.RefreshPlayerHologramVisibleStateRunnable;
 import com.ixbob.thepit.util.Utils;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.title.Title;
+import net.kyori.adventure.util.Ticks;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -21,9 +24,10 @@ public class OnPlayerUpgradeLevelListener implements Listener {
 
         String originLevelText = Utils.getLevelStrWithStyle(prestigeLevel, originLevel);
         String newLevelText = Utils.getLevelStrWithStyle(prestigeLevel, newLevel);
-        player.sendTitle(LangLoader.getString("upgrade_title"),
-                String.format(LangLoader.getString("upgrade_subtitle"), originLevelText, newLevelText),
-                10, 50, 10);
+        Title title = Title.title(Component.text(LangLoader.getString("upgrade_title")),
+                Component.text(String.format(LangLoader.getString("upgrade_subtitle"), originLevelText, newLevelText)),
+                Title.Times.of(Ticks.duration(10L), Ticks.duration(50L), Ticks.duration(10L)));
+        player.showTitle(title);
         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
         Bukkit.getScheduler().runTask(Main.getInstance(), new RefreshPlayerHologramVisibleStateRunnable(player));
     }

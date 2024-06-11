@@ -11,7 +11,6 @@ import org.bukkit.event.block.BlockPlaceEvent;
 public class OnPlayerPlaceBlockListener implements Listener {
     @EventHandler
     public void onPlayerPlaceBlock(BlockPlaceEvent event) {
-        Player player = event.getPlayer();
         Location location = event.getBlockPlaced().getLocation();
         Material material = event.getBlockPlaced().getType();
         if (material == Material.OBSIDIAN

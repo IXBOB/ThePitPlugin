@@ -10,6 +10,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 public class OnPlayerConsumeItemListener implements Listener {
     @EventHandler
     public void onPlayerConsumeItem(PlayerItemConsumeEvent event) {
@@ -18,7 +22,8 @@ public class OnPlayerConsumeItemListener implements Listener {
         if (item.getType() == Material.GOLDEN_APPLE) {
             event.setCancelled(true);
             NMSUtils.getEntityPlayer(player).setAbsorptionAmount(8);
-            player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 100, 1), false);
+            Collection<PotionEffect> effects = new ArrayList<>(List.of(new PotionEffect(PotionEffectType.REGENERATION, 100, 1, false, false)));
+            player.addPotionEffects(effects);
             int newAmount = item.getAmount() - 1;
             item.setAmount(newAmount);
             player.getInventory().setItemInMainHand(item);

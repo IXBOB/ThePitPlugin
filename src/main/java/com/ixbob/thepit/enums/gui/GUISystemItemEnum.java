@@ -1,6 +1,7 @@
 package com.ixbob.thepit.enums.gui;
 
 import com.ixbob.thepit.LangLoader;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -36,7 +37,7 @@ public enum GUISystemItemEnum {
     public ItemStack getItemStack(ArrayList<String> formatStrings) {
         ItemStack itemStack1 = new ItemStack(itemStack);
         ItemMeta itemMeta1 = itemStack1.getItemMeta();
-        itemMeta1.setDisplayName(String.format(itemMeta1.getDisplayName(), formatStrings.toArray()));
+        itemMeta1.displayName(Component.text(String.format(itemMeta1.getDisplayName(), formatStrings.toArray())));
         itemStack1.setItemMeta(itemMeta1);
         return itemStack1;
     }

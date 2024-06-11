@@ -15,6 +15,8 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class OnPlayerInteractListener implements Listener {
     @EventHandler
@@ -30,7 +32,8 @@ public class OnPlayerInteractListener implements Listener {
                     event.setCancelled(true);
                     item.setAmount(item.getAmount() - 1);
                     NMSUtils.getEntityPlayer(player).setAbsorptionAmount(TalentCalcuUtils.getAddPointValue(1, talentLevelList.get(1)));
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 100, 1), false);
+                    Collection<PotionEffect> effects = new ArrayList<>(List.of(new PotionEffect(PotionEffectType.REGENERATION, 100, 1, false, false)));
+                    player.addPotionEffects(effects);
                     player.setFoodLevel(player.getFoodLevel() + 4);
                 }
             }

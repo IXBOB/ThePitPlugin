@@ -23,8 +23,7 @@ import java.util.Random;
 public class OnPlayerPickupItemListener implements Listener {
     @EventHandler
     public void onEntityPickupItem(EntityPickupItemEvent event) {
-        if (event.getEntity() instanceof Player) {
-            Player player = (Player) event.getEntity();
+        if (event.getEntity() instanceof Player player) {
             Item item = event.getItem();
             ItemStack itemStack = item.getItemStack();
             for (DropItemEnum dropItem : DropItemEnum.values()) {

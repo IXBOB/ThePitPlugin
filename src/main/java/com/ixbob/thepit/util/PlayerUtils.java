@@ -168,8 +168,9 @@ public class PlayerUtils {
         //天赋 吸血鬼
         if (damagerEquippedTalentList.contains(GUITalentItemEnum.BLOOD_SUCKER.getId())) {
             int id = GUITalentItemEnum.BLOOD_SUCKER.getId();
-            damager.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, (int)TalentCalcuUtils.getAddPointValue(
-                    id, damagerDataBlock.getNormalTalentLevelList().get(id)), 1));
+            Collection<PotionEffect> effects = new ArrayList<>(List.of(new PotionEffect(PotionEffectType.REGENERATION, (int)TalentCalcuUtils.getAddPointValue(
+                    id, damagerDataBlock.getNormalTalentLevelList().get(id)), 1, false, false)));
+            damager.addPotionEffects(effects);
         }
         //天赋 力量
         if (damagerEquippedTalentList.contains(GUITalentItemEnum.STRENGTH.getId())) {
@@ -290,11 +291,10 @@ public class PlayerUtils {
         EntityDamageEvent event = player.getLastDamageCause();
 
         //玩家输入/spawn confirm前受伤了
-        if (event != null && !event.isCancelled() && (event instanceof EntityDamageByEntityEvent)) {
-            EntityDamageByEntityEvent entityDamageByEntityEvent = (EntityDamageByEntityEvent) event;
+        if (event != null && !event.isCancelled() && (event instanceof EntityDamageByEntityEvent entityDamageByEntityEvent)) {
             Entity lastDamageEntity = entityDamageByEntityEvent.getDamager();
 
-            Player damager = null;
+            Player damager;
             if (lastDamageEntity instanceof Player) {
                 damager = (Player) lastDamageEntity;
             } else if (lastDamageEntity instanceof Arrow) {
@@ -302,7 +302,7 @@ public class PlayerUtils {
             } else {
                 return;
             }
-            PlayerUtils.onPlayerKillAnother(player, damager);
+            PlayerUtils.onPlayerKillAnother(player, Objects.requireNonNull(damager));
         }
 
         //玩家输入/spawn confirm前没有受伤

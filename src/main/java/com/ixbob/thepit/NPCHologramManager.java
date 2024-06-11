@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 public class NPCHologramManager {
     private static NPCHologramManager instance;
-    private HashMap<NPC, ArrayList<Hologram>> npcHologramsMap = new HashMap<>();
+    private final HashMap<NPC, ArrayList<Hologram>> npcHologramsMap = new HashMap<>();
 
     private NPCHologramManager() {
 

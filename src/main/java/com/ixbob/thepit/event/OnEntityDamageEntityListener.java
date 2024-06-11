@@ -10,8 +10,7 @@ import com.ixbob.thepit.util.NMSUtils;
 import com.ixbob.thepit.util.PlayerUtils;
 import com.ixbob.thepit.util.TalentCalcuUtils;
 import com.ixbob.thepit.util.Utils;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -25,6 +24,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class OnEntityDamageEntityListener implements Listener {
     private PlayerDataBlock damagedPlayerDataBlock;
@@ -41,11 +41,10 @@ public class OnEntityDamageEntityListener implements Listener {
                 return;
             }
             else {
-                if (damagerEntity instanceof Arrow) {
-                    Arrow damagerArrow = (Arrow) damagerEntity;
+                if (damagerEntity instanceof Arrow damagerArrow) {
                     Player damager = (Player) damagerArrow.getShooter();
                     Player damagedPlayer = (Player) event.getEntity();
-                    if (damagedPlayer == damager || Utils.isInLobbyArea(damager.getLocation())) {
+                    if (damagedPlayer == damager || Utils.isInLobbyArea(Objects.requireNonNull(damager).getLocation())) {
                         damagerEntity.remove();
                         event.setCancelled(true);
                         return;
@@ -55,9 +54,7 @@ public class OnEntityDamageEntityListener implements Listener {
             }
         }
 
-        if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            Player damagedPlayer = (Player) event.getEntity();
-            Player damager = (Player) event.getDamager();
+        if (event.getDamager() instanceof Player damager && event.getEntity() instanceof Player damagedPlayer) {
             //若有一方在大厅，则取消伤害
             if (Utils.isInLobbyArea(damagedPlayer.getLocation()) || Utils.isInLobbyArea(damager.getLocation())) {
                 event.setCancelled(true);
@@ -134,10 +131,10 @@ public class OnEntityDamageEntityListener implements Listener {
                     .append(LangLoader.getString("damage_show_heart_actionbar_extra").repeat(
                             absorptionHealthAfter > 0 ? (int) Math.ceil(absorptionHealthAfter / 2) : 0
                     ));
-            damager.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(PlayerUtils.getPitDisplayName(damagedPlayer) + " " + actionbarBuilder));
+            damager.sendActionBar(Component.text(PlayerUtils.getPitDisplayName(damagedPlayer) + " " + actionbarBuilder));
         }
         else {
-            damager.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(String.format(LangLoader.getString("damage_kill_show_player_info"), PlayerUtils.getPitDisplayName(damagedPlayer))));
+            damager.sendActionBar(Component.text(String.format(LangLoader.getString("damage_kill_show_player_info"), PlayerUtils.getPitDisplayName(damagedPlayer))));
         }
 
         //若被击杀的玩家受到的伤害足以导致死亡
