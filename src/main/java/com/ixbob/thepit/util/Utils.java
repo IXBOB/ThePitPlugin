@@ -113,10 +113,13 @@ public class Utils {
     public static ArrayList<Player> getDamageHistoryPlayers(ArrayList<LinkedHashMap<Player, ArrayList<Object>>> damagedHistory) {
         ArrayList<Player> playerHistoryList = new ArrayList<>();
         for (LinkedHashMap<Player, ArrayList<Object>> history : damagedHistory) {
-            Map.Entry<Player, ArrayList<Object>> firstEntry = history.entrySet().iterator().next();
-            Player player = firstEntry.getKey();
-            if (!playerHistoryList.contains(player)) {
-                playerHistoryList.add(player);
+            Iterator<Map.Entry<Player, ArrayList<Object>>> iterator = history.entrySet().iterator();
+            if (iterator.hasNext()) {
+                Map.Entry<Player, ArrayList<Object>> firstEntry = iterator.next();
+                Player player = firstEntry.getKey();
+                if (!playerHistoryList.contains(player)) {
+                    playerHistoryList.add(player);
+                }
             }
         }
         return playerHistoryList;

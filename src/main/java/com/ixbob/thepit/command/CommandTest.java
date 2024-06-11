@@ -1,17 +1,21 @@
 package com.ixbob.thepit.command;
 
 import com.ixbob.thepit.Main;
-import com.ixbob.thepit.task.ReloadPitLobbyRankingsListRunnable;
-import org.bukkit.Bukkit;
+import com.ixbob.thepit.PlayerDataBlock;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class CommandTest implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+        if (commandSender instanceof Player player) {
+            PlayerDataBlock dataBlock = Main.getPlayerDataBlock(player);
+            dataBlock.getPlayerScoreboard().create();
+        }
 
-        Bukkit.getScheduler().runTask(Main.getInstance(), new ReloadPitLobbyRankingsListRunnable());
+//        Bukkit.getScheduler().runTask(Main.getInstance(), new ReloadPitLobbyRankingsListRunnable());
 
 //        Bukkit.getScheduler().runTask(Main.getInstance(), new ReloadPitLobbyRankingsListRunnable());
 //        if (commandSender instanceof Player) {

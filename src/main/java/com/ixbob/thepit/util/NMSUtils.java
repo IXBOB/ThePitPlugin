@@ -16,8 +16,6 @@ import org.bukkit.craftbukkit.v1_18_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_18_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.UUID;
 
@@ -29,11 +27,8 @@ public class NMSUtils {
         }
     }
 
-    public static ServerPlayerConnection getPlayerConnection(Player player) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchFieldException {
-        Method getHandle = player.getClass().getMethod("getHandle");
-        Object nmsPlayer = getHandle.invoke(player);
-        Field conField = nmsPlayer.getClass().getField("playerConnection");
-        return (ServerPlayerConnection) conField.get(nmsPlayer);
+    public static ServerPlayerConnection getPlayerConnection(Player player) {
+        return ((CraftPlayer) player).getHandle().connection;
     }
 
     public static Class<?> getNMSClass(String clazz) throws Exception {

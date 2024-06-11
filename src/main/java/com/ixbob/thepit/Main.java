@@ -4,12 +4,12 @@ import com.ixbob.thepit.command.*;
 import com.ixbob.thepit.enums.CustomBasicToolEnum;
 import com.ixbob.thepit.enums.CustomSkullEnum;
 import com.ixbob.thepit.enums.DropItemEnum;
+import com.ixbob.thepit.enums.ScoreboardStructureEnum;
 import com.ixbob.thepit.event.*;
 import com.ixbob.thepit.event.citizens.OnCitizensEnableListener;
 import com.ixbob.thepit.event.citizens.OnNPCRightClickListener;
 import com.ixbob.thepit.event.paper.OnPlayerChatListener;
 import com.ixbob.thepit.service.MongoDBService;
-import com.ixbob.thepit.task.network.SendScoreboardPacketAdapterRunnable;
 import com.ixbob.thepit.task.onstart.delayed.ResetHologramsRunnable;
 import com.ixbob.thepit.util.PlayerUtils;
 import org.bukkit.Bukkit;
@@ -52,6 +52,7 @@ public class Main extends JavaPlugin {
         CustomSkullEnum.init();
         CustomBasicToolEnum.init();
         DropItemEnum.init();
+        ScoreboardStructureEnum.init();
 
         GUIManager = PlayerGUIManager.getInstance();
         taskManager = TaskManager.getInstance();
@@ -105,7 +106,7 @@ public class Main extends JavaPlugin {
 
         getServer().getScheduler().runTaskLater(this, new ResetHologramsRunnable(), 20);
 
-        getServer().getScheduler().runTask(this, new SendScoreboardPacketAdapterRunnable());
+//        getServer().getScheduler().runTask(this, new SendScoreboardPacketAdapterRunnable());
 //        getServer().getScheduler().runTask(this, new RegisterPlayerNamePacketAdapterRunnable());
     }
 

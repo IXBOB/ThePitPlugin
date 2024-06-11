@@ -83,40 +83,18 @@ public class PlayerDataBlock {
         mongoDB.updateDataByUUID(dataObj, player.getUniqueId());
     }
 
-    public void updateScoreboardLevel() {
-        playerScoreboard.replaceKey(1, String.format(LangLoader.getString("main_scoreboard_line2"), level));
-    }
-
-    public void updateScoreboardNextLevelNeedXp() {
-        playerScoreboard.replaceKey(2, String.format(LangLoader.getString("main_scoreboard_line3"), Mth.formatDecimalWithFloor(nextLevelNeedXp-thisLevelOwnXp, 2)));
-    }
-
-    public void updateScoreboardOwnCoinAmount() {
-        playerScoreboard.replaceKey(4, String.format(LangLoader.getString("main_scoreboard_line5"), Mth.formatDecimalWithFloor(coinAmount, 1)));
-    }
-
-    public void updateScoreboardBattleState() {
-        playerScoreboard.replaceKey(6, battleState ?
-                String.format(LangLoader.getString("battle_state_true_scoreboard_line7"), Mth.formatDecimalWithFloor(battleStateCoolCountDownerRunnable.getTimeLeft(), 1))
-                :
-                LangLoader.getString("battle_state_false_scoreboard_line7"));
-    }
-
-    public void updateScoreboardTalentStrength(boolean isInit) {
-        if (!isInit) {
-            playerScoreboard.removeKey(7);
-        }
-        playerScoreboard.insertKey(7, String.format(LangLoader.getString("talent_item_id_4_scoreboard"),
-                talentStrengthValidCountDownerRunnable.getAddDamagePercentagePoint(),
-                Mth.formatDecimalWithFloor(talentStrengthValidCountDownerRunnable.getTimeLeft(), 1)));
-    }
-
     public void addDamagedHistory(Player damager, double finalDamage) {
         playerGetDamagedHistory.add(new LinkedHashMap<>() {{put(damager, new ArrayList<>(Arrays.asList(finalDamage)));}});
     }
 
     public ArrayList<LinkedHashMap<Player, ArrayList<Object>>> getPlayerGetDamagedHistory() {
         return playerGetDamagedHistory;
+    }
+
+    public void removePlayerFromGetDamagedHistory(Player player) {
+        for (LinkedHashMap<Player, ArrayList<Object>> map : playerGetDamagedHistory) {
+            map.remove(player);
+        }
     }
 
     public Player getPlayer() {
@@ -212,11 +190,11 @@ public class PlayerDataBlock {
                 int taskID = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), countDowner, 0, 1);
                 countDowner.setTaskID(taskID);
                 talentStrengthValidCountDownerRunnable = countDowner;
-                updateScoreboardTalentStrength(true);
+                playerScoreboard.updateBoardTalentStrength();
             }
             else {
                 talentStrengthValidCountDownerRunnable.addStrengthLevel();
-                updateScoreboardTalentStrength(false);
+                playerScoreboard.updateBoardTalentStrength();
             }
         }
         else {
@@ -290,10 +268,6 @@ public class PlayerDataBlock {
         return playerScoreboard;
     }
 
-    public TalentStrengthValidCountDownerRunnable getTalentStrengthValidCountDowner() {
-        return talentStrengthValidCountDownerRunnable;
-    }
-
     public ArrayList<Player> getDamagedByArrowPlayers() {
         return damagedByArrowPlayers;
     }
@@ -308,5 +282,13 @@ public class PlayerDataBlock {
 
     public int getId() {
         return id;
+    }
+
+    public BattleStateCoolCountDownerRunnable getBattleStateCoolCountDownerRunnable() {
+        return battleStateCoolCountDownerRunnable;
+    }
+
+    public TalentStrengthValidCountDownerRunnable getTalentStrengthValidCountDownerRunnable() {
+        return talentStrengthValidCountDownerRunnable;
     }
 }

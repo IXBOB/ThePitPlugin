@@ -1,4 +1,4 @@
-package com.ixbob.thepit.event.custom;
+package com.ixbob.thepit.event.thepit;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;

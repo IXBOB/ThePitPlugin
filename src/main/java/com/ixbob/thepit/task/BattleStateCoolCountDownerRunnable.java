@@ -30,7 +30,7 @@ public class BattleStateCoolCountDownerRunnable implements Runnable{
             cancel();
             return;
         }
-        dataBlock.updateScoreboardBattleState();
+        dataBlock.getPlayerScoreboard().updateBoardBattleState();
     }
 
     public void setTaskID(int taskID) {

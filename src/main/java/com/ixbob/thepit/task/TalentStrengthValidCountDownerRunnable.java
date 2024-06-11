@@ -30,16 +30,14 @@ public class TalentStrengthValidCountDownerRunnable implements Runnable{
     public void run() {
         timeLeft -= 0.05f;
         if (timeLeft < 0) {
-            playerScoreboard.removeKey(7);
             dataBlock.updateTalentStrengthState(false);
             cancel();
-            return;
         }
-        if (!player.isOnline()) {
+        else if (!player.isOnline()) {
             cancel();
             return;
         }
-        dataBlock.updateScoreboardTalentStrength(false);
+        playerScoreboard.updateBoardTalentStrength();
     }
 
     public void addStrengthLevel() {

@@ -1,4 +1,4 @@
-package com.ixbob.thepit.event.custom;
+package com.ixbob.thepit.event.thepit;
 
 import com.ixbob.thepit.enums.gui.talent.GUITalentItemEnum;
 import org.bukkit.entity.Player;

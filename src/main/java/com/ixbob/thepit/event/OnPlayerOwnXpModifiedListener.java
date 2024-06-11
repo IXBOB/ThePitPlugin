@@ -2,8 +2,9 @@ package com.ixbob.thepit.event;
 
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.PlayerDataBlock;
-import com.ixbob.thepit.event.custom.PlayerOwnXpModifiedEvent;
-import com.ixbob.thepit.event.custom.PlayerUpgradeLevelEvent;
+import com.ixbob.thepit.PlayerScoreboard;
+import com.ixbob.thepit.event.thepit.PlayerOwnXpModifiedEvent;
+import com.ixbob.thepit.event.thepit.PlayerUpgradeLevelEvent;
 import com.ixbob.thepit.task.ReloadPitLobbyRankingsListRunnable;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -23,6 +24,7 @@ public class OnPlayerOwnXpModifiedListener implements Listener {
         boolean levelUp = false;
         Player player = event.getPlayer();
         PlayerDataBlock dataBlock = Main.getPlayerDataBlock(player);
+        PlayerScoreboard scoreboard = dataBlock.getPlayerScoreboard();
         originXp = event.getOriginXp();
         modifiedXp = event.getModifiedXp();
         newOwnXp = event.getNewXp();
@@ -42,8 +44,8 @@ public class OnPlayerOwnXpModifiedListener implements Listener {
 
         updateDataBlock(dataBlock, newLevel, newOwnXp, nextLevelNeedXp, modifiedXp);
         dataBlock.updatePlayerDBData();
-        dataBlock.updateScoreboardLevel();
-        dataBlock.updateScoreboardNextLevelNeedXp();
+        scoreboard.updateBoardLevel();
+        scoreboard.updateBoardNextLevelNeedXp();
         Bukkit.getScheduler().runTask(Main.getInstance(), new ReloadPitLobbyRankingsListRunnable());
     }
     private void updateDataBlock(PlayerDataBlock dataBlock, int newLevel, double newThisLevelOwnXp, double newNextLevelNeedXp, double modifiedXp) {

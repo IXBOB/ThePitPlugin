@@ -8,7 +8,7 @@ import com.ixbob.thepit.enums.CustomBasicToolEnum;
 import com.ixbob.thepit.enums.PitItemEnum;
 import com.ixbob.thepit.enums.gui.talent.GUITalentItemEnum;
 import com.ixbob.thepit.enums.gui.talent.TalentGivingItemEnum;
-import com.ixbob.thepit.event.custom.*;
+import com.ixbob.thepit.event.thepit.*;
 import com.ixbob.thepit.service.MongoDBService;
 import com.mongodb.DBObject;
 import lombok.NonNull;
@@ -91,9 +91,6 @@ public class PlayerUtils {
     }
 
     public static void addXp(Player player, double addXp) {
-        if (!player.isOnline()) {
-            return;
-        }
         PlayerDataBlock playerData = Main.getPlayerDataBlock(player);
         double originXp = playerData.getThisLevelOwnXp();
 
@@ -113,6 +110,7 @@ public class PlayerUtils {
     }
 
     public static void setBattleState(Player player, boolean battleState) {
+        System.out.println(battleState);
         PlayerBattleStateChangeEvent playerBattleStateChangeEvent = new PlayerBattleStateChangeEvent(player, battleState);
         Bukkit.getPluginManager().callEvent(playerBattleStateChangeEvent);
     }
@@ -225,6 +223,7 @@ public class PlayerUtils {
         }
 
         //助攻
+        //TODO: 写的真的是奇奇怪怪呢，有空Review一下，改改某些乱的地方
         for (Player helper : helperList) {
             double damagePercent = damagePercentMap.get(helper);
             String displayDamagePercent = Mth.formatDecimalWithFloor(damagePercent * 100, 2); // 显示成百分数

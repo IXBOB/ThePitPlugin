@@ -5,7 +5,7 @@ import com.ixbob.thepit.Main;
 import com.ixbob.thepit.PlayerDataBlock;
 import com.ixbob.thepit.enums.PitHitTypeEnum;
 import com.ixbob.thepit.enums.gui.talent.GUITalentItemEnum;
-import com.ixbob.thepit.event.custom.PlayerBattleStateChangeEvent;
+import com.ixbob.thepit.event.thepit.PlayerBattleStateChangeEvent;
 import com.ixbob.thepit.util.NMSUtils;
 import com.ixbob.thepit.util.PlayerUtils;
 import com.ixbob.thepit.util.TalentCalcuUtils;
@@ -98,8 +98,8 @@ public class OnEntityDamageEntityListener implements Listener {
             }
         }
 
-        if (damagerDataBlock.getTalentStrengthValidCountDowner() != null) {
-            event.setDamage(event.getDamage() * (1 + damagerDataBlock.getTalentStrengthValidCountDowner().getAddDamagePercentagePoint() / 100));
+        if (damagerDataBlock.getTalentStrengthValidCountDownerRunnable() != null) {
+            event.setDamage(event.getDamage() * (1 + damagerDataBlock.getTalentStrengthValidCountDownerRunnable().getAddDamagePercentagePoint() / 100));
         }
 
         if (damager.getInventory().getItemInMainHand().getType() == Material.DIAMOND_PICKAXE) {

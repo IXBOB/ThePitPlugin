@@ -2,7 +2,7 @@ package com.ixbob.thepit.event;
 
 import com.ixbob.thepit.LangLoader;
 import com.ixbob.thepit.Main;
-import com.ixbob.thepit.event.custom.PlayerUpgradeLevelEvent;
+import com.ixbob.thepit.event.thepit.PlayerUpgradeLevelEvent;
 import com.ixbob.thepit.task.RefreshPlayerHologramVisibleStateRunnable;
 import com.ixbob.thepit.util.Utils;
 import org.bukkit.Bukkit;

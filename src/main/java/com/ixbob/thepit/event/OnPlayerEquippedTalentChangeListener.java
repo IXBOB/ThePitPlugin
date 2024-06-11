@@ -4,7 +4,7 @@ import com.ixbob.thepit.Main;
 import com.ixbob.thepit.PlayerDataBlock;
 import com.ixbob.thepit.enums.gui.talent.TalentGivingItemEnum;
 import com.ixbob.thepit.enums.gui.talent.GUITalentItemEnum;
-import com.ixbob.thepit.event.custom.PlayerEquippedTalentChangeEvent;
+import com.ixbob.thepit.event.thepit.PlayerEquippedTalentChangeEvent;
 import com.ixbob.thepit.util.TalentCalcuUtils;
 import com.ixbob.thepit.util.TalentUtils;
 import org.bukkit.Material;
