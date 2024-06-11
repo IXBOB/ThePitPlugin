@@ -44,7 +44,10 @@ public enum GUITalentItemEnum {
             LangLoader.getString("talent_item_id_8_name"), LangLoader.getStringList("talent_item_id_8_lores")),
     BLOOD_SUCKER(new ItemStack(Material.SPIDER_EYE), 9, null, 25, 0, 3,
             Utils.getInventoryIndex(3,4), 1,
-            LangLoader.getString("talent_item_id_9_name"), LangLoader.getStringList("talent_item_id_9_lores"));
+            LangLoader.getString("talent_item_id_9_name"), LangLoader.getStringList("talent_item_id_9_lores")),
+    GLADIATOR(new ItemStack(Material.BONE), 10, null, 25, 0, 2,
+            Utils.getInventoryIndex(3,5), 1,
+            LangLoader.getString("talent_item_id_10_name"), LangLoader.getStringList("talent_item_id_10_lores"));
 
     /**
      * {@link TalentCalcuUtils}

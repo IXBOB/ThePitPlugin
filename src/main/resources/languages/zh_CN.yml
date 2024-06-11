@@ -187,6 +187,16 @@ talent_item_id_9_lores: [
   "§7使用弓箭命中其他玩家时， 恢复自身的生命值提升至 1.5❤",
   "§7击杀玩家时额外获得 生命恢复 II (00:0%AddPoint%)",
   "§c但你不会获得恢复道具！"]
+talent_item_id_10_name: "§e§l角斗士"
+talent_item_id_10_lores: [
+  "§7--------------------------------",
+  "§r§b等级: %Level%  %NextLevelTip%",
+  "§r§a§l左键%ActionLeftClick%， 右键升级",
+  " ",
+  "§7在以你为中心的 12 格范围内",
+  "§7每存在一名除你以外的玩家",
+  "§7你受到的伤害 -%AddPoint%％",
+  "§7（最高叠加 10 层）"]
 
 shop_purchase_success: "§a购买 §r%s §r§a成功！ "
 shop_purchase_fail_as_coin: "§c购买失败！ 您还需 %sg 硬币"
