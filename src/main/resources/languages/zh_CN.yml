@@ -12,7 +12,7 @@ npc_talent_name: "§e§l天赋"
 npc_shop_name: "§e§l商店"
 npc_watchman_name: "§e§l看门人"
 
-hd_tip_info_contents: ["§e§l亲爱的玩家" , "§b天坑乱斗插件 by IXBOB 正在开发中"]
+hd_tip_info_contents: ["§e§l亲爱的玩家" , "§b天坑乱斗插件 by IXBOB 正在开发中" , "§b不定期重置玩家数据" , "§b开发进展 §a961460776"]
 hd_tip_jump_contents: ["§c§l天坑乱斗" , "§7跳下去， 开始战斗！"]
 hd_npc_locked: "§c在等级 %s §c时解锁"
 hd_rankings_list_title: "§6§l顶级玩家名单"
