@@ -83,12 +83,9 @@ public class OnEntityDamageEntityListener implements Listener {
                     .filter(player -> !player.equals(damagedPlayer))
                     .filter(player -> player.getLocation().distance(damagedPlayer.getLocation()) <= 12)
                     .count(), 12);
-            System.out.println(nearbyPlayerAmount);
             int talentId = GUITalentItemEnum.GLADIATOR.getId();
             int level = damagedPlayerDataBlock.getNormalTalentLevelList().get(talentId);
-            System.out.println(event.getDamage());
             event.setDamage(event.getDamage() * (1 - TalentCalcuUtils.getAddPointValue(talentId, level) * 0.01 * nearbyPlayerAmount));
-            System.out.println(event.getDamage());
         }
 
         if (hitType == PitHitTypeEnum.ARROW) {

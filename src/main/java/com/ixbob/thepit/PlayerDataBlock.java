@@ -179,6 +179,7 @@ public class PlayerDataBlock {
             }
         }
         else {
+            battleStateCoolCountDownerRunnable.cancel();
             battleStateCoolCountDownerRunnable = null;
         }
     }

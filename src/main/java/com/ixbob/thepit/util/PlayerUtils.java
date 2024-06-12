@@ -265,7 +265,13 @@ public class PlayerUtils {
         PlayerUtils.setBattleState(damagedPlayer, false);
         PlayerUtils.setTypedSpawn(damagedPlayer, false);
         damagedPlayerDataBlock.setDeathAmount(damagedPlayerDataBlock.getDeathAmount() + 1);
+        damagedPlayerDataBlock.setConsecutiveKillAmount(0);
+        damagedPlayerDataBlock.getPlayerScoreboard().updateBoardConsecutiveKillAmount();
+
         damagerDataBlock.setKillAmount(damagerDataBlock.getKillAmount() + 1);
+        damagerDataBlock.setConsecutiveKillAmount(damagerDataBlock.getConsecutiveKillAmount() + 1);
+        damagerDataBlock.getPlayerScoreboard().updateBoardConsecutiveKillAmount();
+
         Utils.backToLobby(damagedPlayer);
     }
 

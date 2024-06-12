@@ -93,16 +93,34 @@ public class PlayerScoreboard {
         }
     }
 
+    public void updateBoardConsecutiveKillAmount() {
+        int consecutiveKillAmount = dataBlock.getConsecutiveKillAmount();
+        boolean isBoardContain = queryContain(ScoreboardStructureEnum.CONSECUTIVE_KILL_AMOUNT);
+        if (isBoardContain && consecutiveKillAmount < 1) {
+            removeKeyInKeys(ScoreboardStructureEnum.CONSECUTIVE_KILL_AMOUNT);
+            return;
+        }
+        if (!isBoardContain && consecutiveKillAmount > 0) {
+            addKeyInKeys(ScoreboardStructureEnum.CONSECUTIVE_KILL_AMOUNT);
+            isBoardContain = true;
+        }
+        if (isBoardContain && consecutiveKillAmount > 0) {
+            replaceBoardScoreNormally(ScoreboardStructureEnum.CONSECUTIVE_KILL_AMOUNT, String.format(LangLoader.getString("scoreboard_consecutive_kill_amount"), consecutiveKillAmount));
+        }
+    }
+
     public void updateBoardTalentStrength() {
         boolean isInStrengthState = dataBlock.getTalentStrengthValidCountDownerRunnable() != null;
         boolean isBoardContain = queryContain(ScoreboardStructureEnum.TALENT_STRENGTH);
+        if (isBoardContain && !isInStrengthState) {
+            removeKeyInKeys(ScoreboardStructureEnum.TALENT_STRENGTH);
+            return;
+        }
         if (!isBoardContain && isInStrengthState) {
             addKeyInKeys(ScoreboardStructureEnum.TALENT_STRENGTH);
-            System.out.println("add");
-        } else if (isBoardContain && !isInStrengthState) {
-            removeKeyInKeys(ScoreboardStructureEnum.TALENT_STRENGTH);
-            System.out.println("remove");
-        } else if (isInStrengthState && isBoardContain) {
+            isBoardContain = true;
+        }
+        if (isInStrengthState && isBoardContain) {
             replaceBoardScoreNormally(ScoreboardStructureEnum.TALENT_STRENGTH, String.format(LangLoader.getString("talent_item_id_4_scoreboard"),
                     dataBlock.getTalentStrengthValidCountDownerRunnable().getAddDamagePercentagePoint(),
                     Mth.formatDecimalWithFloor(dataBlock.getTalentStrengthValidCountDownerRunnable().getTimeLeft(), 1)));
@@ -192,13 +210,13 @@ public class PlayerScoreboard {
         }
         int insertKeyValue = (int)findInKeys(addAfter).get(0).get(2) - 1;
         // 将分数值小于给定分数的分数 - 1 （将分数值小于插入的分数的分数值的分数的分数值 - 1，什么寄吧注释，不会写，自己理解，反正就这个大概意思）
-        for (ArrayList<Object> key : findInKeys(scoreboardStructureEnum)) {
+        for (ArrayList<Object> key : keys) {
             if ((int) key.get(2) <= insertKeyValue) {
                 key.set(2, (int)key.get(2) - 1);
             }
         }
         //插入分数
-        keys.add(new ArrayList<>(Arrays.asList(ScoreboardStructureEnum.TALENT_STRENGTH, LangLoader.getString("talent_item_id_4_scoreboard"), insertKeyValue)));
+        keys.add(new ArrayList<>(Arrays.asList(scoreboardStructureEnum, " ... ", insertKeyValue)));
         refreshBoard();
     }
 
@@ -210,7 +228,7 @@ public class PlayerScoreboard {
                 keys.remove(key);
             }
         }
-        for (ArrayList<Object> key : findInKeys(scoreboardStructureEnum)) { // 将分数值小于给定分数的分数 - 1 （将分数值小于插入的分数的分数值的分数的分数值 - 1，什么寄吧注释，不会写，自己理解，反正就这个大概意思）
+        for (ArrayList<Object> key : keys) { // 将分数值小于给定分数的分数 - 1 （将分数值小于插入的分数的分数值的分数的分数值 - 1，什么寄吧注释，不会写，自己理解，反正就这个大概意思）
             if ((int) key.get(2) < removedKeyValue) {
                 key.set(2, (int)key.get(2) + 1);
             }
