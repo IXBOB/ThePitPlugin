@@ -32,7 +32,7 @@ public class OnPlayerUpgradeLevelListener implements Listener {
                 Title.Times.of(Ticks.duration(10L), Ticks.duration(50L), Ticks.duration(10L)));
         player.showTitle(title);
         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
-        TeamManager.getInstance().getTeam(player).prefix(Component.text(Utils.getLevelStrWithStyle(dataBlock.getPrestigeLevel(), dataBlock.getLevel())));
+        TeamManager.getInstance().getTeam(player).prefix(Component.text(Utils.getLevelStrWithStyle(dataBlock.getPrestigeLevel(), newLevel)));
         Bukkit.getScheduler().runTask(Main.getInstance(), new RefreshPlayerHologramVisibleStateRunnable(player));
     }
 }
