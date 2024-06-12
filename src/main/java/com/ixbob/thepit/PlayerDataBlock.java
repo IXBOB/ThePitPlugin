@@ -35,6 +35,8 @@ public class PlayerDataBlock {
     private boolean typedSpawn;
     private ArrayList<LinkedHashMap<Player, ArrayList<Object>>> playerGetDamagedHistory; //最里面使用的ArrayList便于后续添加更多受击信息
     private ArrayList<Player> damagedByArrowPlayers;
+    private boolean isBeingRewarded;
+    private int beRewardedCoinAmount;
     private int id;
 
     public PlayerDataBlock(Player player) {
@@ -60,6 +62,8 @@ public class PlayerDataBlock {
         this.typedSpawn = false;
         this.playerGetDamagedHistory = new ArrayList<>();
         this.damagedByArrowPlayers = new ArrayList<>();
+        this.isBeingRewarded = false;
+        this.beRewardedCoinAmount = 0;
         this.id = Main.signInPlayerAmountFromLaunch;
 
         this.playerScoreboard = new PlayerScoreboard(player);
@@ -291,5 +295,24 @@ public class PlayerDataBlock {
 
     public TalentStrengthValidCountDownerRunnable getTalentStrengthValidCountDownerRunnable() {
         return talentStrengthValidCountDownerRunnable;
+    }
+
+    public int getBeRewardedCoinAmount() {
+        if (!isBeingRewarded) {
+            return 0;
+        }
+        return beRewardedCoinAmount;
+    }
+
+    public void setBeRewardedCoinAmount(int beRewardedCoinAmount) {
+        this.beRewardedCoinAmount = beRewardedCoinAmount;
+    }
+
+    public boolean getIsBeingRewarded() {
+        return isBeingRewarded;
+    }
+
+    public void setIsBeingRewarded(boolean beingRewarded) {
+        isBeingRewarded = beingRewarded;
     }
 }

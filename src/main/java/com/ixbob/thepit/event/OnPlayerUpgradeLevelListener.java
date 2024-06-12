@@ -2,6 +2,8 @@ package com.ixbob.thepit.event;
 
 import com.ixbob.thepit.LangLoader;
 import com.ixbob.thepit.Main;
+import com.ixbob.thepit.PlayerDataBlock;
+import com.ixbob.thepit.TeamManager;
 import com.ixbob.thepit.event.thepit.PlayerUpgradeLevelEvent;
 import com.ixbob.thepit.task.RefreshPlayerHologramVisibleStateRunnable;
 import com.ixbob.thepit.util.Utils;
@@ -18,6 +20,7 @@ public class OnPlayerUpgradeLevelListener implements Listener {
     @EventHandler
     public void onPlayerUpgradeLevel(PlayerUpgradeLevelEvent event) {
         Player player = event.getPlayer();
+        PlayerDataBlock dataBlock = Main.getPlayerDataBlock(player);
         int originLevel = event.getOriginLevel();
         int newLevel = event.getNewLevel();
         int prestigeLevel = event.getPrestigeLevel();
@@ -29,6 +32,7 @@ public class OnPlayerUpgradeLevelListener implements Listener {
                 Title.Times.of(Ticks.duration(10L), Ticks.duration(50L), Ticks.duration(10L)));
         player.showTitle(title);
         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+        TeamManager.getInstance().getTeam(player).prefix(Component.text(Utils.getLevelStrWithStyle(dataBlock.getPrestigeLevel(), dataBlock.getLevel())));
         Bukkit.getScheduler().runTask(Main.getInstance(), new RefreshPlayerHologramVisibleStateRunnable(player));
     }
 }

@@ -76,7 +76,7 @@ public class PlayerScoreboard {
     }
 
     public void updateBoardNextLevelNeedXp() {
-        replaceBoardScoreNormally(ScoreboardStructureEnum.NEXT_LEVEL_NEED_XP, String.format(LangLoader.getString("main_scoreboard_line3"), Mth.formatDecimalWithFloor(dataBlock.getNextLevelNeedXp(), 2)));
+        replaceBoardScoreNormally(ScoreboardStructureEnum.NEXT_LEVEL_NEED_XP, String.format(LangLoader.getString("main_scoreboard_line3"), Mth.formatDecimalWithFloor(dataBlock.getNextLevelNeedXp() - dataBlock.getThisLevelOwnXp(), 2)));
     }
 
     public void updateBoardCoinAmount() {
@@ -107,6 +107,30 @@ public class PlayerScoreboard {
         if (isBoardContain && consecutiveKillAmount > 0) {
             replaceBoardScoreNormally(ScoreboardStructureEnum.CONSECUTIVE_KILL_AMOUNT, String.format(LangLoader.getString("scoreboard_consecutive_kill_amount"), consecutiveKillAmount));
         }
+    }
+
+    public void updateBeRewardedAmount() {
+        //特殊：是跟在连杀数后面的，先检查一下连杀数是否被添加到了计分板
+        boolean isBeingAfteredKeyExist = queryContain(ScoreboardStructureEnum.BE_REWARDED_AMOUNT.getPositionAfter());
+        if (isBeingAfteredKeyExist) {
+            boolean isBoardContain = queryContain(ScoreboardStructureEnum.BE_REWARDED_AMOUNT);
+            int rewardAmount = dataBlock.getBeRewardedCoinAmount();
+            System.out.println("isBoardContain: " + isBoardContain);
+            System.out.println("rewardAmount " + rewardAmount);
+            if (isBoardContain && rewardAmount <= 0) {
+                removeKeyInKeys(ScoreboardStructureEnum.BE_REWARDED_AMOUNT);
+                return;
+            }
+            if (!isBoardContain && rewardAmount > 0) {
+                addKeyInKeys(ScoreboardStructureEnum.BE_REWARDED_AMOUNT);
+                isBoardContain = true;
+            }
+            if (isBoardContain && rewardAmount > 0) {
+                replaceBoardScoreNormally(ScoreboardStructureEnum.BE_REWARDED_AMOUNT, String.format(LangLoader.getString("scoreboard_be_rewarded_amount"), rewardAmount));
+            }
+            return;
+        }
+        throw new IllegalArgumentException("The being aftered key not exist!");
     }
 
     public void updateBoardTalentStrength() {

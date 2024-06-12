@@ -1,9 +1,6 @@
 package com.ixbob.thepit.util;
 
-import com.ixbob.thepit.LangLoader;
-import com.ixbob.thepit.Main;
-import com.ixbob.thepit.Mth;
-import com.ixbob.thepit.PlayerDataBlock;
+import com.ixbob.thepit.*;
 import com.ixbob.thepit.enums.CustomBasicToolEnum;
 import com.ixbob.thepit.enums.PitItemEnum;
 import com.ixbob.thepit.enums.gui.talent.GUITalentItemEnum;
@@ -12,6 +9,7 @@ import com.ixbob.thepit.event.thepit.*;
 import com.ixbob.thepit.service.MongoDBService;
 import com.mongodb.DBObject;
 import lombok.NonNull;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -26,6 +24,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scoreboard.Team;
 
 import java.util.*;
 
@@ -99,9 +98,6 @@ public class PlayerUtils {
     }
 
     public static void addCoin(Player player, double addCoin) {
-        if (!player.isOnline()) {
-            return;
-        }
         PlayerDataBlock playerData = Main.getPlayerDataBlock(player);
         double originCoin = playerData.getCoinAmount();
 
@@ -213,6 +209,31 @@ public class PlayerUtils {
         }
         damager.sendMessage(toDamagerMes);
         damagedPlayer.sendMessage(toDamagedPlayerMes);
+        //damagedPlayer悬赏
+        if (damagedPlayerDataBlock.getIsBeingRewarded()) {
+            int rewardAmount = damagedPlayerDataBlock.getBeRewardedCoinAmount();
+            //重置被悬赏者的悬赏状态和队伍名称
+            damagedPlayerDataBlock.setIsBeingRewarded(false);
+            damagedPlayerDataBlock.setBeRewardedCoinAmount(0);
+            TeamManager.getInstance().getTeam(damagedPlayer).suffix(Component.text(""));
+            //设置计分板
+            damagedPlayerDataBlock.getPlayerScoreboard().updateBeRewardedAmount();
+            //发送消息和声音
+            for (Player onlinePl : Bukkit.getOnlinePlayers()) {
+                if (!onlinePl.equals(damager)) {
+                    onlinePl.sendMessage(String.format(LangLoader.getString("player_rewarded_be_killed_message_to_others"),
+                            rewardAmount,
+                            PlayerUtils.getPitDisplayName(damagedPlayer),
+                            PlayerUtils.getPitDisplayName(damager)));
+                }
+            }
+            damager.sendMessage(String.format(LangLoader.getString("player_rewarded_be_killed_message_to_self"),
+                    PlayerUtils.getPitDisplayName(damagedPlayer),
+                    rewardAmount));
+            damager.playSound(damager.getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL, 1, 1);
+            //添加硬币
+            PlayerUtils.addCoin(damager, rewardAmount);
+        }
 
         ArrayList<LinkedHashMap<Player, ArrayList<Object>>> damagedHistory = damagedPlayerDataBlock.getPlayerGetDamagedHistory();
         HashMap<Player, Double> damagePercentMap = Utils.getDamagePercentMapSum(damagedHistory);
@@ -272,6 +293,38 @@ public class PlayerUtils {
         damagerDataBlock.setConsecutiveKillAmount(damagerDataBlock.getConsecutiveKillAmount() + 1);
         damagerDataBlock.getPlayerScoreboard().updateBoardConsecutiveKillAmount();
 
+        //上面连杀数增加完了以后，
+        //这里根据连杀数是否满足条件来广播连杀消息
+        int consecutiveKillAmount = damagerDataBlock.getConsecutiveKillAmount();
+        if ((consecutiveKillAmount <= 20 && consecutiveKillAmount % 5 == 0)
+            || (consecutiveKillAmount > 20 && consecutiveKillAmount % 10 == 0)) {
+            //添加悬赏和增加悬赏金额
+            boolean isRewarded = damagerDataBlock.getIsBeingRewarded();
+            if (!isRewarded) {
+                damagerDataBlock.setIsBeingRewarded(true);
+                damagerDataBlock.setBeRewardedCoinAmount(0);
+            }
+            damagerDataBlock.setBeRewardedCoinAmount(damagerDataBlock.getBeRewardedCoinAmount() + 500);
+            //广播消息
+            int beRewardedCoinAmount = damagerDataBlock.getBeRewardedCoinAmount();
+            for (Player onlinePl : Bukkit.getOnlinePlayers()) {
+                if (!onlinePl.equals(damager)) {
+                    onlinePl.sendMessage(String.format(LangLoader.getString("player_consecutive_kill_message_to_others"),
+                            PlayerUtils.getPitDisplayName(damager),
+                            consecutiveKillAmount,
+                            beRewardedCoinAmount));
+                }
+            }
+            damager.sendMessage(String.format(LangLoader.getString("player_consecutive_kill_message_to_self"),
+                    beRewardedCoinAmount));
+            //设置Team被悬赏玩家名称后缀
+            Team damagerTeam = TeamManager.getInstance().getTeam(damager);
+            damagerTeam.suffix(Component.text(" §6§l" + beRewardedCoinAmount + "g"));
+            //设置计分板
+            damagerDataBlock.getPlayerScoreboard().updateBeRewardedAmount();
+        }
+
+        //最后返回大厅相关
         Utils.backToLobby(damagedPlayer);
     }
 
