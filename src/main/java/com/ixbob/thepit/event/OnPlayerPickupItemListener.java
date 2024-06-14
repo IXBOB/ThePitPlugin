@@ -3,7 +3,7 @@ package com.ixbob.thepit.event;
 import com.ixbob.thepit.LangLoader;
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.PlayerDataBlock;
-import com.ixbob.thepit.enums.DropItemEnum;
+import com.ixbob.thepit.enums.DropEquipEnum;
 import com.ixbob.thepit.enums.gui.talent.GUITalentItemEnum;
 import com.ixbob.thepit.task.handler.RandomGoldIngotSpawnSingleTaskHandler;
 import com.ixbob.thepit.util.PlayerUtils;
@@ -26,7 +26,7 @@ public class OnPlayerPickupItemListener implements Listener {
         if (event.getEntity() instanceof Player player) {
             Item item = event.getItem();
             ItemStack itemStack = item.getItemStack();
-            for (DropItemEnum dropItem : DropItemEnum.values()) {
+            for (DropEquipEnum dropItem : DropEquipEnum.values()) {
                 if (itemStack.getType() == dropItem.getItemStack().getType()) {
                     dropItem.apply(player);
                     item.remove();

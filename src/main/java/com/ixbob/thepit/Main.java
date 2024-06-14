@@ -3,7 +3,7 @@ package com.ixbob.thepit;
 import com.ixbob.thepit.command.*;
 import com.ixbob.thepit.enums.CustomBasicToolEnum;
 import com.ixbob.thepit.enums.CustomSkullEnum;
-import com.ixbob.thepit.enums.DropItemEnum;
+import com.ixbob.thepit.enums.DropEquipEnum;
 import com.ixbob.thepit.enums.ScoreboardStructureEnum;
 import com.ixbob.thepit.event.*;
 import com.ixbob.thepit.event.citizens.OnCitizensEnableListener;
@@ -52,7 +52,7 @@ public class Main extends JavaPlugin {
         LangLoader.init();
         CustomSkullEnum.init();
         CustomBasicToolEnum.init();
-        DropItemEnum.init();
+        DropEquipEnum.init();
         ScoreboardStructureEnum.init();
 
         GUIManager = PlayerGUIManager.getInstance();

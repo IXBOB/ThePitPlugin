@@ -15,6 +15,7 @@ public class TalentCalcuUtils {
             case 8 -> 20 + level * 10;
             case 9 -> 40 + level * 3 * 20;
             case 10 -> 1 + level;
+            case 11 -> 10 + level * 10;
             default -> throw new NullPointerException();
         };
     }
@@ -32,6 +33,7 @@ public class TalentCalcuUtils {
             case 8 -> (currentLevel + 1) * 700;
             case 9 -> (currentLevel + 1) * 600;
             case 10 -> (currentLevel + 1) * 1000;
+            case 11 -> (currentLevel + 1) * 1500;
             default -> throw new NullPointerException();
         };
     }

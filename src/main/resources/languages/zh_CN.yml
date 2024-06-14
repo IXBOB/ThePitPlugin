@@ -203,6 +203,16 @@ talent_item_id_10_lores: [
   "§7每存在一名除你以外的玩家",
   "§7你受到的伤害 -%AddPoint%％",
   "§7（最高叠加 10 层）"]
+talent_item_id_11_name: "§e§l幸运钻石"
+talent_item_id_11_lores: [
+  "§7--------------------------------",
+  "§r§b等级: %Level%  %NextLevelTip%",
+  "§r§a§l左键%ActionLeftClick%， 右键升级",
+  " ",
+  "§7拾取击杀掉落的装备时",
+  "§7掉落的装备有 %AddPoint%％ 的几率",
+  "§7变为同类型的钻石装备"]
+talent_item_id_11_message: "§f[§b幸运钻石§f] 你拾取的 %s 变为了§b钻石质"
 
 shop_purchase_success: "§a购买 §r%s §r§a成功！ "
 shop_purchase_fail_as_coin: "§c购买失败！ 您还需 %sg 硬币"
