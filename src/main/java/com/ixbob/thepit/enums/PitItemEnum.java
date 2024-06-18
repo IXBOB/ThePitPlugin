@@ -12,6 +12,7 @@ public enum PitItemEnum {
     BASIC_CHAINMAIL_CHESTPLATE(CustomBasicToolEnum.BASIC_CHAINMAIL_CHESTPLATE.getItemStack(), LangLoader.getString("pititem_basic_chainmail_chestplate")),
     BASIC_CHAINMAIL_LEGGINGS(CustomBasicToolEnum.BASIC_CHAINMAIL_LEGGINGS.getItemStack(), LangLoader.getString("pititem_basic_chainmail_leggings")),
 
+    //TODO: 优化钻石甲，这里的枚举还没用到，并且后面还要跟个命名很不方便 :)
     DEFAULT_IRON_HELMET(DropEquipEnum.IRON_HELMET.getItemStack(), LangLoader.getString("pittalentitem_default_iron_helmet")),
     DEFAULT_IRON_CHESTPLATE(DropEquipEnum.IRON_CHESTPLATE.getItemStack(), LangLoader.getString("pittalentitem_default_iron_chestplate")),
     DEFAULT_IRON_LEGGINGS(DropEquipEnum.IRON_LEGGINGS.getItemStack(), LangLoader.getString("pittalentitem_default_iron_leggings")),

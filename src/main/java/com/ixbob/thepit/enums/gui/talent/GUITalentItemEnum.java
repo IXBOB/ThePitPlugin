@@ -144,6 +144,10 @@ public enum GUITalentItemEnum {
 
     private ItemStack defaultNameMethod(int level, boolean equipped, boolean hasReachedMaxLevel, ItemStack itemStack, ItemMeta itemMeta) {
         ArrayList<String> copiedLoreList = new ArrayList<>(loreList);
+        copiedLoreList.add(0, LangLoader.getString("talent_item_name_empty"));
+        copiedLoreList.add(1, LangLoader.getString("talent_item_level"));
+        copiedLoreList.add(2, LangLoader.getString("talent_item_left_click") + (hasReachedMaxLevel ? "" : LangLoader.getString("talent_item_right_click")));
+        copiedLoreList.add(3, LangLoader.getString("talent_item_name_empty"));
         copiedLoreList.replaceAll(s -> s.replace("%Level%", String.valueOf(level))
                 .replace("%NextLevelTip%", String.valueOf(hasReachedMaxLevel ? LangLoader.getString("talent_item_next_level_tip_already_max") : LangLoader.getString("talent_item_next_level_tip_need_coin")))
                 .replace("%NextLevelNeedCoin%", String.valueOf(TalentUtils.getNextLevelNeedCoinAmount(this, level)))

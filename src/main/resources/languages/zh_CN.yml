@@ -104,62 +104,38 @@ talent_item_click_action_equip: "装备"
 talent_item_click_action_off: "卸下"
 talent_item_next_level_tip_need_coin: "§6下一等级所需: %NextLevelNeedCoin%g 硬币"
 talent_item_next_level_tip_already_max: "§e已满级"
+talent_item_name_empty: "§r"
+talent_item_level: "§r§b等级: %Level%  %NextLevelTip%"
+talent_item_left_click: "§r§a§l左键%ActionLeftClick%"
+talent_item_right_click: "， 右键升级"
 talent_item_id_0_name: "§e§l活跃血液"
 talent_item_id_0_lores: [
-  "§7--------------------------------",
-  "§r§b等级: %Level%  %NextLevelTip%",
-  "§r§a§l左键%ActionLeftClick%， 右键升级",
-  " ",
   "§7天赋携带期间额外获得以下效果：",
   "§7 → 初始最大生命值提高 %AddPoint% 点"]
 talent_item_id_1_name: "§e§l金色巧克力"
 talent_item_id_1_lores: [
-  "§7--------------------------------",
-  "§r§b等级: %Level%  %NextLevelTip%",
-  "§r§a§l左键%ActionLeftClick%， 右键升级",
-  " ",
   "§7天赋携带期间， 击败玩家掉落可瞬间食用的金色巧克力并取代金苹果。 食用后提供：",
   "§7 → 伤害吸收 %AddPoint% 点 （2分钟）",
   "§7 → 生命恢复 II （5秒）"]
 talent_item_id_2_name: "§e§l渔夫"
 talent_item_id_2_lores: [
-  "§7--------------------------------",
-  "§r§b等级: %Level%  %NextLevelTip%",
-  "§r§a§l左键%ActionLeftClick%， 右键升级",
-  " ",
   "§7天赋携带期间额外获得以下物品：",
   "§7 → 钓鱼竿"]
 talent_item_id_3_name: "§e§l无尽箭袋"
 talent_item_id_3_lores: [
-  "§7--------------------------------",
-  "§r§b等级: %Level%  %NextLevelTip%",
-  "§r§a§l左键%ActionLeftClick%， 右键升级",
-  " ",
   "§7每次使用弓箭击中玩家， 你会获得：",
   "§7 → %AddPoint% 支箭"]
 talent_item_id_4_name: "§e§l力量"
 talent_item_id_4_lores: [
-  "§7--------------------------------",
-  "§r§b等级: %Level%  %NextLevelTip%",
-  "§r§a§l左键%ActionLeftClick%， 右键升级",
-  " ",
   "§7每击杀一名玩家， 你在7秒内的攻击力 §c+%AddPoint%％",
   "§7攻击力增益可叠加， 最高10层， 每次增加重置持续时间"]
 talent_item_id_4_scoreboard: "§c力量+%s％ §7（%ss）"
 talent_item_id_5_name: "§e§l安全第一"
 talent_item_id_5_lores: [
-  "§7--------------------------------",
-  "§r§b等级: %Level%  %NextLevelTip%",
-  "§r§a§l左键%ActionLeftClick%， 右键升级",
-  " ",
   "§7天赋携带期间额外获得以下物品：",
   "§7 → 锁链头盔"]
 talent_item_id_6_name: "§e§l矿工"
 talent_item_id_6_lores: [
-  "§7--------------------------------",
-  "§r§b等级: %Level%  %NextLevelTip%",
-  "§r§a§l左键%ActionLeftClick%， 右键升级",
-  " ",
   "§7天赋携带期间额外获得以下物品：",
   "§7 → 钻石镐 （效率 IV）",
   "§7 → 圆石 * %AddPoint%",
@@ -167,48 +143,28 @@ talent_item_id_6_lores: [
   "§7 → 圆石 * 4"]
 talent_item_id_7_name: "§e§l涓流"
 talent_item_id_7_lores: [
-  "§7--------------------------------",
-  "§r§b等级: %Level%  %NextLevelTip%",
-  "§r§a§l左键%ActionLeftClick%， 右键升级",
-  " ",
   "§7捡起硬币时额外获得：",
   "§7 → 10g 硬币",
   "§7 → 恢复自身 %AddPoint% 点生命"]
 talent_item_id_8_name: "§e§l灵活战术"
 talent_item_id_8_lores: [
-  "§7--------------------------------",
-  "§r§b等级: %Level%  %NextLevelTip%",
-  "§r§a§l左键%ActionLeftClick%， 右键升级",
-  " ",
   "§7助攻获得的硬币 +2",
   "§7箭矢命中其他玩家后， 该玩家死亡时",
   "§7你参与击杀/助攻获得的硬币 +%AddPoint%％"]
 talent_item_id_9_name: "§e§l吸血鬼"
 talent_item_id_9_lores: [
-  "§7--------------------------------",
-  "§r§b等级: %Level%  %NextLevelTip%",
-  "§r§a§l左键%ActionLeftClick%， 右键升级",
-  " ",
   "§7攻击击中其他玩家时恢复自身 0.5❤ 生命值",
   "§7使用弓箭命中其他玩家时， 恢复自身的生命值提升至 1.5❤",
   "§7击杀玩家时额外获得 生命恢复 II (00:0%AddPoint%)",
   "§c但你不会获得恢复道具！"]
 talent_item_id_10_name: "§e§l角斗士"
 talent_item_id_10_lores: [
-  "§7--------------------------------",
-  "§r§b等级: %Level%  %NextLevelTip%",
-  "§r§a§l左键%ActionLeftClick%， 右键升级",
-  " ",
   "§7在以你为中心的 12 格范围内",
   "§7每存在一名除你以外的玩家",
   "§7你受到的伤害 -%AddPoint%％",
   "§7（最高叠加 10 层）"]
 talent_item_id_11_name: "§e§l幸运钻石"
 talent_item_id_11_lores: [
-  "§7--------------------------------",
-  "§r§b等级: %Level%  %NextLevelTip%",
-  "§r§a§l左键%ActionLeftClick%， 右键升级",
-  " ",
   "§7拾取击杀掉落的装备时",
   "§7掉落的装备有 %AddPoint%％ 的几率",
   "§7变为同类型的钻石装备"]
