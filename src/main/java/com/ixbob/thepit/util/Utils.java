@@ -20,7 +20,7 @@ public class Utils {
     public static String getLevelStrWithStyle(int prestigeLevel, int level) {
         ChatColor color = getChatColorByLevel(level);
         if (prestigeLevel == 0) {
-            return ChatColor.RESET + "[" + color + level + ChatColor.RESET + "]";
+            return ChatColor.RESET + "" + ChatColor.GRAY + "[" + color + level + ChatColor.RESET + "" + ChatColor.GRAY + "]";
         }
         else {
             return ChatColor.RESET + "" + ChatColor.GRAY + "[" + ChatColor.YELLOW + convertToRoman(prestigeLevel) + ChatColor.RESET+ "-" + color + level + ChatColor.GRAY + "]" + ChatColor.RESET + " ";

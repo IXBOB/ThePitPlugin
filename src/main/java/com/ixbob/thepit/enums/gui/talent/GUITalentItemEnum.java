@@ -51,6 +51,7 @@ public enum GUITalentItemEnum {
     LUCKY_DIAMOND(new ItemStack(Material.DIAMOND), 11, null, 30, 0, 2,
             Utils.getInventoryIndex(3,6), 1,
             LangLoader.getString("talent_item_id_11_name"), LangLoader.getStringList("talent_item_id_11_lores"));
+    //TODO: 未装备天赋的玩家也会有效果？
 
     /**
      * {@link TalentCalcuUtils}
