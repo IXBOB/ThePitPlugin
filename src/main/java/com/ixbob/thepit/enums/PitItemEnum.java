@@ -22,7 +22,9 @@ public enum PitItemEnum {
     DEFAULT_DIAMOND_LEGGINGS(ShopGivingItemEnum.DIAMOND_LEGGINGS.getItemStack(), LangLoader.getString("pitshopitem_default_diamond_leggings")),
     DEFAULT_DIAMOND_BOOTS(ShopGivingItemEnum.DIAMOND_BOOTS.getItemStack(), LangLoader.getString("pitshopitem_default_diamond_boots")),
     DEFAULT_OBSIDIAN(ShopGivingItemEnum.OBSIDIAN.getItemStack(), LangLoader.getString("pitshopitem_default_obsidian")),
-    DEFAULT_FISHING_ROD(TalentGivingItemEnum.DEFAULT_FISHING_ROD.getItemStack(), LangLoader.getString("pittalentitem_default_fishing_rod"));
+    DEFAULT_FISHING_ROD(TalentGivingItemEnum.DEFAULT_FISHING_ROD.getItemStack(), LangLoader.getString("pittalentitem_default_fishing_rod")),
+
+    MYTHICAL_RED_LEATHER_LEGGINGS(MythicalItemEnum.MYTHICAL_RED_LEATHER_LEGGINGS.getItemStack());
 
     private final ItemStack itemStack;
     private final String name;
@@ -33,6 +35,11 @@ public enum PitItemEnum {
         itemStack.setItemMeta(itemMeta);
         this.itemStack = itemStack;
         this.name = name;
+    }
+
+    PitItemEnum(ItemStack itemStack) {
+        this.itemStack = itemStack;
+        this.name = itemStack.getItemMeta().getDisplayName();
     }
 
     public ItemStack getItemStack() {

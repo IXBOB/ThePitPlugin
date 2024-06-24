@@ -82,6 +82,8 @@ pititem_basic_bow: "§r弓"
 pititem_basic_chainmail_chestplate: "§r锁链护甲"
 pititem_basic_chainmail_leggings: "§r锁链护腿"
 
+pititem_mythical_red_leather_leggings: "§c红色神话护腿"
+
 pitshopitem_default_diamond_helmet: "§r钻石头盔"
 pitshopitem_default_diamond_chestplate: "§r钻石胸甲"
 pitshopitem_default_diamond_leggings: "§r钻石护腿"

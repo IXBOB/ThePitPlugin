@@ -53,7 +53,9 @@ public class PlayerGUIManager {
 
     public void onCloseGUI(Player player) {
         BasicGUIImpl gui = playerOpeningCustomGUI.get(player);
-        gui.onClose();
+        if (gui != null) {
+            gui.onClose();
+        }
     }
 
     public void removePlayerFromOpeningGUIHashMap(Player player) {
