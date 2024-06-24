@@ -114,7 +114,8 @@ talent_item_id_0_lores: [
   "§7 → 初始最大生命值提高 %AddPoint% 点"]
 talent_item_id_1_name: "§e§l金色巧克力"
 talent_item_id_1_lores: [
-  "§7天赋携带期间， 击败玩家掉落可瞬间食用的金色巧克力并取代金苹果。 食用后提供：",
+  "§7天赋携带期间， 击败玩家掉落金色巧克力并取代金苹果。",
+  "§7可瞬间食用，食用后提供：",
   "§7 → 伤害吸收 %AddPoint% 点 （2分钟）",
   "§7 → 生命恢复 II （5秒）"]
 talent_item_id_2_name: "§e§l渔夫"

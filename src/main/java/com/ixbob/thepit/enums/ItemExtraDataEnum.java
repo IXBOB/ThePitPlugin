@@ -5,4 +5,6 @@ public enum ItemExtraDataEnum {
     ENCHANT_EFFICIENCY_4,
 
     FLAG_HIDE_ATTRIBUTES,
+
+    PITENCHANT_
 }
