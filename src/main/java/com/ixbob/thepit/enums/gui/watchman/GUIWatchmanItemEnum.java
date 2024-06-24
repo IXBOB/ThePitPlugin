@@ -1,7 +1,7 @@
 package com.ixbob.thepit.enums.gui.watchman;
 
 import com.ixbob.thepit.LangLoader;
-import com.ixbob.thepit.util.Utils;
+import com.ixbob.thepit.util.GUIUtils;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -9,7 +9,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.List;
 
 public enum GUIWatchmanItemEnum {
-    EXIT(Material.EMERALD, 1, 0, Utils.getInventoryIndex(2, 5),
+    EXIT(Material.EMERALD, 1, 0, GUIUtils.getInvIndex(2, 5),
             LangLoader.getString("watchman_item_id_0_name"), LangLoader.getStringList("watchman_item_id_0_lores"));
 
     private final Material material;

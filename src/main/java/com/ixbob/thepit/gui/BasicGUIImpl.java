@@ -2,6 +2,7 @@ package com.ixbob.thepit.gui;
 
 import com.ixbob.thepit.LangLoader;
 import com.ixbob.thepit.Main;
+import com.ixbob.thepit.PlayerGUIManager;
 import com.ixbob.thepit.enums.gui.GUIGridTypeEnum;
 import com.ixbob.thepit.util.Utils;
 import org.bukkit.Bukkit;
@@ -34,6 +35,7 @@ public abstract class BasicGUIImpl implements BasicGUI {
         this.rightMoveable = rightMoveable;
     }
 
+    @Override
     public GUIGridTypeEnum getGridType(int index, ClickType clickType) {
         if (clickType.isLeftClick()) {
             if (leftMoveable.contains(index)) {
@@ -56,6 +58,7 @@ public abstract class BasicGUIImpl implements BasicGUI {
         return GUIGridTypeEnum.INVALID;
     }
 
+    @Override
     public boolean isMoveable(int index, ClickType clickType) {
         if (clickType.isLeftClick()) {
             return leftMoveable.contains(index);
@@ -63,6 +66,7 @@ public abstract class BasicGUIImpl implements BasicGUI {
         return false;
     }
 
+    @Override
     public void onClick(int index, ClickType clickType) {}
 
     @Override
@@ -81,6 +85,11 @@ public abstract class BasicGUIImpl implements BasicGUI {
     }
 
     @Override
+    public void onClose() {
+        PlayerGUIManager.getInstance().removePlayerFromOpeningGUIHashMap(player);
+    }
+
+    @Override
     public void initFrame(String title) {
         inventory = Bukkit.createInventory(player, size, title);
     }
@@ -93,15 +102,23 @@ public abstract class BasicGUIImpl implements BasicGUI {
     @Override
     public void initContent() {}
 
+    @Override
     public Player getPlayer() {
         return player;
     }
 
+    @Override
     public int getSize() {
         return size;
     }
 
+    @Override
     public int getNeedLevel() {
         return needLevel;
+    }
+
+    @Override
+    public Inventory getInventory() {
+        return inventory;
     }
 }

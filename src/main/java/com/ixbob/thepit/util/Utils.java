@@ -79,10 +79,6 @@ public class Utils {
                 && (lobbyAreaFromPos.getZ() <= location.getZ() && location.getZ() <= lobbyAreaToPos.getZ());
     }
 
-    public static int getInventoryIndex(int row, int column) {
-        return row * 9 - 1 - (9 - column);
-    }
-
     public static void backToLobby(Player player) {
         NMSUtils.getEntityPlayer(player).setAbsorptionAmount(0);
         player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());

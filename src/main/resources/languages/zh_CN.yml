@@ -95,6 +95,8 @@ pittalentitem_default_fishing_rod: "§r鱼竿"
 
 watchman_gui_title: "看门人"
 
+enchant_gui_title: "神话附魔台"
+
 watchman_item_id_0_name: "§a§l返回大厅"
 watchman_item_id_0_lores: [
   "§7单击以返回大厅，",

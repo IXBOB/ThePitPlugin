@@ -1,7 +1,7 @@
 package com.ixbob.thepit.enums.gui.shop;
 
 import com.ixbob.thepit.LangLoader;
-import com.ixbob.thepit.util.Utils;
+import com.ixbob.thepit.util.GUIUtils;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -10,17 +10,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum GUIShopItemEnum {
-    DIAMOND_HELMET(Material.DIAMOND_HELMET, 1, 0, Utils.getInventoryIndex(2,2), 1, 300,
+    DIAMOND_HELMET(Material.DIAMOND_HELMET, 1, 0, GUIUtils.getInvIndex(2,2), 1, 300,
             LangLoader.getString("shop_item_id_0_name"), LangLoader.getStringList("shop_item_id_0_lores")),
-    DIAMOND_CHESTPLATE(Material.DIAMOND_CHESTPLATE, 1, 1, Utils.getInventoryIndex(2,3), 1, 450,
+    DIAMOND_CHESTPLATE(Material.DIAMOND_CHESTPLATE, 1, 1, GUIUtils.getInvIndex(2,3), 1, 450,
             LangLoader.getString("shop_item_id_1_name"), LangLoader.getStringList("shop_item_id_1_lores")),
-    DIAMOND_LEGGINGS(Material.DIAMOND_LEGGINGS, 1, 2, Utils.getInventoryIndex(2,4), 1, 350,
+    DIAMOND_LEGGINGS(Material.DIAMOND_LEGGINGS, 1, 2, GUIUtils.getInvIndex(2,4), 1, 350,
             LangLoader.getString("shop_item_id_2_name"), LangLoader.getStringList("shop_item_id_2_lores")),
-    DIAMOND_BOOTS(Material.DIAMOND_BOOTS, 1, 3, Utils.getInventoryIndex(2,5), 1, 260,
+    DIAMOND_BOOTS(Material.DIAMOND_BOOTS, 1, 3, GUIUtils.getInvIndex(2,5), 1, 260,
             LangLoader.getString("shop_item_id_3_name"), LangLoader.getStringList("shop_item_id_3_lores")),
-    OBSIDIAN(Material.OBSIDIAN, 8, 4, Utils.getInventoryIndex(2,6), 1, 50,
+    OBSIDIAN(Material.OBSIDIAN, 8, 4, GUIUtils.getInvIndex(2,6), 1, 50,
             LangLoader.getString("shop_item_id_4_name"), LangLoader.getStringList("shop_item_id_4_lores")),
-    DIAMOND_SWORD(Material.DIAMOND_SWORD, 1, 5, Utils.getInventoryIndex(2,7), 1, 150,
+    DIAMOND_SWORD(Material.DIAMOND_SWORD, 1, 5, GUIUtils.getInvIndex(2,7), 1, 150,
             LangLoader.getString("shop_item_id_5_name"), LangLoader.getStringList("shop_item_id_5_lores")),;
 
     private final Material material;

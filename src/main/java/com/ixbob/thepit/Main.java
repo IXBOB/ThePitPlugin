@@ -74,6 +74,7 @@ public class Main extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("talent")).setExecutor(new CommandTalent());
         Objects.requireNonNull(this.getCommand("shop")).setExecutor(new CommandShop());
         Objects.requireNonNull(this.getCommand("watchman")).setExecutor(new CommandWatchman());
+        Objects.requireNonNull(this.getCommand("ench")).setExecutor(new CommandEnch());
         Objects.requireNonNull(this.getCommand("help")).setExecutor(new CommandHelp());
 
         registerEvents(

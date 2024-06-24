@@ -43,7 +43,7 @@ public class GUITalent extends BasicGUIImpl {
         ArrayList<Integer> talentLevelList = dataBlock.getNormalTalentLevelList();
         ArrayList<?> equippedTalentList = dataBlock.getEquippedNormalTalentList();
 
-        GUIUtils.fillAll(inventory, GUISystemItemEnum.DEFAULT_WALL.getItemStack());
+        GUIUtils.fillAll(inventory, GUISystemItemEnum.DEFAULT_WALL_GRAY.getItemStack());
 
         ItemStack locked = GUISystemItemEnum.TALENT_WALL_LOCKED.getItemStack();
         ItemStack equippedItem = GUISystemItemEnum.TALENT_WALL_ALREADY_EQUIPPED.getItemStack();

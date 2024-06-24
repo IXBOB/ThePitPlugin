@@ -10,7 +10,9 @@ import java.util.ArrayList;
 
 public enum GUISystemItemEnum {
     DEFAULT_EMPTY(),
-    DEFAULT_WALL(Material.GRAY_STAINED_GLASS_PANE, 1, " "),
+    DEFAULT_WALL_GRAY(Material.GRAY_STAINED_GLASS_PANE, 1, " "),
+    DEFAULT_WALL_WHITE(Material.WHITE_STAINED_GLASS_PANE, 1, " "),
+    DEFAULT_WALL_ORANGE(Material.ORANGE_STAINED_GLASS_PANE, 1, " "),
     TALENT_BUTTON_CANCEL(Material.RED_STAINED_GLASS_PANE, 1, LangLoader.getString("talent_system_item_cancel_name")),
     TALENT_BUTTON_APPLY(Material.LIME_STAINED_GLASS_PANE, 1, LangLoader.getString("talent_system_item_equip_name")),
     TALENT_WALL_ALREADY_EQUIPPED(Material.WHITE_STAINED_GLASS_PANE, 1, LangLoader.getString("talent_item_has_equipped")),

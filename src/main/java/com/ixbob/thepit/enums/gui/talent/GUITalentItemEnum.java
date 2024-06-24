@@ -3,9 +3,9 @@ package com.ixbob.thepit.enums.gui.talent;
 import com.ixbob.thepit.LangLoader;
 import com.ixbob.thepit.enums.CustomSkullEnum;
 import com.ixbob.thepit.event.OnPlayerEquippedTalentChangeListener;
+import com.ixbob.thepit.util.GUIUtils;
 import com.ixbob.thepit.util.TalentCalcuUtils;
 import com.ixbob.thepit.util.TalentUtils;
-import com.ixbob.thepit.util.Utils;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -16,40 +16,40 @@ import java.util.List;
 
 public enum GUITalentItemEnum {
     HEALTH_BOOST(new ItemStack(Material.REDSTONE), 0, null, 10, 0, 3,
-            Utils.getInventoryIndex(2,2), 1,
+            GUIUtils.getInvIndex(2,2), 1,
             LangLoader.getString("talent_item_id_0_name"), LangLoader.getStringList("talent_item_id_0_lores")),
     GOLDEN_CHOCOLATE(CustomSkullEnum.GOLDEN_CHOCOLATE.getItemStack(), 1, null, 10, 0, 2,
-            Utils.getInventoryIndex(2, 3), 1,
+            GUIUtils.getInvIndex(2, 3), 1,
             LangLoader.getString("talent_item_id_1_name"), LangLoader.getStringList("talent_item_id_1_lores")),
     FISHERMAN(new ItemStack(Material.FISHING_ROD), 2, null, 10, 0, 0,
-            Utils.getInventoryIndex(2, 4), 1,
+            GUIUtils.getInvIndex(2, 4), 1,
             LangLoader.getString("talent_item_id_2_name"), LangLoader.getStringList("talent_item_id_2_lores")),
     INFINITE_ARROWS(new ItemStack(Material.ARROW), 3, null, 10, 0, 2,
-            Utils.getInventoryIndex(2, 5), 1,
+            GUIUtils.getInvIndex(2, 5), 1,
             LangLoader.getString("talent_item_id_3_name"), LangLoader.getStringList("talent_item_id_3_lores")),
     STRENGTH(new ItemStack(Material.REDSTONE_BLOCK), 4, null, 15, 0, 3,
-            Utils.getInventoryIndex(2, 6), 1,
+            GUIUtils.getInvIndex(2, 6), 1,
             LangLoader.getString("talent_item_id_4_name"), LangLoader.getStringList("talent_item_id_4_lores")),
     SAFETY_FIRST(new ItemStack(Material.CHAINMAIL_HELMET), 5, null, 15, 0, 0,
-            Utils.getInventoryIndex(2, 7), 1,
+            GUIUtils.getInvIndex(2, 7), 1,
             LangLoader.getString("talent_item_id_5_name"), LangLoader.getStringList("talent_item_id_5_lores")),
     MINER(new ItemStack(Material.DIAMOND_PICKAXE), 6, new ItemFlag[]{ItemFlag.HIDE_ATTRIBUTES}, 15, 0, 3,
-            Utils.getInventoryIndex(2,8), 1,
+            GUIUtils.getInvIndex(2,8), 1,
             LangLoader.getString("talent_item_id_6_name"), LangLoader.getStringList("talent_item_id_6_lores")),
     STREAM(new ItemStack(Material.GOLD_INGOT), 7, new ItemFlag[]{ItemFlag.HIDE_ATTRIBUTES}, 20, 0, 3,
-            Utils.getInventoryIndex(3,2), 1,
+            GUIUtils.getInvIndex(3,2), 1,
             LangLoader.getString("talent_item_id_7_name"), LangLoader.getStringList("talent_item_id_7_lores")),
     FLEXIBLE_TACTICS(new ItemStack(Material.STRING), 8, null, 20, 0, 3,
-            Utils.getInventoryIndex(3,3), 1,
+            GUIUtils.getInvIndex(3,3), 1,
             LangLoader.getString("talent_item_id_8_name"), LangLoader.getStringList("talent_item_id_8_lores")),
     BLOOD_SUCKER(new ItemStack(Material.SPIDER_EYE), 9, null, 25, 0, 3,
-            Utils.getInventoryIndex(3,4), 1,
+            GUIUtils.getInvIndex(3,4), 1,
             LangLoader.getString("talent_item_id_9_name"), LangLoader.getStringList("talent_item_id_9_lores")),
     GLADIATOR(new ItemStack(Material.BONE), 10, null, 25, 0, 2,
-            Utils.getInventoryIndex(3,5), 1,
+            GUIUtils.getInvIndex(3,5), 1,
             LangLoader.getString("talent_item_id_10_name"), LangLoader.getStringList("talent_item_id_10_lores")),
     LUCKY_DIAMOND(new ItemStack(Material.DIAMOND), 11, null, 30, 0, 2,
-            Utils.getInventoryIndex(3,6), 1,
+            GUIUtils.getInvIndex(3,6), 1,
             LangLoader.getString("talent_item_id_11_name"), LangLoader.getStringList("talent_item_id_11_lores"));
     //TODO: 未装备天赋的玩家也会有效果？
 

@@ -1,9 +1,6 @@
 package com.ixbob.thepit;
 
-import com.ixbob.thepit.gui.BasicGUIImpl;
-import com.ixbob.thepit.gui.GUIShop;
-import com.ixbob.thepit.gui.GUITalent;
-import com.ixbob.thepit.gui.GUIWatchman;
+import com.ixbob.thepit.gui.*;
 import com.ixbob.thepit.util.Utils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -48,8 +45,19 @@ public class PlayerGUIManager {
         gui.display(LangLoader.getString("watchman_gui_title"));
     }
 
+    public void openEnchantGUI(Player player) {
+        GUIEnchant gui = new GUIEnchant(player);
+        addPlayerToHashMap(player, gui);
+        gui.display(LangLoader.getString("enchant_gui_title"));
+    }
+
     public void onCloseGUI(Player player) {
-        removePlayerFromHashMap(player);
+        BasicGUIImpl gui = playerOpeningCustomGUI.get(player);
+        gui.onClose();
+    }
+
+    public void removePlayerFromOpeningGUIHashMap(Player player) {
+        playerOpeningCustomGUI.remove(player);
     }
 
     private void addPlayerToHashMap(Player player, BasicGUIImpl gui) {
@@ -64,9 +72,5 @@ public class PlayerGUIManager {
             }
         }
         playerOpeningCustomGUI.put(player, gui);
-    }
-
-    private void removePlayerFromHashMap(Player player) {
-        playerOpeningCustomGUI.remove(player);
     }
 }

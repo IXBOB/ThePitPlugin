@@ -29,7 +29,7 @@ public class GUIShop extends BasicGUIImpl {
         leftButton.clear();
         rightButton.clear();
 
-        GUIUtils.fillAll(inventory, GUISystemItemEnum.DEFAULT_WALL.getItemStack());
+        GUIUtils.fillAll(inventory, GUISystemItemEnum.DEFAULT_WALL_GRAY.getItemStack());
 
         for (int index = 10; index < 17; index ++) {
 
