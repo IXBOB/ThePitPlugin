@@ -2,7 +2,7 @@ package com.ixbob.thepit.event;
 
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.PlayerDataBlock;
-import com.ixbob.thepit.enums.PitItemEnum;
+import com.ixbob.thepit.enums.PitItemEnumHolder;
 import com.ixbob.thepit.util.NMSUtils;
 import com.ixbob.thepit.util.TalentCalcuUtils;
 import org.bukkit.entity.Player;
@@ -28,7 +28,7 @@ public class OnPlayerInteractListener implements Listener {
         ArrayList<Integer> talentLevelList = dataBlock.getNormalTalentLevelList();
         if (action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK) {
             if (item != null) {
-                if (item.getType() == PitItemEnum.GOLDEN_CHOCOLATE.getItemStack().getType()) {
+                if (item.getType() == PitItemEnumHolder.GOLDEN_CHOCOLATE.getItemStack().getType()) {
                     event.setCancelled(true);
                     item.setAmount(item.getAmount() - 1);
                     NMSUtils.getEntityPlayer(player).setAbsorptionAmount(TalentCalcuUtils.getAddPointValue(1, talentLevelList.get(1)));

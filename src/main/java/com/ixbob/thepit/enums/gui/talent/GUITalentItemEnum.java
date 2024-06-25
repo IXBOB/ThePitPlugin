@@ -1,7 +1,7 @@
 package com.ixbob.thepit.enums.gui.talent;
 
 import com.ixbob.thepit.LangLoader;
-import com.ixbob.thepit.enums.CustomSkullEnum;
+import com.ixbob.thepit.enums.PitItemEnumHolder;
 import com.ixbob.thepit.event.OnPlayerEquippedTalentChangeListener;
 import com.ixbob.thepit.util.GUIUtils;
 import com.ixbob.thepit.util.TalentCalcuUtils;
@@ -18,7 +18,7 @@ public enum GUITalentItemEnum {
     HEALTH_BOOST(new ItemStack(Material.REDSTONE), 0, null, 10, 0, 3,
             GUIUtils.getInvIndex(2,2), 1,
             LangLoader.getString("talent_item_id_0_name"), LangLoader.getStringList("talent_item_id_0_lores")),
-    GOLDEN_CHOCOLATE(CustomSkullEnum.GOLDEN_CHOCOLATE.getItemStack(), 1, null, 10, 0, 2,
+    GOLDEN_CHOCOLATE(PitItemEnumHolder.CustomSkullEnum.GOLDEN_CHOCOLATE.getItemStack(), 1, null, 10, 0, 2,
             GUIUtils.getInvIndex(2, 3), 1,
             LangLoader.getString("talent_item_id_1_name"), LangLoader.getStringList("talent_item_id_1_lores")),
     FISHERMAN(new ItemStack(Material.FISHING_ROD), 2, null, 10, 0, 0,

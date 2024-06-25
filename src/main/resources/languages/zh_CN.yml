@@ -77,23 +77,7 @@ talent_upgrade_failed_as_already_level_max_message: "§c该天赋已被升级至
 
 shop_gui_title: "商店"
 
-pititem_basic_stone_sword: "§r石剑" #加上§r以防止重命名时字体倾斜
-pititem_basic_bow: "§r弓"
-pititem_basic_chainmail_chestplate: "§r锁链护甲"
-pititem_basic_chainmail_leggings: "§r锁链护腿"
-
 pititem_mythical_red_leather_leggings: "§c红色神话护腿"
-
-pitshopitem_default_diamond_helmet: "§r钻石头盔"
-pitshopitem_default_diamond_chestplate: "§r钻石胸甲"
-pitshopitem_default_diamond_leggings: "§r钻石护腿"
-pitshopitem_default_diamond_boots: "§r钻石靴子"
-pitshopitem_default_obsidian: "§r黑曜石"
-pittalentitem_default_iron_helmet: "§r铁头盔"
-pittalentitem_default_iron_chestplate: "§r铁胸甲"
-pittalentitem_default_iron_leggings: "§r铁护腿"
-pittalentitem_default_iron_boots: "§r铁靴子"
-pittalentitem_default_fishing_rod: "§r鱼竿"
 
 watchman_gui_title: "看门人"
 

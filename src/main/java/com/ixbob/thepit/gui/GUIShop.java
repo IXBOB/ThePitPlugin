@@ -4,10 +4,10 @@ import com.ixbob.thepit.LangLoader;
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.Mth;
 import com.ixbob.thepit.PlayerDataBlock;
+import com.ixbob.thepit.enums.PitItemEnumHolder;
 import com.ixbob.thepit.enums.gui.GUIGridTypeEnum;
 import com.ixbob.thepit.enums.gui.GUISystemItemEnum;
 import com.ixbob.thepit.enums.gui.shop.GUIShopItemEnum;
-import com.ixbob.thepit.enums.gui.shop.ShopGivingItemEnum;
 import com.ixbob.thepit.util.GUIUtils;
 import com.ixbob.thepit.util.PlayerUtils;
 import com.ixbob.thepit.util.ShopUtils;
@@ -72,27 +72,27 @@ public class GUIShop extends BasicGUIImpl {
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 2);
             switch (clickedShopItem) {
                 case DIAMOND_HELMET: {
-                    player.getInventory().addItem(ShopGivingItemEnum.DIAMOND_HELMET.getItemStack());
+                    player.getInventory().addItem(PitItemEnumHolder.DEFAULT_DIAMOND_HELMET.getItemStack());
                     break;
                 }
                 case DIAMOND_CHESTPLATE: {
-                    player.getInventory().addItem(ShopGivingItemEnum.DIAMOND_CHESTPLATE.getItemStack());
+                    player.getInventory().addItem(PitItemEnumHolder.DEFAULT_DIAMOND_CHESTPLATE.getItemStack());
                     break;
                 }
                 case DIAMOND_LEGGINGS: {
-                    player.getInventory().addItem(ShopGivingItemEnum.DIAMOND_LEGGINGS.getItemStack());
+                    player.getInventory().addItem(PitItemEnumHolder.DEFAULT_DIAMOND_LEGGINGS.getItemStack());
                     break;
                 }
                 case DIAMOND_BOOTS: {
-                    player.getInventory().addItem(ShopGivingItemEnum.DIAMOND_BOOTS.getItemStack());
+                    player.getInventory().addItem(PitItemEnumHolder.DEFAULT_DIAMOND_BOOTS.getItemStack());
                     break;
                 }
                 case OBSIDIAN: {
-                    player.getInventory().addItem(ShopGivingItemEnum.OBSIDIAN.getItemStack());
+                    player.getInventory().addItem(PitItemEnumHolder.DEFAULT_OBSIDIAN.getItemStack());
                     break;
                 }
                 case DIAMOND_SWORD: {
-                    player.getInventory().addItem(ShopGivingItemEnum.DIAMOND_SWORD.getItemStack());
+                    player.getInventory().addItem(PitItemEnumHolder.DEFAULT_DIAMOND_SWORD.getItemStack());
                     break;
                 }
             }

@@ -2,7 +2,7 @@ package com.ixbob.thepit.event;
 
 import com.ixbob.thepit.Main;
 import com.ixbob.thepit.PlayerDataBlock;
-import com.ixbob.thepit.enums.gui.talent.TalentGivingItemEnum;
+import com.ixbob.thepit.enums.PitItemEnumHolder;
 import com.ixbob.thepit.enums.gui.talent.GUITalentItemEnum;
 import com.ixbob.thepit.event.thepit.PlayerEquippedTalentChangeEvent;
 import com.ixbob.thepit.util.TalentCalcuUtils;
@@ -64,19 +64,19 @@ public class OnPlayerEquippedTalentChangeListener implements Listener {
             //天赋 渔夫
             case FISHERMAN: {
                 if (isEquipped) {
-                    player.getInventory().addItem(TalentGivingItemEnum.DEFAULT_FISHING_ROD.getItemStack());
+                    player.getInventory().addItem(PitItemEnumHolder.DEFAULT_FISHING_ROD.getItemStack());
                 } else {
-                    player.getInventory().remove(TalentGivingItemEnum.DEFAULT_FISHING_ROD.getItemStack());
+                    player.getInventory().remove(PitItemEnumHolder.DEFAULT_FISHING_ROD.getItemStack());
                 }
                 break;
             }
             //天赋 安全第一
             case SAFETY_FIRST: {
                 if (isEquipped) {
-                    player.getInventory().setHelmet(TalentGivingItemEnum.DEFAULT_CHAINMAIL_HELMET.getItemStack());
+                    player.getInventory().setHelmet(PitItemEnumHolder.DEFAULT_CHAINMAIL_HELMET.getItemStack());
                 } else {
                     player.getInventory().setHelmet(new ItemStack(Material.AIR));
-                    player.getInventory().remove(TalentGivingItemEnum.DEFAULT_CHAINMAIL_HELMET.getItemStack());
+                    player.getInventory().remove(PitItemEnumHolder.DEFAULT_CHAINMAIL_HELMET.getItemStack());
                 }
                 break;
             }
@@ -84,11 +84,11 @@ public class OnPlayerEquippedTalentChangeListener implements Listener {
             case MINER: {
                 if (isEquipped) {
                     id = GUITalentItemEnum.MINER.getId();
-                    player.getInventory().addItem(TalentGivingItemEnum.DIAMOND_PICKAXE_EFFICIENCY_4.getItemStack());
-                    player.getInventory().addItem(TalentGivingItemEnum.DEFAULT_COBBLESTONE.getItemStack((int) TalentCalcuUtils.getAddPointValue(id, dataBlock.getNormalTalentLevelList().get(GUITalentItemEnum.MINER.getId()))));
+                    player.getInventory().addItem(PitItemEnumHolder.DIAMOND_PICKAXE_EFFICIENCY_4.getItemStack());
+                    player.getInventory().addItem(PitItemEnumHolder.DEFAULT_COBBLESTONE.getItemStack((int) TalentCalcuUtils.getAddPointValue(id, dataBlock.getNormalTalentLevelList().get(GUITalentItemEnum.MINER.getId()))));
                 } else {
-                    player.getInventory().remove(TalentGivingItemEnum.DIAMOND_PICKAXE_EFFICIENCY_4.getItemStack());
-                    player.getInventory().remove(TalentGivingItemEnum.DEFAULT_COBBLESTONE.getItemStack().getType());
+                    player.getInventory().remove(PitItemEnumHolder.DIAMOND_PICKAXE_EFFICIENCY_4.getItemStack());
+                    player.getInventory().remove(PitItemEnumHolder.DEFAULT_COBBLESTONE.getItemStack().getType());
                 }
             }
         }

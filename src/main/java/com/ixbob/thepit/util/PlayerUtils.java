@@ -1,8 +1,7 @@
 package com.ixbob.thepit.util;
 
 import com.ixbob.thepit.*;
-import com.ixbob.thepit.enums.CustomBasicToolEnum;
-import com.ixbob.thepit.enums.PitItemEnum;
+import com.ixbob.thepit.enums.PitItemEnumHolder;
 import com.ixbob.thepit.enums.gui.talent.GUITalentItemEnum;
 import com.ixbob.thepit.enums.gui.talent.TalentGivingItemEnum;
 import com.ixbob.thepit.event.thepit.*;
@@ -67,20 +66,20 @@ public class PlayerUtils {
         ArrayList<?> equippedTalentList = dataBlock.getEquippedNormalTalentList();
         if (clear) {
             inventory.clear();
-            inventory.addItem(CustomBasicToolEnum.BASIC_STONE_SWORD.getItemStack());
-            inventory.addItem(CustomBasicToolEnum.BASIC_BOW.getItemStack());
+            inventory.addItem(PitItemEnumHolder.BASIC_STONE_SWORD.getItemStack());
+            inventory.addItem(PitItemEnumHolder.BASIC_BOW.getItemStack());
             if (equippedTalentList.contains(GUITalentItemEnum.FISHERMAN.getId())) {
                 inventory.addItem(TalentGivingItemEnum.DEFAULT_FISHING_ROD.getItemStack());
             }
             if (equippedTalentList.contains(GUITalentItemEnum.SAFETY_FIRST.getId())) {
-                inventory.setHelmet(TalentGivingItemEnum.DEFAULT_CHAINMAIL_HELMET.getItemStack());
+                inventory.setHelmet(PitItemEnumHolder.DEFAULT_CHAINMAIL_HELMET.getItemStack());
             }
             if (equippedTalentList.contains(GUITalentItemEnum.MINER.getId())) {
-                player.getInventory().addItem(TalentGivingItemEnum.DIAMOND_PICKAXE_EFFICIENCY_4.getItemStack());
-                player.getInventory().addItem(TalentGivingItemEnum.DEFAULT_COBBLESTONE.getItemStack((int) TalentCalcuUtils.getAddPointValue(GUITalentItemEnum.MINER.getId(), dataBlock.getNormalTalentLevelList().get(GUITalentItemEnum.MINER.getId()))));
+                player.getInventory().addItem(PitItemEnumHolder.DIAMOND_PICKAXE_EFFICIENCY_4.getItemStack());
+                player.getInventory().addItem(PitItemEnumHolder.DEFAULT_COBBLESTONE.getItemStack((int) TalentCalcuUtils.getAddPointValue(GUITalentItemEnum.MINER.getId(), dataBlock.getNormalTalentLevelList().get(GUITalentItemEnum.MINER.getId()))));
             }
-            inventory.setChestplate(CustomBasicToolEnum.BASIC_CHAINMAIL_CHESTPLATE.getItemStack());
-            inventory.setLeggings(CustomBasicToolEnum.BASIC_CHAINMAIL_LEGGINGS.getItemStack());
+            inventory.setChestplate(PitItemEnumHolder.BASIC_CHAINMAIL_CHESTPLATE.getItemStack());
+            inventory.setLeggings(PitItemEnumHolder.BASIC_CHAINMAIL_LEGGINGS.getItemStack());
         }
         inventory.remove(Material.COOKED_BEEF);
         inventory.addItem(new ItemStack(Material.COOKED_BEEF, 64));
@@ -157,7 +156,7 @@ public class PlayerUtils {
         ArrayList<?> damagerEquippedTalentList = damagerDataBlock.getEquippedNormalTalentList();
         //天赋 金色巧克力
         if (damagerEquippedTalentList.contains(GUITalentItemEnum.GOLDEN_CHOCOLATE.getId()) && !damagerEquippedTalentList.contains(GUITalentItemEnum.BLOOD_SUCKER.getId())) {
-            damager.getInventory().addItem(PitItemEnum.GOLDEN_CHOCOLATE.getItemStack());
+            damager.getInventory().addItem(PitItemEnumHolder.GOLDEN_CHOCOLATE.getItemStack());
         } else if (!damagerEquippedTalentList.contains(GUITalentItemEnum.BLOOD_SUCKER.getId())) {
             damager.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 1));
         }
@@ -174,14 +173,14 @@ public class PlayerUtils {
         }
         //天赋 矿工
         if (damagerEquippedTalentList.contains(GUITalentItemEnum.MINER.getId())) {
-            damager.getInventory().addItem(TalentGivingItemEnum.DEFAULT_COBBLESTONE.getItemStack(4));
+            damager.getInventory().addItem(PitItemEnumHolder.DEFAULT_COBBLESTONE.getItemStack(4));
         }
 
-        ArrayList<PitItemEnum> dropItemList = new ArrayList<>(Arrays.asList(
-                PitItemEnum.DEFAULT_IRON_HELMET,
-                PitItemEnum.DEFAULT_IRON_CHESTPLATE,
-                PitItemEnum.DEFAULT_IRON_LEGGINGS,
-                PitItemEnum.DEFAULT_IRON_BOOTS));
+        ArrayList<PitItemEnumHolder> dropItemList = new ArrayList<>(Arrays.asList(
+                PitItemEnumHolder.DEFAULT_IRON_HELMET,
+                PitItemEnumHolder.DEFAULT_IRON_CHESTPLATE,
+                PitItemEnumHolder.DEFAULT_IRON_LEGGINGS,
+                PitItemEnumHolder.DEFAULT_IRON_BOOTS));
         ItemStack randomDropItem = dropItemList.stream().skip((int) (dropItemList.size() * Math.random())).findFirst().get().getItemStack();
         Bukkit.getWorlds().get(0).dropItemNaturally(damagedPlayer.getLocation(), randomDropItem);
         if (damagedPlayer.getInventory().contains(Material.OBSIDIAN)) {

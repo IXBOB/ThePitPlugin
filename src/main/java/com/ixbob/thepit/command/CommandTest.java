@@ -1,6 +1,6 @@
 package com.ixbob.thepit.command;
 
-import com.ixbob.thepit.enums.PitItemEnum;
+import com.ixbob.thepit.enums.PitItemEnumHolder;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -11,7 +11,7 @@ public class CommandTest implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s,@NotNull String[] strings) {
         if (commandSender instanceof Player player) {
-            player.getInventory().addItem(PitItemEnum.MYTHICAL_RED_LEATHER_LEGGINGS.getItemStack());
+            player.getInventory().addItem(PitItemEnumHolder.MYTHICAL_RED_LEATHER_LEGGINGS.getItemStack());
         }
 
 //        Bukkit.getScheduler().runTask(Main.getInstance(), new ReloadPitLobbyRankingsListRunnable());
